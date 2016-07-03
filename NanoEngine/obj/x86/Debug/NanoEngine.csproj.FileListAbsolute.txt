@@ -1,0 +1,8 @@
+c:\users\gino1\documents\visual studio 2013\Projects\NanoEngine\NanoEngine\bin\WindowsGL\Debug\NanoEngine.exe
+c:\users\gino1\documents\visual studio 2013\Projects\NanoEngine\NanoEngine\bin\WindowsGL\Debug\NanoEngine.pdb
+c:\users\gino1\documents\visual studio 2013\Projects\NanoEngine\NanoEngine\bin\WindowsGL\Debug\MonoGame.Framework.dll
+c:\users\gino1\documents\visual studio 2013\Projects\NanoEngine\NanoEngine\bin\WindowsGL\Debug\OpenTK.dll
+c:\users\gino1\documents\visual studio 2013\Projects\NanoEngine\NanoEngine\obj\x86\Debug\NanoEngine.exe
+c:\users\gino1\documents\visual studio 2013\Projects\NanoEngine\NanoEngine\obj\x86\Debug\NanoEngine.pdb
+c:\users\gino1\documents\visual studio 2013\Projects\NanoEngine\NanoEngine\bin\WindowsGL\Debug\Content\test.PNG
+c:\users\gino1\documents\visual studio 2013\Projects\NanoEngine\NanoEngine\obj\x86\Debug\NanoEngine.csprojResolveAssemblyReference.cache

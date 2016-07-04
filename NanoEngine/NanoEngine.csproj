@@ -49,6 +49,7 @@
     <Compile Include="Core\States\CurrentGameState.cs" />
     <Compile Include="Events\Args\NanoKeyboardEventArgs.cs" />
     <Compile Include="Events\Args\NanoMouseEventArgs.cs" />
+    <Compile Include="Events\Args\NanoMouseReleasedArgs.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Events\Handlers\KeyboardHandler.cs" />
     <Compile Include="Events\Handlers\MouseHandler.cs" />
@@ -57,6 +58,12 @@
     <Compile Include="Events\Interfaces\IKeyboardHandler.cs" />
     <Compile Include="Events\Interfaces\IMouseHandler.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="MenuControler2.cs" />
+    <Compile Include="MenuControler3.cs" />
+    <Compile Include="Menus\IMenu.cs" />
+    <Compile Include="Menus\IMenuItem.cs" />
+    <Compile Include="Menus\Menu.cs" />
+    <Compile Include="Menus\MenuItem.cs" />
     <Compile Include="ObjectManagement\Interfaces\IAIManager.cs" />
     <Compile Include="ObjectManagement\Interfaces\IEntityManager.cs" />
     <Compile Include="ObjectManagement\Managers\AIManager.cs" />
@@ -70,6 +77,8 @@
     <Compile Include="ObjectTypes\Assets\IEntity.cs" />
     <Compile Include="ObjectTypes\General\IGameScreen.cs" />
     <Compile Include="ObjectTypes\Control\IMouseWanted.cs" />
+    <Compile Include="ObjectTypes\General\IMenuControler.cs" />
+    <Compile Include="MenuControler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestAI.cs" />
@@ -87,6 +96,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\RestartLevel1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\RestartLevel2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\resumebutton1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\resumebutton2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\StartGameButton1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\StartGameButton2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\test.PNG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

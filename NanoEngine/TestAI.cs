@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Assets.Control;
 using NanoEngine.ObjectTypes.Control;
@@ -9,8 +10,10 @@ using System.Text;
 
 namespace NanoEngine
 {
-    class TestAI : AIComponent, IMouseWanted
+    class TestAI : AIComponent, IKeyboardWanted
     {
+        Vector2 Pos;
+
         public TestAI()
         {
 
@@ -18,37 +21,38 @@ namespace NanoEngine
 
         public override void Update()
         {
-            controledEntity.Position = new Vector2(controledEntity.Position.X + 1, controledEntity.Position.Y);
+            Pos = controledEntity.Position;
+            controledEntity.Position = Pos;
         }
 
         /// <summary>
-        /// Event Reciver for the mouse down event
+        /// Reciver for the key pressed event
         /// </summary>
-        /// <param name="sender">The object that sends the event</param>
-        /// <param name="e">The arguments that are sent</param>
-        public void OnMouseDown(object sender, NanoMouseEventArgs e)
+        /// <param name="sender">The handler that sent the event</param>
+        /// <param name="args">The aguemnts contained within the event</param>
+        public void OnKeyPressed(object sender, NanoKeyboardEventArgs args)
         {
-            Console.WriteLine("Mouse Pressed Down");
+
         }
 
         /// <summary>
-        /// Event Reciver for mouse up event
+        /// Reciver for the key Released event
         /// </summary>
-        /// <param name="sender">The object that sends the event</param>
-        /// <param name="e">The arguments that are sent</param>
-        public void OnMouseUp(object sender, NanoMouseEventArgs e)
+        /// <param name="sender">The handler that sent the event</param>
+        /// <param name="args">The aguemnts contained within the event</param>
+        public void OnKeyReleased(object sender, NanoKeyboardEventArgs args)
         {
-            Console.WriteLine("Uped");
+
         }
 
         /// <summary>
-        /// Event Reciver for mouse moved event
+        /// Reciver for the key Down event
         /// </summary>
-        /// <param name="sender">The object that sends the event</param>
-        /// <param name="e">The arguments that are sent</param>
-        public void OnMouseMoved(object sender, NanoMouseEventArgs e)
+        /// <param name="sender">The handler that sent the event</param>
+        /// <param name="args">The aguemnts contained within the event</param>
+        public void OnKeyDown(object sender, NanoKeyboardEventArgs args)
         {
-            Console.WriteLine("moved");
+
         }
     }
 }

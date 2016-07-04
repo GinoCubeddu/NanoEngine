@@ -28,11 +28,11 @@ namespace NanoEngine.Events.Handlers
         }
 
         //Event to handle when the mouse is no longer being clicked
-        private event EventHandler<NanoMouseEventArgs> onMouseUp;
+        private event EventHandler<NanoMouseReleasedArgs> onMouseUp;
         /// <summary>
         /// Getter/Setter to return the event when the mouse is no longer being clicked
         /// </summary>
-        public EventHandler<NanoMouseEventArgs> GetOnMouseUp
+        public EventHandler<NanoMouseReleasedArgs> GetOnMouseUp
         {
             get { return onMouseUp; }
             set { onMouseUp = value; }
@@ -74,8 +74,23 @@ namespace NanoEngine.Events.Handlers
             //Check if any button has been Released
             if ((previousMouseState.LeftButton == ButtonState.Pressed && currentMouseState.LeftButton == ButtonState.Released) || (previousMouseState.RightButton == ButtonState.Pressed && currentMouseState.RightButton == ButtonState.Released) || (previousMouseState.MiddleButton == ButtonState.Pressed && currentMouseState.MiddleButton == ButtonState.Released))
             {
+                bool left = false, right = false, middle = false;
+
+                if (previousMouseState.LeftButton == ButtonState.Pressed && currentMouseState.LeftButton == ButtonState.Released)
+                {
+                    left = true;
+                }
+                if (previousMouseState.RightButton == ButtonState.Pressed && currentMouseState.RightButton == ButtonState.Released)
+                {
+                    right = true;
+                }
+                if (previousMouseState.MiddleButton == ButtonState.Pressed && currentMouseState.MiddleButton == ButtonState.Released)
+                {
+                    middle = true;
+                }
+
                 //Fire event
-                MouseReleased(currentMouseState);
+                MouseReleased(left, right, middle, currentMouseState.Position);
             }
 
             //Check if the mouse has moved
@@ -100,10 +115,10 @@ namespace NanoEngine.Events.Handlers
         /// Method that fires the mouse up event
         /// </summary>
         /// <param name="mouseState">The current state of the mouse</param>
-        public void MouseReleased(MouseState mouseState)
+        public void MouseReleased(bool left, bool right, bool middle, Point pos)
         {
             if (onMouseUp != null)
-                onMouseUp(this, new NanoMouseEventArgs { CurrentMouseState = mouseState });
+                onMouseUp(this, new NanoMouseReleasedArgs { Left = left, Middle = middle, Right = right, Position = pos});
         }
 
         /// <summary>

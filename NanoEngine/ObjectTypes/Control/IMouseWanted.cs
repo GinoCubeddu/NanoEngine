@@ -20,7 +20,7 @@ namespace NanoEngine.ObjectTypes.Control
         /// </summary>
         /// <param name="sender">The object that sends the event</param>
         /// <param name="e">The arguments that are sent</param>
-        void OnMouseUp(object sender, NanoMouseEventArgs e);
+        void OnMouseUp(object sender, NanoMouseReleasedArgs e);
 
         /// <summary>
         /// Event Reciver for mouse moved event

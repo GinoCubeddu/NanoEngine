@@ -16,7 +16,7 @@ namespace NanoEngine.Events.Interfaces
         /// <summary>
         /// Getter/Setter to return the event when the mouse is no longer being clicked
         /// </summary>
-        EventHandler<NanoMouseEventArgs> GetOnMouseUp { get; set; }
+        EventHandler<NanoMouseReleasedArgs> GetOnMouseUp { get; set; }
 
         /// <summary>
         /// Getter/Setter to return the event when the mouse has been moved

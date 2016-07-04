@@ -159,6 +159,7 @@ namespace NanoEngine.Core.Managers
         {
             if (UpdateManager.Manager.GameState == CurrentGameState.running)
             {
+                currentScreen.Draw();
                 for (int i = 0; i < entitys.Count; i++)
                 {
                     RenderManager.Manager.StartDraw();

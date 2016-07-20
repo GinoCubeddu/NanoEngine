@@ -41,10 +41,12 @@
     <Compile Include="Core\Interfaces\IContentManagerLoad.cs" />
     <Compile Include="Core\Interfaces\IRenderManager.cs" />
     <Compile Include="Core\Interfaces\ISceneManager.cs" />
+    <Compile Include="Core\Interfaces\ISoundManager.cs" />
     <Compile Include="Core\Interfaces\IUpdateManager.cs" />
     <Compile Include="Core\Managers\ContentManagerLoad.cs" />
     <Compile Include="Core\Managers\RenderManager.cs" />
     <Compile Include="Core\Managers\SceneManager.cs" />
+    <Compile Include="Core\Managers\SoundManager.cs" />
     <Compile Include="Core\Managers\UpdateManager.cs" />
     <Compile Include="Core\States\CurrentGameState.cs" />
     <Compile Include="Events\Args\NanoKeyboardEventArgs.cs" />

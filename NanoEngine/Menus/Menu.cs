@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using NanoEngine.Core.Managers;
 using NanoEngine.Events.Args;
@@ -17,6 +18,8 @@ namespace NanoEngine.Menus
         private int menuPosition;
 
         private bool active;
+
+        private SoundEffect sound = ContentManagerLoad.Manager.LoadResource<SoundEffect>("Sounds/rollover3.wav");
 
         public Menu(IList<IMenuItem> list, bool active)
         {
@@ -53,6 +56,12 @@ namespace NanoEngine.Menus
         {
             if (active)
             {
+                if (args.MyKeys.Contains(Keys.PageDown))
+                    SoundManager.Manager.ChangeLoopedSoundVolume(-0.1F);
+                else if (args.MyKeys.Contains(Keys.PageUp))
+                    SoundManager.Manager.ChangeLoopedSoundVolume(0.1F);
+
+                SoundManager.Manager.PlaySound(sound);
                 if (args.MyKeys.Contains(Keys.Up))
                 {
                     if (menuPosition == 0)
@@ -146,6 +155,9 @@ namespace NanoEngine.Menus
                     Rectangle rect = new Rectangle((int)menuList[i].Position.X, (int)menuList[i].Position.Y, (int)menuList[i].Texture1.Width, (int)menuList[i].Texture1.Height);
                     if(rect.Contains(e.CurrentMouseState.Position))
                     {
+                        if (menuPosition != i)
+                            SoundManager.Manager.PlaySound(sound);
+
                         menuPosition = i;
                     }
                 }

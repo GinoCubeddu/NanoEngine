@@ -16,22 +16,15 @@ namespace NanoEngine.Core.Interfaces
         void Intinalise(ContentManager gContent);
 
         /// <summary>
-        /// Loads the texture 2D 
-        /// </summary>
-        /// <param name="path">string containing the path to the texture</param>
-        /// <returns>Texture2D</returns>
-        T LoadResource<T>(string path);
-
-        /// <summary>
         /// Unloads everything
         /// </summary>
         void UnloadAll();
 
         /// <summary>
-        /// Returns a stored texture or creates a new one if none exsist
+        /// Returns a stored resource or creates a new one if none exsist
         /// </summary>
-        /// <param name="path">The path to the texture</param>
-        /// <returns>the stored or created texture</returns>
-        Texture2D GetTexture(string path);
+        /// <param name="path">The path to the resource</param>
+        /// <returns>the stored or created resource</returns>
+        T LoadResource<T>(string path);
     }
 }

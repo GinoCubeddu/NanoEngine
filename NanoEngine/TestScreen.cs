@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
 using NanoEngine.Core.Managers;
 using NanoEngine.Events;
 using NanoEngine.Menus;
@@ -17,16 +19,17 @@ namespace NanoEngine
 
         public TestScreen()
         {
-         
+            SoundManager.Manager.LoadLoopedSound(ContentManagerLoad.Manager.LoadResource<SoundEffect>("Sounds/600422_Hope-For-The-Lost"), "Level1");
+            SoundManager.Manager.StartLoopedSound("Level1");
         }
 
         public override void LoadContent()
         {
             List<IMenuItem> list = new List<IMenuItem>();
 
-            list.Add(new MenuItem(ContentManagerLoad.Manager.GetTexture("StartGameButton1"), ContentManagerLoad.Manager.GetTexture("StartGameButton2"), new Vector2(100, 100)));
-            list.Add(new MenuItem(ContentManagerLoad.Manager.GetTexture("resumebutton1"), ContentManagerLoad.Manager.GetTexture("resumebutton2"), new Vector2(100, 200)));
-            list.Add(new MenuItem(ContentManagerLoad.Manager.GetTexture("RestartLevel1"), ContentManagerLoad.Manager.GetTexture("RestartLevel2"), new Vector2(100, 300)));
+            list.Add(new MenuItem(ContentManagerLoad.Manager.LoadResource<Texture2D>("StartGameButton1"), ContentManagerLoad.Manager.LoadResource<Texture2D>("StartGameButton2"), new Vector2(100, 100)));
+            list.Add(new MenuItem(ContentManagerLoad.Manager.LoadResource<Texture2D>("resumebutton1"), ContentManagerLoad.Manager.LoadResource<Texture2D>("resumebutton2"), new Vector2(100, 200)));
+            list.Add(new MenuItem(ContentManagerLoad.Manager.LoadResource<Texture2D>("RestartLevel1"), ContentManagerLoad.Manager.LoadResource<Texture2D>("RestartLevel2"), new Vector2(100, 300)));
             list[0].Initialise<MenuControler>();
             list[1].Initialise<MenuControler2>();
             list[2].Initialise<MenuControler3>();

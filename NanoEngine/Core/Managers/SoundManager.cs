@@ -10,9 +10,15 @@ namespace NanoEngine.Core.Managers
     public class SoundManager : ISoundManager
     {
         //Private soundmanagaer instance
-        private ISoundManager manager;
+        public static ISoundManager manager;
 
-        private ISoundManager Manager
+        //Private float to hold the sound of the looped song
+        private float loopedSoundVoloume = 0.2f;
+
+        //private list to hold all currently playing songs
+        private IList<SoundEffectInstance> currentlyPlaying;
+
+        public static ISoundManager Manager
         {
             get { return manager ?? (manager = new SoundManager()); }
         }
@@ -26,6 +32,7 @@ namespace NanoEngine.Core.Managers
         private SoundManager()
         {
             loopedSounds = new Dictionary<string, SoundEffectInstance>();
+            currentlyPlaying = new List<SoundEffectInstance>();
         }
 
         /// <summary>
@@ -69,6 +76,10 @@ namespace NanoEngine.Core.Managers
             //if the looped sound name exsists
             if(loopedSounds.ContainsKey(name))
             {
+                //Add to currently playing list
+                currentlyPlaying.Add(loopedSounds[name]);
+                //Set volume
+                loopedSounds[name].Volume = loopedSoundVoloume;
                 //Play the sound
                 loopedSounds[name].Play();
             }
@@ -89,6 +100,27 @@ namespace NanoEngine.Core.Managers
             {
                 //Stop the sound
                loopedSounds[soundName].Stop(true);
+               //Remove to currently playing list
+               currentlyPlaying.Add(loopedSounds[soundName]);
+            }
+        }
+
+        /// <summary>
+        /// Method that allows the increase or decrease of the voloume
+        /// </summary>
+        /// <param name="amount">The amount to increase or decrease by</param>
+        public void ChangeLoopedSoundVolume(float amount)
+        {
+            //If the amount does not exceed the bounds
+            if(!(loopedSoundVoloume + amount < 0) && !(loopedSoundVoloume + amount > 1))
+            {
+                //Updaate the volume
+                loopedSoundVoloume += amount;
+                //set volume of all current playing songs
+                foreach(SoundEffectInstance sound in currentlyPlaying)
+                {
+                    sound.Volume = loopedSoundVoloume;
+                }
             }
         }
     }

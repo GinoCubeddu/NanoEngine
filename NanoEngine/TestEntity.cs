@@ -1,4 +1,5 @@
-﻿using NanoEngine.Core.Managers;
+﻿using Microsoft.Xna.Framework.Graphics;
+using NanoEngine.Core.Managers;
 using NanoEngine.Events;
 using NanoEngine.ObjectManagement.Managers;
 using NanoEngine.ObjectTypes.Assets;
@@ -15,7 +16,7 @@ namespace NanoEngine
 
         public TestEntity()
         {
-            setTexture(ContentManagerLoad.Manager.GetTexture("Test"));
+            setTexture(ContentManagerLoad.Manager.LoadResource<Texture2D>("Test"));
         }
 
         public override void Initilise()

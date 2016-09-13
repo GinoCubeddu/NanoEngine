@@ -13,7 +13,6 @@ C:\Users\Gino\Desktop\NanoEngine\NanoEngine\bin\WindowsGL\Debug\NanoEngine.exe
 C:\Users\Gino\Desktop\NanoEngine\NanoEngine\bin\WindowsGL\Debug\NanoEngine.pdb
 C:\Users\Gino\Desktop\NanoEngine\NanoEngine\bin\WindowsGL\Debug\MonoGame.Framework.dll
 C:\Users\Gino\Desktop\NanoEngine\NanoEngine\bin\WindowsGL\Debug\OpenTK.dll
-C:\Users\Gino\Desktop\NanoEngine\NanoEngine\obj\x86\Debug\NanoEngine.csprojResolveAssemblyReference.cache
 C:\Users\Gino\Desktop\NanoEngine\NanoEngine\bin\WindowsGL\Debug\Content\Default.xnb
 C:\Users\Gino\Desktop\NanoEngine\NanoEngine\bin\WindowsGL\Debug\Content\RestartLevel1.png
 C:\Users\Gino\Desktop\NanoEngine\NanoEngine\bin\WindowsGL\Debug\Content\RestartLevel2.png
@@ -36,3 +35,6 @@ C:\Users\gino1\Downloads\NanoEngine-master\NanoEngine-master\NanoEngine\bin\Wind
 C:\Users\gino1\Downloads\NanoEngine-master\NanoEngine-master\NanoEngine\bin\WindowsGL\Debug\MonoGame.Framework.dll
 C:\Users\gino1\Downloads\NanoEngine-master\NanoEngine-master\NanoEngine\bin\WindowsGL\Debug\OpenTK.dll
 C:\Users\gino1\Downloads\NanoEngine-master\NanoEngine-master\NanoEngine\obj\x86\Debug\NanoEngine.csprojResolveAssemblyReference.cache
+C:\Users\Gino\Desktop\NanoEngine\NanoEngine\bin\WindowsGL\Debug\Content\Sounds\rollover3.wav
+C:\Users\Gino\Desktop\NanoEngine\NanoEngine\bin\WindowsGL\Debug\Content\Sounds\600422_Hope-For-The-Lost.wav
+C:\Users\Gino\Desktop\NanoEngine\NanoEngine\obj\x86\Debug\NanoEngine.csprojResolveAssemblyReference.cache

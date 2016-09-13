@@ -110,6 +110,12 @@
     <Content Include="Content\resumebutton2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Sounds\600422_Hope-For-The-Lost.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sounds\rollover3.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\StartGameButton1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

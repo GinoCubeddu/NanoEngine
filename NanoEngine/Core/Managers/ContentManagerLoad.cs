@@ -16,8 +16,8 @@ namespace NanoEngine.Core.Managers
         //private feild holding the content manager
         private ContentManager Content;
 
-        //private filed to hold all textures that have been created
-        private IDictionary<String, Texture2D> resources;
+        //private filed to hold all resources that have been created
+        private IDictionary<String, IDisposable> resources;
 
         //public getter for returning the manager
         public static IContentManagerLoad Manager
@@ -34,7 +34,7 @@ namespace NanoEngine.Core.Managers
         {
             Content = gContent;
             Content.RootDirectory = "Content";
-            resources = new Dictionary<String, Texture2D>();
+            resources = new Dictionary<String, IDisposable>();
         }
 
         /// <summary>
@@ -48,38 +48,27 @@ namespace NanoEngine.Core.Managers
         }
 
         /// <summary>
-        /// Loads a resource to use
+        /// Returns a stored resource or creates a new one if none exsist
         /// </summary>
-        /// <param name="path">string containing the path to the resource</param>
-        /// <returns>Texture2D</returns>
+        /// <param name="path">The path to the resource</param>
+        /// <returns>the stored or created resource</returns>
         public T LoadResource<T>(string path)
         {
-            return Content.Load<T>(path);
-        }
-
-        /// <summary>
-        /// Returns a stored texture or creates a new one if none exsist
-        /// </summary>
-        /// <param name="path">The path to the texture</param>
-        /// <returns>the stored or created texture</returns>
-        public Texture2D GetTexture(string path)
-        {
-            //set a null texture
-            Texture2D texture = null;
-            //If the texture exsists
+            T resource;
+            //If the resource exsists
             if (resources.ContainsKey(path))
             {
-                //Sets the texture to the found resource
-                texture = resources[path];
+                //Sets the resource to the found resource
+                resource = (T)resources[path];
             }
             else
             {
-                //Create a new texture
-                texture = Content.Load<Texture2D>(path);
-                //add created texture to store of textures
-                resources.Add(path, texture);
+                //Create a new resource
+                resource = Content.Load<T>(path);
+                //add created resource to store of resources
+                resources.Add(path, (IDisposable)resource);
             }
-            return texture;
+            return resource;
         }
 
         /// <summary>

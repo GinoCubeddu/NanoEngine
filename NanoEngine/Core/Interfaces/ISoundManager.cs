@@ -32,5 +32,11 @@ namespace NanoEngine.Core.Interfaces
         /// </summary>
         /// <param name="soundName">The name of the sound to stop looping</param>
         void StopLoopedSound(string soundName);
+
+        /// <summary>
+        /// Method that allows the increase or decrease of the voloume
+        /// </summary>
+        /// <param name="amount">The amount to increase or decrease by</param>
+        void ChangeLoopedSoundVolume(float amount);
     }
 }

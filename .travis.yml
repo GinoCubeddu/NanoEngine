@@ -7,5 +7,7 @@ before_install:
 install:
   - sudo apt-get install -qq monodevelop libopenal-dev referenceassemblies-pcl ttf-mscorefonts-installer gtk-sharp2; # install needed packages for the monogame sdk
   - sudo ./generate.sh && yes Y|sudo ./monogame-linux.run; # install monogame sdk
+  - echo ttf-mscorefonts-installer    msttcorefonts/accepted-mscorefonts-eula    select true    | sudo debconf-set-selections
+  - sudo apt-get install ttf-mscorefonts-installer
 script:
   - (cd NanoEngine/Content && mono /opt/monogame-pipeline/MGCB.exe /rebuild /@:"Content.mgcb" /outputDir:"../bin/Release/Content") 

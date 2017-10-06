@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DirtTile.cs" />
     <Compile Include="Core\Interfaces\IContentManagerLoad.cs" />
     <Compile Include="Core\Interfaces\IRenderManager.cs" />
     <Compile Include="Core\Interfaces\ISceneManager.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Events\Interfaces\IKeyboardHandler.cs" />
     <Compile Include="Events\Interfaces\IMouseHandler.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="GrassTile.cs" />
     <Compile Include="MenuControler2.cs" />
     <Compile Include="MenuControler3.cs" />
     <Compile Include="Menus\IMenu.cs" />
@@ -68,12 +70,16 @@
     <Compile Include="Menus\MenuItem.cs" />
     <Compile Include="ObjectManagement\Interfaces\IAIManager.cs" />
     <Compile Include="ObjectManagement\Interfaces\IEntityManager.cs" />
+    <Compile Include="ObjectManagement\Interfaces\ITileManager.cs" />
     <Compile Include="ObjectManagement\Managers\AIManager.cs" />
     <Compile Include="ObjectManagement\Managers\EntityManager.cs" />
+    <Compile Include="ObjectManagement\Managers\TileManager.cs" />
     <Compile Include="ObjectTypes\Assets\Control\AIComponent.cs" />
     <Compile Include="ObjectTypes\Assets\Entity.cs" />
     <Compile Include="ObjectTypes\Assets\Control\IAIComponent.cs" />
     <Compile Include="ObjectTypes\Assets\IAsset.cs" />
+    <Compile Include="ObjectTypes\Assets\ITile.cs" />
+    <Compile Include="ObjectTypes\Assets\Tile.cs" />
     <Compile Include="ObjectTypes\Control\IKeyboardWanted.cs" />
     <Compile Include="ObjectTypes\General\GameScreen.cs" />
     <Compile Include="ObjectTypes\Assets\IEntity.cs" />
@@ -88,6 +94,9 @@
     <Compile Include="TestScreen.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK">
       <HintPath>$(MSBuildProgramFiles32)\MonoGame\v3.0\Assemblies\WindowsGL\OpenTK.dll</HintPath>
     </Reference>
@@ -133,6 +142,15 @@
   <ItemGroup>
     <Folder Include="ObjectTypes\Collision\" />
     <Folder Include="ObjectTypes\Events\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\level1.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\test-json.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages.config" />
   </ItemGroup>
   <!-- Specify the search path explicitly so the ResolveAssemblyReferences task picks the right ones -->
   <Target Name="BeforeResolveReferences">

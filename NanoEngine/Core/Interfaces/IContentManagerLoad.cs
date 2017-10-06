@@ -26,5 +26,12 @@ namespace NanoEngine.Core.Interfaces
         /// <param name="path">The path to the resource</param>
         /// <returns>the stored or created resource</returns>
         T LoadResource<T>(string path);
+
+        /// <summary>
+        /// Returns a stored texture or creates a new one if none exsist
+        /// </summary>
+        /// <param name="path">The path to the texture</param>
+        /// <returns>the stored or created texture</returns>
+        Texture2D GetTexture(string path);
     }
 }

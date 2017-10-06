@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NanoEngine.Core.Managers;
+using NanoEngine.ObjectManagement.Managers;
 using System;
 
 namespace NanoEngine
@@ -42,6 +43,8 @@ namespace NanoEngine
             ContentManagerLoad.Manager.Intinalise(Content);
 
             SceneManager.Manager.setStartScreen<TestScreen>();
+
+            TileManager.Manager.AddTile<GrassTile>("grass_tile");
 
             // TODO: Add your initialization logic here
             RenderManager.Init(this);

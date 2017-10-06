@@ -34,8 +34,8 @@ namespace NanoEngine.ObjectTypes.Assets
         /// <summary>
         /// Method that sets the tectire of the entity
         /// </summary>
-        /// <param name="_texture">Texture that the entity will use</param>
-        void setTexture(Texture2D _texture);
+        /// <param name="texture">Texture that the entity will use</param>
+        void setTexture(Texture2D texture);
 
         /// <summary>
         /// Method to update the bounds of the entity

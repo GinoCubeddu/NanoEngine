@@ -1,0 +1,11 @@
+{
+    "levelName": "test",
+    "playerSpawn": [ 1, 2 ],
+    "tiles": [
+      {
+        "x": 1,
+        "y": 2,
+        "spriteName": "hello world"
+      }
+    ]
+}

@@ -42,9 +42,10 @@ namespace NanoEngine
             this.IsMouseVisible = true;
             ContentManagerLoad.Manager.Intinalise(Content);
 
-            SceneManager.Manager.setStartScreen<TestScreen>();
-
             TileManager.Manager.AddTile<GrassTile>("grass_tile");
+            TileManager.Manager.AddTile<DirtTile>("dirt_tile");
+
+            SceneManager.Manager.setStartScreen<TestScreen>();
 
             // TODO: Add your initialization logic here
             RenderManager.Init(this);

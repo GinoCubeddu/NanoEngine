@@ -41,6 +41,7 @@ namespace NanoEngine.ObjectManagement.Managers
             if(!tiles.Values.Contains(typeof(T)))
             {
                 tiles.Add(id, typeof(T));
+                Console.WriteLine("added");
                 return;
             }
             Console.WriteLine(

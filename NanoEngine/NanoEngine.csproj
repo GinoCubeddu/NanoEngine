@@ -156,7 +156,7 @@
     <Content Include="Content\level1.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\test-json.json">
+    <Content Include="Content\level2.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

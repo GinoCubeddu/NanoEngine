@@ -23,7 +23,7 @@ namespace NanoEngine
         {
             // SoundManager.Manager.LoadLoopedSound(ContentManagerLoad.Manager.LoadResource<SoundEffect>("Sounds/600422_Hope-For-The-Lost"), "Level1");
             // SoundManager.Manager.StartLoopedSound("Level1");
-            TileManager.Manager.LoadTileMap("level1");
+            TileManager.Manager.LoadTileMap("level2");
         }
 
         public override void LoadContent()

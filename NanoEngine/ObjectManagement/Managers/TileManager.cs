@@ -13,14 +13,19 @@ namespace NanoEngine.ObjectManagement.Managers
 {
     class TileManager : ITileManager
     {
+        // Private Dictonary to hold the types of tiles avaliable
         private static IDictionary<string, Type> tiles;
 
+        // Private instance of the manager
         private static ITileManager manager;
 
+        // TileMap object to hold the structure and information on tiles
         private static TileMap tileMap;
 
+        // List to hold the tiles created tiles
         private static IList<ITile> generatedTiles;
         
+        // Public accessor for the Tile Manager
         public static ITileManager Manager
         {
             get { return manager ?? (manager = new TileManager()); }
@@ -79,7 +84,7 @@ namespace NanoEngine.ObjectManagement.Managers
             foreach (TileInformation tile in tileMap.tiles)
             {
                 ITile newTile = (ITile)Activator.CreateInstance(tiles[tile.spriteName]);
-                Rectangle location = new Rectangle(tile.x * 64, tile.y * 64, 64, 64);
+                Rectangle location = new Rectangle(tile.x * 64, tile.y * 64, tile.xsize, tile.ysize);
                 newTile.Initilise(location, new Vector2(tile.x, tile.y));
                 generatedTiles.Add(newTile);
             }
@@ -96,7 +101,9 @@ namespace NanoEngine.ObjectManagement.Managers
     public class TileInformation
     {
         public int x { get; set; }
+        public int xsize { get; set; }
         public int y { get; set; }
+        public int ysize { get; set; }
         public string spriteName { get; set; }
     }
 }

@@ -8,7 +8,7 @@
         <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
         <meta name="generator" content="Doxygen 1.8.13"/>
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <title>Test Project: NanoEngine.Core.Managers.ContentManagerLoad Class Reference</title>
+        <title>NanoEngine: NanoEngine.Core.Managers.ContentManagerLoad Class Reference</title>
         <!--<link href="tabs.css" rel="stylesheet" type="text/css"/>-->
         <script type="text/javascript" src="dynsections.js"></script>
         <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -29,7 +29,7 @@
         <nav class="navbar navbar-default" role="navigation">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand">Test Project 1.0.0</a>
+                    <a class="navbar-brand">NanoEngine 0.0.1</a>
                 </div>
             </div>
         </nav>
@@ -100,17 +100,16 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a6c1473eb80fe5759410145e2eabbfdd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unloads everything  <a href="#a6c1473eb80fe5759410145e2eabbfdd3">More...</a><br /></td></tr>
 <tr class="separator:a6c1473eb80fe5759410145e2eabbfdd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9eb0f921fa2e013903e221afef0a11de"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_engine_1_1_core_1_1_managers_1_1_content_manager_load.html#a9eb0f921fa2e013903e221afef0a11de">LoadResource&lt; T &gt;</a> (string path)</td></tr>
-<tr class="memdesc:a9eb0f921fa2e013903e221afef0a11de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a resource to use  <a href="#a9eb0f921fa2e013903e221afef0a11de">More...</a><br /></td></tr>
+<tr class="memdesc:a9eb0f921fa2e013903e221afef0a11de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a stored resource or creates a new one if none exsist  <a href="#a9eb0f921fa2e013903e221afef0a11de">More...</a><br /></td></tr>
 <tr class="separator:a9eb0f921fa2e013903e221afef0a11de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0779b6a12a6b5a1623eb1ebf28ceb07"><td class="memItemLeft" align="right" valign="top">Texture2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_engine_1_1_core_1_1_managers_1_1_content_manager_load.html#ae0779b6a12a6b5a1623eb1ebf28ceb07">GetTexture</a> (string path)</td></tr>
-<tr class="memdesc:ae0779b6a12a6b5a1623eb1ebf28ceb07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a stored texture or creates a new one if none exsist  <a href="#ae0779b6a12a6b5a1623eb1ebf28ceb07">More...</a><br /></td></tr>
-<tr class="separator:ae0779b6a12a6b5a1623eb1ebf28ceb07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abca4627235d4e51a0ca7e6d3db00ed8e"><td class="memItemLeft" align="right" valign="top">ContentManager&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_engine_1_1_core_1_1_managers_1_1_content_manager_load.html#abca4627235d4e51a0ca7e6d3db00ed8e">getContentManager</a> ()</td></tr>
+<tr class="memdesc:abca4627235d4e51a0ca7e6d3db00ed8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method to get the content manager  <a href="#abca4627235d4e51a0ca7e6d3db00ed8e">More...</a><br /></td></tr>
 <tr class="separator:abca4627235d4e51a0ca7e6d3db00ed8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:ad4367c139388493de641474c94c31f32"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_nano_engine_1_1_core_1_1_interfaces_1_1_i_content_manager_load.html">IContentManagerLoad</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_engine_1_1_core_1_1_managers_1_1_content_manager_load.html#ad4367c139388493de641474c94c31f32">Manager</a><code> [get]</code></td></tr>
+<tr class="memitem:ad4367c139388493de641474c94c31f32"><td class="memItemLeft" align="right" valign="top"><a id="ad4367c139388493de641474c94c31f32"></a>
+static <a class="el" href="interface_nano_engine_1_1_core_1_1_interfaces_1_1_i_content_manager_load.html">IContentManagerLoad</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Manager</b><code> [get]</code></td></tr>
 <tr class="separator:ad4367c139388493de641474c94c31f32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -140,46 +139,10 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_content_manager_load_8cs_source.html#l00084">84</a> of file <a class="el" href="_content_manager_load_8cs_source.html">ContentManagerLoad.cs</a>.</p>
+<p>Method to get the content manager </p>
+<dl class="section return"><dt>Returns</dt><dd>The current content manager</dd></dl>
 
-</div>
-</div>
-<a id="ae0779b6a12a6b5a1623eb1ebf28ceb07"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae0779b6a12a6b5a1623eb1ebf28ceb07">&#9670;&nbsp;</a></span>GetTexture()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Texture2D NanoEngine.Core.Managers.ContentManagerLoad.GetTexture </td>
-          <td>(</td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns a stored texture or creates a new one if none exsist </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>The path to the texture</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>the stored or created texture</dd></dl>
-
-<p>Implements <a class="el" href="interface_nano_engine_1_1_core_1_1_interfaces_1_1_i_content_manager_load.html#a046d4d5ae5d2beebfe6eb2f083c56601">NanoEngine.Core.Interfaces.IContentManagerLoad</a>.</p>
-
-<p class="definition">Definition at line <a class="el" href="_content_manager_load_8cs_source.html#l00065">65</a> of file <a class="el" href="_content_manager_load_8cs_source.html">ContentManagerLoad.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_content_manager_load_8cs_source.html#l00078">78</a> of file <a class="el" href="_content_manager_load_8cs_source.html">ContentManagerLoad.cs</a>.</p>
 
 </div>
 </div>
@@ -245,14 +208,14 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Loads a resource to use </p>
+<p>Returns a stored resource or creates a new one if none exsist </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">path</td><td>string containing the path to the resource</td></tr>
+    <tr><td class="paramname">path</td><td>The path to the resource</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Texture2D</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the stored or created resource</dd></dl>
 
 <p>Implements <a class="el" href="interface_nano_engine_1_1_core_1_1_interfaces_1_1_i_content_manager_load.html#aea773ee7210e19f6b5f93319468318f7">NanoEngine.Core.Interfaces.IContentManagerLoad</a>.</p>
 
@@ -291,33 +254,8 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Property Documentation</h2>
-<a id="ad4367c139388493de641474c94c31f32"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad4367c139388493de641474c94c31f32">&#9670;&nbsp;</a></span>Manager</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="interface_nano_engine_1_1_core_1_1_interfaces_1_1_i_content_manager_load.html">IContentManagerLoad</a> NanoEngine.Core.Managers.ContentManagerLoad.Manager</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">get</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_content_manager_load_8cs_source.html#l00024">24</a> of file <a class="el" href="_content_manager_load_8cs_source.html">ContentManagerLoad.cs</a>.</p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>NanoEngine/NanoEngine/Core/Managers/<a class="el" href="_content_manager_load_8cs_source.html">ContentManagerLoad.cs</a></li>
+<li>C:/Users/cubg1_14/Desktop/NanoEngine/NanoEngine/Core/Managers/<a class="el" href="_content_manager_load_8cs_source.html">ContentManagerLoad.cs</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.8-->
@@ -328,7 +266,7 @@ Properties</h2></td></tr>
 </div>
 </div>
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Oct 19 2017 16:14:12 for Test Project by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 23 2017 12:08:58 for NanoEngine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>

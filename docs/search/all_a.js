@@ -1,24 +1,12 @@
 var searchData=
 [
-  ['args',['Args',['../namespace_nano_engine_1_1_events_1_1_args.html',1,'NanoEngine::Events']]],
-  ['assets',['Assets',['../namespace_nano_engine_1_1_object_types_1_1_assets.html',1,'NanoEngine::ObjectTypes']]],
-  ['control',['Control',['../namespace_nano_engine_1_1_object_types_1_1_assets_1_1_control.html',1,'NanoEngine.ObjectTypes.Assets.Control'],['../namespace_nano_engine_1_1_object_types_1_1_control.html',1,'NanoEngine.ObjectTypes.Control']]],
-  ['core',['Core',['../namespace_nano_engine_1_1_core.html',1,'NanoEngine']]],
-  ['events',['Events',['../namespace_nano_engine_1_1_events.html',1,'NanoEngine']]],
-  ['general',['General',['../namespace_nano_engine_1_1_object_types_1_1_general.html',1,'NanoEngine::ObjectTypes']]],
-  ['handlers',['Handlers',['../namespace_nano_engine_1_1_events_1_1_handlers.html',1,'NanoEngine::Events']]],
-  ['nanoengine',['NanoEngine',['../index.html',1,'']]],
-  ['interfaces',['Interfaces',['../namespace_nano_engine_1_1_core_1_1_interfaces.html',1,'NanoEngine.Core.Interfaces'],['../namespace_nano_engine_1_1_events_1_1_interfaces.html',1,'NanoEngine.Events.Interfaces'],['../namespace_nano_engine_1_1_object_management_1_1_interfaces.html',1,'NanoEngine.ObjectManagement.Interfaces']]],
-  ['managers',['Managers',['../namespace_nano_engine_1_1_core_1_1_managers.html',1,'NanoEngine.Core.Managers'],['../namespace_nano_engine_1_1_object_management_1_1_managers.html',1,'NanoEngine.ObjectManagement.Managers']]],
-  ['menus',['Menus',['../namespace_nano_engine_1_1_menus.html',1,'NanoEngine']]],
-  ['nanoengine',['NanoEngine',['../namespace_nano_engine.html',1,'']]],
-  ['nanokeyboardeventargs',['NanoKeyboardEventArgs',['../class_nano_engine_1_1_events_1_1_args_1_1_nano_keyboard_event_args.html',1,'NanoEngine::Events::Args']]],
-  ['nanokeyboardeventargs_2ecs',['NanoKeyboardEventArgs.cs',['../_nano_keyboard_event_args_8cs.html',1,'']]],
-  ['nanomouseeventargs',['NanoMouseEventArgs',['../class_nano_engine_1_1_events_1_1_args_1_1_nano_mouse_event_args.html',1,'NanoEngine::Events::Args']]],
-  ['nanomouseeventargs_2ecs',['NanoMouseEventArgs.cs',['../_nano_mouse_event_args_8cs.html',1,'']]],
-  ['nanomousereleasedargs',['NanoMouseReleasedArgs',['../class_nano_engine_1_1_events_1_1_args_1_1_nano_mouse_released_args.html',1,'NanoEngine::Events::Args']]],
-  ['nanomousereleasedargs_2ecs',['NanoMouseReleasedArgs.cs',['../_nano_mouse_released_args_8cs.html',1,'']]],
-  ['objectmanagement',['ObjectManagement',['../namespace_nano_engine_1_1_object_management.html',1,'NanoEngine']]],
-  ['objecttypes',['ObjectTypes',['../namespace_nano_engine_1_1_object_types.html',1,'NanoEngine']]],
-  ['states',['States',['../namespace_nano_engine_1_1_core_1_1_states.html',1,'NanoEngine::Core']]]
+  ['onkeyboarddown',['OnKeyboardDown',['../class_nano_engine_1_1_events_1_1_handlers_1_1_keyboard_handler.html#a5a2d1555f1fddffc572443275a71a6a4',1,'NanoEngine::Events::Handlers::KeyboardHandler']]],
+  ['onkeyboardpressed',['OnKeyboardPressed',['../class_nano_engine_1_1_events_1_1_handlers_1_1_keyboard_handler.html#ae488dc8ceabbd3c8a7d20765a071a550',1,'NanoEngine::Events::Handlers::KeyboardHandler']]],
+  ['onkeyboardreleased',['OnKeyboardReleased',['../class_nano_engine_1_1_events_1_1_handlers_1_1_keyboard_handler.html#acb8ee76039fb090641add7fde85c3e59',1,'NanoEngine::Events::Handlers::KeyboardHandler']]],
+  ['onkeydown',['OnKeyDown',['../class_nano_engine_1_1_menus_1_1_menu.html#ac5e813acc8db1219f9bd2608b6f1e710',1,'NanoEngine.Menus.Menu.OnKeyDown()'],['../interface_nano_engine_1_1_object_types_1_1_control_1_1_i_keyboard_wanted.html#a194294d9bea0fae8a446eb5fd510bcb2',1,'NanoEngine.ObjectTypes.Control.IKeyboardWanted.OnKeyDown()'],['../class_nano_engine_1_1_test_a_i.html#a1b6bc5c62f44abb62140151a17b40a22',1,'NanoEngine.TestAI.OnKeyDown()']]],
+  ['onkeypressed',['OnKeyPressed',['../class_nano_engine_1_1_menus_1_1_menu.html#abf79bdd34594a98ca20f13ffc256f32b',1,'NanoEngine.Menus.Menu.OnKeyPressed()'],['../interface_nano_engine_1_1_object_types_1_1_control_1_1_i_keyboard_wanted.html#a95487f76469d0e29e148ce502362c551',1,'NanoEngine.ObjectTypes.Control.IKeyboardWanted.OnKeyPressed()'],['../class_nano_engine_1_1_test_a_i.html#a2f42cec82a9d391f4329b96ec8247026',1,'NanoEngine.TestAI.OnKeyPressed()']]],
+  ['onkeyreleased',['OnKeyReleased',['../class_nano_engine_1_1_menus_1_1_menu.html#aa36e94bbc4f76b3f2d740c0c52a09b0b',1,'NanoEngine.Menus.Menu.OnKeyReleased()'],['../interface_nano_engine_1_1_object_types_1_1_control_1_1_i_keyboard_wanted.html#a8b2418c4c639ba0a09836d0d5518bee8',1,'NanoEngine.ObjectTypes.Control.IKeyboardWanted.OnKeyReleased()'],['../class_nano_engine_1_1_test_a_i.html#a76741d4ac9fba8088e940cf8c8499191',1,'NanoEngine.TestAI.OnKeyReleased()']]],
+  ['onmousedown',['OnMouseDown',['../class_nano_engine_1_1_menus_1_1_menu.html#a1c9c7364f636359511dd52cba5beee40',1,'NanoEngine.Menus.Menu.OnMouseDown()'],['../interface_nano_engine_1_1_object_types_1_1_control_1_1_i_mouse_wanted.html#a08d92385472f72e76e1b08a1fddde08c',1,'NanoEngine.ObjectTypes.Control.IMouseWanted.OnMouseDown()']]],
+  ['onmousemoved',['OnMouseMoved',['../class_nano_engine_1_1_menus_1_1_menu.html#aee386b70fb0d386163eb9b7a5d148b80',1,'NanoEngine.Menus.Menu.OnMouseMoved()'],['../interface_nano_engine_1_1_object_types_1_1_control_1_1_i_mouse_wanted.html#a572f8c33c5773dddb113c7b42233bb8c',1,'NanoEngine.ObjectTypes.Control.IMouseWanted.OnMouseMoved()']]],
+  ['onmouseup',['OnMouseUp',['../class_nano_engine_1_1_menus_1_1_menu.html#a9c1e985ce498387c488f003fef21e172',1,'NanoEngine.Menus.Menu.OnMouseUp()'],['../interface_nano_engine_1_1_object_types_1_1_control_1_1_i_mouse_wanted.html#a984c4f6cee9ac5fb29ffc7aecd687869',1,'NanoEngine.ObjectTypes.Control.IMouseWanted.OnMouseUp()']]]
 ];

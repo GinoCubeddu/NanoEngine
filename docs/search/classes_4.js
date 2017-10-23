@@ -19,7 +19,5 @@ var searchData=
   ['irendermanager',['IRenderManager',['../interface_nano_engine_1_1_core_1_1_interfaces_1_1_i_render_manager.html',1,'NanoEngine::Core::Interfaces']]],
   ['iscenemanager',['ISceneManager',['../interface_nano_engine_1_1_core_1_1_interfaces_1_1_i_scene_manager.html',1,'NanoEngine::Core::Interfaces']]],
   ['isoundmanager',['ISoundManager',['../interface_nano_engine_1_1_core_1_1_interfaces_1_1_i_sound_manager.html',1,'NanoEngine::Core::Interfaces']]],
-  ['itile',['ITile',['../interface_nano_engine_1_1_object_types_1_1_assets_1_1_i_tile.html',1,'NanoEngine::ObjectTypes::Assets']]],
-  ['itilemanager',['ITileManager',['../interface_nano_engine_1_1_object_management_1_1_interfaces_1_1_i_tile_manager.html',1,'NanoEngine::ObjectManagement::Interfaces']]],
   ['iupdatemanager',['IUpdateManager',['../interface_nano_engine_1_1_core_1_1_interfaces_1_1_i_update_manager.html',1,'NanoEngine::Core::Interfaces']]]
 ];

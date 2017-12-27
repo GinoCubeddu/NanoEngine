@@ -80,6 +80,19 @@ namespace NanoEngine.ObjectManagement.Managers
                 generatedTiles.Add(newTile);
             }
         }
+
+        /// <summary>
+        /// Unloads all the content that the tile manager has created by
+        /// setting the refrences to null makining them elidable for garbage
+        /// collection. Should only be called before TileManager is about to
+        /// be destroyed itsself.
+        /// </summary>
+        public void UnloadContent()
+        {
+            tiles = null;
+            tileMap = null;
+            generatedTiles = null;
+        }
     }
 
     public class TileMap

@@ -14,24 +14,15 @@ namespace NanoEngine.ObjectManagement.Managers
     class TileManager : ITileManager
     {
         // Private Dictonary to hold the types of tiles avaliable
-        private static IDictionary<string, Type> tiles;
-
-        // Private instance of the manager
-        private static ITileManager manager;
+        private IDictionary<string, Type> tiles;
 
         // TileMap object to hold the structure and information on tiles
-        private static TileMap tileMap;
+        private TileMap tileMap;
 
         // List to hold the tiles created tiles
-        private static IList<ITile> generatedTiles;
-        
-        // Public accessor for the Tile Manager
-        public static ITileManager Manager
-        {
-            get { return manager ?? (manager = new TileManager()); }
-        }
+        private IList<ITile> generatedTiles;
 
-        private TileManager()
+        public TileManager()
         {
             tiles = new Dictionary<string, Type>();
             generatedTiles = new List<ITile>();

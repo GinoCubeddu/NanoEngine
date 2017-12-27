@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 
 using NanoEngine.ObjectManagement.Managers;
+using NanoEngine.ObjectManagement.Interfaces;
 
 namespace NanoEngine
 {
@@ -19,11 +20,14 @@ namespace NanoEngine
     {
         // Menu menu;
 
+        private ITileManager tileManager;
+
         public TestScreen()
         {
-            // SoundManager.Manager.LoadLoopedSound(ContentManagerLoad.Manager.LoadResource<SoundEffect>("Sounds/600422_Hope-For-The-Lost"), "Level1");
-            // SoundManager.Manager.StartLoopedSound("Level1");
-            TileManager.Manager.LoadTileMap("level2");
+            tileManager = new TileManager();
+            tileManager.AddTile<GrassTile>("grass_tile");
+            tileManager.AddTile<DirtTile>("dirt_tile");
+            tileManager.LoadTileMap("level2");
         }
 
         public override void LoadContent()
@@ -51,7 +55,7 @@ namespace NanoEngine
         {
             // menu.Draw();
             RenderManager.Manager.StartDraw();
-            TileManager.Manager.DrawTileMap();
+            tileManager.DrawTileMap();
             RenderManager.Manager.EndDraw();
         }
 

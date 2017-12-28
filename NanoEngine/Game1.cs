@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NanoEngine.Core.Managers;
 using NanoEngine.ObjectManagement.Managers;
+using NanoEngine.ObjectTypes.General;
 using System;
 
 namespace NanoEngine
@@ -42,7 +43,7 @@ namespace NanoEngine
             this.IsMouseVisible = true;
             ContentManagerLoad.Manager.Intinalise(Content);
 
-            SceneManager.Manager.setStartScreen<TestScreen>();
+            // SceneManager.Manager.setStartScreen<GameScreen>();
 
             // TODO: Add your initialization logic here
             RenderManager.Init(this);

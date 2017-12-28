@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NanoEngine.Core.Managers;
+using NanoEngine.ObjectManagement.Managers;
 using System;
 
 namespace NanoEngine

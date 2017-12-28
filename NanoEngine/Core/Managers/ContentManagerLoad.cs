@@ -8,7 +8,7 @@ using System.Text;
 
 namespace NanoEngine.Core.Managers
 {
-    class ContentManagerLoad : IContentManagerLoad
+    public class ContentManagerLoad : IContentManagerLoad
     {
         //private feild that holds the instance of the interface
         private static IContentManagerLoad manager;
@@ -16,8 +16,8 @@ namespace NanoEngine.Core.Managers
         //private feild holding the content manager
         private ContentManager Content;
 
-        //private filed to hold all resources that have been created
-        private IDictionary<String, IDisposable> resources;
+        //private filed to hold all textures that have been created
+        private IDictionary<String, Texture2D> resources;
 
         //public getter for returning the manager
         public static IContentManagerLoad Manager
@@ -34,7 +34,7 @@ namespace NanoEngine.Core.Managers
         {
             Content = gContent;
             Content.RootDirectory = "Content";
-            resources = new Dictionary<String, IDisposable>();
+            resources = new Dictionary<String, Texture2D>();
         }
 
         /// <summary>
@@ -48,33 +48,39 @@ namespace NanoEngine.Core.Managers
         }
 
         /// <summary>
-        /// Returns a stored resource or creates a new one if none exsist
+        /// Loads a resource to use
         /// </summary>
-        /// <param name="path">The path to the resource</param>
-        /// <returns>the stored or created resource</returns>
+        /// <param name="path">string containing the path to the resource</param>
+        /// <returns>Texture2D</returns>
         public T LoadResource<T>(string path)
         {
-            T resource;
-            //If the resource exsists
-            if (resources.ContainsKey(path))
-            {
-                //Sets the resource to the found resource
-                resource = (T)resources[path];
-            }
-            else
-            {
-                //Create a new resource
-                resource = Content.Load<T>(path);
-                //add created resource to store of resources
-                resources.Add(path, (IDisposable)resource);
-            }
-            return resource;
+            return Content.Load<T>(path);
         }
 
         /// <summary>
-        /// Method to get the content manager
+        /// Returns a stored texture or creates a new one if none exsist
         /// </summary>
-        /// <returns>The current content manager</returns>
+        /// <param name="path">The path to the texture</param>
+        /// <returns>the stored or created texture</returns>
+        public Texture2D GetTexture(string path)
+        {
+            //set a null texture
+            Texture2D texture = null;
+            //If the texture exsists
+            if (resources.ContainsKey(path))
+            {
+                //Sets the texture to the found resource
+                texture = resources[path];
+            } else
+            {
+                //Create a new texture
+                texture = Content.Load<Texture2D>(path);
+                //add created texture to store of textures
+                resources.Add(path, texture);
+            }
+            return texture;
+        }
+
         public ContentManager getContentManager()
         {
             return Content;

@@ -130,17 +130,20 @@ namespace NanoEngine.Core.Managers
         {
             if (UpdateManager.Manager.GameState == CurrentGameState.running)
             {
-                //Update the current screen
-                currentScreen.Update();
-
-                //Loop though each entity and update it (Using a for loop instead of foreach as you are unable to edit the list in a foreach loop)
-                for (int i = 0; i < entitys.Count; i++)
+                if (currentScreen != null)
                 {
-                    //If the entity needs to be removedd then remove it
-                    if (entitys[i].Remove == true)
+                    //Update the current screen
+                    currentScreen.Update();
+
+                    //Loop though each entity and update it (Using a for loop instead of foreach as you are unable to edit the list in a foreach loop)
+                    for (int i = 0; i < entitys.Count; i++)
                     {
-                        EntityManager.Manager.remove(entitys[i].UniqueID);
-                        AIManager.Manager.RemoveAI(entitys[i].UniqueID);
+                        //If the entity needs to be removedd then remove it
+                        if (entitys[i].Remove == true)
+                        {
+                            EntityManager.Manager.remove(entitys[i].UniqueID);
+                            AIManager.Manager.RemoveAI(entitys[i].UniqueID);
+                        }
                     }
                 }
             }
@@ -159,12 +162,15 @@ namespace NanoEngine.Core.Managers
         {
             if (UpdateManager.Manager.GameState == CurrentGameState.running)
             {
-                currentScreen.Draw();
-                for (int i = 0; i < entitys.Count; i++)
+                if(currentScreen != null)
                 {
-                    RenderManager.Manager.StartDraw();
-                     RenderManager.Manager.Draw(entitys[i].Texture, entitys[i].Position, Color.White);
-                    RenderManager.Manager.EndDraw();
+                    currentScreen.Draw();
+                    for (int i = 0; i < entitys.Count; i++)
+                    {
+                        RenderManager.Manager.StartDraw();
+                        RenderManager.Manager.Draw(entitys[i].Texture, entitys[i].Position, Color.White);
+                        RenderManager.Manager.EndDraw();
+                    }
                 }
             }
             else

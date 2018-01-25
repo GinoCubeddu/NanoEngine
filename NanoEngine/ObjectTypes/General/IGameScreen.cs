@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NanoEngine.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,7 @@ namespace NanoEngine.ObjectTypes.General
         /// <summary>
         /// Method to draw the current screen
         /// </summary>
-        void Draw();
+        /// <param name="renderManager">An instance of the render manager which will be used to draw</param>
+        void Draw(IRenderManager renderManager);
     }
 }

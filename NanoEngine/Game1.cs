@@ -47,8 +47,8 @@ namespace NanoEngine
             // SceneManager.Manager.setStartScreen<GameScreen>();
 
             // TODO: Add your initialization logic here
-            RenderManager.Init(this);
-            Components.Add((IGameComponent)RenderManager.Manager);
+            IRenderManager renderManager = new RenderManager(this);
+            Components.Add((IGameComponent)renderManager);
 
             IUpdateManager updateManager = new UpdateManager(this);
             Components.Add((IGameComponent)updateManager);

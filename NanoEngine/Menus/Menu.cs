@@ -1,13 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
+using NanoEngine.Core.Interfaces;
 using NanoEngine.Core.Managers;
 using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Control;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace NanoEngine.Menus
 {
@@ -27,23 +25,21 @@ namespace NanoEngine.Menus
             this.active = active;
         }
 
-        public void Draw()
+        public void Draw(IRenderManager renderManager)
         {
             if(active)
-            {
-                RenderManager.Manager.StartDraw();
+            {                
                 for(int i = 0; i < menuList.Count; i++)
                 {
                     if(i == menuPosition)
                     {
-                        RenderManager.Manager.Draw(menuList[i].Texture2, menuList[i].Position, Color.White);
+                        renderManager.Draw(menuList[i].Texture2, menuList[i].Position, Color.White);
                     }
                     else
                     {
-                        RenderManager.Manager.Draw(menuList[i].Texture1, menuList[i].Position, Color.White);
+                        renderManager.Draw(menuList[i].Texture1, menuList[i].Position, Color.White);
                     }
                 }
-                RenderManager.Manager.EndDraw();
             }
         }
 

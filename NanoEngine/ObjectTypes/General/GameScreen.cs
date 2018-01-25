@@ -1,4 +1,5 @@
-﻿using NanoEngine.Core.Managers;
+﻿using NanoEngine.Core.Interfaces;
+using NanoEngine.Core.Managers;
 using NanoEngine.ObjectManagement.Managers;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,7 @@ namespace NanoEngine.ObjectTypes.General
         /// <summary>
         /// Abstarct method to force sub classes to implement it
         /// </summary>
-        public abstract void Draw();
+        /// <param name="renderManager">An instance of the render manager which will be used to draw</param>
+        public abstract void Draw(IRenderManager renderManager);
     }
 }

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using Microsoft.Xna.Framework;
-using NanoEngine.Core.Managers;
 using NanoEngine.ObjectManagement.Interfaces;
 using NanoEngine.ObjectTypes.Assets;
 using Newtonsoft.Json;
+using NanoEngine.Core.Interfaces;
 
 namespace NanoEngine.ObjectManagement.Managers
 {
@@ -49,11 +47,12 @@ namespace NanoEngine.ObjectManagement.Managers
         /// <summary>
         /// Draws the current tile map
         /// </summary>
-        public void DrawTileMap()
+        /// <param name="renderManager">An instance of the render manager which will be used to draw</param>
+        public void DrawTileMap(IRenderManager renderManager)
         {
             foreach(ITile tile in generatedTiles)
             {
-                RenderManager.Manager.Draw(tile.Texture, tile.Bounds, Color.White);
+                renderManager.Draw(tile.Texture, tile.Bounds, Color.White);
             }
         }
 

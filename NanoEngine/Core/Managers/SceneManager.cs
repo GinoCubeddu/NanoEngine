@@ -128,30 +128,30 @@ namespace NanoEngine.Core.Managers
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public void Update()
         {
-            if (UpdateManager.Manager.GameState == CurrentGameState.running)
-            {
-                if (currentScreen != null)
-                {
-                    //Update the current screen
-                    currentScreen.Update();
+            //if (UpdateManager.Manager.GameState == CurrentGameState.running)
+            //{
+            //    if (currentScreen != null)
+            //    {
+            //        //Update the current screen
+            //        currentScreen.Update();
 
-                    //Loop though each entity and update it (Using a for loop instead of foreach as you are unable to edit the list in a foreach loop)
-                    for (int i = 0; i < entitys.Count; i++)
-                    {
-                        //If the entity needs to be removedd then remove it
-                        if (entitys[i].Remove == true)
-                        {
-                            EntityManager.Manager.remove(entitys[i].UniqueID);
-                            AIManager.Manager.RemoveAI(entitys[i].UniqueID);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if (pauseScreen != null)
-                    pauseScreen.Update();
-            }
+            //        //Loop though each entity and update it (Using a for loop instead of foreach as you are unable to edit the list in a foreach loop)
+            //        for (int i = 0; i < entitys.Count; i++)
+            //        {
+            //            //If the entity needs to be removedd then remove it
+            //            if (entitys[i].Remove == true)
+            //            {
+            //                EntityManager.Manager.remove(entitys[i].UniqueID);
+            //                AIManager.Manager.RemoveAI(entitys[i].UniqueID);
+            //            }
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    if (pauseScreen != null)
+            //        pauseScreen.Update();
+            //}
         }
 
         /// <summary>
@@ -160,24 +160,24 @@ namespace NanoEngine.Core.Managers
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public void Draw()
         {
-            if (UpdateManager.Manager.GameState == CurrentGameState.running)
-            {
-                if(currentScreen != null)
-                {
-                    currentScreen.Draw();
-                    for (int i = 0; i < entitys.Count; i++)
-                    {
-                        RenderManager.Manager.StartDraw();
-                        RenderManager.Manager.Draw(entitys[i].Texture, entitys[i].Position, Color.White);
-                        RenderManager.Manager.EndDraw();
-                    }
-                }
-            }
-            else
-            {
-                if (pauseScreen != null)
-                    pauseScreen.Draw();
-            }
+        //    if (UpdateManager.Manager.GameState == CurrentGameState.running)
+        //    {
+        //        if(currentScreen != null)
+        //        {
+        //            currentScreen.Draw();
+        //            for (int i = 0; i < entitys.Count; i++)
+        //            {
+        //                RenderManager.Manager.StartDraw();
+        //                RenderManager.Manager.Draw(entitys[i].Texture, entitys[i].Position, Color.White);
+        //                RenderManager.Manager.EndDraw();
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (pauseScreen != null)
+        //            pauseScreen.Draw();
+        //    }
 
         }
     }

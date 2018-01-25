@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using NanoEngine.Core.Interfaces;
 using NanoEngine.Core.Managers;
 using NanoEngine.ObjectManagement.Managers;
 using NanoEngine.ObjectTypes.General;
@@ -49,8 +50,8 @@ namespace NanoEngine
             RenderManager.Init(this);
             Components.Add((IGameComponent)RenderManager.Manager);
 
-            UpdateManager.Init(this);
-            Components.Add((IGameComponent)UpdateManager.Manager);
+            IUpdateManager updateManager = new UpdateManager(this);
+            Components.Add((IGameComponent)updateManager);
             
             base.Initialize();
         }

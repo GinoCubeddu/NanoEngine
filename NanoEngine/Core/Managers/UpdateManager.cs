@@ -36,32 +36,7 @@ namespace NanoEngine.Core.Managers
         }
 
         //private filed to hold refrence to the manager
-        private static IUpdateManager manager;
-
-        public static IUpdateManager Manager
-        {
-            get { return manager; }
-        }
-
-        /// <summary>
-        /// Mathod to Initialize and create a single instance of the UpdateManager
-        /// </summary>
-        /// <param name="game">Instance of the game</param>
-        public static void Init(Game game)
-        {
-            //checks to see if the manager is not null
-            if (manager != null)
-            {
-                //if its not null throw an error as there can only be one
-                throw new SystemException("Cannot create a sceond instance of the UpdateManager");
-            }
-            else
-            {
-                //If there is no sceneManager create one
-                manager = new UpdateManager(game);
-                _game1 = game;
-            }
-        }
+        private static bool Created;
 
         /// <summary>
         /// Constructor for the update manager
@@ -70,7 +45,10 @@ namespace NanoEngine.Core.Managers
         public UpdateManager(Game game)
             : base(game)
         {
+            if (Created)
+                throw new Exception("Only one instance of the UpdateManager may be created");
             _game1 = game;
+            Created = true;
         }
 
         /// <summary>

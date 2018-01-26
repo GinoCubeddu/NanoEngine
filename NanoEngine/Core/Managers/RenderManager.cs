@@ -251,7 +251,7 @@ namespace NanoEngine.Core.Managers
             //Sets background color
             _game1.GraphicsDevice.Clear(bgColor);
 
-            SceneManager.Manager.Draw();
+            SceneManager.Manager.Draw(this);
         }
 
         /// <summary>

@@ -149,7 +149,7 @@ namespace NanoEngine.Core.Managers
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        /// <param name="renderManager">Provides a refrence to the renderManager.</param>
         public void Draw(IRenderManager renderManager)
         {
             if (currentScreen != null)

@@ -33,7 +33,8 @@ namespace NanoEngine.Core.Interfaces
         /// <summary>
         /// Method to draw the objects on the screen
         /// </summary>
-        void Draw();
+        /// <param name="renderManager">Provides a refrence to the renderManager.</param>
+        void Draw(IRenderManager renderManager);
 
         /// <summary>
         /// Method to update the objects on the screen

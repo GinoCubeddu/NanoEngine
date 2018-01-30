@@ -19,14 +19,14 @@ namespace NanoEngine.ObjectTypes.General
         void UnloadContent();
 
         /// <summary>
-        /// Method to update the current screen
+        /// Method to Draw the scene
         /// </summary>
-        void Update();
+        /// <param name="renderManager">RenderManager containing draw methods</param>
+        void DrawScreen(IRenderManager renderManager);
 
         /// <summary>
-        /// Method to draw the current screen
+        /// Method to update the GameScreen
         /// </summary>
-        /// <param name="renderManager">An instance of the render manager which will be used to draw</param>
-        void Draw(IRenderManager renderManager);
+        void UpdateScreen();
     }
 }

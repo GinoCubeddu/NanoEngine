@@ -8,7 +8,7 @@ using System.Text;
 
 namespace NanoEngine.ObjectManagement.Managers
 {
-    public class EntityManager : IAssetFactory
+    public class AssetFactory : IAssetFactory
     {
         //Private static field holding the refrence to the manager
         private static IAssetFactory manager;
@@ -26,13 +26,13 @@ namespace NanoEngine.ObjectManagement.Managers
         public static IAssetFactory Manager
         {
             //uses the null coalescing operator to check if the manager has a null refrence if it does it creates a new instance
-            get { return manager ?? (manager = new EntityManager()); }
+            get { return manager ?? (manager = new AssetFactory()); }
         }
 
         /// <summary>
         /// Private constructor so it can only be called in the class by the getter making it a singleton
         /// </summary>
-        private EntityManager()
+        private AssetFactory()
         {
             //Instansiate instance vars
             uniqueID = 2;

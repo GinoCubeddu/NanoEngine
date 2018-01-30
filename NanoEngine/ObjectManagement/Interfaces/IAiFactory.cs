@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NanoEngine.ObjectManagement.Interfaces
 {
-    public interface IAIManager
+    public interface IAiFactory
     {
         /// <summary>
         /// Method to update the behaviours

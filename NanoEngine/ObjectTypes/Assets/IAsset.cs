@@ -17,5 +17,39 @@ namespace NanoEngine.ObjectTypes.Assets
 
         //getter for the entitys bounding box
         Rectangle Bounds { get; set; }
+
+        //Getter for the unique name
+        string UniqueName { get; }
+
+        //getter for the remove variable
+        bool Remove { get; }
+
+        /// <summary>
+        /// Sets the position of the entity
+        /// </summary>
+        /// <param name="position">Vector2 containg the position</param>
+        void SetPosition(Vector2 position);
+
+        /// <summary>
+        /// setter for the unique name and id
+        /// </summary>
+        /// <param name="name">String for Unique Name</param>
+        void SetUniqueData(string name);
+
+        /// <summary>
+        /// Method that sets the tectire of the entity
+        /// </summary>
+        /// <param name="texture">Texture that the entity will use</param>
+        void SetTexture(Texture2D texture);
+
+        /// <summary>
+        /// Method to update the bounds of the entity
+        /// </summary>
+        void UpdateBounds();
+
+        /// <summary>
+        /// Method to Initalise the entity
+        /// </summary>
+        void Initilise();
     }
 }

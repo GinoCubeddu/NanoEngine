@@ -8,7 +8,7 @@ using System.Text;
 
 namespace NanoEngine.ObjectManagement.Managers
 {
-    public class AIManager : IAiFactory
+    public class AiFactory : IAiFactory
     {
         //Static field to hold an instance to the manager
         private static IAiFactory manager;
@@ -19,13 +19,13 @@ namespace NanoEngine.ObjectManagement.Managers
         ///getter for the instance of the manager
         public static IAiFactory Manager
         {
-            get { return manager ?? (manager = new AIManager()); }
+            get { return manager ?? (manager = new AiFactory()); }
         }
 
         /// <summary>
         /// Private constructor for the AIManager
         /// </summary>
-        private AIManager()
+        private AiFactory()
         {
             _AIs = new List<IAIComponent>();
         }

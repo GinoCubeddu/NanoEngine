@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NanoEngine.ObjectManagement.Interfaces
 {
-    public interface IEntityManager
+    public interface IAssetFactory
     {
         /// <summary>
         /// Using generics to create a new IEntity

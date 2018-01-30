@@ -44,7 +44,7 @@ namespace NanoEngine
             this.IsMouseVisible = true;
             ContentManagerLoad.Manager.Intinalise(Content);
 
-            // SceneManager.Manager.setStartScreen<GameScreen>();
+            SceneManager.Manager.setStartScreen<TestGameScreen>();
 
             // TODO: Add your initialization logic here
             IRenderManager renderManager = new RenderManager(this);

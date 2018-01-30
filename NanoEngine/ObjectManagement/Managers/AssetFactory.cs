@@ -8,10 +8,10 @@ using System.Text;
 
 namespace NanoEngine.ObjectManagement.Managers
 {
-    public class EntityManager : IEntityManager
+    public class EntityManager : IAssetFactory
     {
         //Private static field holding the refrence to the manager
-        private static IEntityManager manager;
+        private static IAssetFactory manager;
 
         //Private list that holds the current entitys
         private List<IEntity> EntityList;
@@ -23,7 +23,7 @@ namespace NanoEngine.ObjectManagement.Managers
         private bool mainPlayerSet;
 
         //A public static getter to return the instance of the manager sinice its static it will be the same instance every time
-        public static IEntityManager Manager
+        public static IAssetFactory Manager
         {
             //uses the null coalescing operator to check if the manager has a null refrence if it does it creates a new instance
             get { return manager ?? (manager = new EntityManager()); }

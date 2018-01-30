@@ -21,8 +21,8 @@ namespace NanoEngine.ObjectTypes.General
         public virtual void UnloadContent()
         {
             ContentManagerLoad.Manager.UnloadAll();
-            EntityManager.Manager.emptyList();
-            AIManager.Manager.EmptyList();
+            AssetFactory.Manager.emptyList();
+            AiFactory.Manager.EmptyList();
         }
 
         /// <summary>

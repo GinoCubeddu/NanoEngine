@@ -8,16 +8,16 @@ using System.Text;
 
 namespace NanoEngine.ObjectManagement.Managers
 {
-    public class AIManager : IAIManager
+    public class AIManager : IAiFactory
     {
         //Static field to hold an instance to the manager
-        private static IAIManager manager;
+        private static IAiFactory manager;
 
         ///List to hold all the current AI's
         private List<IAIComponent> _AIs;
 
         ///getter for the instance of the manager
-        public static IAIManager Manager
+        public static IAiFactory Manager
         {
             get { return manager ?? (manager = new AIManager()); }
         }

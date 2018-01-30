@@ -89,7 +89,7 @@ namespace NanoEngine.Core.Managers
                 pauseScreen.LoadContent();
 
             //Gets the current list of entitys
-            entitys = EntityManager.Manager.GetList();
+            entitys = AssetFactory.Manager.GetList();
         }
 
         /// <summary>
@@ -139,8 +139,8 @@ namespace NanoEngine.Core.Managers
                     //If the entity needs to be removedd then remove it
                     if (entitys[i].Remove == true)
                     {
-                        EntityManager.Manager.remove(entitys[i].UniqueID);
-                        AIManager.Manager.RemoveAI(entitys[i].UniqueID);
+                        AssetFactory.Manager.remove(entitys[i].UniqueID);
+                        AiFactory.Manager.RemoveAI(entitys[i].UniqueID);
                     }
                 }
             }

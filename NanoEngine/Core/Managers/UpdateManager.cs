@@ -58,7 +58,7 @@ namespace NanoEngine.Core.Managers
         public override void Update(GameTime gameTime)
         {
             EventManager.Manager.Update();
-            AIManager.Manager.Update();
+            AiFactory.Manager.Update();
             SceneManager.Manager.Update();
         }
 

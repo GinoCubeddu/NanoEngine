@@ -66,9 +66,11 @@
     <Compile Include="Menus\MenuItem.cs" />
     <Compile Include="ObjectManagement\Interfaces\IAiFactory.cs" />
     <Compile Include="ObjectManagement\Interfaces\IAssetFactory.cs" />
+    <Compile Include="ObjectManagement\Interfaces\IAssetManager.cs" />
     <Compile Include="ObjectManagement\Interfaces\ITileManager.cs" />
     <Compile Include="ObjectManagement\Managers\AiFactory.cs" />
     <Compile Include="ObjectManagement\Managers\AssetFactory.cs" />
+    <Compile Include="ObjectManagement\Managers\AssetManager.cs" />
     <Compile Include="ObjectManagement\Managers\TileManager.cs" />
     <Compile Include="ObjectTypes\Assets\Control\AIComponent.cs" />
     <Compile Include="ObjectTypes\Assets\Entity.cs" />

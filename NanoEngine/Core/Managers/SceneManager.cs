@@ -89,7 +89,7 @@ namespace NanoEngine.Core.Managers
                 pauseScreen.LoadContent();
 
             //Gets the current list of entitys
-            entitys = AssetFactory.Manager.GetList();
+            // entitys = AssetFactory.Manager.GetList();
         }
 
         /// <summary>
@@ -131,18 +131,7 @@ namespace NanoEngine.Core.Managers
             if (currentScreen != null)
             {
                 //Update the current screen
-                currentScreen.Update();
-
-                //Loop though each entity and update it (Using a for loop instead of foreach as you are unable to edit the list in a foreach loop)
-                for (int i = 0; i < entitys.Count; i++)
-                {
-                    //If the entity needs to be removedd then remove it
-                    if (entitys[i].Remove == true)
-                    {
-                        AssetFactory.Manager.remove(entitys[i].UniqueID);
-                        AiFactory.Manager.RemoveAI(entitys[i].UniqueID);
-                    }
-                }
+                currentScreen.UpdateScreen();
             }
         }
 
@@ -154,13 +143,9 @@ namespace NanoEngine.Core.Managers
         {
             if (currentScreen != null)
             {
-                currentScreen.Draw(renderManager);
-                for (int i = 0; i < entitys.Count; i++)
-                {
-                    renderManager.StartDraw();
-                        renderManager.Draw(entitys[i].Texture, entitys[i].Position, Color.White);
-                    renderManager.EndDraw();
-                }
+                renderManager.StartDraw();
+                currentScreen.DrawScreen(renderManager);
+                renderManager.EndDraw();
             }
         }
     }

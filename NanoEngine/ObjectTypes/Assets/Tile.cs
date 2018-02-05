@@ -13,7 +13,7 @@ namespace NanoEngine.ObjectTypes.Assets
     {
         private Texture2D texture;
 
-        public Animation AssetAnimation { get; protected set; }
+        public IAnimation AssetAnimation { get; protected set; }
 
         public Texture2D Texture
         {

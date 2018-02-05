@@ -26,7 +26,7 @@ namespace NanoEngine.ObjectTypes.Assets
         bool Remove { get; }
 
         // Getter for the animation class that belongs to the asset
-        Animation AssetAnimation { get; }
+        IAnimation AssetAnimation { get; }
 
         /// <summary>
         /// Sets the position of the entity

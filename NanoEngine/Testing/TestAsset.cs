@@ -12,7 +12,7 @@ namespace NanoEngine
     {
         public override void Initilise()
         {
-            // SetTexture(ContentManagerLoad.Manager.LoadResource<Texture2D>("player"));
+            SetTexture(ContentManagerLoad.Manager.LoadResource<Texture2D>("player"));
             IDictionary<string, IDictionary<string, int>> AnimationDict =
                 new Dictionary<string, IDictionary<string, int>>();
 
@@ -41,7 +41,7 @@ namespace NanoEngine
             AnimationDict["runLeft"].Add("ColumnCount", 6);
 
             AssetAnimation = new Animation(
-                AnimationDict, ContentManagerLoad.Manager.GetTexture("player")
+                this, AnimationDict
             );
         }
     }

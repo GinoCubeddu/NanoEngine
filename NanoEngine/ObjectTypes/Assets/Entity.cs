@@ -13,7 +13,7 @@ namespace NanoEngine.ObjectTypes.Assets
         //Feild for holding the texture
         private Texture2D texture;
 
-        public Animation AssetAnimation { get; protected set; }
+        public IAnimation AssetAnimation { get; protected set; }
 
         //getter for the texture and setter for the texture
         public Texture2D Texture { get { return texture; } }

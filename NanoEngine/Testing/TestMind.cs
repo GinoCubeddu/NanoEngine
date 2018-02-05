@@ -20,9 +20,20 @@ namespace NanoEngine.Testing
         {
 
             if (args.MyKeys.Contains(Keys.Left) & Direction == "left")
+            {
                 controledEntity.AssetAnimation.ChangeAnimationState("runLeft");
+                controledEntity.SetPosition(new Vector2(
+                    controledEntity.Position.X - 3, controledEntity.Position.Y
+                ));
+            }
+                
             else if (args.MyKeys.Contains(Keys.Right) & Direction == "right")
+            {
                 controledEntity.AssetAnimation.ChangeAnimationState("runRight");
+                controledEntity.SetPosition(new Vector2(
+                    controledEntity.Position.X + 3, controledEntity.Position.Y
+                ));
+            }                
 
             if (args.MyKeys.Contains(Keys.S))
                 controledEntity.AssetAnimation.ChangeAnimationState("idleRight");

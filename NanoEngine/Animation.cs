@@ -22,7 +22,9 @@ namespace NanoEngine
         // The asset that is being animated
         private IAsset _animatedAsset;
 
-        private int Timer;
+        private float Timer;
+
+        private float fps;
 
         public Animation(
             IAsset asset, IDictionary<string, IDictionary<string, int>> states
@@ -33,6 +35,8 @@ namespace NanoEngine
             CurrentColumn = 0;
             _animatedAsset = asset;
             Timer = 0;
+            fps = 1f / 24f;
+            Console.WriteLine(fps);
         }
 
         /// <summary>
@@ -42,6 +46,17 @@ namespace NanoEngine
         public void Animate(IRenderManager renderManager)
         {
             IDictionary<string, int> AnimationData = States[CurrentAninmation];
+            Timer += (float) renderManager.gameTime.ElapsedGameTime.TotalSeconds;
+            Console.WriteLine(Timer);
+            if (Timer > fps)
+            {
+                CurrentColumn++;
+
+                if (CurrentColumn >= AnimationData["ColumnCount"])
+                    CurrentColumn = 0;
+                Timer = 0;
+            }
+            
             renderManager.Draw(
                     _animatedAsset.Texture, _animatedAsset.Position,
                     new Rectangle(
@@ -52,16 +67,6 @@ namespace NanoEngine
                     ),
                     Color.White
                 );
-            if (Timer > 3)
-            {
-                CurrentColumn++;
-
-                if (CurrentColumn >= AnimationData["ColumnCount"])
-                    CurrentColumn = 0;
-                Timer = 0;
-            }
-            Timer++;
-
         }
 
         /// <summary>

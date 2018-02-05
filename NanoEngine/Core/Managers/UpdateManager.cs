@@ -19,6 +19,8 @@ namespace NanoEngine.Core.Managers
         //private boolean to hold the game state
         CurrentGameState gameState;
 
+        public GameTime gameTime { get; private set; }
+
         //public getter for the game state
         public CurrentGameState GameState
         {
@@ -57,6 +59,7 @@ namespace NanoEngine.Core.Managers
         /// <param name="gameTime">The current time of the game</param>
         public override void Update(GameTime gameTime)
         {
+            this.gameTime = gameTime;
             EventManager.Manager.Update();
             SceneManager.Manager.Update();
         }

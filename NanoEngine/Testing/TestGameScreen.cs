@@ -26,7 +26,7 @@ namespace NanoEngine
             tileManager.AddTile<DirtTile>("dirt_tile");
             tileManager.AddTile<GrassTile>("grass_tile");
             tileManager.LoadTileMap("TestLevel");
-            _assetManager.CreateAsset<TestAsset, TestMind>(new Vector2(20, 20));
+            _assetManager.CreateAsset<TestAsset, TestMind>(new Vector2(20, 256));
             
         }
 

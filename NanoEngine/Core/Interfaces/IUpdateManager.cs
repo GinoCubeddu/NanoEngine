@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using NanoEngine.Core.States;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace NanoEngine.Core.Interfaces
         /// Public getter for the current game state
         /// </summary>
         CurrentGameState GameState { get; set; }
+
+        GameTime gameTime { get; }
 
         /// <summary>
         /// Public setter for the pause button

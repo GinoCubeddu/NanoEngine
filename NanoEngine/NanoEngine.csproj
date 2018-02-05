@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Animation.cs" />
     <Compile Include="Core\Interfaces\IContentManagerLoad.cs" />
     <Compile Include="Core\Interfaces\IRenderManager.cs" />
     <Compile Include="Core\Interfaces\ISceneManager.cs" />

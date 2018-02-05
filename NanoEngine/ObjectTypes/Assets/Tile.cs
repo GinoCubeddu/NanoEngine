@@ -5,12 +5,15 @@ using System.Text;
 
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using NanoEngine.Core.Interfaces;
 
 namespace NanoEngine.ObjectTypes.Assets
 {
     public abstract class Tile : ITile
     {
         private Texture2D texture;
+
+        public Animation AssetAnimation { get; protected set; }
 
         public Texture2D Texture
         {
@@ -82,6 +85,11 @@ namespace NanoEngine.ObjectTypes.Assets
         {
             bounds = pos;
             position = tilePos;
+        }
+
+        public void Draw(IRenderManager renderManager)
+        {
+            throw new NotImplementedException();
         }
     }
 }

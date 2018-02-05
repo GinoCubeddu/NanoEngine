@@ -143,7 +143,7 @@ namespace NanoEngine.ObjectManagement.Managers
         public void DrawAssets(IRenderManager rendermanager)
         {
             foreach (IAsset asset in _assetDictionary.Values)
-                rendermanager.Draw(asset.Texture, asset.Position, Color.White);
+                asset.Draw(rendermanager);
         }
 
         /// <summary>

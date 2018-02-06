@@ -22,6 +22,6 @@ namespace NanoEngine.ObjectTypes.Assets
         /// Method to initalise the AI
         /// </summary>
         /// <param name="ent">The entity that the AI will control</param>
-        void Initialise(IEntity ent);
+        void Initialise(IAsset ent);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NanoEngine.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,13 +19,14 @@ namespace NanoEngine.ObjectTypes.General
         void UnloadContent();
 
         /// <summary>
-        /// Method to update the current screen
+        /// Method to Draw the scene
         /// </summary>
-        void Update();
+        /// <param name="renderManager">RenderManager containing draw methods</param>
+        void DrawScreen(IRenderManager renderManager);
 
         /// <summary>
-        /// Method to draw the current screen
+        /// Method to update the GameScreen
         /// </summary>
-        void Draw();
+        void UpdateScreen();
     }
 }

@@ -25,7 +25,7 @@ namespace NanoEngine.ObjectTypes.Assets.Control
         }
 
         //Protected filed to hold what entity is being controled
-        protected IEntity controledEntity;
+        protected IAsset controledEntity;
 
         /// <summary>
         /// Method that updates the AI
@@ -38,7 +38,7 @@ namespace NanoEngine.ObjectTypes.Assets.Control
         private void SetUniqueData()
         {
             //SET the unqie data to match the entiys
-            uID = controledEntity.UniqueID;
+            // uID = controledEntity.UniqueID;
             uName = "Behaviour" + controledEntity.UniqueName;
         }
 
@@ -46,9 +46,9 @@ namespace NanoEngine.ObjectTypes.Assets.Control
         /// Method to initalise the mind
         /// </summary>
         /// <param name="ent"></param>
-        public void Initialise(IEntity ent)
+        public void Initialise(IAsset asset)
         {
-            controledEntity = ent;
+            controledEntity = asset;
             SetUniqueData();
         }
     }

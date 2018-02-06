@@ -5,19 +5,10 @@ using System.Text;
 using Microsoft.Xna.Framework.Input;
 using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Assets;
+using NanoEngine.StateManagement.States;
 
 namespace NanoEngine
 {
-    public enum StateKeyboardTransitionTypes
-    {
-        Pressed, Released
-    }
-
-    public enum StateMouseTransitionTypes
-    {
-        RightPressed, RightReleased, LefttPressed, LeftReleased
-    }
-
     public interface IStateMachine
     {
         /// <summary>
@@ -37,7 +28,7 @@ namespace NanoEngine
         /// </param>
         void AddKeyboardTransition(
             Type stateFrom, Type stateTo,
-            IDictionary<StateKeyboardTransitionTypes, IList<Keys>> keyStates
+            IDictionary<KeyStates, IList<Keys>> keyStates
         );
 
         /// <summary>
@@ -47,7 +38,7 @@ namespace NanoEngine
         /// <param name="stateTo">The type of state to transition to</param>
         /// <param name="mouseStates">A list containing all the mouse states</param>
         void AddMouseTransition(
-            Type stateFrom, Type stateTo, IList<StateMouseTransitionTypes> mouseStates
+            Type stateFrom, Type stateTo, IList<MouseStates> mouseStates
         );
 
         /// <summary>

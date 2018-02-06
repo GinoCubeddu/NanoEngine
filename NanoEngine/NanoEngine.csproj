@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Animation.cs" />
     <Compile Include="Core\Interfaces\IContentManagerLoad.cs" />
     <Compile Include="Core\Interfaces\IRenderManager.cs" />
     <Compile Include="Core\Interfaces\ISceneManager.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Events\Interfaces\IKeyboardHandler.cs" />
     <Compile Include="Events\Interfaces\IMouseHandler.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="IAnimation.cs" />
     <Compile Include="Menus\IMenu.cs" />
     <Compile Include="Menus\IMenuItem.cs" />
     <Compile Include="Menus\Menu.cs" />

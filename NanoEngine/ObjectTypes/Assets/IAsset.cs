@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NanoEngine.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,9 @@ namespace NanoEngine.ObjectTypes.Assets
 
         //getter for the remove variable
         bool Remove { get; }
+
+        // Getter for the animation class that belongs to the asset
+        IAnimation AssetAnimation { get; }
 
         /// <summary>
         /// Sets the position of the entity
@@ -51,5 +55,11 @@ namespace NanoEngine.ObjectTypes.Assets
         /// Method to Initalise the entity
         /// </summary>
         void Initilise();
+
+        /// <summary>
+        /// Method rendermanager calls to draw the entity
+        /// </summary>
+        /// <param name="renderManager">An instance of the rendermanager</param>
+        void Draw(IRenderManager renderManager);
     }
 }

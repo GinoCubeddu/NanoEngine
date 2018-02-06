@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NanoEngine.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace NanoEngine.ObjectTypes.Assets
     {
         //Feild for holding the texture
         private Texture2D texture;
+
+        public IAnimation AssetAnimation { get; protected set; }
 
         //getter for the texture and setter for the texture
         public Texture2D Texture { get { return texture; } }
@@ -64,7 +67,7 @@ namespace NanoEngine.ObjectTypes.Assets
         /// </summary>
         protected void CreateBounds()
         {
-            bounds = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
+            // bounds = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
         }
 
         /// <summary>
@@ -85,5 +88,13 @@ namespace NanoEngine.ObjectTypes.Assets
         /// Method to initalise the the entity
         /// </summary>
         public abstract void Initilise();
+
+        public virtual void Draw(IRenderManager renderManager)
+        {
+            if (AssetAnimation != null)
+                AssetAnimation.Animate(renderManager);
+            else
+                renderManager.Draw(Texture, Position, Color.White);
+        }
     }
 }

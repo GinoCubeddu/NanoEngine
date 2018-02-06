@@ -15,6 +15,8 @@ namespace NanoEngine.Core.Interfaces
         /// <param name="color"></param>
         void ChangeBackgroundColor(Color color);
 
+        GameTime gameTime { get; }
+
         /// <summary>
         /// Draws an object to the screen
         /// </summary>

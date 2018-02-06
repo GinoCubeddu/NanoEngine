@@ -10,9 +10,11 @@ namespace NanoEngine.Core.Managers
 {
     public class RenderManager : GameComponent, IRenderManager
     {
-
+        
         //private static field to hold the instace of Game1
         private static Game _game1;
+
+        public GameTime gameTime { get; private set; }
 
         //Private field to hold refrence to sprite batch
         private static SpriteBatch spriteBatch;
@@ -248,6 +250,7 @@ namespace NanoEngine.Core.Managers
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
+            this.gameTime = gameTime;
             //Sets background color
             _game1.GraphicsDevice.Clear(bgColor);
 

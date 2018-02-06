@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.StateManagement.States;
 
 namespace NanoEngine.Events.Handlers
 {
@@ -120,8 +121,10 @@ namespace NanoEngine.Events.Handlers
         /// <param name="pKeys">The keys that are being pressed</param>
         protected virtual void OnKeyboardPressed(IList<Keys> pKeys)
         {
+            IDictionary<KeyStates, IList<Keys>> k = new Dictionary<KeyStates, IList<Keys>>();
+            k.Add(KeyStates.Pressed, pKeys);
             if (OnKeyPressed != null)
-                OnKeyPressed(this, new NanoKeyboardEventArgs { MyKeys = pKeys });
+                OnKeyPressed(this, new NanoKeyboardEventArgs { MyKeys = pKeys, TheKeys = k});
         }
 
         /// <summary>

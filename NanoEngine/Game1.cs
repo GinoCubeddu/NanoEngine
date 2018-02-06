@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using NanoEngine.Core.Interfaces;
 using NanoEngine.Core.Managers;
 using NanoEngine.ObjectManagement.Managers;
 using NanoEngine.ObjectTypes.General;
@@ -43,14 +44,14 @@ namespace NanoEngine
             this.IsMouseVisible = true;
             ContentManagerLoad.Manager.Intinalise(Content);
 
-            // SceneManager.Manager.setStartScreen<GameScreen>();
+            SceneManager.Manager.setStartScreen<TestGameScreen>();
 
             // TODO: Add your initialization logic here
-            RenderManager.Init(this);
-            Components.Add((IGameComponent)RenderManager.Manager);
+            IRenderManager renderManager = new RenderManager(this);
+            Components.Add((IGameComponent)renderManager);
 
-            UpdateManager.Init(this);
-            Components.Add((IGameComponent)UpdateManager.Manager);
+            IUpdateManager updateManager = new UpdateManager(this);
+            Components.Add((IGameComponent)updateManager);
             
             base.Initialize();
         }

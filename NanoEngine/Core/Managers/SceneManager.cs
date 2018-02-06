@@ -89,7 +89,7 @@ namespace NanoEngine.Core.Managers
                 pauseScreen.LoadContent();
 
             //Gets the current list of entitys
-            entitys = EntityManager.Manager.GetList();
+            // entitys = AssetFactory.Manager.GetList();
         }
 
         /// <summary>
@@ -128,57 +128,25 @@ namespace NanoEngine.Core.Managers
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public void Update()
         {
-            if (UpdateManager.Manager.GameState == CurrentGameState.running)
+            if (currentScreen != null)
             {
-                if (currentScreen != null)
-                {
-                    //Update the current screen
-                    currentScreen.Update();
-
-                    //Loop though each entity and update it (Using a for loop instead of foreach as you are unable to edit the list in a foreach loop)
-                    for (int i = 0; i < entitys.Count; i++)
-                    {
-                        //If the entity needs to be removedd then remove it
-                        if (entitys[i].Remove == true)
-                        {
-                            EntityManager.Manager.remove(entitys[i].UniqueID);
-                            AIManager.Manager.RemoveAI(entitys[i].UniqueID);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if (pauseScreen != null)
-                    pauseScreen.Update();
+                //Update the current screen
+                currentScreen.UpdateScreen();
             }
         }
 
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        public void Draw()
+        /// <param name="renderManager">Provides a refrence to the renderManager.</param>
+        public void Draw(IRenderManager renderManager)
         {
-            if (UpdateManager.Manager.GameState == CurrentGameState.running)
+            if (currentScreen != null)
             {
-                if(currentScreen != null)
-                {
-                    currentScreen.Draw();
-                    for (int i = 0; i < entitys.Count; i++)
-                    {
-                        RenderManager.Manager.StartDraw();
-                        RenderManager.Manager.Draw(entitys[i].Texture, entitys[i].Position, Color.White);
-                        RenderManager.Manager.EndDraw();
-                    }
-                }
+                renderManager.StartDraw();
+                currentScreen.DrawScreen(renderManager);
+                renderManager.EndDraw();
             }
-            else
-            {
-                if (pauseScreen != null)
-                    pauseScreen.Draw();
-            }
-
         }
     }
 }

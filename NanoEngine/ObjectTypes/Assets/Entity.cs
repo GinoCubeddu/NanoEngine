@@ -18,29 +18,24 @@ namespace NanoEngine.ObjectTypes.Assets
         /// <summary>
         /// Method to set the texture of the entity
         /// </summary>
-        /// <param name="_texture">The texture to assign to the entity</param>
-        public void setTexture(Texture2D _texture)
+        /// <param name="texture">The texture to assign to the entity</param>
+        public void SetTexture(Texture2D texture)
         {
-            texture = _texture;
+            this.texture = texture;
         }
 
         //Field for unique name, getter for unique name
         private string uniqueName;
         public string UniqueName { get { return uniqueName; } }
 
-        //Field for unique id, getter for the unique id
-        private int uniqueID;
-        public int UniqueID { get { return uniqueID; } }
-
         /// <summary>
         /// setter for the unique name and id
         /// </summary>
         /// <param name="name">String for Unique Name</param>
         /// <param name="ID">String for unique ID</param>
-        public void setUniqueData(string name, int ID)
+        public void SetUniqueData(string name)
         {
             uniqueName = name;
-            uniqueID = ID;
         }
 
         //Field for position
@@ -51,10 +46,10 @@ namespace NanoEngine.ObjectTypes.Assets
         /// <summary>
         /// Sets the position of the entity
         /// </summary>
-        /// <param name="ePosition">Vector2 containg the position</param>
-        public void setPosition(Vector2 ePosition)
+        /// <param name="position">Vector2 containg the position</param>
+        public void SetPosition(Vector2 position)
         {
-            position = ePosition;
+            this.position = position;
             CreateBounds();
         }
 

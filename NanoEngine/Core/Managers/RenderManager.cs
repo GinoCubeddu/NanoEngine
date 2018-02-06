@@ -26,18 +26,12 @@ namespace NanoEngine.Core.Managers
         {
             get { return spriteScale; }
         }
-
-        //private field to hold single refrence to the rendermanager
-        private static IRenderManager manager;
-
+        
         //private field to hold background colour
         private Color bgColor;
 
-        //Getter that returns the managers instance
-        public static IRenderManager Manager
-        {
-            get { return manager; }
-        }
+        // private field used to make sure only one instace of the manager is allowed
+        private static bool Created;
 
         /// <summary>
         /// Constructor for the renderer
@@ -46,27 +40,10 @@ namespace NanoEngine.Core.Managers
         public RenderManager(Game game)
             : base(game)
         {
+            if (Created)
+                throw new Exception("Only one instance of the RenderManager may be created");
             _game1 = game;
-        }
-
-        /// <summary>
-        /// Mathod to Initialize and create a single instance of the RenderManager
-        /// </summary>
-        /// <param name="game">Instance of the game</param>
-        public static void Init(Game game)
-        {
-            //checks to see if the manager is not null
-            if (manager != null)
-            {
-                //if its not null throw an error as there can only be one
-                throw new SystemException("Cannot create a sceond instance of the RenderManager");
-            }
-            else
-            {
-                //If there is no sceneManager create one
-                manager = new RenderManager(game);
-                _game1 = game;
-            }
+            Created = true;
         }
 
         /// <summary>
@@ -274,7 +251,7 @@ namespace NanoEngine.Core.Managers
             //Sets background color
             _game1.GraphicsDevice.Clear(bgColor);
 
-            SceneManager.Manager.Draw();
+            SceneManager.Manager.Draw(this);
         }
 
         /// <summary>

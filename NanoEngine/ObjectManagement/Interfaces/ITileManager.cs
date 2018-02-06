@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NanoEngine.ObjectTypes.Assets;
+using NanoEngine.Core.Interfaces;
 
 namespace NanoEngine.ObjectManagement.Interfaces
 {
@@ -18,7 +19,8 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// <summary>
         /// Draws the current tile map
         /// </summary>
-        void DrawTileMap();
+        /// <param name="renderManager">An instance of the render manager which will be used to draw</param>
+        void DrawTileMap(IRenderManager renderManager);
 
         /// <summary>
         /// Loads a new tilemap ready to be drawn

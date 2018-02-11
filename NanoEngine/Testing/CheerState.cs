@@ -1,25 +1,24 @@
-﻿using NanoEngine;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
-using Microsoft.Xna.Framework;
+using System.Threading;
 using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Testing
 {
-    public class WalkingState : IState
+    class CheerState : IState
     {
-        private readonly string _animationState;
+        public bool IsSuccess { get; private set; }
 
-        private readonly int _direction;
+        private string _animation;
 
-        public bool IsSuccess { get; }
+        public int Timer;
 
-        public WalkingState(string animationState, int direction)
+        public CheerState(string animationState)
         {
-            _animationState = animationState;
-            _direction = direction;
+            _animation = animationState;
         }
 
         /// <summary>
@@ -29,8 +28,10 @@ namespace NanoEngine.Testing
         /// <param name="owner">The AI that owns the state</param>
         public void Enter<T>(T owner)
         {
-            Console.WriteLine("Entering WalkingState");
-            (owner as IAiComponent).ControledAsset.AssetAnimation.ChangeAnimationState(_animationState);
+            IsSuccess = false;
+            IAiComponent _owner = (owner as IAiComponent);
+            _owner.ControledAsset.AssetAnimation.ChangeAnimationState(_animation);
+            Timer = 0;
         }
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace NanoEngine.Testing
         /// <param name="owner">The AI that owns the state</param>
         public void Exit<T>(T owner)
         {
-            Console.WriteLine("Exiting WalkingState");
+
         }
 
         /// <summary>
@@ -50,11 +51,9 @@ namespace NanoEngine.Testing
         /// <param name="owner">The AI that owns the state</param>
         public void Update<T>(T owner)
         {
-            IAiComponent _owner = (owner as IAiComponent);
-            _owner.ControledAsset.SetPosition(new Vector2(
-                _owner.ControledAsset.Position.X + 1 * _direction,
-                _owner.ControledAsset.Position.Y
-            ));
+            Timer++;
+            if (Timer > 360)
+                IsSuccess = true;
         }
     }
 }

@@ -96,16 +96,17 @@
     <Compile Include="StateManagement\Transitions\KeyboardStateTransition.cs" />
     <Compile Include="StateManagement\Transitions\MethodStateTransition.cs" />
     <Compile Include="StateManagement\Transitions\TransitionHolder.cs" />
+    <Compile Include="Testing\CheerState.cs" />
     <Compile Include="Testing\DirtTile.cs" />
     <Compile Include="Testing\GrassTile.cs" />
     <Compile Include="Testing\IdleState.cs" />
-    <Compile Include="Testing\State1.cs" />
-    <Compile Include="Testing\State2.cs" />
-    <Compile Include="Testing\State3.cs" />
+    <Compile Include="Testing\PatrolState.cs" />
     <Compile Include="Testing\TestAsset.cs" />
     <Compile Include="Testing\TestGameScreen.cs" />
     <Compile Include="Testing\TestMind.cs" />
     <Compile Include="Testing\WalkingState.cs" />
+    <Compile Include="Testing\ZombieAsset.cs" />
+    <Compile Include="Testing\ZombieMind.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -129,6 +130,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\player.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\zombie.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />

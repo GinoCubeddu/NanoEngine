@@ -62,6 +62,7 @@
     <Compile Include="Events\Interfaces\IMouseHandler.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="IAnimation.cs" />
+    <Compile Include="IAssetmanagerNeeded.cs" />
     <Compile Include="IState.cs" />
     <Compile Include="StateManagement\StateMachine\IStateMachine.cs" />
     <Compile Include="Menus\IMenu.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="StateManagement\Transitions\KeyboardStateTransition.cs" />
     <Compile Include="StateManagement\Transitions\MethodStateTransition.cs" />
     <Compile Include="StateManagement\Transitions\TransitionHolder.cs" />
+    <Compile Include="Testing\ChaseState.cs" />
     <Compile Include="Testing\CheerState.cs" />
     <Compile Include="Testing\DirtTile.cs" />
     <Compile Include="Testing\GrassTile.cs" />

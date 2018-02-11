@@ -52,7 +52,7 @@ namespace NanoEngine.Testing
         {
             IAiComponent _owner = (owner as IAiComponent);
             _owner.ControledAsset.SetPosition(new Vector2(
-                _owner.ControledAsset.Position.X + 1 * _direction,
+                _owner.ControledAsset.Position.X + 2 * _direction,
                 _owner.ControledAsset.Position.Y
             ));
         }

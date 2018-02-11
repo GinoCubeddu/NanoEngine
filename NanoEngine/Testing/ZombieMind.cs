@@ -18,10 +18,14 @@ namespace NanoEngine.Testing
 
         public override void Initialise()
         {
+            // Init a new state machine
             _stateMachine = new StateMachine<IAiComponent>(this);
+
+            // Add a patroling state
             _stateMachine.AddState(
                 new PatrolState(
-                    new List<string>() {"walkRight", "walkLeft"},
+                    "walkRight",
+                    "walkLeft",
                     new List<Vector2>()
                     {
                         new Vector2(controledEntity.Position.X + 250, controledEntity.Position.Y),
@@ -30,17 +34,37 @@ namespace NanoEngine.Testing
                 "patrol"
             );
 
+            // Add a "cheer" state
             _stateMachine.AddState(new CheerState("cheer"), "cheer");
-            _stateMachine.AddState(new ChaseState(AssetManager.RetriveAsset("player")), "chase");
+            
+            // Add a chase state
+            _stateMachine.AddState(
+                new ChaseState(
+                    "walkRight",
+                    "walkLeft",
+                    AssetManager.RetriveAsset("player")
+                ),
+                "chase"
+            );
+
+            // Set up all the transitions for the states
             _stateMachine.AddSuccessTransition("patrol", "cheer");
             _stateMachine.AddSuccessTransition("cheer", "patrol");
             _stateMachine.AddMethodCheckTransition(CloseToPlayer, "patrol", "chase");
+            _stateMachine.AddMethodCheckTransition(CloseToPlayer, "chase", "patrol", false);
         }
 
+        /// <summary>
+        /// Checks to see if the Ai is close to the player
+        /// </summary>
+        /// <returns></returns>
         private bool CloseToPlayer()
         {
+            // Grab the players position
             Vector2 playersPosition = AssetManager.RetriveAsset("player").Position;
-            if (Vector2.Distance(controledEntity.Position, playersPosition) < 100)
+
+            // Check if the player is within 250 px of the enemey
+            if (Vector2.Distance(controledEntity.Position, playersPosition) < 250)
                 return true;
             return false;
         }

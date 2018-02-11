@@ -10,19 +10,19 @@ namespace NanoEngine.StateManagement.StateMachine
     public class StateMachine<T> : IStateMachine
     {
         // Dictonary to hold what states the machine has access to
-        private IDictionary<Type, IState> _avaliableStates;
+        private IDictionary<string, IState> _avaliableStates;
 
         // Holds the type of the current state which should be updated
-        private Type currentState;
+        private string currentState;
 
-        private IDictionary<Type, TransitionHolder> _stateTransitions;
+        private IDictionary<string, TransitionHolder> _stateTransitions;
 
         private T _owner;
 
         public StateMachine(T owner)
         {
-            _avaliableStates = new Dictionary<Type, IState>();
-            _stateTransitions = new Dictionary<Type, TransitionHolder>();
+            _avaliableStates = new Dictionary<string, IState>();
+            _stateTransitions = new Dictionary<string, TransitionHolder>();
             currentState = null;
             _owner = owner;
         }
@@ -31,44 +31,41 @@ namespace NanoEngine.StateManagement.StateMachine
         /// Adds a state to the state machine
         /// </summary>
         /// <param name="state">The state to add</param>
-        public void AddState(IState state)
+        /// <param name="stateName">The unique name to which the state will be identified</param>
+        public void AddState(IState state, string stateName)
         {
             if (_avaliableStates.Count == 0)
             {
-                currentState = state.GetType();
+                currentState = stateName;
                 state.Enter(_owner);
             }
                 
 
-            if (!CheckStateExsists(state.GetType()))
-                _avaliableStates.Add(state.GetType(), state);
+            if (!CheckStateExsists(stateName))
+                _avaliableStates.Add(stateName, state);
         }
 
         /// <summary>
         /// Adds a transition between states that relys on keyboard input
         /// </summary>
-        /// <typeparam name="T">The type of state to transition from</typeparam>
-        /// <typeparam name="U">The type of state to transition to</typeparam>
         /// <param name="wantedState">The State we want the keys to be in</param>
         /// <param name="keysRequired">The keys that should be in the state</param>
-        public void AddKeyboardTransition<T, U>(KeyStates wantedState, IList<Keys> keysRequired)
-            where T : IState
-            where U : IState
+        /// <param name="stateFrom">The sate to transition from</param>
+        /// <param name="stateTo">The state to transition to</param>
+        public void AddKeyboardTransition(KeyStates wantedState, IList<Keys> keysRequired, string stateFrom, string stateTo)
         {
-            ValidateTransition(typeof(T), typeof(U));
-            CheckTransitionHandlerExsists(typeof(T));
-            _stateTransitions[typeof(T)].AddKeyboardTransition(typeof(U), wantedState, keysRequired);
+            ValidateTransition(stateFrom, stateTo);
+            CheckTransitionHandlerExsists(stateFrom);
+            _stateTransitions[stateFrom].AddKeyboardTransition(stateTo, wantedState, keysRequired);
         }
 
         /// <summary>
         /// Adds a transition between states that relys on mouse input
         /// </summary>
-        /// <typeparam name="T">The type of state to transition from</typeparam>
-        /// <typeparam name="U">The type of state to transition to</typeparam>
         /// <param name="mouseStates">A list containing all the mouse states</param>
-        public void AddMouseTransition<T, U>(IList<MouseStates> mouseStates)
-            where T : IState
-            where U : IState
+        /// <param name="stateFrom">The sate to transition from</param>
+        /// <param name="stateTo">The state to transition to</param>
+        public void AddMouseTransition(IList<MouseStates> mouseStates, string stateFrom, string stateTo)
         {
             throw new NotImplementedException();
         }
@@ -77,16 +74,14 @@ namespace NanoEngine.StateManagement.StateMachine
         /// Adds a transition between states that relays on the bool return
         /// value of a method
         /// </summary>
-        /// <typeparam name="T">The type of state to transition from</typeparam>
-        /// <typeparam name="U">The type of state to transition to</typeparam>
         /// <param name="methodBoolCheck">The method name of the owner</param>
-        public void AddMethodCheckTransition<T, U>(Func<bool> methodBoolCheck)
-            where T : IState
-            where U : IState
+        /// <param name="stateFrom">The sate to transition from</param>
+        /// <param name="stateTo">The state to transition to</param>
+        public void AddMethodCheckTransition(Func<bool> methodBoolCheck, string stateFrom, string stateTo)
         {
-            ValidateTransition(typeof(T), typeof(U));
-            CheckTransitionHandlerExsists(typeof(T));
-            _stateTransitions[typeof(T)].AddMethodTransition(typeof(U), methodBoolCheck);
+            ValidateTransition(stateFrom, stateTo);
+            CheckTransitionHandlerExsists(stateFrom);
+            _stateTransitions[stateFrom].AddMethodTransition(stateTo, methodBoolCheck);
         }
 
         /// <summary>
@@ -131,12 +126,12 @@ namespace NanoEngine.StateManagement.StateMachine
             _avaliableStates[currentState].Update(_owner);
         }
 
-        private bool CheckStateExsists(Type stateType)
+        private bool CheckStateExsists(string stateType)
         {
             return _avaliableStates.ContainsKey(stateType);
         }
 
-        private void ValidateTransition(Type stateFrom, Type stateTo)
+        private void ValidateTransition(string stateFrom, string stateTo)
         {
             if (!CheckStateExsists(stateFrom))
                 throw new Exception(String.Format(
@@ -160,7 +155,7 @@ namespace NanoEngine.StateManagement.StateMachine
                 throw new Exception("Unable to transition state to itsself");
         }
 
-        private void CheckTransitionHandlerExsists(Type stateType)
+        private void CheckTransitionHandlerExsists(string stateType)
         {
             if(!_stateTransitions.ContainsKey(stateType))
                 _stateTransitions.Add(stateType, new TransitionHolder());
@@ -174,7 +169,7 @@ namespace NanoEngine.StateManagement.StateMachine
             }
         }
 
-        private void ChangeState(Type stateTo)
+        private void ChangeState(string stateTo)
         {
             if (stateTo != null)
             {

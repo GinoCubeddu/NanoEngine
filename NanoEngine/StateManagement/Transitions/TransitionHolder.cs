@@ -28,7 +28,7 @@ namespace NanoEngine.StateManagement.Transitions
         /// <param name="stateTo">Where the state should transition to</param>
         /// <param name="keyboardType">The type of keyboard event</param>
         /// <param name="keys">The list of keys to be checked</param>
-        public void AddKeyboardTransition(Type stateTo, KeyStates keyboardType, IList<Keys> keys)
+        public void AddKeyboardTransition(string stateTo, KeyStates keyboardType, IList<Keys> keys)
         {
             // Init the keyboard transition list if it is not already created
             if (_keyboardTransitions == null)
@@ -44,7 +44,7 @@ namespace NanoEngine.StateManagement.Transitions
         /// </summary>
         /// <param name="keyboardEvent">The event args given by the handler</param>
         /// <returns>The type of the next state if transition requirements met otherwise null</returns>
-        public Type CheckKeyboardTransitions(NanoKeyboardEventArgs keyboardEvent)
+        public string CheckKeyboardTransitions(NanoKeyboardEventArgs keyboardEvent)
         {
             if (_keyboardTransitions == null)
                 return null;
@@ -62,7 +62,7 @@ namespace NanoEngine.StateManagement.Transitions
         /// </summary>
         /// <param name="stateTo">Where the state should transition to</param>
         /// <param name="method">The method that we need to check</param>
-        public void AddMethodTransition(Type stateTo, Func<bool> method)
+        public void AddMethodTransition(string stateTo, Func<bool> method)
         {
             // Init the method transition list if not already created
             if (_methodTransitions == null)
@@ -75,7 +75,7 @@ namespace NanoEngine.StateManagement.Transitions
         /// Checks to see if any of the method transitions are valid
         /// </summary>
         /// <returns>The type of the next state if transition requirements met otherwise null</returns>
-        public Type CheckMethodTransitions()
+        public string CheckMethodTransitions()
         {
             if (_methodTransitions == null)
                 return null;

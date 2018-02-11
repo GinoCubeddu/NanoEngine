@@ -11,7 +11,7 @@ namespace NanoEngine.StateManagement.Transitions
     internal class KeyboardStateTransition
     {
         // Holds the type of which state to transition to
-        public Type StateTo { get; }
+        public string StateTo { get; }
 
         // Holds which key state we want to check for
         private KeyStates _keyboardTransition;
@@ -25,7 +25,7 @@ namespace NanoEngine.StateManagement.Transitions
         /// <param name="type">The key state we are checking the keys against</param>
         /// <param name="keysRequired">The keys required to be in the key state</param>
         /// <param name="stateTo">The statebehaviour we want to transition to</param>
-        public KeyboardStateTransition(Type stateTo, KeyStates type, IList<Keys> keysRequired)
+        public KeyboardStateTransition(string stateTo, KeyStates type, IList<Keys> keysRequired)
         {
             _keyboardTransition = type;
             _keys = keysRequired;

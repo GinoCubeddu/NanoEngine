@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NanoEngine.ObjectTypes.Assets.Control
 {
-    public abstract class AIComponent : IAIComponent
+    public abstract class AiComponent : IAiComponent
     {
         //protected field for the components Unique ID
         protected int uID;
@@ -26,6 +26,11 @@ namespace NanoEngine.ObjectTypes.Assets.Control
 
         //Protected filed to hold what entity is being controled
         protected IAsset controledEntity;
+
+        public IAsset ControledAsset
+        {
+            get { return controledEntity; }
+        }
 
         /// <summary>
         /// Method that updates the AI

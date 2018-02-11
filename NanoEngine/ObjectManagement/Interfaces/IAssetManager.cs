@@ -26,7 +26,7 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// spawned straight away</param>
         void CreateAsset<T, U>(string uName, int posX, int PosY, bool spawn = true)
             where T : IAsset, new()
-            where U : IAIComponent, new();
+            where U : IAiComponent, new();
 
         /// <summary>
         /// Creates an asset along with it's mind and add's. Once created
@@ -43,7 +43,7 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// spawned straight away</param>
         void CreateAsset<T, U>(string uName, Vector2 pos, bool spawn = true)
             where T : IAsset, new()
-            where U : IAIComponent, new();
+            where U : IAiComponent, new();
 
         /// <summary>
         /// Creates an asset along with it's mind and add's. Once created
@@ -60,7 +60,7 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// spawned straight away</param>
         void CreateAsset<T, U>(int posX, int PosY, bool spawn = true)
             where T : IAsset, new()
-            where U : IAIComponent, new();
+            where U : IAiComponent, new();
 
         /// <summary>
         /// Creates an asset along with it's mind and add's. Once created
@@ -75,7 +75,7 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// spawned straight away</param>
         void CreateAsset<T, U>(Vector2 pos, bool spawn = true)
             where T : IAsset, new()
-            where U : IAIComponent, new();
+            where U : IAiComponent, new();
 
         /// <summary>
         /// Draws all the assets on the screen if they are "spawned" in
@@ -105,7 +105,7 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// </summary>
         /// <param name="uName">the ID of the AI</param>
         /// <returns>An AI that belongs to the requested asset</returns>
-        IAIComponent RetriveAssetAI(string uName);
+        IAiComponent RetriveAssetAI(string uName);
 
         /// <summary>
         /// Unloads and destroys all created assets and their minds

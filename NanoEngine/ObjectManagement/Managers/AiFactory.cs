@@ -16,10 +16,10 @@ namespace NanoEngine.ObjectManagement.Managers
         /// <typeparam name="T">Type of AI wanted</typeparam>
         /// <param name="asset"></param>
         /// <returns>The created AI</returns>
-        public IAIComponent CreateAI<T>(IAsset asset) where T : IAIComponent, new()
+        public IAiComponent CreateAI<T>(IAsset asset) where T : IAiComponent, new()
         {
             //Create new AI
-            IAIComponent AI = new T();
+            IAiComponent AI = new T();
             //Init the ai
             AI.Initialise(asset);
             //Check if its certian things

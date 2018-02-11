@@ -104,6 +104,7 @@
     <Compile Include="Testing\TestAsset.cs" />
     <Compile Include="Testing\TestGameScreen.cs" />
     <Compile Include="Testing\TestMind.cs" />
+    <Compile Include="Testing\WalkingState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">

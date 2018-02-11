@@ -12,8 +12,7 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// Factory method to create an AI
         /// </summary>
         /// <typeparam name="T">Type of AI wanted</typeparam>
-        /// <param name="asset"></param>
         /// <returns>The created AI</returns>
-        IAiComponent CreateAI<T>(IAsset asset) where T : IAiComponent, new();
+        IAiComponent CreateAi<T>() where T : IAiComponent, new();
     }
 }

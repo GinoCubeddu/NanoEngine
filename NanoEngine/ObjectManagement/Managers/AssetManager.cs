@@ -79,8 +79,12 @@ namespace NanoEngine.ObjectManagement.Managers
 
                 _aiComponents.Add(
                     uName,
-                    _aiFactory.CreateAI<U>(_assetDictionary[uName])
+                    _aiFactory.CreateAi<U>()
                 );
+                if (_aiComponents[uName] is IAssetmanagerNeeded)
+                    (_aiComponents[uName] as IAssetmanagerNeeded).AssetManager = this;
+
+                _aiComponents[uName].InitialiseAiComponent(_assetDictionary[uName]);
             }
             catch (Exception e)
             {

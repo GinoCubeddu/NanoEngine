@@ -45,6 +45,13 @@ namespace NanoEngine
         void AddMethodCheckTransition(Func<bool> methodBoolCheck, string stateFrom, string stateTo);
 
         /// <summary>
+        /// Adds a transition between states that relys on the state being a success
+        /// </summary>
+        /// <param name="stateFrom">The sate to transition from</param>
+        /// <param name="stateTo">The state to transition to</param>
+        void AddSuccessTransition(string stateFrom, string stateTo);
+
+        /// <summary>
         /// Allows the state machine to handle any collision events that may
         /// cause the state to change
         /// </summary>

@@ -28,7 +28,31 @@ namespace NanoEngine.Testing
         public override void Initialise()
         {
             _StateMachine = new StateMachine<AiComponent>(this);
-            _StateMachine.AddState(new WalkingState());
+            _StateMachine.AddState(new IdleState("idleRight"), "idle");
+            _StateMachine.AddState(new WalkingState("runRight", 1), "runRight");
+            _StateMachine.AddState(new WalkingState("runLeft", -1), "runLeft");
+
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Pressed, new List<Keys>() { Keys.D }, "idle", "runRight"
+            );
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Pressed, new List<Keys>() { Keys.A }, "idle", "runLeft"
+            );
+
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Pressed, new List<Keys>() {Keys.D}, "runLeft", "runRight"
+            );
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Released, new List<Keys>() { Keys.A }, "runLeft", "idle"
+            );
+
+            
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Pressed, new List<Keys>() { Keys.A }, "runRight", "runLeft"
+            );
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Released, new List<Keys>() { Keys.D }, "runRight", "idle"
+            );
         }
 
         public bool IsReadyToSwitch()

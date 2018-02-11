@@ -98,6 +98,7 @@
     <Compile Include="StateManagement\Transitions\TransitionHolder.cs" />
     <Compile Include="Testing\DirtTile.cs" />
     <Compile Include="Testing\GrassTile.cs" />
+    <Compile Include="Testing\IdleState.cs" />
     <Compile Include="Testing\State1.cs" />
     <Compile Include="Testing\State2.cs" />
     <Compile Include="Testing\State3.cs" />

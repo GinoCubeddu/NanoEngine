@@ -2,11 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Testing
 {
-    class State3 : IState
+    public class IdleState : IState
     {
+        private string _animationState;
+
+        public IdleState(string animationState)
+        {
+            _animationState = animationState;
+        }
         /// <summary>
         /// Method that gets called at the begining of each state
         /// </summary>
@@ -14,8 +21,8 @@ namespace NanoEngine.Testing
         /// <param name="owner">The AI that owns the state</param>
         public void Enter<T>(T owner)
         {
-            (owner as TestMind).Timer = 0;
-            Console.WriteLine("Entering state 3");
+            Console.WriteLine("Exiting IdleState");
+            (owner as IAiComponent).ControledAsset.AssetAnimation.ChangeAnimationState(_animationState);
         }
 
         /// <summary>
@@ -25,7 +32,7 @@ namespace NanoEngine.Testing
         /// <param name="owner">The AI that owns the state</param>
         public void Exit<T>(T owner)
         {
-            Console.WriteLine("Exiting state 3");
+            Console.WriteLine("Exiting IdleState");
         }
 
         /// <summary>
@@ -35,7 +42,7 @@ namespace NanoEngine.Testing
         /// <param name="owner">The AI that owns the state</param>
         public void Update<T>(T owner)
         {
-            Console.WriteLine("Updating state 3");
+            Console.WriteLine("Updating idle state");
         }
     }
 }

@@ -65,13 +65,14 @@ namespace NanoEngine.StateManagement.Transitions
         /// </summary>
         /// <param name="stateTo">Where the state should transition to</param>
         /// <param name="method">The method that we need to check</param>
-        public void AddMethodTransition(string stateTo, Func<bool> method)
+        /// <param name="expectedBool">The expected return value of the method</param>
+        public void AddMethodTransition(string stateTo, Func<bool> method, bool expectedBool)
         {
             // Init the method transition list if not already created
             if (_methodTransitions == null)
                 _methodTransitions = new List<MethodStateTransition>();
 
-                _methodTransitions.Add(new MethodStateTransition(stateTo, method));
+                _methodTransitions.Add(new MethodStateTransition(stateTo, method, expectedBool));
         }
 
         /// <summary>

@@ -13,14 +13,18 @@ namespace NanoEngine.StateManagement.Transitions
         // Holds the method that we need to call for transition check
         private Func<bool> _methodToCall;
 
+        // Holds the expected boolean return value of the method
+        private bool _expectedBool;
+
         /// <summary>
         /// Constructor for the keyboard transition
         /// </summary>
         /// <param name="stateTo">The statebehaviour we want to transition to</param>
-        public MethodStateTransition(string stateTo, Func<bool> methodToCall)
+        public MethodStateTransition(string stateTo, Func<bool> methodToCall, bool expectedBool)
         {
             StateTo = stateTo;
             _methodToCall = methodToCall;
+            _expectedBool = expectedBool;
         }
 
         /// <summary>
@@ -29,7 +33,8 @@ namespace NanoEngine.StateManagement.Transitions
         /// <returns>Boolean telling us if it is a valid transition</returns>
         public bool CheckTransition()
         {
-            return _methodToCall.Invoke();
+            bool response = _methodToCall.Invoke();
+            return response == _expectedBool;
         }
     }
 }

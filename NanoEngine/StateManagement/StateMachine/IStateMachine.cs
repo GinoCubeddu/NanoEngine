@@ -45,6 +45,16 @@ namespace NanoEngine
         void AddMethodCheckTransition(Func<bool> methodBoolCheck, string stateFrom, string stateTo);
 
         /// <summary>
+        /// Adds a transition between states that relays on the bool return
+        /// value of a method
+        /// </summary>
+        /// <param name="methodBoolCheck">The method name of the owner</param>
+        /// <param name="stateFrom">The sate to transition from</param>
+        /// <param name="stateTo">The state to transition to</param>
+        /// <param name="expectedOutcome">Wether the method shold return true or false</param>
+        void AddMethodCheckTransition(Func<bool> methodBoolCheck, string stateFrom, string stateTo, bool expectedOutcome);
+
+        /// <summary>
         /// Adds a transition between states that relys on the state being a success
         /// </summary>
         /// <param name="stateFrom">The sate to transition from</param>

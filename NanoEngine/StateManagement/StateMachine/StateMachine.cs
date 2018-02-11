@@ -79,9 +79,22 @@ namespace NanoEngine.StateManagement.StateMachine
         /// <param name="stateTo">The state to transition to</param>
         public void AddMethodCheckTransition(Func<bool> methodBoolCheck, string stateFrom, string stateTo)
         {
+            AddMethodCheckTransition(methodBoolCheck, stateFrom, stateTo, true);
+        }
+
+        /// <summary>
+        /// Adds a transition between states that relays on the bool return
+        /// value of a method
+        /// </summary>
+        /// <param name="methodBoolCheck">The method name of the owner</param>
+        /// <param name="stateFrom">The sate to transition from</param>
+        /// <param name="stateTo">The state to transition to</param>
+        /// <param name="expectedOutcome">Wether the method shold return true or false</param>
+        public void AddMethodCheckTransition(Func<bool> methodBoolCheck, string stateFrom, string stateTo, bool expectedOutcome)
+        {
             ValidateTransition(stateFrom, stateTo);
             CheckTransitionHandlerExsists(stateFrom);
-            _stateTransitions[stateFrom].AddMethodTransition(stateTo, methodBoolCheck);
+            _stateTransitions[stateFrom].AddMethodTransition(stateTo, methodBoolCheck, expectedOutcome);
         }
 
         /// <summary>

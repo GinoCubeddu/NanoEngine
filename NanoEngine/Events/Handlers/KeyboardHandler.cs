@@ -60,7 +60,6 @@ namespace NanoEngine.Events.Handlers
 
             if (k.Keys.Count > 0)
                 KeyboardChange(k);
-
         }
 
         /// <summary>

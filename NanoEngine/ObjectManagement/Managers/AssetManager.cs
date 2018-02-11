@@ -15,7 +15,7 @@ namespace NanoEngine.ObjectManagement.Managers
 
         private IDictionary<string, IAsset> _assetDictionary;
 
-        private IDictionary<string, IAIComponent> _aiComponents;
+        private IDictionary<string, IAiComponent> _aiComponents;
 
         private IAssetFactory _assetFactory;
 
@@ -25,7 +25,7 @@ namespace NanoEngine.ObjectManagement.Managers
         {
             _uid = 0;
             _assetDictionary = new Dictionary<string, IAsset>();
-            _aiComponents = new Dictionary<string, IAIComponent>();
+            _aiComponents = new Dictionary<string, IAiComponent>();
             _assetFactory = new AssetFactory();
             _aiFactory = new AiFactory();
         }
@@ -46,7 +46,7 @@ namespace NanoEngine.ObjectManagement.Managers
         /// spawned straight away</param>
         public void CreateAsset<T, U>(string uName, int posX, int PosY, bool spawn = true) 
             where T : IAsset, new()
-            where U : IAIComponent, new()
+            where U : IAiComponent, new()
         {
             CreateAsset<T, U>(uName, new Vector2(posX, PosY), spawn);
         }
@@ -66,7 +66,7 @@ namespace NanoEngine.ObjectManagement.Managers
         /// spawned straight away</param>
         public void CreateAsset<T, U>(string uName, Vector2 pos, bool spawn = true) 
             where T : IAsset, new()
-            where U : IAIComponent, new()
+            where U : IAiComponent, new()
         {
             try
             {
@@ -104,7 +104,7 @@ namespace NanoEngine.ObjectManagement.Managers
         /// spawned straight away</param>
         public void CreateAsset<T, U>(int posX, int posY, bool spawn = true)
             where T : IAsset, new()
-            where U : IAIComponent, new()
+            where U : IAiComponent, new()
         {
             CreateAsset<T, U>(
                 typeof(T).ToString() + _uid.ToString(),
@@ -127,7 +127,7 @@ namespace NanoEngine.ObjectManagement.Managers
         /// spawned straight away</param>
         public void CreateAsset<T, U>(Vector2 pos, bool spawn = true)
             where T : IAsset, new()
-            where U : IAIComponent, new()
+            where U : IAiComponent, new()
         {
             CreateAsset<T, U>(
                 typeof(T).ToString() + _uid.ToString(),
@@ -151,7 +151,7 @@ namespace NanoEngine.ObjectManagement.Managers
         /// </summary>
         public void UpdateAssets()
         {
-            foreach (IAIComponent item in _aiComponents.Values)
+            foreach (IAiComponent item in _aiComponents.Values)
             {
                 item.Update();
             }
@@ -203,7 +203,7 @@ namespace NanoEngine.ObjectManagement.Managers
         /// </summary>
         /// <param name="uName">the ID of the AI</param>
         /// <returns>An AI that belongs to the requested asset</returns>
-        public IAIComponent RetriveAssetAI(string uName)
+        public IAiComponent RetriveAssetAI(string uName)
         {
             if (_aiComponents.ContainsKey(uName))
                 return _aiComponents[uName];

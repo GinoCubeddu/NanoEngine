@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NanoEngine.ObjectTypes.Assets
 {
-    public interface IAIComponent
+    public interface IAiComponent
     {
         //getter for the unique ID
         int UID { get; }

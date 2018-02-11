@@ -14,6 +14,6 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// <typeparam name="T">Type of AI wanted</typeparam>
         /// <param name="asset"></param>
         /// <returns>The created AI</returns>
-        IAIComponent CreateAI<T>(IAsset asset) where T : IAIComponent, new();
+        IAiComponent CreateAI<T>(IAsset asset) where T : IAiComponent, new();
     }
 }

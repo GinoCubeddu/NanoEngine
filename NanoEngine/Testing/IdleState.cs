@@ -10,6 +10,8 @@ namespace NanoEngine.Testing
     {
         private string _animationState;
 
+        public bool IsSuccess { get; }
+
         public IdleState(string animationState)
         {
             _animationState = animationState;

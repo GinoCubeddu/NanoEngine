@@ -34,7 +34,7 @@ namespace NanoEngine.Testing
         /// <param name="owner">The AI that owns the state</param>
         public void Update<T>(T owner)
         {
-            Console.WriteLine("updating state 1");
+            // Console.WriteLine("updating state 1");
         }
     }
 }

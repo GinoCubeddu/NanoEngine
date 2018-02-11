@@ -39,7 +39,9 @@ namespace NanoEngine.StateManagement.Transitions
         /// <returns>Boolean telling us if it is a valid transition</returns>
         public bool CheckTransition(NanoKeyboardEventArgs eventArgs)
         {
-            return _keys.All(key => eventArgs.TheKeys[_keyboardTransition].Contains(key));
+            if (eventArgs.TheKeys.Keys.Contains(_keyboardTransition))
+             return _keys.All(key => eventArgs.TheKeys[_keyboardTransition].Contains(key));
+            return false;
         }
     }
 }

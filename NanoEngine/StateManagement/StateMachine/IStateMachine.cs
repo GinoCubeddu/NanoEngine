@@ -53,34 +53,26 @@ namespace NanoEngine
         /// Allows the state machine to handle any collision events that may
         /// cause the state to change
         /// </summary>
-        /// <typeparam name="T">The type of AI that the state uses</typeparam>
-        /// <param name="owner">The AI that owns the state</param>
         /// <param name="collisionArgs">Arguments that contain information on the event</param>
-        void HandleCollision<T>(T owner, NanoMouseEventArgs collisionArgs);
+        void HandleCollision(NanoMouseEventArgs collisionArgs);
 
         /// <summary>
         /// Allows the state machine to handle any keyboard events that may
         /// cause the state to change
         /// </summary>
-        /// <typeparam name="T">The type of AI that the state uses</typeparam>
-        /// <param name="owner">The AI that owns the state</param>
         /// <param name="keyboardArgs">Arguments that contain information on the event</param>
-        void HandleKeyboardInput<T>(T owner, NanoKeyboardEventArgs keyboardArgs);
+        void HandleKeyboardInput(NanoKeyboardEventArgs keyboardArgs);
 
         /// <summary>
         /// Allows the state machine to handle any mouse events that may
         /// cause the state to change
         /// </summary>
-        /// <typeparam name="T">The type of AI that the state uses</typeparam>
-        /// <param name="owner">The AI that owns the state</param>
         /// <param name="mouseArgs">Arguments that contain information on the event</param>
-        void HandleMouseInput<T>(T owner, NanoMouseEventArgs mouseArgs);
+        void HandleMouseInput(NanoMouseEventArgs mouseArgs);
 
         /// <summary>
         /// Updates the currently active state
         /// </summary>
-        /// <typeparam name="T">The type of AI that the state uses</typeparam>
-        /// <param name="owner">The AI that owns the state</param>
-        void Update<T>(T owner);
+        void Update();
     }
 }

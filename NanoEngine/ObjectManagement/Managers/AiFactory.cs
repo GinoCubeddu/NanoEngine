@@ -21,7 +21,7 @@ namespace NanoEngine.ObjectManagement.Managers
             //Create new AI
             IAiComponent AI = new T();
             //Init the ai
-            AI.Initialise(asset);
+            AI.InitialiseAiComponent(asset);
             //Check if its certian things
             EventManager.Manager.AddDelegates(AI);
             //Add AI to list

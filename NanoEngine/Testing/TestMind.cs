@@ -11,7 +11,7 @@ using NanoEngine.StateManagement.States;
 
 namespace NanoEngine.Testing
 {
-    class TestMind : AIComponent, IKeyboardWanted
+    class TestMind : AiComponent, IKeyboardWanted
     {
         private string Direction;
 
@@ -22,18 +22,13 @@ namespace NanoEngine.Testing
         public TestMind()
         {
             Timer = 0;
-            _StateMachine = new StateMachine();
-            _StateMachine.AddState(new State1());
-            _StateMachine.AddState(new State2());
-            _StateMachine.AddState(new State3());
-            _StateMachine.AddKeyboardTransition<State1, State2>(
-                KeyStates.Pressed, new List<Keys>() { Keys.NumPad1 }
-            );
-            _StateMachine.AddKeyboardTransition<State2, State3>(
-                KeyStates.Pressed, new List<Keys>() { Keys.NumPad2 }    
-            );
-            _StateMachine.AddMethodCheckTransition<State3, State1>(IsReadyToSwitch);
             Direction = "right";
+        }
+
+        public override void Initialise()
+        {
+            _StateMachine = new StateMachine<AiComponent>(this);
+            _StateMachine.AddState(new WalkingState());
         }
 
         public bool IsReadyToSwitch()
@@ -45,7 +40,7 @@ namespace NanoEngine.Testing
 
         public override void Update()
         {
-            _StateMachine.Update<IAIComponent>(this);
+            _StateMachine.Update();
             Timer++;
         }
 
@@ -60,7 +55,7 @@ namespace NanoEngine.Testing
                 }
             }
             Console.WriteLine(args.TheKeys.Values);
-            _StateMachine.HandleKeyboardInput(this, args);
+            _StateMachine.HandleKeyboardInput(args);
         }
     }
 }

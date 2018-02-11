@@ -85,6 +85,18 @@ namespace NanoEngine.StateManagement.StateMachine
         }
 
         /// <summary>
+        /// Adds a transition between states that relys on the state being a success
+        /// </summary>
+        /// <param name="stateFrom">The sate to transition from</param>
+        /// <param name="stateTo">The state to transition to</param>
+        public void AddSuccessTransition(string stateFrom, string stateTo)
+        {
+            ValidateTransition(stateFrom, stateTo);
+            CheckTransitionHandlerExsists(stateFrom);
+            _stateTransitions[stateFrom].SuccessState = stateTo;
+        }
+
+        /// <summary>
         /// Allows the state machine to handle any collision events that may
         /// cause the state to change
         /// </summary>
@@ -122,6 +134,7 @@ namespace NanoEngine.StateManagement.StateMachine
         /// </summary>
         public void Update()
         {
+            CheckSuccessTransition();
             CheckMethodTransition();
             _avaliableStates[currentState].Update(_owner);
         }
@@ -177,6 +190,15 @@ namespace NanoEngine.StateManagement.StateMachine
                 currentState = stateTo;
                 _avaliableStates[currentState].Enter(_owner);
             }
+        }
+
+        private void CheckSuccessTransition()
+        {
+            // THIS IS TEMP AND SHOULD BE MOVED TO THE TRANSITION HOLDER
+            if (_stateTransitions.Keys.Contains(currentState) && _stateTransitions[currentState].SuccessState != null)
+                if (_avaliableStates[currentState].IsSuccess)
+                    ChangeState(_stateTransitions[currentState].SuccessState);
+
         }
     }
 }

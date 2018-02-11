@@ -8,6 +8,9 @@ namespace NanoEngine
 {
     public interface IState
     {
+        // Boolean telling us if the state was a success
+        bool IsSuccess { get; }
+
         /// <summary>
         /// Method that gets called at the begining of each state
         /// </summary>

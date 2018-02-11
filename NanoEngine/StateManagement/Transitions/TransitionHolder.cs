@@ -16,10 +16,13 @@ namespace NanoEngine.StateManagement.Transitions
         // Holds all the method transitions for this state
         private IList<MethodStateTransition> _methodTransitions;
 
+        public string SuccessState { get; set; }
+
         public TransitionHolder()
         {
             _keyboardTransitions = null;
             _methodTransitions = null;
+            SuccessState = null;
         }
 
         /// <summary>

@@ -15,39 +15,34 @@ namespace NanoEngine
         /// Adds a state to the state machine
         /// </summary>
         /// <param name="state">The state to add</param>
-        void AddState(IState state);
+        /// <param name="stateName">The unique name to which the state will be identified</param>
+        void AddState(IState state, string stateName);
 
         /// <summary>
         /// Adds a transition between states that relys on keyboard input
         /// </summary>
-        /// <typeparam name="T">The type of state to transition from</typeparam>
-        /// <typeparam name="U">The type of state to transition to</typeparam>
         /// <param name="wantedState">The State we want the keys to be in</param>
         /// <param name="keysRequired">The keys that should be in the state</param>
-        void AddKeyboardTransition<T, U>(KeyStates wantedState, IList<Keys> keysRequired) 
-            where T : IState
-            where U : IState;
+        /// <param name="stateFrom">The sate to transition from</param>
+        /// <param name="stateTo">The state to transition to</param>
+        void AddKeyboardTransition(KeyStates wantedState, IList<Keys> keysRequired, string stateFrom, string stateTo);
 
         /// <summary>
         /// Adds a transition between states that relys on mouse input
         /// </summary>
-        /// <typeparam name="T">The type of state to transition from</typeparam>
-        /// <typeparam name="U">The type of state to transition to</typeparam>
         /// <param name="mouseStates">A list containing all the mouse states</param>
-        void AddMouseTransition<T, U>(IList<MouseStates> mouseStates)
-            where T : IState
-            where U : IState;
+        /// <param name="stateFrom">The sate to transition from</param>
+        /// <param name="stateTo">The state to transition to</param>
+        void AddMouseTransition(IList<MouseStates> mouseStates, string stateFrom, string stateTo);
 
         /// <summary>
         /// Adds a transition between states that relays on the bool return
         /// value of a method
         /// </summary>
-        /// <typeparam name="T">The type of state to transition from</typeparam>
-        /// <typeparam name="U">The type of state to transition to</typeparam>
         /// <param name="methodBoolCheck">The method name of the owner</param>
-        void AddMethodCheckTransition<T, U>(Func<bool> methodBoolCheck)
-            where T : IState
-            where U : IState;
+        /// <param name="stateFrom">The sate to transition from</param>
+        /// <param name="stateTo">The state to transition to</param>
+        void AddMethodCheckTransition(Func<bool> methodBoolCheck, string stateFrom, string stateTo);
 
         /// <summary>
         /// Allows the state machine to handle any collision events that may

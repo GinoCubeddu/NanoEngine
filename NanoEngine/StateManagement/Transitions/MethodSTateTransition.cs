@@ -8,7 +8,7 @@ namespace NanoEngine.StateManagement.Transitions
     internal class MethodStateTransition
     {
         // Holds the type of which state to transition to
-        public Type StateTo { get; }
+        public string StateTo { get; }
 
         // Holds the method that we need to call for transition check
         private Func<bool> _methodToCall;
@@ -17,7 +17,7 @@ namespace NanoEngine.StateManagement.Transitions
         /// Constructor for the keyboard transition
         /// </summary>
         /// <param name="stateTo">The statebehaviour we want to transition to</param>
-        public MethodStateTransition(Type stateTo, Func<bool> methodToCall)
+        public MethodStateTransition(string stateTo, Func<bool> methodToCall)
         {
             StateTo = stateTo;
             _methodToCall = methodToCall;

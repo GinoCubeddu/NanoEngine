@@ -51,10 +51,13 @@ namespace NanoEngine.ObjectTypes.Assets.Control
         /// Method to initalise the mind
         /// </summary>
         /// <param name="ent"></param>
-        public void Initialise(IAsset asset)
+        public void InitialiseAiComponent(IAsset asset)
         {
             controledEntity = asset;
             SetUniqueData();
+            this.Initialise();
         }
+
+        public abstract void Initialise();
     }
 }

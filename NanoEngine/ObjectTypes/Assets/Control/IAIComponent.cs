@@ -10,6 +10,9 @@ namespace NanoEngine.ObjectTypes.Assets
         //getter for the unique ID
         int UID { get; }
 
+        // getter for the minds controled asset
+        IAsset ControledAsset { get; }
+
         //getter for the ynique name
         string UName { get; }
 
@@ -22,6 +25,8 @@ namespace NanoEngine.ObjectTypes.Assets
         /// Method to initalise the AI
         /// </summary>
         /// <param name="ent">The entity that the AI will control</param>
-        void Initialise(IAsset ent);
+        void InitialiseAiComponent(IAsset ent);
+
+        void Initialise();
     }
 }

@@ -7,7 +7,7 @@ using NanoEngine.StateManagement.Transitions;
 
 namespace NanoEngine.StateManagement.StateMachine
 {
-    public class StateMachine : IStateMachine
+    public class StateMachine<T> : IStateMachine
     {
         // Dictonary to hold what states the machine has access to
         private IDictionary<Type, IState> _avaliableStates;
@@ -17,11 +17,14 @@ namespace NanoEngine.StateManagement.StateMachine
 
         private IDictionary<Type, TransitionHolder> _stateTransitions;
 
-        public StateMachine()
+        private T _owner;
+
+        public StateMachine(T owner)
         {
             _avaliableStates = new Dictionary<Type, IState>();
             _stateTransitions = new Dictionary<Type, TransitionHolder>();
             currentState = null;
+            _owner = owner;
         }
 
         /// <summary>
@@ -31,7 +34,11 @@ namespace NanoEngine.StateManagement.StateMachine
         public void AddState(IState state)
         {
             if (_avaliableStates.Count == 0)
+            {
                 currentState = state.GetType();
+                state.Enter(_owner);
+            }
+                
 
             if (!CheckStateExsists(state.GetType()))
                 _avaliableStates.Add(state.GetType(), state);
@@ -86,10 +93,8 @@ namespace NanoEngine.StateManagement.StateMachine
         /// Allows the state machine to handle any collision events that may
         /// cause the state to change
         /// </summary>
-        /// <typeparam name="T">The type of AI that the state uses</typeparam>
-        /// <param name="owner">The AI that owns the state</param>
         /// <param name="collisionArgs">Arguments that contain information on the event</param>
-        public void HandleCollision<T>(T owner, NanoMouseEventArgs collisionArgs)
+        public void HandleCollision(NanoMouseEventArgs collisionArgs)
         {
             throw new NotImplementedException();
         }
@@ -98,20 +103,12 @@ namespace NanoEngine.StateManagement.StateMachine
         /// Allows the state machine to handle any keyboard events that may
         /// cause the state to change
         /// </summary>
-        /// <typeparam name="T">The type of AI that the state uses</typeparam>
-        /// <param name="owner">The AI that owns the state</param>
         /// <param name="keyboardArgs">Arguments that contain information on the event</param>
-        public void HandleKeyboardInput<T>(T owner, NanoKeyboardEventArgs keyboardArgs)
+        public void HandleKeyboardInput(NanoKeyboardEventArgs keyboardArgs)
         {
             if (_stateTransitions.Keys.Contains(currentState))
             {
-                Type stateTo = _stateTransitions[currentState].CheckKeyboardTransitions(keyboardArgs);
-                if (stateTo != null)
-                {
-                    _avaliableStates[currentState].Exit(owner);
-                    currentState = stateTo;
-                    _avaliableStates[currentState].Enter(owner);
-                }
+                ChangeState(_stateTransitions[currentState].CheckKeyboardTransitions(keyboardArgs));
             }
         }
 
@@ -119,10 +116,8 @@ namespace NanoEngine.StateManagement.StateMachine
         /// Allows the state machine to handle any mouse events that may
         /// cause the state to change
         /// </summary>
-        /// <typeparam name="T">The type of AI that the state uses</typeparam>
-        /// <param name="owner">The AI that owns the state</param>
         /// <param name="mouseArgs">Arguments that contain information on the event</param>
-        public void HandleMouseInput<T>(T owner, NanoMouseEventArgs mouseArgs)
+        public void HandleMouseInput(NanoMouseEventArgs mouseArgs)
         {
             throw new NotImplementedException();
         }
@@ -130,12 +125,10 @@ namespace NanoEngine.StateManagement.StateMachine
         /// <summary>
         /// Updates the currently active state
         /// </summary>
-        /// <typeparam name="T">The type of AI that the state uses</typeparam>
-        /// <param name="owner">The AI that owns the state</param>
-        public void Update<T>(T owner)
+        public void Update()
         {
-            CheckMethodTransition(owner);
-            _avaliableStates[currentState].Update(owner);
+            CheckMethodTransition();
+            _avaliableStates[currentState].Update(_owner);
         }
 
         private bool CheckStateExsists(Type stateType)
@@ -173,17 +166,21 @@ namespace NanoEngine.StateManagement.StateMachine
                 _stateTransitions.Add(stateType, new TransitionHolder());
         }
 
-        private void CheckMethodTransition<T>(T owner)
+        private void CheckMethodTransition()
         {
             if (_stateTransitions.Keys.Contains(currentState))
             {
-                Type stateTo = _stateTransitions[currentState].CheckMethodTransitions();
-                if (stateTo != null)
-                {
-                    _avaliableStates[currentState].Exit(owner);
-                    currentState = stateTo;
-                    _avaliableStates[currentState].Enter(owner);
-                }
+                ChangeState(_stateTransitions[currentState].CheckMethodTransitions());
+            }
+        }
+
+        private void ChangeState(Type stateTo)
+        {
+            if (stateTo != null)
+            {
+                _avaliableStates[currentState].Exit(_owner);
+                currentState = stateTo;
+                _avaliableStates[currentState].Enter(_owner);
             }
         }
     }

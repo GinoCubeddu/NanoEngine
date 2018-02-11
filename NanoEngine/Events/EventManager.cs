@@ -51,9 +51,7 @@ namespace NanoEngine.Events
 
             if (obj is IKeyboardWanted)
             {
-                (handlers[1] as IKeyboardHandler).GetOnKeyDown += (obj as IKeyboardWanted).OnKeyDown;
-                (handlers[1] as IKeyboardHandler).GetOnKeyPressed += (obj as IKeyboardWanted).OnKeyPressed;
-                (handlers[1] as IKeyboardHandler).GetOnKeyReleased += (obj as IKeyboardWanted).OnKeyReleased;
+                (handlers[1] as IKeyboardHandler).GetOnKeyboardChanged += (obj as IKeyboardWanted).OnKeyboardChange;
             }
         }
 
@@ -72,9 +70,7 @@ namespace NanoEngine.Events
 
             if (obj is IKeyboardWanted)
             {
-                (handlers[0] as IKeyboardHandler).GetOnKeyDown -= (obj as IKeyboardWanted).OnKeyDown;
-                (handlers[0] as IKeyboardHandler).GetOnKeyPressed -= (obj as IKeyboardWanted).OnKeyPressed;
-                (handlers[0] as IKeyboardHandler).GetOnKeyReleased -= (obj as IKeyboardWanted).OnKeyReleased;
+                (handlers[1] as IKeyboardHandler).GetOnKeyboardChanged -= (obj as IKeyboardWanted).OnKeyboardChange;
             }
         }
 

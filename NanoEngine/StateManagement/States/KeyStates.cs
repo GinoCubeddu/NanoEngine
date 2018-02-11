@@ -7,6 +7,6 @@ namespace NanoEngine.StateManagement.States
 {
     public enum KeyStates
     {
-        Pressed, Released
+        Pressed, Released, Down
     }
 }

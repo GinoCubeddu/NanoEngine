@@ -43,48 +43,24 @@ namespace NanoEngine.Testing
             return false;
         }
 
-        public void OnKeyDown(object sender, NanoKeyboardEventArgs args)
-        {
-
-            if (args.MyKeys.Contains(Keys.Left) & Direction == "left")
-            {
-                controledEntity.AssetAnimation.ChangeAnimationState("runLeft");
-                controledEntity.SetPosition(new Vector2(
-                    controledEntity.Position.X - 3, controledEntity.Position.Y
-                ));
-            }
-                
-            else if (args.MyKeys.Contains(Keys.Right) & Direction == "right")
-            {
-                controledEntity.AssetAnimation.ChangeAnimationState("runRight");
-                controledEntity.SetPosition(new Vector2(
-                    controledEntity.Position.X + 3, controledEntity.Position.Y
-                ));
-            }                
-
-            if (args.MyKeys.Contains(Keys.S))
-                controledEntity.AssetAnimation.ChangeAnimationState("idleRight");
-        }
-
-        public void OnKeyPressed(object sender, NanoKeyboardEventArgs args)
-        {
-            _StateMachine.HandleKeyboardInput(this, args);
-        }
-
-        public void OnKeyReleased(object sender, NanoKeyboardEventArgs args)
-        {
-            for (int i = 0; i < args.MyKeys.Count; i++)
-                Console.WriteLine(args.MyKeys[i]);
-            if (args.MyKeys.Contains(Keys.Left) && Direction == "left")
-                controledEntity.AssetAnimation.ChangeAnimationState("idleLeft");
-            if (args.MyKeys.Contains(Keys.Right) && Direction == "right")
-                controledEntity.AssetAnimation.ChangeAnimationState("idleRight");
-        }
-
         public override void Update()
         {
             _StateMachine.Update<IAIComponent>(this);
             Timer++;
+        }
+
+        public void OnKeyboardChange(object sender, NanoKeyboardEventArgs args)
+        {
+            foreach (KeyStates key in args.TheKeys.Keys)
+            {
+                Console.WriteLine(key.ToString().ToUpper());
+                foreach (Keys item in args.TheKeys[key])
+                {
+                    Console.WriteLine(item);
+                }
+            }
+            Console.WriteLine(args.TheKeys.Values);
+            _StateMachine.HandleKeyboardInput(this, args);
         }
     }
 }

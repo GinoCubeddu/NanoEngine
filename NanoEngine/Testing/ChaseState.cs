@@ -7,7 +7,7 @@ using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Testing
 {
-    class ChaseState : IState
+    class ChaseState<T> : IState<T> where T : IAiComponent
     {
         public bool IsSuccess { get; }
 
@@ -33,7 +33,7 @@ namespace NanoEngine.Testing
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Enter<T>(T owner)
+        public void Enter(T owner)
         {
             Console.WriteLine("Entering chase state");
         }
@@ -43,7 +43,7 @@ namespace NanoEngine.Testing
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Exit<T>(T owner)
+        public void Exit(T owner)
         {
             Console.WriteLine("Exiting chase state");
         }
@@ -53,24 +53,23 @@ namespace NanoEngine.Testing
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Update<T>(T owner)
+        public void Update(T owner)
         {
-            IAiComponent _owner = (owner as IAiComponent);
-            if (_chasedAsset.Position.X - _owner.ControledAsset.Position.X < 0)
+            if (_chasedAsset.Position.X - owner.ControledAsset.Position.X < 0)
             {
-                _owner.ControledAsset.AssetAnimation.ChangeAnimationState(_leftFacingAnimation);
+                owner.ControledAsset.AssetAnimation.ChangeAnimationState(_leftFacingAnimation);
                 _direction = -1;
             }
             else
             {
                 _direction = 1;
-                _owner.ControledAsset.AssetAnimation.ChangeAnimationState(_rightFacingAnimation);
+                owner.ControledAsset.AssetAnimation.ChangeAnimationState(_rightFacingAnimation);
             }
-            
 
-            _owner.ControledAsset.SetPosition(new Vector2(
-                _owner.ControledAsset.Position.X + 1 * _direction,
-                _owner.ControledAsset.Position.Y
+
+            owner.ControledAsset.SetPosition(new Vector2(
+                owner.ControledAsset.Position.X + 1 * _direction,
+                owner.ControledAsset.Position.Y
             ));
         }
     }

@@ -7,10 +7,10 @@ using NanoEngine.StateManagement.Transitions;
 
 namespace NanoEngine.StateManagement.StateMachine
 {
-    public class StateMachine<T> : IStateMachine
+    public class StateMachine<T> : IStateMachine<T>
     {
         // Dictonary to hold what states the machine has access to
-        private IDictionary<string, IState> _avaliableStates;
+        private IDictionary<string, IState<T>> _avaliableStates;
 
         // Holds the type of the current state which should be updated
         private string currentState;
@@ -21,7 +21,7 @@ namespace NanoEngine.StateManagement.StateMachine
 
         public StateMachine(T owner)
         {
-            _avaliableStates = new Dictionary<string, IState>();
+            _avaliableStates = new Dictionary<string, IState<T>>();
             _stateTransitions = new Dictionary<string, TransitionHolder>();
             currentState = null;
             _owner = owner;
@@ -32,7 +32,7 @@ namespace NanoEngine.StateManagement.StateMachine
         /// </summary>
         /// <param name="state">The state to add</param>
         /// <param name="stateName">The unique name to which the state will be identified</param>
-        public void AddState(IState state, string stateName)
+        public void AddState(IState<T> state, string stateName)
         {
             if (_avaliableStates.Count == 0)
             {

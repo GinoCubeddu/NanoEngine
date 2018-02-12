@@ -8,7 +8,7 @@ using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Testing
 {
-    public class WalkingState : IState
+    public class WalkingState<T> : IState<T> where T : IAiComponent
     {
         private readonly string _animationState;
 
@@ -27,10 +27,10 @@ namespace NanoEngine.Testing
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Enter<T>(T owner)
+        public void Enter(T owner)
         {
             Console.WriteLine("Entering WalkingState");
-            (owner as IAiComponent).ControledAsset.AssetAnimation.ChangeAnimationState(_animationState);
+            owner.ControledAsset.AssetAnimation.ChangeAnimationState(_animationState);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace NanoEngine.Testing
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Exit<T>(T owner)
+        public void Exit(T owner)
         {
             Console.WriteLine("Exiting WalkingState");
         }
@@ -48,12 +48,11 @@ namespace NanoEngine.Testing
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Update<T>(T owner)
+        public void Update(T owner)
         {
-            IAiComponent _owner = (owner as IAiComponent);
-            _owner.ControledAsset.SetPosition(new Vector2(
-                _owner.ControledAsset.Position.X + 2 * _direction,
-                _owner.ControledAsset.Position.Y
+            owner.ControledAsset.SetPosition(new Vector2(
+                owner.ControledAsset.Position.X + 2 * _direction,
+                owner.ControledAsset.Position.Y
             ));
         }
     }

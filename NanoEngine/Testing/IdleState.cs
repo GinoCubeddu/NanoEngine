@@ -6,7 +6,7 @@ using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Testing
 {
-    public class IdleState : IState
+    public class IdleState<T> : IState<T> where T : IAiComponent
     {
         private string _animationState;
 
@@ -21,10 +21,10 @@ namespace NanoEngine.Testing
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Enter<T>(T owner)
+        public void Enter(T owner)
         {
             Console.WriteLine("Exiting IdleState");
-            (owner as IAiComponent).ControledAsset.AssetAnimation.ChangeAnimationState(_animationState);
+            owner.ControledAsset.AssetAnimation.ChangeAnimationState(_animationState);
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace NanoEngine.Testing
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Exit<T>(T owner)
+        public void Exit(T owner)
         {
             Console.WriteLine("Exiting IdleState");
         }
@@ -42,7 +42,7 @@ namespace NanoEngine.Testing
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Update<T>(T owner)
+        public void Update(T owner)
         {
             Console.WriteLine("Updating idle state");
         }

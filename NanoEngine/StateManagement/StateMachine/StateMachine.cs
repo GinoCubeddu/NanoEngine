@@ -15,14 +15,16 @@ namespace NanoEngine.StateManagement.StateMachine
         // Holds the type of the current state which should be updated
         private string currentState;
 
-        private IDictionary<string, TransitionHolder> _stateTransitions;
+        // Holds all the transitions for a specfic state
+        private IDictionary<string, ITransitionHolder> _stateTransitions;
 
+        // Holds the owner of teh states
         private T _owner;
 
         public StateMachine(T owner)
         {
             _avaliableStates = new Dictionary<string, IState<T>>();
-            _stateTransitions = new Dictionary<string, TransitionHolder>();
+            _stateTransitions = new Dictionary<string, ITransitionHolder>();
             currentState = null;
             _owner = owner;
         }
@@ -34,13 +36,14 @@ namespace NanoEngine.StateManagement.StateMachine
         /// <param name="stateName">The unique name to which the state will be identified</param>
         public void AddState(IState<T> state, string stateName)
         {
+            // If no states exsist then this si the first state
             if (_avaliableStates.Count == 0)
             {
                 currentState = stateName;
                 state.Enter(_owner);
             }
                 
-
+            // Only add the state if it does not already exsist
             if (!CheckStateExsists(stateName))
                 _avaliableStates.Add(stateName, state);
         }
@@ -152,13 +155,24 @@ namespace NanoEngine.StateManagement.StateMachine
             _avaliableStates[currentState].Update(_owner);
         }
 
+        /// <summary>
+        /// Check to see if the state already exsists
+        /// </summary>
+        /// <param name="stateType">The name of the state</param>
+        /// <returns>True if the state exsists false if not</returns>
         private bool CheckStateExsists(string stateType)
         {
             return _avaliableStates.ContainsKey(stateType);
         }
 
+        /// <summary>
+        /// Validates if the transistion is a valid one
+        /// </summary>
+        /// <param name="stateFrom">The name of the state to transition from</param>
+        /// <param name="stateTo">The name of the state to transition to</param>
         private void ValidateTransition(string stateFrom, string stateTo)
         {
+            // Throw an error if either of the states do not exsist
             if (!CheckStateExsists(stateFrom))
                 throw new Exception(String.Format(
                     "Unable to create transition from {0} to {1} as state {0} " + 
@@ -174,29 +188,41 @@ namespace NanoEngine.StateManagement.StateMachine
                     stateFrom.GetType().ToString(),
                     stateTo.GetType().ToString()
                 ));
-            Console.WriteLine(stateFrom);
-            Console.WriteLine(stateTo);
 
+            // Throw exception if trying to transition to itsself
             if (stateFrom == stateTo)
                 throw new Exception("Unable to transition state to itsself");
         }
 
+        /// <summary>
+        /// Checks to see if the transition handler exsists for the passed in
+        /// state type if one does not then it is created
+        /// </summary>
+        /// <param name="stateType">The name of the state</param>
         private void CheckTransitionHandlerExsists(string stateType)
         {
             if(!_stateTransitions.ContainsKey(stateType))
                 _stateTransitions.Add(stateType, new TransitionHolder());
         }
 
+        /// <summary>
+        /// Checks if the state transition for the method call is ready
+        /// If it is ready to transition then switch out the state to
+        /// the new one
+        /// </summary>
         private void CheckMethodTransition()
         {
             if (_stateTransitions.Keys.Contains(currentState))
-            {
                 ChangeState(_stateTransitions[currentState].CheckMethodTransitions());
-            }
         }
 
+        /// <summary>
+        /// Changes the current state to the passed in state
+        /// </summary>
+        /// <param name="stateTo"></param>
         private void ChangeState(string stateTo)
         {
+            // Only change the state if the passed in state is not null
             if (stateTo != null)
             {
                 _avaliableStates[currentState].Exit(_owner);

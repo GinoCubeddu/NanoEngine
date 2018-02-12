@@ -8,7 +8,7 @@ using NanoEngine.StateManagement.States;
 
 namespace NanoEngine.StateManagement.Transitions
 {
-    internal class TransitionHolder
+    internal class TransitionHolder : ITransitionHolder
     {
         // Holds all the keyboard transitions for this state
         private IList<KeyboardStateTransition> _keyboardTransitions;
@@ -16,6 +16,7 @@ namespace NanoEngine.StateManagement.Transitions
         // Holds all the method transitions for this state
         private IList<MethodStateTransition> _methodTransitions;
 
+        // Holds the state for the state to transition to if it is a success
         public string SuccessState { get; set; }
 
         public TransitionHolder()
@@ -72,7 +73,7 @@ namespace NanoEngine.StateManagement.Transitions
             if (_methodTransitions == null)
                 _methodTransitions = new List<MethodStateTransition>();
 
-                _methodTransitions.Add(new MethodStateTransition(stateTo, method, expectedBool));
+            _methodTransitions.Add(new MethodStateTransition(stateTo, method, expectedBool));
         }
 
         /// <summary>

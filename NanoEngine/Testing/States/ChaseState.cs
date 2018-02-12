@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using NanoEngine.ObjectTypes.Assets;
 
-namespace NanoEngine.Testing
+namespace NanoEngine.Testing.States
 {
     class ChaseState<T> : IState<T> where T : IAiComponent
     {

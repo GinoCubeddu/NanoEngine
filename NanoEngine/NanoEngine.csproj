@@ -98,18 +98,18 @@
     <Compile Include="StateManagement\Transitions\KeyboardStateTransition.cs" />
     <Compile Include="StateManagement\Transitions\MethodStateTransition.cs" />
     <Compile Include="StateManagement\Transitions\TransitionHolder.cs" />
-    <Compile Include="Testing\ChaseState.cs" />
-    <Compile Include="Testing\CheerState.cs" />
-    <Compile Include="Testing\DirtTile.cs" />
-    <Compile Include="Testing\GrassTile.cs" />
-    <Compile Include="Testing\IdleState.cs" />
-    <Compile Include="Testing\PatrolState.cs" />
-    <Compile Include="Testing\TestAsset.cs" />
+    <Compile Include="Testing\States\ChaseState.cs" />
+    <Compile Include="Testing\States\CheerState.cs" />
+    <Compile Include="Testing\Tiles\DirtTile.cs" />
+    <Compile Include="Testing\Tiles\GrassTile.cs" />
+    <Compile Include="Testing\States\IdleState.cs" />
+    <Compile Include="Testing\States\PatrolState.cs" />
+    <Compile Include="Testing\Assets\TestAsset.cs" />
     <Compile Include="Testing\TestGameScreen.cs" />
-    <Compile Include="Testing\TestMind.cs" />
-    <Compile Include="Testing\WalkingState.cs" />
-    <Compile Include="Testing\ZombieAsset.cs" />
-    <Compile Include="Testing\ZombieMind.cs" />
+    <Compile Include="Testing\Assets\TestMind.cs" />
+    <Compile Include="Testing\States\WalkingState.cs" />
+    <Compile Include="Testing\Assets\ZombieAsset.cs" />
+    <Compile Include="Testing\Assets\ZombieMind.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">

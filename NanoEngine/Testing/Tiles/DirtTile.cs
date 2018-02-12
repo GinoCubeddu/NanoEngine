@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using NanoEngine.Core.Managers;
 using NanoEngine.ObjectTypes.Assets;
 
-namespace NanoEngine
+namespace NanoEngine.Testing.Tiles
 {
     class DirtTile : Tile
     {

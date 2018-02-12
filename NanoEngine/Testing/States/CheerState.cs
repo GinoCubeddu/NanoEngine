@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using NanoEngine.ObjectTypes.Assets;
 
-namespace NanoEngine.Testing
+namespace NanoEngine.Testing.States
 {
     class CheerState<T> : IState<T> where T : IAiComponent
     {

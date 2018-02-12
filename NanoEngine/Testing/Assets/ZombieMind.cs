@@ -7,8 +7,9 @@ using NanoEngine.ObjectManagement.Interfaces;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.ObjectTypes.Assets.Control;
 using NanoEngine.StateManagement.StateMachine;
+using NanoEngine.Testing.States;
 
-namespace NanoEngine.Testing
+namespace NanoEngine.Testing.Assets
 {
     public class ZombieMind : AiComponent, IAssetmanagerNeeded
     {

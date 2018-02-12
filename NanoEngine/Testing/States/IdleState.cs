@@ -1,27 +1,21 @@
-﻿using NanoEngine;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
 using NanoEngine.ObjectTypes.Assets;
 
-namespace NanoEngine.Testing
+namespace NanoEngine.Testing.States
 {
-    public class WalkingState<T> : IState<T> where T : IAiComponent
+    public class IdleState<T> : IState<T> where T : IAiComponent
     {
-        private readonly string _animationState;
-
-        private readonly int _direction;
+        private string _animationState;
 
         public bool IsSuccess { get; }
 
-        public WalkingState(string animationState, int direction)
+        public IdleState(string animationState)
         {
             _animationState = animationState;
-            _direction = direction;
         }
-
         /// <summary>
         /// Method that gets called at the begining of each state
         /// </summary>
@@ -29,7 +23,7 @@ namespace NanoEngine.Testing
         /// <param name="owner">The AI that owns the state</param>
         public void Enter(T owner)
         {
-            Console.WriteLine("Entering WalkingState");
+            Console.WriteLine("Exiting IdleState");
             owner.ControledAsset.AssetAnimation.ChangeAnimationState(_animationState);
         }
 
@@ -40,7 +34,7 @@ namespace NanoEngine.Testing
         /// <param name="owner">The AI that owns the state</param>
         public void Exit(T owner)
         {
-            Console.WriteLine("Exiting WalkingState");
+            Console.WriteLine("Exiting IdleState");
         }
 
         /// <summary>
@@ -50,10 +44,7 @@ namespace NanoEngine.Testing
         /// <param name="owner">The AI that owns the state</param>
         public void Update(T owner)
         {
-            owner.ControledAsset.SetPosition(new Vector2(
-                owner.ControledAsset.Position.X + 2 * _direction,
-                owner.ControledAsset.Position.Y
-            ));
+            Console.WriteLine("Updating idle state");
         }
     }
 }

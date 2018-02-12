@@ -8,8 +8,9 @@ using NanoEngine.ObjectTypes.Assets.Control;
 using NanoEngine.ObjectTypes.Control;
 using NanoEngine.StateManagement.StateMachine;
 using NanoEngine.StateManagement.States;
+using NanoEngine.Testing.States;
 
-namespace NanoEngine.Testing
+namespace NanoEngine.Testing.Assets
 {
     class TestMind : AiComponent, IKeyboardWanted
     {

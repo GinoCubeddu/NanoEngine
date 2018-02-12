@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework;
 using NanoEngine.ObjectManagement.Interfaces;
 using NanoEngine.ObjectManagement.Managers;
 using NanoEngine.Testing;
+using NanoEngine.Testing.Tiles;
+using NanoEngine.Testing.Assets;
 
 namespace NanoEngine
 {

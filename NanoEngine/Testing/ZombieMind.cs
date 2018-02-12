@@ -12,7 +12,7 @@ namespace NanoEngine.Testing
 {
     public class ZombieMind : AiComponent, IAssetmanagerNeeded
     {
-        private IStateMachine _stateMachine;
+        private IStateMachine<IAiComponent> _stateMachine;
 
         public IAssetManager AssetManager { get; set; }
 
@@ -23,7 +23,7 @@ namespace NanoEngine.Testing
 
             // Add a patroling state
             _stateMachine.AddState(
-                new PatrolState(
+                new PatrolState<IAiComponent>(
                     "walkRight",
                     "walkLeft",
                     new List<Vector2>()
@@ -35,11 +35,11 @@ namespace NanoEngine.Testing
             );
 
             // Add a "cheer" state
-            _stateMachine.AddState(new CheerState("cheer"), "cheer");
+            _stateMachine.AddState(new CheerState<IAiComponent>("cheer"), "cheer");
             
             // Add a chase state
             _stateMachine.AddState(
-                new ChaseState(
+                new ChaseState<IAiComponent>(
                     "walkRight",
                     "walkLeft",
                     AssetManager.RetriveAsset("player")

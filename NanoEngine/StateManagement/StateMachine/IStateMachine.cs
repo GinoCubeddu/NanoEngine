@@ -9,14 +9,14 @@ using NanoEngine.StateManagement.States;
 
 namespace NanoEngine
 {
-    public interface IStateMachine
+    public interface IStateMachine<T>
     {
         /// <summary>
         /// Adds a state to the state machine
         /// </summary>
         /// <param name="state">The state to add</param>
         /// <param name="stateName">The unique name to which the state will be identified</param>
-        void AddState(IState state, string stateName);
+        void AddState(IState<T> state, string stateName);
 
         /// <summary>
         /// Adds a transition between states that relys on keyboard input

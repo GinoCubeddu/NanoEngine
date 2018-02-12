@@ -7,7 +7,7 @@ using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Testing
 {
-    public class PatrolState : IState
+    public class PatrolState<T> : IState<T> where T : IAiComponent
     {
         // Animation state to be in when facing right
         private readonly string _rightFacingAnimation;
@@ -42,15 +42,13 @@ namespace NanoEngine.Testing
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Enter<T>(T owner)
+        public void Enter(T owner)
         {
-            // Cast the owner as Ai
-            IAiComponent _owner = (owner as IAiComponent);
             // Reset all vars 
             _pointsVisited = 0;
             IsSuccess = false;
-            _owner.ControledAsset.AssetAnimation.ChangeAnimationState(_rightFacingAnimation);
-            CheckDirection(_owner);
+            owner.ControledAsset.AssetAnimation.ChangeAnimationState(_rightFacingAnimation);
+            CheckDirection(owner);
         }
 
         /// <summary>
@@ -58,7 +56,7 @@ namespace NanoEngine.Testing
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Exit<T>(T owner)
+        public void Exit(T owner)
         {
             _currentTarget = 0;
             _pointsVisited = 0;
@@ -70,19 +68,16 @@ namespace NanoEngine.Testing
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Update<T>(T owner)
+        public void Update(T owner)
         {
-            // Cast the owner as an AI
-            IAiComponent _owner = (owner as IAiComponent);
-
             // Move the asset towards the point
-            _owner.ControledAsset.SetPosition(new Vector2(
-                _owner.ControledAsset.Position.X + 1 * _direction,
-                _owner.ControledAsset.Position.Y
+            owner.ControledAsset.SetPosition(new Vector2(
+                owner.ControledAsset.Position.X + 1 * _direction,
+                owner.ControledAsset.Position.Y
             ));
 
             // If the distance is less than 10 then it is at the point
-            if (Vector2.Distance(_owner.ControledAsset.Position, _patrolPoints[_currentTarget]) < 10)
+            if (Vector2.Distance(owner.ControledAsset.Position, _patrolPoints[_currentTarget]) < 10)
             {
                 // Change target
                 if (_currentTarget + 1 >= _patrolPoints.Count)
@@ -90,7 +85,7 @@ namespace NanoEngine.Testing
                 else
                     _currentTarget++;
                 // Check the direction of the next point
-                CheckDirection(_owner);
+                CheckDirection(owner);
                 // Make the state a success if the asset has patroled 5 points
                 _pointsVisited++;
                 if (_pointsVisited == 5)

@@ -15,7 +15,7 @@ namespace NanoEngine.Testing
     {
         private string Direction;
 
-        public IStateMachine _StateMachine;
+        public IStateMachine<IAiComponent> _StateMachine;
 
         public int Timer;
 
@@ -27,10 +27,10 @@ namespace NanoEngine.Testing
 
         public override void Initialise()
         {
-            _StateMachine = new StateMachine<AiComponent>(this);
-            _StateMachine.AddState(new IdleState("idleRight"), "idle");
-            _StateMachine.AddState(new WalkingState("runRight", 1), "runRight");
-            _StateMachine.AddState(new WalkingState("runLeft", -1), "runLeft");
+            _StateMachine = new StateMachine<IAiComponent>(this);
+            _StateMachine.AddState(new IdleState<IAiComponent>("idleRight"), "idle");
+            _StateMachine.AddState(new WalkingState<IAiComponent>("runRight", 1), "runRight");
+            _StateMachine.AddState(new WalkingState<IAiComponent>("runLeft", -1), "runLeft");
 
             _StateMachine.AddKeyboardTransition(
                 KeyStates.Pressed, new List<Keys>() { Keys.D }, "idle", "runRight"

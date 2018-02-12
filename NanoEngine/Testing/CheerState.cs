@@ -8,7 +8,7 @@ using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Testing
 {
-    class CheerState : IState
+    class CheerState<T> : IState<T> where T : IAiComponent
     {
         public bool IsSuccess { get; private set; }
 
@@ -26,11 +26,10 @@ namespace NanoEngine.Testing
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Enter<T>(T owner)
+        public void Enter(T owner)
         {
             IsSuccess = false;
-            IAiComponent _owner = (owner as IAiComponent);
-            _owner.ControledAsset.AssetAnimation.ChangeAnimationState(_animation);
+            owner.ControledAsset.AssetAnimation.ChangeAnimationState(_animation);
             Timer = 0;
         }
 
@@ -39,7 +38,7 @@ namespace NanoEngine.Testing
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Exit<T>(T owner)
+        public void Exit(T owner)
         {
 
         }
@@ -49,7 +48,7 @@ namespace NanoEngine.Testing
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Update<T>(T owner)
+        public void Update(T owner)
         {
             Timer++;
             if (Timer > 360)

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NanoEngine.ObjectTypes.Assets.Control
 {
-    public abstract class AIComponent : IAIComponent
+    public abstract class AiComponent : IAiComponent
     {
         //protected field for the components Unique ID
         protected int uID;
@@ -27,6 +27,11 @@ namespace NanoEngine.ObjectTypes.Assets.Control
         //Protected filed to hold what entity is being controled
         protected IAsset controledEntity;
 
+        public IAsset ControledAsset
+        {
+            get { return controledEntity; }
+        }
+
         /// <summary>
         /// Method that updates the AI
         /// </summary>
@@ -46,10 +51,13 @@ namespace NanoEngine.ObjectTypes.Assets.Control
         /// Method to initalise the mind
         /// </summary>
         /// <param name="ent"></param>
-        public void Initialise(IAsset asset)
+        public void InitialiseAiComponent(IAsset asset)
         {
             controledEntity = asset;
             SetUniqueData();
+            this.Initialise();
         }
+
+        public abstract void Initialise();
     }
 }

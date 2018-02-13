@@ -9,16 +9,9 @@ namespace NanoEngine.Events.Interfaces
     public interface IKeyboardHandler : IHandler
     {
         /// <summary>
-        /// Public getter and setter to control the OnKeyPressed event
+        /// Sends an event when the keyboard state chanages
         /// </summary>
-        EventHandler<NanoKeyboardEventArgs> GetOnKeyPressed { get; set; }
-        /// <summary>
-        /// Public getter and setter to control the OnKeyDown event
-        /// </summary>
-        EventHandler<NanoKeyboardEventArgs> GetOnKeyDown { get; set; }
-        /// <summary>
-        /// Public getter and setter to control the OnKeyReleased
-        /// </summary>
-        EventHandler<NanoKeyboardEventArgs> GetOnKeyReleased { get; set; }
+        /// <param name="pKeys">A dict conatining the keys and what state they are in</param>
+        EventHandler<NanoKeyboardEventArgs> GetOnKeyboardChanged { get; set; }
     }
 }

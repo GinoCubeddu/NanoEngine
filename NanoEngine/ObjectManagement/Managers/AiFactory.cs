@@ -14,14 +14,11 @@ namespace NanoEngine.ObjectManagement.Managers
         /// Factory method to create an AI
         /// </summary>
         /// <typeparam name="T">Type of AI wanted</typeparam>
-        /// <param name="asset"></param>
         /// <returns>The created AI</returns>
-        public IAIComponent CreateAI<T>(IAsset asset) where T : IAIComponent, new()
+        public IAiComponent CreateAi<T>() where T : IAiComponent, new()
         {
             //Create new AI
-            IAIComponent AI = new T();
-            //Init the ai
-            AI.Initialise(asset);
+            IAiComponent AI = new T();
             //Check if its certian things
             EventManager.Manager.AddDelegates(AI);
             //Add AI to list

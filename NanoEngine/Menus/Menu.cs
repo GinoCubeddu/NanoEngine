@@ -6,6 +6,8 @@ using NanoEngine.Core.Managers;
 using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Control;
 using System.Collections.Generic;
+using System;
+using NanoEngine.StateManagement.States;
 
 namespace NanoEngine.Menus
 {
@@ -41,70 +43,6 @@ namespace NanoEngine.Menus
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Reciver for the key pressed event
-        /// </summary>
-        /// <param name="sender">The handler that sent the event</param>
-        /// <param name="args">The aguemnts contained within the event</param>
-        public void OnKeyPressed(object sender, NanoKeyboardEventArgs args)
-        {
-            if (active)
-            {
-                if (args.MyKeys.Contains(Keys.PageDown))
-                    SoundManager.Manager.ChangeLoopedSoundVolume(-0.1F);
-                else if (args.MyKeys.Contains(Keys.PageUp))
-                    SoundManager.Manager.ChangeLoopedSoundVolume(0.1F);
-
-                SoundManager.Manager.PlaySound(sound);
-                if (args.MyKeys.Contains(Keys.Up))
-                {
-                    if (menuPosition == 0)
-                    {
-                        menuPosition = menuList.Count - 1;
-                    }
-                    else
-                    {
-                        menuPosition--;
-                    }
-                }
-                else if (args.MyKeys.Contains(Keys.Down))
-                {
-                    if (menuPosition == menuList.Count - 1)
-                    {
-                        menuPosition = 0;
-                    }
-                    else
-                    {
-                        menuPosition++;
-                    }
-                }
-                else if(args.MyKeys.Contains(Keys.Enter))
-                {
-                    menuList[menuPosition].Controler.Clicked();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Reciver for the key Released event
-        /// </summary>
-        /// <param name="sender">The handler that sent the event</param>
-        /// <param name="args">The aguemnts contained within the event</param>
-        public void OnKeyReleased(object sender, NanoKeyboardEventArgs args)
-        {
-
-        }
-
-        /// <summary>
-        /// Reciver for the key Down event
-        /// </summary>
-        /// <param name="sender">The handler that sent the event</param>
-        /// <param name="args">The aguemnts contained within the event</param>
-        public void OnKeyDown(object sender, NanoKeyboardEventArgs args)
-        {
-
         }
 
         /// <summary>
@@ -156,6 +94,45 @@ namespace NanoEngine.Menus
 
                         menuPosition = i;
                     }
+                }
+            }
+        }
+
+        public void OnKeyboardChange(object sender, NanoKeyboardEventArgs args)
+        {
+            if (active)
+            {
+                if (args.TheKeys[KeyStates.Pressed].Contains(Keys.PageDown))
+                    SoundManager.Manager.ChangeLoopedSoundVolume(-0.1F);
+                else if (args.TheKeys[KeyStates.Pressed].Contains(Keys.PageUp))
+                    SoundManager.Manager.ChangeLoopedSoundVolume(0.1F);
+
+                SoundManager.Manager.PlaySound(sound);
+                if (args.TheKeys[KeyStates.Pressed].Contains(Keys.Up))
+                {
+                    if (menuPosition == 0)
+                    {
+                        menuPosition = menuList.Count - 1;
+                    }
+                    else
+                    {
+                        menuPosition--;
+                    }
+                }
+                else if (args.TheKeys[KeyStates.Pressed].Contains(Keys.Down))
+                {
+                    if (menuPosition == menuList.Count - 1)
+                    {
+                        menuPosition = 0;
+                    }
+                    else
+                    {
+                        menuPosition++;
+                    }
+                }
+                else if (args.TheKeys[KeyStates.Pressed].Contains(Keys.Enter))
+                {
+                    menuList[menuPosition].Controler.Clicked();
                 }
             }
         }

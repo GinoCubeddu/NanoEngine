@@ -32,7 +32,7 @@ namespace NanoEngine
             _currentColumn = 0;
             _animatedAsset = asset;
             _timer = 0;
-            fps = 1f / 24f;
+            fps = 1f / 12f;
         }
 
         /// <summary>

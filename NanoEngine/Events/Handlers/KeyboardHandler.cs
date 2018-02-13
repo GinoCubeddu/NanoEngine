@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.StateManagement.States;
 
 namespace NanoEngine.Events.Handlers
 {
@@ -12,37 +13,12 @@ namespace NanoEngine.Events.Handlers
     {
         private static bool created = false;
 
-        //Private event for when a key is pressed
-        private event EventHandler<NanoKeyboardEventArgs> OnKeyPressed;
-        /// <summary>
-        /// Public getter and setter to control the OnKeyPressed event
-        /// </summary>
-        public EventHandler<NanoKeyboardEventArgs> GetOnKeyPressed
-        {
-            get { return OnKeyPressed; }
-            set { OnKeyPressed = value; }
-        }
+        private event EventHandler<NanoKeyboardEventArgs> _onKeyboardChanged;
 
-        //Private event for when a key is held down
-        private event EventHandler<NanoKeyboardEventArgs> OnKeyDown;
-        /// <summary>
-        /// Public getter and setter to control the OnKeyDown event
-        /// </summary>
-        public EventHandler<NanoKeyboardEventArgs> GetOnKeyDown
+        public EventHandler<NanoKeyboardEventArgs> GetOnKeyboardChanged
         {
-            get { return OnKeyDown; }
-            set { OnKeyDown = value; }
-        }
-
-        //Private event for when a key is released
-        private event EventHandler<NanoKeyboardEventArgs> OnKeyReleased;
-        /// <summary>
-        /// Public getter and setter to control the OnKeyReleased
-        /// </summary>
-        public EventHandler<NanoKeyboardEventArgs> GetOnKeyReleased
-        {
-            get { return OnKeyReleased; }
-            set { OnKeyReleased = value; }
+            get { return _onKeyboardChanged; }
+            set { _onKeyboardChanged = value; }
         }
 
         //private fields holding the current and previous keyboard states
@@ -50,7 +26,7 @@ namespace NanoEngine.Events.Handlers
 
         public KeyboardHandler()
         {
-                created = true;
+            created = true;
         }
 
         /// <summary>
@@ -58,90 +34,78 @@ namespace NanoEngine.Events.Handlers
         /// </summary>
         public void Update()
         {
+            IDictionary<KeyStates, IList<Keys>> k = new Dictionary<KeyStates, IList<Keys>>();
             //Make the previous state equal to the current
             PrevKeyState = currentKeyState;
             //Make the current state equal to the keyboard state
             currentKeyState = Keyboard.GetState();
+
             //If the state has chaged
             if (currentKeyState != PrevKeyState)
             {
-                //Create a new list containing the keys that will be sent to the event
-                IList<Keys> keysToBeSent = currentKeyState.GetPressedKeys().ToList();
-                //If the keys to be sent is not 0
-                if (keysToBeSent.Count != 0)
-                {
-                    //Loop through the current state of keys
-                    for (int i = 0; i < currentKeyState.GetPressedKeys().Count(); i++)
-                    {
-                        //Loop through the previous state of keys
-                        for (int j = 0; j < PrevKeyState.GetPressedKeys().Count(); j++)
-                        {
-                            //If the a key exsists in both states
-                            if (currentKeyState.GetPressedKeys()[i] == PrevKeyState.GetPressedKeys()[j])
-                                //remove the matching key from the keys to be sent as its still being held down
-                                keysToBeSent.Remove(currentKeyState.GetPressedKeys()[i]);
-                        }
-                    }
-                    //Fire an event for keys that only want to be fired once
-                    OnKeyboardPressed(keysToBeSent);
-                }
+                IList<Keys> pressedKeys = GetPressedKeys(
+                    currentKeyState.GetPressedKeys(), PrevKeyState.GetPressedKeys()
+                );
+
+                IList<Keys> releasedKeys = GetReleasedKeys(
+                    currentKeyState.GetPressedKeys(), PrevKeyState.GetPressedKeys()
+                );                
+
+                if (pressedKeys.Count > 0)
+                    k.Add(KeyStates.Pressed, pressedKeys);
+                                         
+                if (releasedKeys.Count > 0)
+                    k.Add(KeyStates.Released, releasedKeys);                
             }
 
-            //If any keys are being held down 
-            if (currentKeyState.GetPressedKeys().Count() != 0)
-                //Fire an event with the current set of keys
-                OnKeyboardDown(currentKeyState.GetPressedKeys());
+            if (k.Keys.Count > 0)
+                KeyboardChange(k);
+        }
 
-            if (currentKeyState != PrevKeyState)
+        /// <summary>
+        /// Returns a list containing all the released keys
+        /// </summary>
+        /// <param name="currentKeys">All the current keys that are pressed</param>
+        /// <param name="previousKeys">All the previous keys that are pressed</param>
+        /// <returns>The list containing the released keys</returns>
+        private IList<Keys> GetReleasedKeys(IList<Keys> currentKeys, IList<Keys> previousKeys)
+        {
+            IList<Keys> releasedKeys = new List<Keys>();
+            foreach (Keys key in previousKeys)
             {
-                //Create a new list containg the keys that will be sent to the event
-                IList<Keys> keysToBeSent = PrevKeyState.GetPressedKeys().ToList();
-                if (keysToBeSent.Count != 0)
-                {
-                    //Loop through the last set of keys
-                    for (int i = 0; i < PrevKeyState.GetPressedKeys().Count(); i++)
-                    {
-                        //Loop through the current set of keys
-                        for (int j = 0; j < currentKeyState.GetPressedKeys().Count(); j++)
-                        {
-                            //if the current state does not have the same key as the previous state
-                            if (!(currentKeyState.GetPressedKeys().Contains(PrevKeyState.GetPressedKeys()[i])))
-                                keysToBeSent.Add(PrevKeyState.GetPressedKeys()[i]);
-                        }
-                    }
-                    OnKeyboardReleased(keysToBeSent);
-                }
+                if (!currentKeys.Contains(key))
+                    releasedKeys.Add(key);
             }
+            return releasedKeys;
         }
 
         /// <summary>
-        /// Method that fires an event when a key is pressed
+        /// Returns a list containing all the newly pressed keys
         /// </summary>
-        /// <param name="pKeys">The keys that are being pressed</param>
-        protected virtual void OnKeyboardPressed(IList<Keys> pKeys)
+        /// <param name="currentKeys">All the current keys that are pressed</param>
+        /// <param name="previousKeys">All the previous keys that are pressed</param>
+        /// <returns>The list containing the newly pressed keys</returns>
+        private IList<Keys> GetPressedKeys(IList<Keys> currentKeys, IList<Keys> previousKeys)
         {
-            if (OnKeyPressed != null)
-                OnKeyPressed(this, new NanoKeyboardEventArgs { MyKeys = pKeys });
+            IList<Keys> pressedKeys = new List<Keys>(currentKeys);
+            // Loop through all the previous keys
+            foreach (Keys key in previousKeys)
+            {
+                // if the previous key is in the current keys then don't resend the event
+                // and remove it from the keys that will be sent to the PRESSED event
+                if (currentKeys.Contains(key))
+                    pressedKeys.Remove(key);
+            }
+            return pressedKeys;
         }
 
         /// <summary>
-        /// Method that fires an event when a key is being held down
+        /// Sends an event when the keyboard state chanages
         /// </summary>
-        /// <param name="pKeys">The keys that are being held down</param>
-        protected virtual void OnKeyboardDown(IList<Keys> pKeys)
+        /// <param name="pKeys">A dict conatining the keys and what state they are in</param>
+        protected virtual void KeyboardChange(IDictionary<KeyStates, IList<Keys>> pKeys)
         {
-            if (OnKeyDown != null)
-                OnKeyDown(this, new NanoKeyboardEventArgs { MyKeys = pKeys });
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pKeys">The keys that have been released</param>
-        protected virtual void OnKeyboardReleased(IList<Keys> pKeys)
-        {
-            if (OnKeyReleased != null)
-                OnKeyReleased(this, new NanoKeyboardEventArgs { MyKeys = pKeys });
+            _onKeyboardChanged(this, new NanoKeyboardEventArgs { TheKeys = pKeys });
         }
     }
 }

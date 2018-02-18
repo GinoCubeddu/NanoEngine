@@ -19,6 +19,14 @@ namespace NanoEngine.Core.Managers
         //Private field to hold refrence to sprite batch
         private static SpriteBatch spriteBatch;
 
+        // Blank texture used for drwaing items such as lines
+        private Texture2D _blankTexture;
+
+        public Texture2D BlanTexture
+        {
+            get { return _blankTexture; }
+        }
+
         private Vector2 spriteScale;
 
         /// <summary>
@@ -45,6 +53,7 @@ namespace NanoEngine.Core.Managers
             if (Created)
                 throw new Exception("Only one instance of the RenderManager may be created");
             _game1 = game;
+            _blankTexture = new Texture2D(GetGD, 1, 1);
             Created = true;
         }
 

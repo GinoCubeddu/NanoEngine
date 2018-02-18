@@ -36,7 +36,7 @@ namespace NanoEngine.Collision
         private IList<IAsset> _assets;
 
         // Tells the quad tree wether to draw or not
-        private bool _drawQuadTree;
+        public static bool DrawQuadTrees = false;
 
         public QuadTree(int maxObjects, int maxLevels, Rectangle bounds)
             : this(0, maxObjects, maxLevels, bounds)
@@ -54,7 +54,6 @@ namespace NanoEngine.Collision
             _horizontalCenterPoint = _bounds.Y + (_bounds.Height / 2);
             _nodes = new IQuadTree[4];
             _assets = new List<IAsset>();
-            _drawQuadTree = false;
         }
 
         /// <summary>
@@ -86,7 +85,7 @@ namespace NanoEngine.Collision
         public void Draw(IRenderManager renderManager)
         {
             // Draws each side of the quad tree
-            if (_drawQuadTree)
+            if (DrawQuadTrees)
             {
                 renderManager.Draw(
                     renderManager.BlankTexture,
@@ -227,48 +226,32 @@ namespace NanoEngine.Collision
             int subNodeHeight = (int)(_bounds.Height / 2);
 
             _nodes[0] = new QuadTree(
-                _level + 1, _maxLevels, _maxObjects,
+                _level + 1, _maxObjects, _maxLevels,
                 new Rectangle(
                     _bounds.X, _bounds.Y, subNodeWidth, subNodeHeight
                 )
             );
             _nodes[1] = new QuadTree(
-                _level + 1, _maxLevels, _maxObjects,
+                _level + 1, _maxObjects, _maxLevels,
                 new Rectangle(
                     _bounds.X + subNodeWidth, _bounds.Y, subNodeWidth,
                     subNodeHeight
                 )
             );
             _nodes[2] = new QuadTree(
-                _level + 1, _maxLevels, _maxObjects,
+                _level + 1, _maxObjects, _maxLevels,
                 new Rectangle(
                     _bounds.X, _bounds.Y + subNodeHeight, subNodeWidth,
                     subNodeHeight
                 )
             );
             _nodes[3] = new QuadTree(
-                _level + 1, _maxLevels, _maxObjects,
+                _level + 1, _maxObjects, _maxLevels,
                 new Rectangle(
                     _bounds.X + subNodeWidth, _bounds.Y + subNodeHeight,
                     subNodeWidth, subNodeHeight
                 )
             );
-        }
-
-        /// <summary>
-        /// Toggles the DrawQuadTree variable on and off
-        /// </summary>
-        public void ToggleDraw()
-        {
-            // Invert the draw boolean
-            _drawQuadTree = !_drawQuadTree;
-            
-            // If there are no nodes then we can return
-            if (_nodes[0] == null) return;
-
-            // Call toggle draw on all sub quadrants
-            foreach (IQuadTree node in _nodes)
-                node.ToggleDraw();
         }
 
         /// <summary>

@@ -43,10 +43,5 @@ namespace NanoEngine.Collision
         /// 4 sub quads as child nodes
         /// </summary>
         void Split();
-
-        /// <summary>
-        /// Toggles the DrawQuadTree variable on and off
-        /// </summary>
-        void ToggleDraw();
     }
 }

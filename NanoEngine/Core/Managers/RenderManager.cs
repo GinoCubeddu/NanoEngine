@@ -22,7 +22,7 @@ namespace NanoEngine.Core.Managers
         // Blank texture used for drwaing items such as lines
         private Texture2D _blankTexture;
 
-        public Texture2D BlanTexture
+        public Texture2D BlankTexture
         {
             get { return _blankTexture; }
         }
@@ -54,6 +54,7 @@ namespace NanoEngine.Core.Managers
                 throw new Exception("Only one instance of the RenderManager may be created");
             _game1 = game;
             _blankTexture = new Texture2D(GetGD, 1, 1);
+            _blankTexture.SetData<Color>(new Color[] { Color.Black });
             Created = true;
         }
 

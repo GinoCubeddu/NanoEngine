@@ -18,6 +18,8 @@ namespace NanoEngine.ObjectTypes.Assets
         //getter for the texture and setter for the texture
         public Texture2D Texture { get { return texture; } }
 
+        public int Speed;
+
         /// <summary>
         /// Method to set the texture of the entity
         /// </summary>
@@ -67,7 +69,7 @@ namespace NanoEngine.ObjectTypes.Assets
         /// </summary>
         protected void CreateBounds()
         {
-            // bounds = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
+            bounds = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
         }
 
         /// <summary>

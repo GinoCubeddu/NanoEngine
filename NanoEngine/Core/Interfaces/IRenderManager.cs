@@ -17,6 +17,8 @@ namespace NanoEngine.Core.Interfaces
 
         GameTime gameTime { get; }
 
+        Texture2D BlankTexture { get; }
+
         /// <summary>
         /// Draws an object to the screen
         /// </summary>

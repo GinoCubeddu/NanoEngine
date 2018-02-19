@@ -43,6 +43,7 @@ namespace NanoEngine
         {
             IDictionary<string, int> animationData = _states[_currentAninmation];
             _timer += (float) renderManager.gameTime.ElapsedGameTime.TotalSeconds;
+            _animatedAsset.Bounds = new Rectangle((int)_animatedAsset.Position.X, (int)_animatedAsset.Position.Y, animationData["TextureWidth"], animationData["TextureHeight"]);
             if (_timer > fps)
             {
                 _currentColumn++;

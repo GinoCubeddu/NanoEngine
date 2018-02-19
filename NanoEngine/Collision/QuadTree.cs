@@ -137,6 +137,7 @@ namespace NanoEngine.Collision
                 // AND the quadtree has already been split
                 foreach (int i in GetQuadrantsIn(asset))
                     _nodes[i].Insert(asset);
+                return;
             }
 
             // If we have reached hear it means that the quadtree has yet to split

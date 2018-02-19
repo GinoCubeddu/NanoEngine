@@ -152,12 +152,14 @@ namespace NanoEngine.ObjectManagement.Managers
         /// </summary>
         public void DrawAssets(IRenderManager rendermanager)
         {
+            _quadTree.Clear();
             foreach (IAsset asset in _assetDictionary.Values)
             {
+                _quadTree.Insert(asset);
                 asset.Draw(rendermanager);
+                rendermanager.Draw(rendermanager.BlankTexture, asset.Bounds, Color.White);
             }
-            _quadTree.Draw(rendermanager);
-           
+            _quadTree.Draw(rendermanager);           
         }
 
         /// <summary>
@@ -167,12 +169,8 @@ namespace NanoEngine.ObjectManagement.Managers
         {
             foreach (IAiComponent item in _aiComponents.Values)
             {
-                _quadTree.Insert(item.ControledAsset);
-
                 item.Update();
             }
-            _quadTree.Clear();
-
         }
 
         /// <summary>

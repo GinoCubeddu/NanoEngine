@@ -44,6 +44,9 @@ namespace NanoEngine
             this.IsMouseVisible = true;
             ContentManagerLoad.Manager.Intinalise(Content);
 
+            graphics.PreferredBackBufferHeight = 1000;
+            graphics.ApplyChanges();
+
             SceneManager.Manager.setStartScreen<TestGameScreen>();
 
             // TODO: Add your initialization logic here

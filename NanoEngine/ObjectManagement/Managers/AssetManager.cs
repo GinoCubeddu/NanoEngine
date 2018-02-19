@@ -32,7 +32,7 @@ namespace NanoEngine.ObjectManagement.Managers
             _aiComponents = new Dictionary<string, IAiComponent>();
             _assetFactory = new AssetFactory();
             _aiFactory = new AiFactory();
-            _quadTree = new QuadTree(1, 5, new Rectangle(0, 0, 800, 480));
+            _quadTree = new QuadTree(1, 5, new Rectangle(0, 0, 800, 1000));
             QuadTree.DrawQuadTrees = true;
         }
 

@@ -24,18 +24,20 @@ namespace NanoEngine
 
         public override void LoadContent()
         {
+            _assetManager.CreateAsset<TestAsset, TestMind>("player", new Vector2(20, 256));
+            _assetManager.CreateAsset<ZombieAsset, ZombieMind>(new Vector2(350, 0));
+            _assetManager.CreateAsset<ZombieAsset, ZombieMind>(new Vector2(350, 150));
+            _assetManager.CreateAsset<ZombieAsset, ZombieMind>(new Vector2(350, 256));
             tileManager = new TileManager();
             tileManager.AddTile<DirtTile>("dirt_tile");
             tileManager.AddTile<GrassTile>("grass_tile");
             tileManager.LoadTileMap("TestLevel");
-            _assetManager.CreateAsset<TestAsset, TestMind>("player", new Vector2(20, 256));
-            _assetManager.CreateAsset<ZombieAsset, ZombieMind>(new Vector2(350, 256));
 
         }
 
         protected override void Update()
         {
-            _assetManager.UpdateAssets();
+
         }
     }
 }

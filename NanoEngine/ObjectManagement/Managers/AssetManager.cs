@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using NanoEngine.Collision;
 using NanoEngine.ObjectManagement.Interfaces;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.Core.Interfaces;
+using NanoEngine.Core.Managers;
 
 namespace NanoEngine.ObjectManagement.Managers
 {
@@ -21,6 +23,8 @@ namespace NanoEngine.ObjectManagement.Managers
 
         private IAiFactory _aiFactory;
 
+        private IQuadTree _quadTree;
+
         public AssetManager()
         {
             _uid = 0;
@@ -28,6 +32,8 @@ namespace NanoEngine.ObjectManagement.Managers
             _aiComponents = new Dictionary<string, IAiComponent>();
             _assetFactory = new AssetFactory();
             _aiFactory = new AiFactory();
+            _quadTree = new QuadTree(1, 5, new Rectangle(0, 0, 800, 1000));
+            QuadTree.DrawQuadTrees = true;
         }
 
         /// <summary>
@@ -146,8 +152,14 @@ namespace NanoEngine.ObjectManagement.Managers
         /// </summary>
         public void DrawAssets(IRenderManager rendermanager)
         {
+            _quadTree.Clear();
             foreach (IAsset asset in _assetDictionary.Values)
+            {
+                _quadTree.Insert(asset);
                 asset.Draw(rendermanager);
+                rendermanager.Draw(rendermanager.BlankTexture, asset.Bounds, Color.White);
+            }
+            _quadTree.Draw(rendermanager);           
         }
 
         /// <summary>

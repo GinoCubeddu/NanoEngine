@@ -74,7 +74,7 @@ namespace NanoEngine.ObjectManagement.Managers
             foreach (TileInformation tile in tileMap.tiles)
             {
                 ITile newTile = (ITile)Activator.CreateInstance(tiles[tile.spriteName]);
-                Rectangle location = new Rectangle(tile.x * 64, tile.y * 64, tile.xsize, tile.ysize);
+                Rectangle location = new Rectangle(tile.x * 64, 1000 - tile.y * 64, tile.xsize, tile.ysize);
                 newTile.Initilise(location, new Vector2(tile.x, tile.y));
                 generatedTiles.Add(newTile);
             }

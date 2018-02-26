@@ -5,224 +5,217 @@
       {
         "x": 0,
         "xsize": 64,
-        "y": 7,
+        "y": 0,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 0,
         "xsize": 64,
-        "y": 6,
+        "y": 1,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 0,
         "xsize": 64,
-        "y": 5,
+        "y": 2,
         "ysize": 64,
         "spriteName": "grass_tile"
       },
       {
         "x": 1,
         "xsize": 64,
-        "y": 7,
+        "y": 0,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 1,
         "xsize": 64,
-        "y": 6,
+        "y": 1,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 1,
         "xsize": 64,
-        "y": 5,
+        "y": 2,
         "ysize": 64,
         "spriteName": "grass_tile"
       },
       {
         "x": 2,
         "xsize": 64,
-        "y": 7,
+        "y": 0,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 2,
         "xsize": 64,
-        "y": 6,
+        "y": 1,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 2,
         "xsize": 64,
-        "y": 5,
+        "y": 2,
         "ysize": 64,
         "spriteName": "grass_tile"
       },
       {
         "x": 3,
         "xsize": 64,
-        "y": 7,
+        "y": 0,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 3,
         "xsize": 64,
-        "y": 6,
+        "y": 1,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 3,
         "xsize": 64,
-        "y": 5,
+        "y": 2,
         "ysize": 64,
         "spriteName": "grass_tile"
       },
       {
         "x": 6,
         "xsize": 64,
-        "y": 7,
+        "y": 0,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 6,
         "xsize": 64,
-        "y": 6,
+        "y": 1,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 6,
         "xsize": 64,
-        "y": 5,
+        "y": 2,
         "ysize": 64,
         "spriteName": "grass_tile"
       },
       {
         "x": 7,
         "xsize": 64,
-        "y": 7,
+        "y": 0,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 7,
         "xsize": 64,
-        "y": 6,
+        "y": 1,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 7,
         "xsize": 64,
-        "y": 5,
+        "y": 2,
         "ysize": 64,
         "spriteName": "grass_tile"
       },
       {
         "x": 8,
         "xsize": 64,
-        "y": 7,
+        "y": 0,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 8,
         "xsize": 64,
-        "y": 6,
+        "y": 1,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 8,
         "xsize": 64,
-        "y": 5,
+        "y": 2,
         "ysize": 64,
         "spriteName": "grass_tile"
       },
       {
         "x": 9,
         "xsize": 64,
-        "y": 7,
+        "y": 0,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 9,
         "xsize": 64,
-        "y": 6,
+        "y": 1,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 9,
         "xsize": 64,
-        "y": 5,
+        "y": 2,
         "ysize": 64,
         "spriteName": "grass_tile"
       },
       {
         "x": 10,
         "xsize": 64,
-        "y": 7,
+        "y": 0,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 10,
         "xsize": 64,
-        "y": 6,
+        "y": 1,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 10,
         "xsize": 64,
-        "y": 5,
+        "y": 2,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 10,
         "xsize": 64,
-        "y": 4,
+        "y": 3,
         "ysize": 64,
         "spriteName": "grass_tile"
       },
       {
         "x": 11,
         "xsize": 64,
-        "y": 7,
+        "y": 0,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 11,
         "xsize": 64,
-        "y": 6,
+        "y": 1,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 11,
         "xsize": 64,
-        "y": 5,
-        "ysize": 64,
-        "spriteName": "dirt_tile"
-      },
-      {
-        "x": 11,
-        "xsize": 64,
-        "y": 4,
+        "y": 2,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
@@ -231,40 +224,26 @@
         "xsize": 64,
         "y": 3,
         "ysize": 64,
+        "spriteName": "dirt_tile"
+      },
+      {
+        "x": 11,
+        "xsize": 64,
+        "y": 4,
+        "ysize": 64,
         "spriteName": "grass_tile"
       },
       {
         "x": 12,
         "xsize": 64,
-        "y": 7,
+        "y": 0,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
       {
         "x": 12,
         "xsize": 64,
-        "y": 6,
-        "ysize": 64,
-        "spriteName": "dirt_tile"
-      },
-      {
-        "x": 12,
-        "xsize": 64,
-        "y": 5,
-        "ysize": 64,
-        "spriteName": "dirt_tile"
-      },
-      {
-        "x": 12,
-        "xsize": 64,
-        "y": 4,
-        "ysize": 64,
-        "spriteName": "dirt_tile"
-      },
-      {
-        "x": 12,
-        "xsize": 64,
-        "y": 3,
+        "y": 1,
         "ysize": 64,
         "spriteName": "dirt_tile"
       },
@@ -272,6 +251,27 @@
         "x": 12,
         "xsize": 64,
         "y": 2,
+        "ysize": 64,
+        "spriteName": "dirt_tile"
+      },
+      {
+        "x": 12,
+        "xsize": 64,
+        "y": 3,
+        "ysize": 64,
+        "spriteName": "dirt_tile"
+      },
+      {
+        "x": 12,
+        "xsize": 64,
+        "y": 4,
+        "ysize": 64,
+        "spriteName": "dirt_tile"
+      },
+      {
+        "x": 12,
+        "xsize": 64,
+        "y": 5,
         "ysize": 64,
         "spriteName":  "grass_tile"
       }

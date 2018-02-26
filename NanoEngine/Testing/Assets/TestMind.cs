@@ -32,7 +32,8 @@ namespace NanoEngine.Testing.Assets
             _StateMachine.AddState(new IdleState<IAiComponent>("idleRight"), "idle");
             _StateMachine.AddState(new WalkingState<IAiComponent>("runRight", 1), "runRight");
             _StateMachine.AddState(new WalkingState<IAiComponent>("runLeft", -1), "runLeft");
-
+            _StateMachine.AddState(new HorizontalState<IAiComponent>("runRight", -1), "runUp");
+            _StateMachine.AddState(new HorizontalState<IAiComponent>("runLeft", 1), "runDown");
             _StateMachine.AddKeyboardTransition(
                 KeyStates.Pressed, new List<Keys>() { Keys.D }, "idle", "runRight"
             );
@@ -47,12 +48,45 @@ namespace NanoEngine.Testing.Assets
                 KeyStates.Released, new List<Keys>() { Keys.A }, "runLeft", "idle"
             );
 
-            
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Pressed, new List<Keys>() { Keys.W }, "idle", "runUp"
+            );
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Pressed, new List<Keys>() { Keys.S }, "idle", "runDown"
+            );
+
+
             _StateMachine.AddKeyboardTransition(
                 KeyStates.Pressed, new List<Keys>() { Keys.A }, "runRight", "runLeft"
             );
             _StateMachine.AddKeyboardTransition(
                 KeyStates.Released, new List<Keys>() { Keys.D }, "runRight", "idle"
+            );
+
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Pressed, new List<Keys>() { Keys.W }, "runLeft", "runUp"
+            );
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Pressed, new List<Keys>() { Keys.W }, "runRight", "runUp"
+            );
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Pressed, new List<Keys>() { Keys.W }, "runDown", "runUp"
+            );
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Released, new List<Keys>() { Keys.W }, "runUp", "idle"
+            );
+
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Pressed, new List<Keys>() { Keys.S }, "runLeft", "runDown"
+            );
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Pressed, new List<Keys>() { Keys.S }, "runRight", "runDown"
+            );
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Pressed, new List<Keys>() { Keys.S }, "runUp", "runDown"
+            );
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Released, new List<Keys>() { Keys.S }, "runDown", "idle"
             );
         }
 

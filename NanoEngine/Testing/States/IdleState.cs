@@ -44,7 +44,7 @@ namespace NanoEngine.Testing.States
         /// <param name="owner">The AI that owns the state</param>
         public void Update(T owner)
         {
-            Console.WriteLine("Updating idle state");
+
         }
     }
 }

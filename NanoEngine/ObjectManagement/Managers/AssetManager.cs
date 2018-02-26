@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using NanoEngine.Collision;
+using NanoEngine.Collision.CollisionTypes;
 using NanoEngine.ObjectManagement.Interfaces;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.Core.Interfaces;
@@ -25,6 +26,8 @@ namespace NanoEngine.ObjectManagement.Managers
 
         private IQuadTree _quadTree;
 
+        private IAABB _aabb;
+
         public AssetManager()
         {
             _uid = 0;
@@ -32,8 +35,9 @@ namespace NanoEngine.ObjectManagement.Managers
             _aiComponents = new Dictionary<string, IAiComponent>();
             _assetFactory = new AssetFactory();
             _aiFactory = new AiFactory();
-            _quadTree = new QuadTree(1, 5, new Rectangle(0, 0, 800, 1000));
+            _quadTree = new QuadTree(2, 5, new Rectangle(0, 0, 800, 1000));
             QuadTree.DrawQuadTrees = true;
+            _aabb = new AABB();
         }
 
         /// <summary>
@@ -158,6 +162,15 @@ namespace NanoEngine.ObjectManagement.Managers
                 _quadTree.Insert(asset);
                 asset.Draw(rendermanager);
                 rendermanager.Draw(rendermanager.BlankTexture, asset.Bounds, Color.White);
+            }
+
+            foreach (IAsset asset in _assetDictionary.Values)
+            {
+                IList<IAsset> assets = _quadTree.RetriveCollidables(asset);
+                foreach (IAsset asset1 in assets)
+                {
+                    _aabb.CheckCollision(asset, asset1);
+                }
             }
             _quadTree.Draw(rendermanager);           
         }

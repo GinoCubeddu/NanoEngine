@@ -105,15 +105,6 @@ namespace NanoEngine.Testing.Assets
 
         public void OnKeyboardChange(object sender, NanoKeyboardEventArgs args)
         {
-            foreach (KeyStates key in args.TheKeys.Keys)
-            {
-                Console.WriteLine(key.ToString().ToUpper());
-                foreach (Keys item in args.TheKeys[key])
-                {
-                    Console.WriteLine(item);
-                }
-            }
-            Console.WriteLine(args.TheKeys.Values);
             _StateMachine.HandleKeyboardInput(args);
         }
     }

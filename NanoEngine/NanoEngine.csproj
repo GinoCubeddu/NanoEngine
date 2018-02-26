@@ -39,6 +39,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Animation.cs" />
+    <Compile Include="Collision\CollisionTypes\AABB.cs" />
+    <Compile Include="Collision\CollisionTypes\IAABB.cs" />
     <Compile Include="Collision\IQuadTree.cs" />
     <Compile Include="Collision\QuadTree.cs" />
     <Compile Include="Core\Interfaces\IContentManagerLoad.cs" />

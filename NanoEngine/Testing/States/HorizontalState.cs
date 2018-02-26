@@ -50,7 +50,6 @@ namespace NanoEngine.Testing.States
         /// <param name="owner">The AI that owns the state</param>
         public void Update(T owner)
         {
-            Console.WriteLine("CALLED");
             owner.ControledAsset.SetPosition(new Vector2(
                 owner.ControledAsset.Position.X,
                 owner.ControledAsset.Position.Y + 2 * _direction

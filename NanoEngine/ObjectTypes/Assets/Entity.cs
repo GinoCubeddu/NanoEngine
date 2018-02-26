@@ -69,7 +69,7 @@ namespace NanoEngine.ObjectTypes.Assets
         /// </summary>
         protected void CreateBounds()
         {
-            bounds = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
+            // bounds = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
         }
 
         /// <summary>

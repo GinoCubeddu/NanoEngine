@@ -39,6 +39,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Animation.cs" />
+    <Compile Include="Collision\IQuadTree.cs" />
+    <Compile Include="Collision\QuadTree.cs" />
     <Compile Include="Core\Interfaces\IContentManagerLoad.cs" />
     <Compile Include="Core\Interfaces\IRenderManager.cs" />
     <Compile Include="Core\Interfaces\ISceneManager.cs" />
@@ -100,6 +102,7 @@
     <Compile Include="StateManagement\Transitions\TransitionHolder.cs" />
     <Compile Include="Testing\States\ChaseState.cs" />
     <Compile Include="Testing\States\CheerState.cs" />
+    <Compile Include="Testing\States\HorizontalState.cs" />
     <Compile Include="Testing\Tiles\DirtTile.cs" />
     <Compile Include="Testing\Tiles\GrassTile.cs" />
     <Compile Include="Testing\States\IdleState.cs" />

@@ -5,9 +5,13 @@ using System.Linq;
 using System.Text;
 using NanoEngine.Core.Interfaces;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using NanoEngine.Collision.CollisionTypes;
+using NanoEngine.Events.Args;
 using NanoEngine.ObjectManagement.Interfaces;
 using NanoEngine.ObjectManagement.Managers;
+using NanoEngine.ObjectTypes.Control;
+using NanoEngine.StateManagement.States;
 using NanoEngine.Testing;
 using NanoEngine.Testing.Tiles;
 using NanoEngine.Testing.Assets;
@@ -32,8 +36,7 @@ namespace NanoEngine
             tileManager = new TileManager();
             tileManager.AddTile<DirtTile>("dirt_tile");
             tileManager.AddTile<GrassTile>("grass_tile");
-            tileManager.LoadTileMap("TestLevel");
-
+            tileManager.LoadTileMap("TestLevel", 7);
 
         }
 

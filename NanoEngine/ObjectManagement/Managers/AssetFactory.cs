@@ -21,11 +21,12 @@ namespace NanoEngine.ObjectManagement.Managers
         {
             //Create new entity
             IAsset ent = new T();
+            //set the start position
+            ent.SetPosition(position);
+
             ent.Initilise();
 
             ent.SetUniqueData(uName);
-            //set the start position
-            ent.SetPosition(position);
             //Increase and set unquie id and name
             return ent;
         }

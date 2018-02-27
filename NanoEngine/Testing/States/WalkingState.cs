@@ -51,7 +51,7 @@ namespace NanoEngine.Testing.States
         public void Update(T owner)
         {
             owner.ControledAsset.SetPosition(new Vector2(
-                owner.ControledAsset.Position.X + 2 * _direction,
+                owner.ControledAsset.Position.X + 4 * _direction,
                 owner.ControledAsset.Position.Y
             ));
         }

@@ -161,7 +161,6 @@ namespace NanoEngine.ObjectManagement.Managers
             {
                 _quadTree.Insert(asset);
                 asset.Draw(rendermanager);
-                rendermanager.Draw(rendermanager.BlankTexture, asset.Bounds, Color.White);
             }
 
             foreach (IAsset asset in _assetDictionary.Values)

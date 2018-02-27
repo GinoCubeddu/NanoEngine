@@ -6,6 +6,7 @@ using NanoEngine.Core.Managers;
 using NanoEngine.ObjectManagement.Managers;
 using NanoEngine.ObjectTypes.General;
 using System;
+using NanoEngine.Core.Camera;
 
 namespace NanoEngine
 {
@@ -44,8 +45,8 @@ namespace NanoEngine
             this.IsMouseVisible = true;
             ContentManagerLoad.Manager.Intinalise(Content);
 
-            graphics.PreferredBackBufferHeight = 1000;
-            graphics.ApplyChanges();
+
+            Camera2D.SetViewport(GraphicsDevice.Viewport);
 
             SceneManager.Manager.setStartScreen<TestGameScreen>();
 

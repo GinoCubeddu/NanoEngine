@@ -37,6 +37,7 @@ namespace NanoEngine.ObjectTypes.Assets
             set { bounds = value; }
         }
 
+        public IList<Vector2> Points { get; }
         public string UniqueName { get; }
         public bool Remove { get; }
 
@@ -68,6 +69,17 @@ namespace NanoEngine.ObjectTypes.Assets
         }
 
         /// <summary>
+        /// Method that sets the tectire of the entity
+        /// </summary>
+        /// <param name="texture">Texture that the entity will use</param>
+        /// <param name="width">The width of the texture</param>
+        /// <param name="height">The height of the texure</param>
+        public void SetTexture(Texture2D texture, int width, int height)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Method to update the bounds of the entity
         /// </summary>
         public void UpdateBounds()
@@ -88,6 +100,15 @@ namespace NanoEngine.ObjectTypes.Assets
         }
 
         public void Draw(IRenderManager renderManager)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns a list of points generated from the current bounds
+        /// </summary>
+        /// <returns>A list of points</returns>
+        public IList<Vector2> GetPointsFromBounds()
         {
             throw new NotImplementedException();
         }

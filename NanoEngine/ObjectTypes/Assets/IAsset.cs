@@ -10,14 +10,17 @@ namespace NanoEngine.ObjectTypes.Assets
 {
     public interface IAsset
     {
-        //Getter for the texture of the entity
+        // Getter for the texture of the entity
         Texture2D Texture { get; }
 
-        //getter for the position
+        // getter for the position
         Vector2 Position { get; set; }
 
-        //getter for the entitys bounding box
+        // getter for the entitys bounding box
         Rectangle Bounds { get; set; }
+
+        // Getter for the points that make up an object
+        IList<Vector2> Points { get; }
 
         //Getter for the unique name
         string UniqueName { get; }
@@ -47,6 +50,14 @@ namespace NanoEngine.ObjectTypes.Assets
         void SetTexture(Texture2D texture);
 
         /// <summary>
+        /// Method that sets the tectire of the entity
+        /// </summary>
+        /// <param name="texture">Texture that the entity will use</param>
+        /// <param name="width">The width of the texture</param>
+        /// <param name="height">The height of the texure</param>
+        void SetTexture(Texture2D texture, int width, int height);
+
+        /// <summary>
         /// Method to update the bounds of the entity
         /// </summary>
         void UpdateBounds();
@@ -61,5 +72,11 @@ namespace NanoEngine.ObjectTypes.Assets
         /// </summary>
         /// <param name="renderManager">An instance of the rendermanager</param>
         void Draw(IRenderManager renderManager);
+
+        /// <summary>
+        /// Returns a list of points generated from the current bounds
+        /// </summary>
+        /// <returns>A list of points</returns>
+        IList<Vector2> GetPointsFromBounds();
     }
 }

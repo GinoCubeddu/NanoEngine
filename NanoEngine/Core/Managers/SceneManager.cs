@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.Events;
+using NanoEngine.ObjectTypes.Control;
 
 namespace NanoEngine.Core.Managers
 {
@@ -59,6 +61,9 @@ namespace NanoEngine.Core.Managers
         {
             //Create new screen
             currentScreen = new T();
+
+            EventManager.Manager.AddDelegates(currentScreen);
+
             //load the screesn content
             LoadContent();
         }
@@ -100,6 +105,7 @@ namespace NanoEngine.Core.Managers
         {
             //Unloads content from the current screen
             currentScreen.UnloadContent();
+            EventManager.Manager.RemoveDelegates(currentScreen);
 
             //unload pause screen if not null
             if (pauseScreen != null)
@@ -143,7 +149,13 @@ namespace NanoEngine.Core.Managers
         {
             if (currentScreen != null)
             {
-                renderManager.StartDraw();
+                if (currentScreen.Camera2D != null)
+                    renderManager.StartDraw(
+                        SpriteSortMode.Deferred, BlendState.AlphaBlend, null,
+                        null, null, null, currentScreen.Camera2D.Transform
+                    );
+                else
+                    renderManager.StartDraw(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
                 currentScreen.DrawScreen(renderManager);
                 renderManager.EndDraw();
             }

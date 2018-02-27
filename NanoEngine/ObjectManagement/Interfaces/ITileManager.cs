@@ -26,7 +26,7 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// Loads a new tilemap ready to be drawn
         /// </summary>
         /// <param name="fileName">The name of the json tile map file</param>
-        void LoadTileMap(string fileName);
+        void LoadTileMap(string fileName, int mapHeight);
 
         /// <summary>
         /// Unloads all the content that the tile manager has created by

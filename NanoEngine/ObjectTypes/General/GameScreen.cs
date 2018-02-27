@@ -6,12 +6,58 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.Core.Camera;
+using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.ObjectTypes.General
 {
     public abstract class GameScreen : IGameScreen
     {
         protected IAssetManager _assetManager = new AssetManager();
+
+        private IDictionary<string, ICamera2D> _cameras;
+
+        public ICamera2D Camera2D { get; private set; }
+
+        /// <summary>
+        /// Adds a camera to the level
+        /// </summary>
+        /// <param name="id">The id of the camera</param>
+        /// <param name="asset">The asset the camera should focus on</param>
+        protected void AddCamera(string id, IAsset asset)
+        {
+            // If this is the first camera then create the dict
+            if (_cameras == null)
+                _cameras = new Dictionary<string, ICamera2D>();
+
+            // Add the camera if one by that ID does not exsist
+            if (!_cameras.Keys.Contains(id))
+            {
+                _cameras.Add(id, new Camera2D(asset));
+                // If the current camera is null then set this camera to
+                // the main one
+                if (Camera2D == null)
+                    Camera2D = _cameras[id];
+            }
+        }
+
+        /// <summary>
+        /// Changes the current camera to a different one
+        /// </summary>
+        /// <param name="id">The id of the desired camera</param>
+        protected void ChangeCamera(string id)
+        {
+            // Attempt to change to the camera otherwise throw an error
+            try
+            {
+                Camera2D = _cameras[id];
+            }
+            catch (KeyNotFoundException err)
+            {
+                Console.WriteLine(err);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Abstract method to force sub classes to implement it. It is used to load content to the screen 
@@ -53,6 +99,9 @@ namespace NanoEngine.ObjectTypes.General
         public void UpdateScreen()
         {
             _assetManager.UpdateAssets();
+            // If we have a camera then update it
+            if (Camera2D != null)
+                Camera2D.Update();
             Update();
         }
     }

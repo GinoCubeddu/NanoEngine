@@ -3,11 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.Core.Camera;
 
 namespace NanoEngine.ObjectTypes.General
 {
     public interface IGameScreen
     {
+        // Returns the current camera of the screen
+        ICamera2D Camera2D { get; }
+
         /// <summary>
         /// Method to load the staring content of the screen
         /// </summary>

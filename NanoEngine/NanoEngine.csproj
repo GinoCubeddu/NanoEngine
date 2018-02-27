@@ -43,6 +43,8 @@
     <Compile Include="Collision\CollisionTypes\IAABB.cs" />
     <Compile Include="Collision\IQuadTree.cs" />
     <Compile Include="Collision\QuadTree.cs" />
+    <Compile Include="Core\Camera\Camera2D.cs" />
+    <Compile Include="Core\Camera\ICamera2D.cs" />
     <Compile Include="Core\Interfaces\IContentManagerLoad.cs" />
     <Compile Include="Core\Interfaces\IRenderManager.cs" />
     <Compile Include="Core\Interfaces\ISceneManager.cs" />

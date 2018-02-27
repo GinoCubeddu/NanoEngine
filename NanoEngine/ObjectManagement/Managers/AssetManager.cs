@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using NanoEngine.Collision;
 using NanoEngine.Collision.CollisionTypes;
 using NanoEngine.ObjectManagement.Interfaces;
@@ -28,6 +29,8 @@ namespace NanoEngine.ObjectManagement.Managers
 
         private IAABB _aabb;
 
+        private ISAT _sat;
+
         public AssetManager()
         {
             _uid = 0;
@@ -38,6 +41,7 @@ namespace NanoEngine.ObjectManagement.Managers
             _quadTree = new QuadTree(2, 5, new Rectangle(0, 0, 800, 1000));
             QuadTree.DrawQuadTrees = true;
             _aabb = new AABB();
+            _sat = new SAT();
         }
 
         /// <summary>
@@ -161,6 +165,24 @@ namespace NanoEngine.ObjectManagement.Managers
             {
                 _quadTree.Insert(asset);
                 asset.Draw(rendermanager);
+
+                IList<Vector2> assetPoints = asset.Points ?? asset.GetPointsFromBounds();
+                for (int i = 0; i < assetPoints.Count; i++)
+                {
+                    Vector2 edge = assetPoints[i + 1 == assetPoints.Count ? 0 : i + 1] - assetPoints[i];
+                    float angle = (float)Math.Atan2(edge.Y, edge.X);
+                    // draw lines between each point of object
+                    rendermanager.Draw(
+                        rendermanager.BlankTexture,
+                        new Rectangle((int)assetPoints[i].X, (int)assetPoints[i].Y, (int)edge.Length(), 3),
+                        null,
+                        Color.Red,
+                        angle,
+                        new Vector2(0, 0),
+                        SpriteEffects.None,
+                        0
+                    );
+                }
             }
 
             foreach (IAsset asset in _assetDictionary.Values)
@@ -168,7 +190,10 @@ namespace NanoEngine.ObjectManagement.Managers
                 IList<IAsset> assets = _quadTree.RetriveCollidables(asset);
                 foreach (IAsset asset1 in assets)
                 {
-                    _aabb.CheckCollision(asset, asset1);
+                    if (_sat.CheckCollision(asset, asset1))
+                    {
+                        Console.WriteLine("true");
+                    }
                 }
             }
             _quadTree.Draw(rendermanager);           

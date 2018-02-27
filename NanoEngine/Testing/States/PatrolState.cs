@@ -72,8 +72,7 @@ namespace NanoEngine.Testing.States
         {
             // Move the asset towards the point
             owner.ControledAsset.SetPosition(new Vector2(
-                owner.ControledAsset.Position.X + 1 * _direction,
-                owner.ControledAsset.Position.Y
+                1 * _direction, 0
             ));
 
             // If the distance is less than 10 then it is at the point

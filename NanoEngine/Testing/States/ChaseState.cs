@@ -68,8 +68,7 @@ namespace NanoEngine.Testing.States
 
 
             owner.ControledAsset.SetPosition(new Vector2(
-                owner.ControledAsset.Position.X + 1 * _direction,
-                owner.ControledAsset.Position.Y
+                1 * _direction, 0
             ));
         }
     }

@@ -30,7 +30,8 @@ namespace NanoEngine
         public override void LoadContent()
         {
             _assetManager.CreateAsset<Hex, BlankMind>("hex", new Vector2(300, 300));
-            _assetManager.CreateAsset<Hex, TestMind>("player", new Vector2(20, 256));
+            _assetManager.CreateAsset<Hex, HexMind>("controlableHex", new Vector2(20, 256));
+            _assetManager.CreateAsset<TestAsset, TestMind>("player", new Vector2(20, 256));
             _assetManager.CreateAsset<ZombieAsset, ZombieMind>("zombie", new Vector2(350, 0));
             _assetManager.CreateAsset<ZombieAsset, ZombieMind>(new Vector2(350, 150));
             _assetManager.CreateAsset<ZombieAsset, ZombieMind>(new Vector2(350, 256));

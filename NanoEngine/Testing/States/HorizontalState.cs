@@ -30,7 +30,7 @@ namespace NanoEngine.Testing.States
         public void Enter(T owner)
         {
             Console.WriteLine("Entering WalkingState");
-            // owner.ControledAsset.AssetAnimation.ChangeAnimationState(_animationState);
+            owner.ControledAsset.AssetAnimation.ChangeAnimationState(_animationState);
         }
 
         /// <summary>

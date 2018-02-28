@@ -60,7 +60,7 @@ namespace NanoEngine.ObjectManagement.Managers
         /// Loads a new tilemap ready to be drawn
         /// </summary>
         /// <param name="fileName">The name of the json tile map file</param>
-        public void LoadTileMap(string fileName, int mapHeight)
+        public void LoadTileMap(string fileName)
         {
             if(!fileName.Contains(".json"))
             {
@@ -70,14 +70,19 @@ namespace NanoEngine.ObjectManagement.Managers
             JsonSerializer s = new JsonSerializer();
             var file = File.OpenText("Content/" + fileName);
             tileMap = (TileMap)s.Deserialize(file, typeof(TileMap));
+          
 
-            foreach (TileInformation tile in tileMap.tiles)
+          foreach (TileInformation tile in tileMap.layers)
             {
-                ITile newTile = (ITile)Activator.CreateInstance(tiles[tile.spriteName]);
-                Rectangle location = new Rectangle(tile.x * 64, (64 * mapHeight) - tile.y * 64, tile.xsize, tile.ysize);
+                var sum = tile.data;
+                Console.WriteLine("sum " + sum);
+          
+                ITile newTile = (ITile)Activator.CreateInstance(tiles[tile.name]);
+                Rectangle location = new Rectangle(tile.x * 64, (64 * tileMap.height) - tile.y * 64, tileMap.tileheight, tileMap.tilewidth);
                 newTile.Initilise(location, new Vector2(tile.x, tile.y));
                 generatedTiles.Add(newTile);
-            }
+               
+          }
         }
 
         /// <summary>
@@ -96,17 +101,21 @@ namespace NanoEngine.ObjectManagement.Managers
 
     public class TileMap
     {
-        public string levelName { get; set; }
-        public IList<int> playerSpawn { get; set; }
-        public IList<TileInformation> tiles { get; set; }
+        public int height { get; set; }
+        public int tilewidth { get; set; }
+        public int tileheight { get; set; }
+
+        public IList<TileInformation> layers { get; set; }
     }
 
     public class TileInformation
     {
+
+        public int height { get; set; }
+        public string name { get; set; }
         public int x { get; set; }
-        public int xsize { get; set; }
         public int y { get; set; }
-        public int ysize { get; set; }
-        public string spriteName { get; set; }
+        public IList<int> data { get; set; }
     }
+
 }

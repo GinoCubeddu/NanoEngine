@@ -37,7 +37,7 @@ namespace NanoEngine
             tileManager = new TileManager();
             tileManager.AddTile<DirtTile>("dirt_tile");
             tileManager.AddTile<GrassTile>("grass_tile");
-            tileManager.LoadTileMap("TestLevel", 7);
+            tileManager.LoadTileMap("TestLevelTiled");
             AddCamera("player", _assetManager.RetriveAsset("player"));
             AddCamera("zombie", _assetManager.RetriveAsset("zombie"));
         }

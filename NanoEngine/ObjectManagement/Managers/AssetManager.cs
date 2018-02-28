@@ -5,11 +5,14 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NanoEngine.Collision;
+using NanoEngine.Collision.CollidableTypes;
 using NanoEngine.Collision.CollisionTypes;
+using NanoEngine.Collision.Manager;
 using NanoEngine.ObjectManagement.Interfaces;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.Core.Interfaces;
 using NanoEngine.Core.Managers;
+using OpenTK.Graphics.ES20;
 
 namespace NanoEngine.ObjectManagement.Managers
 {
@@ -27,9 +30,7 @@ namespace NanoEngine.ObjectManagement.Managers
 
         private IQuadTree _quadTree;
 
-        private IAABB _aabb;
-
-        private ISAT _sat;
+        private ICollisionManager _collisionManager;
 
         public AssetManager()
         {
@@ -40,8 +41,7 @@ namespace NanoEngine.ObjectManagement.Managers
             _aiFactory = new AiFactory();
             _quadTree = new QuadTree(2, 5, new Rectangle(0, 0, 800, 1000));
             QuadTree.DrawQuadTrees = true;
-            _aabb = new AABB();
-            _sat = new SAT();
+            _collisionManager = new CollisionManager();
         }
 
         /// <summary>
@@ -163,7 +163,8 @@ namespace NanoEngine.ObjectManagement.Managers
             _quadTree.Clear();
             foreach (IAsset asset in _assetDictionary.Values)
             {
-                _quadTree.Insert(asset);
+                if (asset is ICollidable)
+                    _quadTree.Insert(asset);
                 asset.Draw(rendermanager);
 
                 IList<Vector2> assetPoints = asset.Points ?? asset.GetPointsFromBounds();
@@ -187,13 +188,42 @@ namespace NanoEngine.ObjectManagement.Managers
 
             foreach (IAsset asset in _assetDictionary.Values)
             {
-                IList<IAsset> assets = _quadTree.RetriveCollidables(asset);
-                foreach (IAsset asset1 in assets)
+                if (asset is ICollidable)
                 {
-                    if (_sat.CheckCollision(asset, asset1))
+                    // If the asset is a colidable then we want to get all possible collidables
+                    IList<IAsset> possibleCollidables = _quadTree.RetriveCollidables(asset);
+
+                    // We dont want to check for collisions if there are none possible
+                    if (possibleCollidables.Count == 0)
+                        continue;
+                    
+                    // Set a null variable for the assetAI
+                    IAiComponent assetAi = null;
+
+                    // Create a new tuple list to hold the possible collidables
+                    // and their minds
+                    IList<Tuple<IAsset, IAiComponent>> possibleCollidablesList = new List<Tuple<IAsset, IAiComponent>>();
+
+                    // Loop through each possible collsion and add them to the list
+                    foreach (IAsset possibleCollidable in possibleCollidables)
                     {
-                        Console.WriteLine("true");
+                        // Reset the value to null and then attempt to get the AI for
+                        // the current asset before adding it to the tuple list
+                        assetAi = null;
+                        _aiComponents.TryGetValue(possibleCollidable.UniqueName, out assetAi);
+                        possibleCollidablesList.Add(new Tuple<IAsset, IAiComponent>(
+                            possibleCollidable, assetAi    
+                        ));
                     }
+
+                    // Reset the ai to null before attempting to get the ai for the
+                    // main asset
+                    assetAi = null;
+                    _aiComponents.TryGetValue(asset.UniqueName, out assetAi);
+                    _collisionManager.CheckCollision(
+                        new Tuple<IAsset, IAiComponent>(asset, assetAi),
+                        possibleCollidablesList
+                    );
                 }
             }
             _quadTree.Draw(rendermanager);           

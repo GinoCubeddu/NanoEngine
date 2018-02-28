@@ -39,12 +39,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Animation.cs" />
+    <Compile Include="Collision\CollidableTypes\IAABBColidable.cs" />
+    <Compile Include="Collision\CollidableTypes\ICollidable.cs" />
+    <Compile Include="Collision\CollidableTypes\ICollisionResponder.cs" />
+    <Compile Include="Collision\CollidableTypes\ISATColidable.cs" />
     <Compile Include="Collision\CollisionTypes\AABB.cs" />
     <Compile Include="Collision\CollisionTypes\IAABB.cs" />
     <Compile Include="Collision\CollisionTypes\ICollisionType.cs" />
     <Compile Include="Collision\CollisionTypes\ISAT.cs" />
     <Compile Include="Collision\CollisionTypes\SAT.cs" />
+    <Compile Include="Collision\CollisionResponse.cs" />
     <Compile Include="Collision\IQuadTree.cs" />
+    <Compile Include="Collision\Manager\CollisionManager.cs" />
+    <Compile Include="Collision\Manager\ICollisionManager.cs" />
     <Compile Include="Collision\QuadTree.cs" />
     <Compile Include="Core\Camera\Camera2D.cs" />
     <Compile Include="Core\Camera\ICamera2D.cs" />
@@ -109,6 +116,7 @@
     <Compile Include="StateManagement\Transitions\TransitionHolder.cs" />
     <Compile Include="Testing\Assets\BlankMind.cs" />
     <Compile Include="Testing\Assets\Hex.cs" />
+    <Compile Include="Testing\Assets\HexMind.cs" />
     <Compile Include="Testing\States\ChaseState.cs" />
     <Compile Include="Testing\States\CheerState.cs" />
     <Compile Include="Testing\States\HorizontalState.cs" />

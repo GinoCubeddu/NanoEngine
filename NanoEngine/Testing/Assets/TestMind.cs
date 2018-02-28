@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using NanoEngine.Collision;
+using NanoEngine.Collision.CollidableTypes;
 using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.ObjectTypes.Assets.Control;
@@ -12,7 +14,7 @@ using NanoEngine.Testing.States;
 
 namespace NanoEngine.Testing.Assets
 {
-    class TestMind : AiComponent, IKeyboardWanted
+    class TestMind : AiComponent, IKeyboardWanted, ICollisionResponder
     {
         private string Direction;
 
@@ -106,6 +108,11 @@ namespace NanoEngine.Testing.Assets
         public void OnKeyboardChange(object sender, NanoKeyboardEventArgs args)
         {
             _StateMachine.HandleKeyboardInput(args);
+        }
+
+        public void CollisionResponse(CollisionResponse response)
+        {
+            Console.WriteLine("I am colliding with the " + response.Asset.UniqueName + " Asset");
         }
     }
 }

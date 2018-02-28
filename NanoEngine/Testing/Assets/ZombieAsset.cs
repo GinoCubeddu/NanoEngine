@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
+using NanoEngine.Collision.CollidableTypes;
 using NanoEngine.Core.Managers;
 using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Testing.Assets
 {
-    public class ZombieAsset : Entity
+    public class ZombieAsset : Entity, IAABBColidable
     {
         /// <summary>
         /// Method to initalise the the entity

@@ -35,9 +35,9 @@ namespace NanoEngine
             _assetManager.CreateAsset<ZombieAsset, ZombieMind>(new Vector2(350, 150));
             _assetManager.CreateAsset<ZombieAsset, ZombieMind>(new Vector2(350, 256));
             tileManager = new TileManager();
-            tileManager.AddTile<DirtTile>("dirt_tile");
-            tileManager.AddTile<GrassTile>("grass_tile");
-            tileManager.LoadTileMap("TestLevelTiled");
+            tileManager.AddTile<DirtTile>(1);
+            tileManager.AddTile<GrassTile>(2);
+            tileManager.LoadTileMap("tiled");
             AddCamera("player", _assetManager.RetriveAsset("player"));
             AddCamera("zombie", _assetManager.RetriveAsset("zombie"));
         }

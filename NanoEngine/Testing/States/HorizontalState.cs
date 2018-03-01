@@ -52,7 +52,7 @@ namespace NanoEngine.Testing.States
         {
             owner.ControledAsset.SetPosition(new Vector2(
                 0,
-                1 * _direction
+                4 * _direction
             ));
         }
     }

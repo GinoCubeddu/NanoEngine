@@ -12,17 +12,17 @@ namespace NanoEngine.ObjectManagement.Managers
     class TileManager : ITileManager
     {
         // Private Dictonary to hold the types of tiles avaliable
-        private IDictionary<string, Type> tiles;
+        private IDictionary<int, Type> tiles;
 
-        // TileMap object to hold the structure and information on tiles
-        private TileMap tileMap;
+        //RootObject to hold the structure and information on tiles
+        private RootObject rootObject;
 
         // List to hold the tiles created tiles
         private IList<ITile> generatedTiles;
 
         public TileManager()
         {
-            tiles = new Dictionary<string, Type>();
+            tiles = new Dictionary<int, Type>();
             generatedTiles = new List<ITile>();
         }
 
@@ -30,7 +30,7 @@ namespace NanoEngine.ObjectManagement.Managers
         /// Adds a tile to the possible tiles avaliable for use
         /// </summary>
         /// <param name="tile">The tile object</param>
-        public void AddTile<T>(string id) where T : ITile
+        public void AddTile<T>(int id) where T : ITile
         {
             if(!tiles.Values.Contains(typeof(T)))
             {
@@ -69,20 +69,41 @@ namespace NanoEngine.ObjectManagement.Managers
 
             JsonSerializer s = new JsonSerializer();
             var file = File.OpenText("Content/" + fileName);
-            tileMap = (TileMap)s.Deserialize(file, typeof(TileMap));
+            rootObject = (RootObject)s.Deserialize(file, typeof(RootObject));
           
-
-          foreach (TileInformation tile in tileMap.layers)
+            foreach (Layer layer in rootObject.layers)
             {
-                var sum = tile.data;
-                Console.WriteLine("sum " + sum);
-          
-                ITile newTile = (ITile)Activator.CreateInstance(tiles[tile.name]);
-                Rectangle location = new Rectangle(tile.x * 64, (64 * tileMap.height) - tile.y * 64, tileMap.tileheight, tileMap.tilewidth);
-                newTile.Initilise(location, new Vector2(tile.x, tile.y));
-                generatedTiles.Add(newTile);
-               
-          }
+                if(layer.type == "tilelayer")
+                {
+
+                     int x = 0;
+                     int y = 0;
+
+                     for (var i = 0; i < layer.data.Count; i++)
+                     {
+                         if (i % 100 == 0)
+                         {
+                             y += 1;
+                             x = 0;
+                         }
+                         x++;
+                         if (layer.data[i] != 0)
+                         {
+                             ITile newTile = (ITile)Activator.CreateInstance(tiles[layer.data[i]]);
+                             Rectangle location = new Rectangle(x * 64, (64 * rootObject.height) + (y * 64), rootObject.tileheight, rootObject.tilewidth);
+                             Console.WriteLine(location);
+                             newTile.Initilise(location, new Vector2(location.X, location.Y));
+                             generatedTiles.Add(newTile);
+                         }
+                     } 
+                } else
+                {
+                    foreach(Object obj in layer.objects)
+                    {
+                        Console.WriteLine("testman " + obj.properties.mind);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -94,28 +115,74 @@ namespace NanoEngine.ObjectManagement.Managers
         public void UnloadContent()
         {
             tiles = null;
-            tileMap = null;
+            rootObject = null;
             generatedTiles = null;
         }
     }
 
-    public class TileMap
+    public class Properties
     {
-        public int height { get; set; }
-        public int tilewidth { get; set; }
-        public int tileheight { get; set; }
-
-        public IList<TileInformation> layers { get; set; }
+        public string mind { get; set; }
     }
 
-    public class TileInformation
+    public class Propertytypes
     {
+        public string mind { get; set; }
+    }
 
+    public class Object
+    {
         public int height { get; set; }
+        public int id { get; set; }
         public string name { get; set; }
+        public Properties properties { get; set; }
+        public Propertytypes propertytypes { get; set; }
+        public int rotation { get; set; }
+        public string type { get; set; }
+        public bool visible { get; set; }
+        public int width { get; set; }
         public int x { get; set; }
         public int y { get; set; }
-        public IList<int> data { get; set; }
     }
+
+    public class Layer
+    {
+        public IList<int> data { get; set; }
+        public int height { get; set; }
+        public string name { get; set; }
+        public int opacity { get; set; }
+        public string type { get; set; }
+        public bool visible { get; set; }
+        public int width { get; set; }
+        public int x { get; set; }
+        public int y { get; set; }
+        public string draworder { get; set; }
+        public IList<Object> objects { get; set; }
+    }
+
+    public class Tileset
+    {
+        public int firstgid { get; set; }
+        public string source { get; set; }
+    }
+
+    public class RootObject
+    {
+        public int height { get; set; }
+        public bool infinite { get; set; }
+        public IList<Layer> layers { get; set; }
+        public int nextobjectid { get; set; }
+        public string orientation { get; set; }
+        public string renderorder { get; set; }
+        public string tiledversion { get; set; }
+        public int tileheight { get; set; }
+        public IList<Tileset> tilesets { get; set; }
+        public int tilewidth { get; set; }
+        public string type { get; set; }
+        public int version { get; set; }
+        public int width { get; set; }
+    }
+
+ 
 
 }

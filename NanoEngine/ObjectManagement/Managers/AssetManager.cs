@@ -179,8 +179,10 @@ namespace NanoEngine.ObjectManagement.Managers
         public void DrawAssets(IRenderManager rendermanager)
         {
             _quadTree.Clear();
-            foreach (IAsset asset in _assetDictionary.Values)
+            IList<string> assetKeys = _assetDictionary.Keys.ToList();
+            foreach (string assetKey in assetKeys)
             {
+                IAsset asset = _assetDictionary[assetKey];
                 if (asset.Despawn)
                     continue;
 
@@ -207,8 +209,9 @@ namespace NanoEngine.ObjectManagement.Managers
                 }
             }
 
-            foreach (IAsset asset in _assetDictionary.Values)
+            foreach (string assetKey in assetKeys)
             {
+                IAsset asset = _assetDictionary[assetKey];
                 if (asset is ICollidable)
                 {
                     if (asset.Despawn)
@@ -258,10 +261,11 @@ namespace NanoEngine.ObjectManagement.Managers
         /// </summary>
         public void UpdateAssets()
         {
-            foreach (IAiComponent item in _aiComponents.Values)
+            IList<string> aiKeys = _aiComponents.Keys.ToList();
+            foreach (string aiName in aiKeys)
             {
-                if (!item.ControledAsset.Despawn)
-                    item.Update();
+                if (!_aiComponents[aiName].ControledAsset.Despawn)
+                    _aiComponents[aiName].Update();
             }
         }
 

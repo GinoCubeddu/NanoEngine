@@ -30,7 +30,7 @@ namespace NanoEngine.Testing.States
         public void Enter(T owner)
         {
             Console.WriteLine("Entering WalkingState");
-            // owner.ControledAsset.AssetAnimation.ChangeAnimationState(_animationState);
+            owner.ControledAsset.AssetAnimation.ChangeAnimationState(_animationState);
         }
 
         /// <summary>
@@ -51,8 +51,8 @@ namespace NanoEngine.Testing.States
         public void Update(T owner)
         {
             owner.ControledAsset.SetPosition(new Vector2(
-                4 * _direction,
-                0
+                owner.ControledAsset.Position.X + 4 * _direction,
+                owner.ControledAsset.Position.Y
             ));
         }
     }

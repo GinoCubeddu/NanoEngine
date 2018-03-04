@@ -7,6 +7,8 @@ using NanoEngine.ObjectManagement.Managers;
 using NanoEngine.ObjectTypes.General;
 using System;
 using NanoEngine.Core.Camera;
+using NanoEngine.Testing.Assets;
+using NanoEngine.Testing.Tiles;
 
 namespace NanoEngine
 {
@@ -45,6 +47,11 @@ namespace NanoEngine
             this.IsMouseVisible = true;
             ContentManagerLoad.Manager.Intinalise(Content);
 
+            LevelLoader.AddLevelAsset<DirtTile>(1);
+            LevelLoader.AddLevelAsset<GrassTile>(2);
+            LevelLoader.AddLevelAsset<ChestAsset>(3);
+            LevelLoader.AddLevelAsset<CoinAsset>(4);
+            LevelLoader.AddLevelAsset<TestAsset, TestMind>(5, "player");
 
             Camera2D.SetViewport(GraphicsDevice.Viewport);
 

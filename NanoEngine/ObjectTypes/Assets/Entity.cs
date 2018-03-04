@@ -8,7 +8,7 @@ using System.Text;
 
 namespace NanoEngine.ObjectTypes.Assets
 {
-    public abstract class Entity : IEntity
+    public abstract class Entity : IAsset
     {
         //Feild for holding the texture
         private Texture2D _texture;
@@ -27,6 +27,16 @@ namespace NanoEngine.ObjectTypes.Assets
         private int _assetWidth;
 
         private int _assetHeight;
+
+        private bool _despawn = false;
+
+        // Property to state if the asset wants to be drawn/updated
+        public bool Despawn
+        {
+            get { return _despawn;}
+            set { _despawn = value; }
+        }
+
 
         /// <summary>
         /// Method that sets the tectire of the entity

@@ -175,6 +175,9 @@ namespace NanoEngine.ObjectManagement.Managers
             _quadTree.Clear();
             foreach (IAsset asset in _assetDictionary.Values)
             {
+                if (asset.Despawn)
+                    continue;
+
                 if (asset is ICollidable)
                     _quadTree.Insert(asset);
                 asset.Draw(rendermanager);
@@ -202,6 +205,9 @@ namespace NanoEngine.ObjectManagement.Managers
             {
                 if (asset is ICollidable)
                 {
+                    if (asset.Despawn)
+                        continue;
+
                     // If the asset is a colidable then we want to get all possible collidables
                     IList<IAsset> possibleCollidables = _quadTree.RetriveCollidables(asset);
 
@@ -248,7 +254,8 @@ namespace NanoEngine.ObjectManagement.Managers
         {
             foreach (IAiComponent item in _aiComponents.Values)
             {
-                item.Update();
+                if (!item.ControledAsset.Despawn)
+                    item.Update();
             }
         }
 

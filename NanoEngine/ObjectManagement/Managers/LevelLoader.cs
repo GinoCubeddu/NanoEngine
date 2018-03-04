@@ -13,6 +13,9 @@ namespace NanoEngine.ObjectManagement.Managers
 {
     class LevelLoader : ILevelLoader
     {
+        // Provides access to the level bounds
+        public Rectangle LevelBounds { get; private set; }
+
         private static IDictionary<int, Tuple<Type, Type, string>> _possibleAssets;
 
         /// <summary>
@@ -102,6 +105,8 @@ namespace NanoEngine.ObjectManagement.Managers
             var file = File.OpenText("Content/" + fileName);
             TileMap tileMap = (TileMap)s.Deserialize(file, typeof(TileMap));
 
+            LevelBounds = new Rectangle(0, 0, (tileMap.Width * tileMap.TileWidth), (tileMap.Height * tileMap.TileHeight));
+
             foreach (Layer layer in tileMap.Layers)
             {
                 int x = 0;
@@ -123,9 +128,19 @@ namespace NanoEngine.ObjectManagement.Managers
                         // Create the new position for the asset
                         Vector2 position = new Vector2(x * tileMap.TileWidth, y * tileMap.TileHeight);
 
+                        // Grab the requested uniqe name for the asset
+                        string uName = _possibleAssets[layer.Data[i]].Item3;
+
+                        // if the asset did not require a certian name then create one for it
+                        if (uName == null)
+                        {
+                            uName = _possibleAssets[layer.Data[i]].Item1.ToString() + uId;
+                            uId++;
+                        }
+
                         // Create a new asset
                         IAsset asset = assetFactory.RetriveNewAsset(
-                            _possibleAssets[layer.Data[i]].Item1, "",  position
+                            _possibleAssets[layer.Data[i]].Item1, uName,  position
                         );
 
                         // If the asset is not quite the size of the tile size then offset it
@@ -137,16 +152,6 @@ namespace NanoEngine.ObjectManagement.Managers
                                 asset.Position.X + ((tileMap.TileWidth - asset.Bounds.Width) * 0.5f),
                                 asset.Position.Y + (tileMap.TileHeight - asset.Bounds.Height)
                             ));
-                        }
-
-                        // Grab the requested uniqe name for the asset
-                        string uName = _possibleAssets[layer.Data[i]].Item3;
-
-                        // if the asset did not require a certian name then create one for it
-                        if (uName == null)
-                        {
-                            uName = _possibleAssets[layer.Data[i]].Item1.ToString() + uId;
-                            uId++;
                         }
 
                         // Add the asset to the dictonary

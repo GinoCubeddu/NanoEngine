@@ -61,7 +61,7 @@ namespace NanoEngine.Core.Managers
         {
             this.gameTime = gameTime;
             EventManager.Manager.Update();
-            SceneManager.Manager.Update();
+            SceneManager.Manager.Update(this);
         }
 
         /// <summary>

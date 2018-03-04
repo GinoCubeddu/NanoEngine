@@ -19,6 +19,8 @@ namespace NanoEngine.ObjectTypes.General
 
         public ICamera2D Camera2D { get; private set; }
 
+        public double LevelTimer { get; private set; }
+
         /// <summary>
         /// Adds a camera to the level
         /// </summary>
@@ -92,12 +94,13 @@ namespace NanoEngine.ObjectTypes.General
             _assetManager.DrawAssets(renderManager);
             Draw(renderManager);
         }
-
         /// <summary>
         /// Method to update the GameScreen
         /// </summary>
-        public void UpdateScreen()
+        /// <param name="updateManager">Provides a refrence to the updateManager.</param>
+        public void UpdateScreen(IUpdateManager updateManager)
         {
+            LevelTimer += updateManager.gameTime.ElapsedGameTime.TotalSeconds;
             _assetManager.UpdateAssets();
             // If we have a camera then update it
             if (Camera2D != null)

@@ -101,7 +101,6 @@
     <Compile Include="ObjectTypes\Assets\IAsset.cs" />
     <Compile Include="ObjectTypes\Control\IKeyboardWanted.cs" />
     <Compile Include="ObjectTypes\General\GameScreen.cs" />
-    <Compile Include="ObjectTypes\Assets\IEntity.cs" />
     <Compile Include="ObjectTypes\General\IGameScreen.cs" />
     <Compile Include="ObjectTypes\Control\IMouseWanted.cs" />
     <Compile Include="ObjectTypes\General\IMenuControler.cs" />

@@ -122,9 +122,6 @@ namespace NanoEngine.ObjectManagement.Managers
                     {
                         // Create the new position for the asset
                         Vector2 position = new Vector2(x * tileMap.TileWidth, y * tileMap.TileHeight);
-                        
-
-                        Console.WriteLine(layer.Data[i]);
 
                         // Create a new asset
                         IAsset asset = assetFactory.RetriveNewAsset(
@@ -141,7 +138,6 @@ namespace NanoEngine.ObjectManagement.Managers
                                 asset.Position.Y + (tileMap.TileHeight - asset.Bounds.Height)
                             ));
                         }
-                        Console.WriteLine(asset.Bounds);
 
                         // Grab the requested uniqe name for the asset
                         string uName = _possibleAssets[layer.Data[i]].Item3;

@@ -14,5 +14,7 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// <typeparam name="T">Type of AI wanted</typeparam>
         /// <returns>The created AI</returns>
         IAiComponent CreateAi<T>() where T : IAiComponent, new();
+        
+        IAiComponent CreateAi(Type aiType);
     }
 }

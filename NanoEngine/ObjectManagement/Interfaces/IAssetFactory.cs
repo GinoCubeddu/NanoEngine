@@ -18,5 +18,8 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// <returns>a newly created entity</returns>
         IAsset RetriveNewAsset<T>(string uName, Vector2 position)
             where T : IAsset, new();
+
+        IAsset RetriveNewAsset(Type assetType, string uName, Vector2 position);
+
     }
 }

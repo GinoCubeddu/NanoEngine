@@ -115,7 +115,6 @@ namespace NanoEngine.ObjectManagement.Managers
         /// </summary>
         /// <typeparam name="T">The type of asset that you want</typeparam>
         /// <typeparam name="U">The type of mind you want</typeparam>
-
         /// <param name="posX">The X position of the asset</param>
         /// <param name="PosY">The Y position of the asset</param>
         /// <param name="spawn">Deciding if we want the asset to be
@@ -153,6 +152,18 @@ namespace NanoEngine.ObjectManagement.Managers
                 spawn
             );
             _uid++;
+        }
+
+        /// <summary>
+        /// Load all the assets from a json file. All ids of all assets within the
+        /// json file MUST be added through the static methods of the LevelLoader
+        /// class first
+        /// </summary>
+        /// <param name="filename">The name of the json file within the Content directory</param>
+        public void LoadLevel(string filename)
+        {
+            ILevelLoader loader = new LevelLoader();
+            loader.LoadTileMap(filename, _assetDictionary, _aiComponents, _assetFactory, _aiFactory, _uid);
         }
 
         /// <summary>

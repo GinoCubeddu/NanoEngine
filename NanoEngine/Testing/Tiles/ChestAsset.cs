@@ -8,14 +8,14 @@ using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Testing.Tiles
 {
-    class DirtTile : Entity
+    class ChestAsset : Entity
     {
         /// <summary>
         /// Method to initalise the the entity
         /// </summary>
         public override void Initilise()
         {
-            SetTexture(ContentManagerLoad.Manager.LoadResource<Texture2D>("Dirt"));
+            SetTexture(ContentManagerLoad.Manager.LoadResource<Texture2D>("Chest"));
         }
     }
 }

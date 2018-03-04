@@ -36,9 +36,6 @@ namespace NanoEngine.Core.Managers
             get { return screenDimentions; }
         }
 
-        //private list of type IEntity to hold the current entitys on the screen
-        private List<IEntity> entitys;
-
         //private fielf to hold the current screen
         private IGameScreen currentScreen;
 

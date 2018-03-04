@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using NanoEngine.Collision.CollidableTypes;
 using NanoEngine.Core.Managers;
 using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Testing.Assets
 {
-    public class Hex : Entity
+    public class Hex : Entity, ISATColidable
     {
         /// <summary>
         /// Method to initalise the the entity

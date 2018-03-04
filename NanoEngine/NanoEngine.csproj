@@ -80,6 +80,7 @@
     <Compile Include="IAnimation.cs" />
     <Compile Include="IAssetmanagerNeeded.cs" />
     <Compile Include="IState.cs" />
+    <Compile Include="NanoEngineInit.cs" />
     <Compile Include="ObjectTypes\LevelContents\Layer.cs" />
     <Compile Include="ObjectTypes\LevelContents\TileMap.cs" />
     <Compile Include="StateManagement\StateMachine\IStateMachine.cs" />

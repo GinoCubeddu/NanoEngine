@@ -45,24 +45,14 @@ namespace NanoEngine
         protected override void Initialize()
         {
             this.IsMouseVisible = true;
-            ContentManagerLoad.Manager.Intinalise(Content);
-
             LevelLoader.AddLevelAsset<DirtTile>(1);
             LevelLoader.AddLevelAsset<GrassTile>(2);
             LevelLoader.AddLevelAsset<ChestAsset>(3);
             LevelLoader.AddLevelAsset<CoinAsset>(4);
             LevelLoader.AddLevelAsset<TestAsset, TestMind>(5, "player");
 
-            Camera2D.SetViewport(GraphicsDevice.Viewport);
-
+            NanoEngineInit.Initialize(GraphicsDevice, this, Content);
             SceneManager.Manager.setStartScreen<TestGameScreen>();
-
-            // TODO: Add your initialization logic here
-            IRenderManager renderManager = new RenderManager(this);
-            Components.Add((IGameComponent)renderManager);
-
-            IUpdateManager updateManager = new UpdateManager(this);
-            Components.Add((IGameComponent)updateManager);
             
             base.Initialize();
         }

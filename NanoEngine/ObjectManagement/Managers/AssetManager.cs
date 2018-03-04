@@ -165,6 +165,12 @@ namespace NanoEngine.ObjectManagement.Managers
             ILevelLoader loader = new LevelLoader();
             loader.LoadTileMap(filename, _assetDictionary, _aiComponents, _assetFactory, _aiFactory, _uid);
             _quadTree = new QuadTree(2, 5, loader.LevelBounds);
+
+            foreach (IAiComponent aiComponent in _aiComponents.Values)
+            {
+                if (aiComponent is IAssetmanagerNeeded)
+                    (aiComponent as IAssetmanagerNeeded).AssetManager = this;
+            }
         }
 
         /// <summary>

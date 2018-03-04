@@ -39,7 +39,7 @@ namespace NanoEngine.ObjectManagement.Managers
             _aiComponents = new Dictionary<string, IAiComponent>();
             _assetFactory = new AssetFactory();
             _aiFactory = new AiFactory();
-            _quadTree = new QuadTree(2, 5, new Rectangle(0, 0, 800, 1000));
+            _quadTree = new QuadTree(2, 5, RenderManager.RenderBounds);
             QuadTree.DrawQuadTrees = true;
             _collisionManager = new CollisionManager();
         }
@@ -164,6 +164,7 @@ namespace NanoEngine.ObjectManagement.Managers
         {
             ILevelLoader loader = new LevelLoader();
             loader.LoadTileMap(filename, _assetDictionary, _aiComponents, _assetFactory, _aiFactory, _uid);
+            _quadTree = new QuadTree(2, 5, loader.LevelBounds);
         }
 
         /// <summary>

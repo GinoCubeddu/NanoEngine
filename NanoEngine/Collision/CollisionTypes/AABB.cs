@@ -17,7 +17,6 @@ namespace NanoEngine.Collision.CollisionTypes
         /// <returns>A boolean value telling us if there has been a collision</returns>
         public bool CheckCollision(IAsset asset1, IAsset asset2)
         {
-            Console.WriteLine("CHECKING THROUGH AABB");
             // IF left side of object one is LESS THAN right side of object two AND
             // IF right side of object one is GREATER than left side of object two AND
             // IF top side of object one is LESS THAN bottom side of object two AND

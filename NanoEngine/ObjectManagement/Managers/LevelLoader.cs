@@ -11,7 +11,7 @@ using NanoEngine.Testing.Assets;
 
 namespace NanoEngine.ObjectManagement.Managers
 {
-    class LevelLoader : ILevelLoader
+    public class LevelLoader : ILevelLoader
     {
         // Provides access to the level bounds
         public Rectangle LevelBounds { get; private set; }

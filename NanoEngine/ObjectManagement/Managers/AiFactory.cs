@@ -18,12 +18,19 @@ namespace NanoEngine.ObjectManagement.Managers
         public IAiComponent CreateAi<T>() where T : IAiComponent, new()
         {
             //Create new AI
-            IAiComponent AI = new T();
+            IAiComponent ai = new T();
             //Check if its certian things
-            EventManager.Manager.AddDelegates(AI);
+            EventManager.Manager.AddDelegates(ai);
             //Add AI to list
             //Return AI
-            return AI;
+            return ai;
+        }
+
+        public IAiComponent CreateAi(Type aiType)
+        {
+            IAiComponent ai = (IAiComponent) Activator.CreateInstance(aiType);
+            EventManager.Manager.AddDelegates(ai);
+            return ai;
         }
     }
 }

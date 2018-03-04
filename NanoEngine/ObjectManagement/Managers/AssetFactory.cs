@@ -20,15 +20,27 @@ namespace NanoEngine.ObjectManagement.Managers
         public IAsset RetriveNewAsset<T>(string uName, Vector2 position) where T : IAsset, new()
         {
             //Create new entity
-            IAsset ent = new T();
+            IAsset asset = new T();
             //set the start position
-            ent.SetPosition(position);
-
-            ent.Initilise();
-
-            ent.SetUniqueData(uName);
+            InitiliseAsset(asset, uName, position);
             //Increase and set unquie id and name
-            return ent;
+            return asset;
+        }
+
+        public IAsset RetriveNewAsset(Type assetType, string uName, Vector2 position)
+        {
+            IAsset asset = (IAsset) Activator.CreateInstance(assetType);
+            InitiliseAsset(asset, uName, position);
+            return asset;
+        }
+
+        private void InitiliseAsset(IAsset asset, string uName, Vector2 position)
+        {
+            asset.SetPosition(position);
+
+            asset.Initilise();
+
+            asset.SetUniqueData(uName);
         }
     }
 }

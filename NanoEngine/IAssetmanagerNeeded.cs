@@ -6,7 +6,7 @@ using NanoEngine.ObjectManagement.Interfaces;
 
 namespace NanoEngine
 {
-    interface IAssetmanagerNeeded
+    public interface IAssetmanagerNeeded
     {
         IAssetManager AssetManager { set; }
     }

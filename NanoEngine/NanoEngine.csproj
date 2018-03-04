@@ -80,6 +80,8 @@
     <Compile Include="IAnimation.cs" />
     <Compile Include="IAssetmanagerNeeded.cs" />
     <Compile Include="IState.cs" />
+    <Compile Include="ObjectTypes\LevelContents\Layer.cs" />
+    <Compile Include="ObjectTypes\LevelContents\TileMap.cs" />
     <Compile Include="StateManagement\StateMachine\IStateMachine.cs" />
     <Compile Include="Menus\IMenu.cs" />
     <Compile Include="Menus\IMenuItem.cs" />
@@ -88,17 +90,15 @@
     <Compile Include="ObjectManagement\Interfaces\IAiFactory.cs" />
     <Compile Include="ObjectManagement\Interfaces\IAssetFactory.cs" />
     <Compile Include="ObjectManagement\Interfaces\IAssetManager.cs" />
-    <Compile Include="ObjectManagement\Interfaces\ITileManager.cs" />
+    <Compile Include="ObjectManagement\Interfaces\ILevelLoader.cs" />
     <Compile Include="ObjectManagement\Managers\AiFactory.cs" />
     <Compile Include="ObjectManagement\Managers\AssetFactory.cs" />
     <Compile Include="ObjectManagement\Managers\AssetManager.cs" />
-    <Compile Include="ObjectManagement\Managers\TileManager.cs" />
+    <Compile Include="ObjectManagement\Managers\LevelLoader.cs" />
     <Compile Include="ObjectTypes\Assets\Control\AIComponent.cs" />
     <Compile Include="ObjectTypes\Assets\Entity.cs" />
     <Compile Include="ObjectTypes\Assets\Control\IAIComponent.cs" />
     <Compile Include="ObjectTypes\Assets\IAsset.cs" />
-    <Compile Include="ObjectTypes\Assets\ITile.cs" />
-    <Compile Include="ObjectTypes\Assets\Tile.cs" />
     <Compile Include="ObjectTypes\Control\IKeyboardWanted.cs" />
     <Compile Include="ObjectTypes\General\GameScreen.cs" />
     <Compile Include="ObjectTypes\Assets\IEntity.cs" />
@@ -120,7 +120,9 @@
     <Compile Include="Testing\States\ChaseState.cs" />
     <Compile Include="Testing\States\CheerState.cs" />
     <Compile Include="Testing\States\HorizontalState.cs" />
+    <Compile Include="Testing\Tiles\ChestAsset.cs" />
     <Compile Include="Testing\Tiles\DirtTile.cs" />
+    <Compile Include="Testing\Tiles\CoinAsset.cs" />
     <Compile Include="Testing\Tiles\GrassTile.cs" />
     <Compile Include="Testing\States\IdleState.cs" />
     <Compile Include="Testing\States\PatrolState.cs" />
@@ -146,7 +148,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Chest.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\coin_16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Dirt.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Dirt_Tile.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\GrassMid.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Grass_Tile.png">
@@ -173,7 +187,7 @@
     <Folder Include="ObjectTypes\Events\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\TestLevel.json">
+    <None Include="Content\Level2.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

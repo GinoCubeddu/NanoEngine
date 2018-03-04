@@ -92,8 +92,6 @@
     <Compile Include="ObjectTypes\Assets\Entity.cs" />
     <Compile Include="ObjectTypes\Assets\Control\IAIComponent.cs" />
     <Compile Include="ObjectTypes\Assets\IAsset.cs" />
-    <Compile Include="ObjectTypes\Assets\ITile.cs" />
-    <Compile Include="ObjectTypes\Assets\Tile.cs" />
     <Compile Include="ObjectTypes\Control\IKeyboardWanted.cs" />
     <Compile Include="ObjectTypes\General\GameScreen.cs" />
     <Compile Include="ObjectTypes\Assets\IEntity.cs" />

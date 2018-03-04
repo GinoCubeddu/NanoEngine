@@ -10,6 +10,7 @@ namespace NanoEngine.Core.Managers
 {
     public class RenderManager : GameComponent, IRenderManager
     {
+        public static Rectangle RenderBounds { get; private set; }
         
         //private static field to hold the instace of Game1
         private static Game _game1;
@@ -53,6 +54,7 @@ namespace NanoEngine.Core.Managers
             if (Created)
                 throw new Exception("Only one instance of the RenderManager may be created");
             _game1 = game;
+            RenderBounds = GetGD.Viewport.Bounds;
             _blankTexture = new Texture2D(GetGD, 1, 1);
             _blankTexture.SetData<Color>(new Color[] { Color.Black });
             Created = true;

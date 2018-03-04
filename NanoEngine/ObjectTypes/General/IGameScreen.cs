@@ -12,6 +12,9 @@ namespace NanoEngine.ObjectTypes.General
         // Returns the current camera of the screen
         ICamera2D Camera2D { get; }
 
+        // Returns the current amount of update time this screen has had
+        double LevelTimer { get; }
+
         /// <summary>
         /// Method to load the staring content of the screen
         /// </summary>
@@ -31,6 +34,7 @@ namespace NanoEngine.ObjectTypes.General
         /// <summary>
         /// Method to update the GameScreen
         /// </summary>
-        void UpdateScreen();
+        /// <param name="updateManager">Provides a refrence to the updateManager.</param>
+        void UpdateScreen(IUpdateManager updateManager);
     }
 }

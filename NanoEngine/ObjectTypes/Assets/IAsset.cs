@@ -13,6 +13,9 @@ namespace NanoEngine.ObjectTypes.Assets
         // Getter for the texture of the entity
         Texture2D Texture { get; }
 
+        // Property to state if the asset wants to be drawn/updated
+        bool Despawn { get; set; }
+
         // getter for the position
         Vector2 Position { get; set; }
 

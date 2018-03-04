@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.ObjectManagement.Interfaces
 {
     public interface ILevelLoader
     {
+        // Provides access to the level bounds
+        Rectangle LevelBounds { get; }
+
         /// <summary>
         /// Loads the requested tile map assets and aiComponets into the passed in
         /// dictonaries

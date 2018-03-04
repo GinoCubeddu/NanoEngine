@@ -17,7 +17,6 @@ namespace NanoEngine.Collision.CollisionTypes
         /// <returns>A boolean value telling us if there has been a collision</returns>
         public bool CheckCollision(IAsset asset1, IAsset asset2)
         {
-            Console.WriteLine("CHECKING THROUGH SAT");
             // Get the points of the two collidables, if no points are defined use
             // points generated from the bounding box
             IList<Vector2> asset1Points = asset1.Points ?? asset1.GetPointsFromBounds();

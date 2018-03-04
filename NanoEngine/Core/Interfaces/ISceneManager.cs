@@ -15,6 +15,9 @@ namespace NanoEngine.Core.Interfaces
         /// <typeparam name="T">Screen of type IGameScreen</typeparam>
         void ChangeScreen<T>() where T : IGameScreen, new();
 
+        // Getter to retrive the current gamescreen
+        IGameScreen CurrentGameScreen { get; }
+
         //Getter to return the dimentions of the screen
         Vector2 ScreenDimentions { get; }
 
@@ -39,6 +42,7 @@ namespace NanoEngine.Core.Interfaces
         /// <summary>
         /// Method to update the objects on the screen
         /// </summary>
-        void Update();
+        /// <param name="updateManager">Provides a refrence to the updateManager.</param>
+        void Update(IUpdateManager updateManager);
     }
 }

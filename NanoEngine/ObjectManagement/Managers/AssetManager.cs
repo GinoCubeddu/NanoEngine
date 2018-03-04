@@ -39,7 +39,7 @@ namespace NanoEngine.ObjectManagement.Managers
             _aiComponents = new Dictionary<string, IAiComponent>();
             _assetFactory = new AssetFactory();
             _aiFactory = new AiFactory();
-            _quadTree = new QuadTree(2, 5, new Rectangle(0, 0, 800, 1000));
+            _quadTree = new QuadTree(2, 5, RenderManager.RenderBounds);
             QuadTree.DrawQuadTrees = true;
             _collisionManager = new CollisionManager();
         }
@@ -164,6 +164,7 @@ namespace NanoEngine.ObjectManagement.Managers
         {
             ILevelLoader loader = new LevelLoader();
             loader.LoadTileMap(filename, _assetDictionary, _aiComponents, _assetFactory, _aiFactory, _uid);
+            _quadTree = new QuadTree(2, 5, loader.LevelBounds);
         }
 
         /// <summary>
@@ -174,6 +175,9 @@ namespace NanoEngine.ObjectManagement.Managers
             _quadTree.Clear();
             foreach (IAsset asset in _assetDictionary.Values)
             {
+                if (asset.Despawn)
+                    continue;
+
                 if (asset is ICollidable)
                     _quadTree.Insert(asset);
                 asset.Draw(rendermanager);
@@ -201,6 +205,9 @@ namespace NanoEngine.ObjectManagement.Managers
             {
                 if (asset is ICollidable)
                 {
+                    if (asset.Despawn)
+                        continue;
+
                     // If the asset is a colidable then we want to get all possible collidables
                     IList<IAsset> possibleCollidables = _quadTree.RetriveCollidables(asset);
 
@@ -247,7 +254,8 @@ namespace NanoEngine.ObjectManagement.Managers
         {
             foreach (IAiComponent item in _aiComponents.Values)
             {
-                item.Update();
+                if (!item.ControledAsset.Despawn)
+                    item.Update();
             }
         }
 

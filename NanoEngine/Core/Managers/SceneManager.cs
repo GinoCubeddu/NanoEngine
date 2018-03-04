@@ -36,11 +36,14 @@ namespace NanoEngine.Core.Managers
             get { return screenDimentions; }
         }
 
-        //private list of type IEntity to hold the current entitys on the screen
-        private List<IEntity> entitys;
-
         //private fielf to hold the current screen
         private IGameScreen currentScreen;
+
+        public IGameScreen CurrentGameScreen
+        {
+            get { return currentScreen; }
+        }
+
 
         //private field for pause screen
         private IGameScreen pauseScreen;
@@ -131,13 +134,13 @@ namespace NanoEngine.Core.Managers
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        public void Update()
+        /// <param name="updateManager">Provides a refrence to the updateManager.</param>
+        public void Update(IUpdateManager updateManager)
         {
             if (currentScreen != null)
             {
                 //Update the current screen
-                currentScreen.UpdateScreen();
+                currentScreen.UpdateScreen(updateManager);
             }
         }
 

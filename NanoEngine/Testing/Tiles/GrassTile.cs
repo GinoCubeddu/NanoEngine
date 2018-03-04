@@ -9,11 +9,14 @@ using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Testing.Tiles
 {
-    class GrassTile : Tile
+    class GrassTile : Entity
     {
-        public GrassTile()
+        /// <summary>
+        /// Method to initalise the the entity
+        /// </summary>
+        public override void Initilise()
         {
-            Texture = ContentManagerLoad.Manager.LoadResource<Texture2D>("Grass_Tile");
+            SetTexture(ContentManagerLoad.Manager.LoadResource<Texture2D>("GrassMid"));
         }
     }
 }

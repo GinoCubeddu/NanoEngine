@@ -78,6 +78,14 @@ namespace NanoEngine.ObjectManagement.Interfaces
             where U : IAiComponent, new();
 
         /// <summary>
+        /// Load all the assets from a json file. All ids of all assets within the
+        /// json file MUST be added through the static methods of the LevelLoader
+        /// class first
+        /// </summary>
+        /// <param name="filename">The name of the json file within the Content directory</param>
+        void LoadLevel(string filename);
+
+        /// <summary>
         /// Draws all the assets on the screen if they are "spawned" in
         /// </summary>
         void DrawAssets(IRenderManager rendermanager);

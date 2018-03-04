@@ -77,19 +77,18 @@ namespace NanoEngine.ObjectTypes.Assets
         /// <param name="position">Vector2 containg the position</param>
         public void SetPosition(Vector2 position)
         {
-            if (_position == null)
-                _position = position;
-            else
-            {
-                _position.X += position.X;
-                _position.Y += position.Y;
+            _position = position;
+            //else
+            //{
+            //    _position.X += position.X;
+            //    _position.Y += position.Y;
 
-                if (Points != null)
-                    for (int i = 0; i < Points.Count; i++)
-                    {
-                        Points[i] = new Vector2(Points[i].X + position.X, Points[i].Y + position.Y);
-                    }
-            }
+            //    if (Points != null)
+            //        for (int i = 0; i < Points.Count; i++)
+            //        {
+            //            Points[i] = new Vector2(Points[i].X + position.X, Points[i].Y + position.Y);
+            //        }
+            //}
             UpdateBounds();
         }
 

@@ -101,6 +101,7 @@ namespace NanoEngine.Testing.Assets
 
         public override void Update()
         {
+            Console.WriteLine(controledEntity.Position);
             _StateMachine.Update();
             Timer++;
         }

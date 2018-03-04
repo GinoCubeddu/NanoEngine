@@ -20,27 +20,16 @@ namespace NanoEngine
 {
     class TestGameScreen : GameScreen, IKeyboardWanted
     {
-        private ITileManager tileManager;
+        private ILevelLoader tileManager;
 
         protected override void Draw(IRenderManager renderManager)
         {
-            tileManager.DrawTileMap(renderManager);
         }
 
         public override void LoadContent()
         {
-            _assetManager.CreateAsset<Hex, BlankMind>("hex", new Vector2(300, 300));
-            _assetManager.CreateAsset<Hex, HexMind>("controlableHex", new Vector2(20, 256));
-            _assetManager.CreateAsset<TestAsset, TestMind>("player", new Vector2(20, 256));
-            _assetManager.CreateAsset<ZombieAsset, ZombieMind>("zombie", new Vector2(350, 0));
-            _assetManager.CreateAsset<ZombieAsset, ZombieMind>(new Vector2(350, 150));
-            _assetManager.CreateAsset<ZombieAsset, ZombieMind>(new Vector2(350, 256));
-            tileManager = new TileManager();
-            tileManager.AddTile<DirtTile>("dirt_tile");
-            tileManager.AddTile<GrassTile>("grass_tile");
-            tileManager.LoadTileMap("TestLevel", 7);
+            _assetManager.LoadLevel("Level2");
             AddCamera("player", _assetManager.RetriveAsset("player"));
-            AddCamera("zombie", _assetManager.RetriveAsset("zombie"));
         }
 
         protected override void Update()
@@ -59,8 +48,6 @@ namespace NanoEngine
             {
                 if (args.TheKeys[KeyStates.Pressed].Contains(Keys.D1))
                     ChangeCamera("player");
-                else if (args.TheKeys[KeyStates.Pressed].Contains(Keys.D2))
-                    ChangeCamera("zombie");
             }
         }
     }

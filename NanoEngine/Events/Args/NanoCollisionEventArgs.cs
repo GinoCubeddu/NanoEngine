@@ -8,7 +8,7 @@ using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Events.Args
 {
-    class NanoCollisionEventArgs : EventArgs
+    public class NanoCollisionEventArgs : EventArgs
     {
         // The asset that the object has collided with
         public IAsset CollidedWith { get; set; }

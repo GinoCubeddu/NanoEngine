@@ -45,8 +45,8 @@ namespace NanoEngine
         protected override void Initialize()
         {
             this.IsMouseVisible = true;
-            LevelLoader.AddLevelAsset<DirtTile>(1);
-            LevelLoader.AddLevelAsset<GrassTile>(2);
+            LevelLoader.AddLevelAsset<DirtTile, TileMind>(1);
+            LevelLoader.AddLevelAsset<GrassTile, TileMind>(2);
             LevelLoader.AddLevelAsset<ChestAsset>(3);
             LevelLoader.AddLevelAsset<CoinAsset>(4);
             LevelLoader.AddLevelAsset<TestAsset, TestMind>(5, "player");

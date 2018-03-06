@@ -43,6 +43,7 @@
     <Compile Include="Collision\CollidableTypes\ICollidable.cs" />
     <Compile Include="Collision\CollidableTypes\ICollisionResponder.cs" />
     <Compile Include="Collision\CollidableTypes\ISATColidable.cs" />
+    <Compile Include="Collision\CollisionSide.cs" />
     <Compile Include="Collision\CollisionTypes\AABB.cs" />
     <Compile Include="Collision\CollisionTypes\IAABB.cs" />
     <Compile Include="Collision\CollisionTypes\ICollisionType.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Core\Managers\SoundManager.cs" />
     <Compile Include="Core\Managers\UpdateManager.cs" />
     <Compile Include="Core\States\CurrentGameState.cs" />
+    <Compile Include="Events\Args\NanoCollisionEventArgs.cs" />
     <Compile Include="Events\Args\NanoKeyboardEventArgs.cs" />
     <Compile Include="Events\Args\NanoMouseEventArgs.cs" />
     <Compile Include="Events\Args\NanoMouseReleasedArgs.cs" />

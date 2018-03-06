@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NanoEngine.Collision.CollidableTypes;
 using NanoEngine.Collision.CollisionTypes;
+using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Collision.Manager
@@ -35,19 +36,19 @@ namespace NanoEngine.Collision.Manager
         {
             foreach (Tuple<IAsset, IAiComponent> possibleCollision in possibleCollisions)
             {
-                bool collision = false;
+                Tuple<NanoCollisionEventArgs, NanoCollisionEventArgs> collision = null;
                 if (asset.Item1 is IAABBColidable && possibleCollision.Item1 is IAABBColidable)
                     collision = _aabb.CheckCollision(asset.Item1, possibleCollision.Item1);
                 else
                     collision = _sat.CheckCollision(asset.Item1, possibleCollision.Item1);
 
-                if (collision)
+                if (collision != null)
                 {
                     (asset.Item2 as ICollisionResponder)?.CollisionResponse(
-                        new CollisionResponse(possibleCollision.Item1)
+                        collision.Item1
                     );
                     (possibleCollision.Item2 as ICollisionResponder)?.CollisionResponse(
-                        new CollisionResponse(asset.Item1)    
+                        collision.Item2
                     );
                 }
             }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Collision.CollisionTypes
@@ -15,6 +16,6 @@ namespace NanoEngine.Collision.CollisionTypes
         /// <param name="asset1">The first asset to be checked against</param>
         /// <param name="asset2">The second asset to be checked against</param>
         /// <returns>A boolean value telling us if there has been a collision</returns>
-        bool CheckCollision(IAsset asset1, IAsset asset2);
+        Tuple<NanoCollisionEventArgs, NanoCollisionEventArgs> CheckCollision(IAsset asset1, IAsset asset2);
     }
 }

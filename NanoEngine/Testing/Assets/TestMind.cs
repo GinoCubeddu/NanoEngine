@@ -101,7 +101,6 @@ namespace NanoEngine.Testing.Assets
 
         public override void Update()
         {
-            Console.WriteLine(controledEntity.Position);
             _StateMachine.Update();
             Timer++;
         }
@@ -111,9 +110,9 @@ namespace NanoEngine.Testing.Assets
             _StateMachine.HandleKeyboardInput(args);
         }
 
-        public void CollisionResponse(CollisionResponse response)
+        public void CollisionResponse(NanoCollisionEventArgs response)
         {
-            Console.WriteLine("I am colliding with the " + response.Asset.UniqueName + " Asset");
+            Console.WriteLine("PLAYER: " + response.CollisionSide);
         }
     }
 }

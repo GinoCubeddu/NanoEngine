@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NanoEngine.Core.Interfaces;
+using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Collision.CollisionTypes
@@ -15,7 +16,7 @@ namespace NanoEngine.Collision.CollisionTypes
         /// <param name="asset1">The first asset to be checked against</param>
         /// <param name="asset2">The second asset to be checked against</param>
         /// <returns>A boolean value telling us if there has been a collision</returns>
-        public bool CheckCollision(IAsset asset1, IAsset asset2)
+        public Tuple<NanoCollisionEventArgs, NanoCollisionEventArgs> CheckCollision(IAsset asset1, IAsset asset2)
         {
             // Get the points of the two collidables, if no points are defined use
             // points generated from the bounding box
@@ -24,8 +25,8 @@ namespace NanoEngine.Collision.CollisionTypes
 
             // If either of the overlap checks return false then there is no overlap
             if (!CheckOverLap(asset1Points, asset2Points) || !CheckOverLap(asset2Points, asset1Points))
-                return false;
-            return true;
+                return null;
+            return null;
         }
 
         /// <summary>

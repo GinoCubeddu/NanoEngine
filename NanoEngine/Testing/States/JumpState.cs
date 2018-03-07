@@ -1,36 +1,30 @@
-﻿using NanoEngine;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Testing.States
 {
-    public class WalkingState<T> : IState<T> where T : IAiComponent
+    class JumpState : IState<IAiComponent>
     {
-        private readonly string _animationState;
-
-        private readonly int _direction;
-
-        public bool IsSuccess { get; }
-
-        public WalkingState(string animationState, int direction)
-        {
-            _animationState = animationState;
-            _direction = direction;
-        }
+        public bool IsSuccess { get; private set; }
 
         /// <summary>
         /// Method that gets called at the begining of each state
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Enter(T owner)
+        public void Enter(IAiComponent owner)
         {
-            Console.WriteLine("Entering WalkingState");
-            owner.ControledAsset.AssetAnimation.ChangeAnimationState(_animationState);
+            (owner.ControledAsset as PhysicsEntity).ApplyForce(new Vector2(
+                0, -5    
+            ));
+
+            (owner.ControledAsset as PhysicsEntity).Gravity = new Vector2(0, 0.7f);
+            IsSuccess = true;
         }
 
         /// <summary>
@@ -38,9 +32,9 @@ namespace NanoEngine.Testing.States
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Exit(T owner)
+        public void Exit(IAiComponent owner)
         {
-            Console.WriteLine("Exiting WalkingState");
+
         }
 
         /// <summary>
@@ -48,11 +42,9 @@ namespace NanoEngine.Testing.States
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Update(T owner)
+        public void Update(IAiComponent owner)
         {
-            (owner.ControledAsset as PhysicsEntity)?.ApplyForce(
-                new Vector2(0.5f * _direction, 0)
-            );
+
         }
     }
 }

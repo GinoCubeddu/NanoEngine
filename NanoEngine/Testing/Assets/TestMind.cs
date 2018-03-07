@@ -36,6 +36,23 @@ namespace NanoEngine.Testing.Assets
             _StateMachine.AddState(new WalkingState<IAiComponent>("runLeft", -1), "runLeft");
             _StateMachine.AddState(new HorizontalState<IAiComponent>("runRight", -1), "runUp");
             _StateMachine.AddState(new HorizontalState<IAiComponent>("runLeft", 1), "runDown");
+            _StateMachine.AddState(new JumpState(), "jump");
+
+
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Pressed, new List<Keys>() { Keys.Space }, "idle", "jump"
+            );
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Pressed, new List<Keys>() { Keys.Space }, "runRight", "jump"
+            );
+            _StateMachine.AddKeyboardTransition(
+                KeyStates.Pressed, new List<Keys>() { Keys.Space }, "runLeft", "jump"
+            );
+            _StateMachine.AddSuccessTransition(
+                "jump", "idle"
+            );
+
+
             _StateMachine.AddKeyboardTransition(
                 KeyStates.Pressed, new List<Keys>() { Keys.D }, "idle", "runRight"
             );

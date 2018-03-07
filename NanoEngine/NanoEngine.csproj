@@ -85,10 +85,13 @@
     <Compile Include="Game1.cs" />
     <Compile Include="IAnimation.cs" />
     <Compile Include="IAssetmanagerNeeded.cs" />
+    <Compile Include="Physics\IPhysicsManager.cs" />
     <Compile Include="IState.cs" />
     <Compile Include="NanoEngineInit.cs" />
+    <Compile Include="ObjectTypes\Assets\PhysicsEntity.cs" />
     <Compile Include="ObjectTypes\LevelContents\Layer.cs" />
     <Compile Include="ObjectTypes\LevelContents\TileMap.cs" />
+    <Compile Include="Physics\PhysicsManager.cs" />
     <Compile Include="StateManagement\StateMachine\IStateMachine.cs" />
     <Compile Include="Menus\IMenu.cs" />
     <Compile Include="Menus\IMenuItem.cs" />
@@ -126,6 +129,7 @@
     <Compile Include="Testing\States\ChaseState.cs" />
     <Compile Include="Testing\States\CheerState.cs" />
     <Compile Include="Testing\States\HorizontalState.cs" />
+    <Compile Include="Testing\States\JumpState.cs" />
     <Compile Include="Testing\Tiles\ChestAsset.cs" />
     <Compile Include="Testing\Tiles\DirtTile.cs" />
     <Compile Include="Testing\Tiles\CoinAsset.cs" />

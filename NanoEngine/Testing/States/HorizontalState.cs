@@ -50,9 +50,8 @@ namespace NanoEngine.Testing.States
         /// <param name="owner">The AI that owns the state</param>
         public void Update(T owner)
         {
-            owner.ControledAsset.SetPosition(new Vector2(
-                owner.ControledAsset.Position.X,
-                owner.ControledAsset.Position.Y + 4 * _direction
+            (owner.ControledAsset as PhysicsEntity)?.ApplyForce(new Vector2(
+                0, 0.2f * _direction
             ));
         }
     }

@@ -12,6 +12,7 @@ using NanoEngine.ObjectManagement.Interfaces;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.Core.Interfaces;
 using NanoEngine.Core.Managers;
+using NanoEngine.Physics;
 using OpenTK.Graphics.ES20;
 
 namespace NanoEngine.ObjectManagement.Managers
@@ -32,6 +33,8 @@ namespace NanoEngine.ObjectManagement.Managers
 
         private ICollisionManager _collisionManager;
 
+        private IPhysicsManager _physicsManager;
+
         public AssetManager()
         {
             _uid = 0;
@@ -42,6 +45,7 @@ namespace NanoEngine.ObjectManagement.Managers
             _quadTree = new QuadTree(2, 5, RenderManager.RenderBounds);
             QuadTree.DrawQuadTrees = true;
             _collisionManager = new CollisionManager();
+            _physicsManager = new PhysicsManager();
         }
 
         /// <summary>
@@ -261,6 +265,7 @@ namespace NanoEngine.ObjectManagement.Managers
         /// </summary>
         public void UpdateAssets()
         {
+            _physicsManager.UpdatePhysics(_assetDictionary.Values.ToList());
             IList<string> aiKeys = _aiComponents.Keys.ToList();
             foreach (string aiName in aiKeys)
             {

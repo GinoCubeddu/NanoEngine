@@ -10,7 +10,7 @@ using NanoEngine.Collision.CollidableTypes;
 
 namespace NanoEngine.Testing.Assets
 {
-    class TestAsset : Entity, IAABBColidable
+    class TestAsset : PhysicsEntity, IAABBColidable
     {
         public override void Initilise()
         {

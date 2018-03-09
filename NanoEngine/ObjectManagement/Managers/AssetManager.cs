@@ -12,6 +12,7 @@ using NanoEngine.ObjectManagement.Interfaces;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.Core.Interfaces;
 using NanoEngine.Core.Managers;
+using NanoEngine.Events.Interfaces;
 using NanoEngine.Physics;
 using OpenTK.Graphics.ES20;
 
@@ -35,13 +36,14 @@ namespace NanoEngine.ObjectManagement.Managers
 
         private IPhysicsManager _physicsManager;
 
-        public AssetManager()
+
+        public AssetManager(IEventManager eventManager)
         {
             _uid = 0;
             _assetDictionary = new Dictionary<string, IAsset>();
             _aiComponents = new Dictionary<string, IAiComponent>();
             _assetFactory = new AssetFactory();
-            _aiFactory = new AiFactory();
+            _aiFactory = new AiFactory(eventManager);
             _quadTree = new QuadTree(2, 5, RenderManager.RenderBounds);
             QuadTree.DrawQuadTrees = true;
             _collisionManager = new CollisionManager();
@@ -174,6 +176,7 @@ namespace NanoEngine.ObjectManagement.Managers
             {
                 if (aiComponent is IAssetmanagerNeeded)
                     (aiComponent as IAssetmanagerNeeded).AssetManager = this;
+                aiComponent.InitialiseAiComponent(aiComponent.ControledAsset);
             }
         }
 

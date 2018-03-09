@@ -11,29 +11,18 @@ namespace NanoEngine.Events
     public class EventManager : IEventManager
     {
         //List to hold the the handlers
-        private static List<IHandler> handlers;
-
-        //Filed to hold instance to the handler
-        private static IEventManager manager;
-
-        /// <summary>
-        /// Getter to return the manager 
-        /// </summary>
-        public static IEventManager Manager
-        {
-            get { return manager ?? (manager = new EventManager()); }
-        }
+        private IList<IHandler> _handlers;
 
         /// <summary>
         /// Private constructor so it can only be created inside by the getter
         /// </summary>
-        private EventManager()
+        public EventManager()
         {
             //Initialise the instance variables
-            handlers = new List<IHandler>();
+            _handlers = new List<IHandler>();
             //Add handlers to list
-            handlers.Add(new MouseHandler());
-            handlers.Add(new KeyboardHandler());
+            _handlers.Add(new MouseHandler());
+            _handlers.Add(new KeyboardHandler());
         }
 
         /// <summary>
@@ -44,14 +33,14 @@ namespace NanoEngine.Events
         {
             if(obj is IMouseWanted)
             {
-                (handlers[0] as IMouseHandler).GetOnMouseDown += (obj as IMouseWanted).OnMouseDown;
-                (handlers[0] as IMouseHandler).GetOnMouseUp += (obj as IMouseWanted).OnMouseUp;
-                (handlers[0] as IMouseHandler).GetOnMouseMoved += (obj as IMouseWanted).OnMouseMoved;
+                (_handlers[0] as IMouseHandler).GetOnMouseDown += (obj as IMouseWanted).OnMouseDown;
+                (_handlers[0] as IMouseHandler).GetOnMouseUp += (obj as IMouseWanted).OnMouseUp;
+                (_handlers[0] as IMouseHandler).GetOnMouseMoved += (obj as IMouseWanted).OnMouseMoved;
             }
 
             if (obj is IKeyboardWanted)
             {
-                (handlers[1] as IKeyboardHandler).GetOnKeyboardChanged += (obj as IKeyboardWanted).OnKeyboardChange;
+                (_handlers[1] as IKeyboardHandler).GetOnKeyboardChanged += (obj as IKeyboardWanted).OnKeyboardChange;
             }
         }
 
@@ -63,14 +52,14 @@ namespace NanoEngine.Events
         {
             if (obj is IMouseWanted)
             {
-                (handlers[0] as IMouseHandler).GetOnMouseDown -= (obj as IMouseWanted).OnMouseDown;
-                (handlers[0] as IMouseHandler).GetOnMouseUp -= (obj as IMouseWanted).OnMouseUp;
-                (handlers[0] as IMouseHandler).GetOnMouseMoved -= (obj as IMouseWanted).OnMouseMoved;
+                (_handlers[0] as IMouseHandler).GetOnMouseDown -= (obj as IMouseWanted).OnMouseDown;
+                (_handlers[0] as IMouseHandler).GetOnMouseUp -= (obj as IMouseWanted).OnMouseUp;
+                (_handlers[0] as IMouseHandler).GetOnMouseMoved -= (obj as IMouseWanted).OnMouseMoved;
             }
 
             if (obj is IKeyboardWanted)
             {
-                (handlers[1] as IKeyboardHandler).GetOnKeyboardChanged -= (obj as IKeyboardWanted).OnKeyboardChange;
+                (_handlers[1] as IKeyboardHandler).GetOnKeyboardChanged -= (obj as IKeyboardWanted).OnKeyboardChange;
             }
         }
 
@@ -80,7 +69,7 @@ namespace NanoEngine.Events
         public void Update()
         {
             //Loop through the handlers and update them.
-            foreach(IHandler item in handlers)
+            foreach(IHandler item in _handlers)
             {
                 item.Update();
             }

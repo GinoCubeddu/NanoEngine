@@ -36,5 +36,10 @@ namespace NanoEngine.ObjectTypes.General
         /// </summary>
         /// <param name="updateManager">Provides a refrence to the updateManager.</param>
         void UpdateScreen(IUpdateManager updateManager);
+
+        /// <summary>
+        /// Initialise's the screen
+        /// </summary>
+        void Initialise();
     }
 }

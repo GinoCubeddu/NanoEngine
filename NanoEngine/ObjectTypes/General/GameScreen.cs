@@ -7,19 +7,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NanoEngine.Core.Camera;
+using NanoEngine.Events;
+using NanoEngine.Events.Interfaces;
 using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.ObjectTypes.General
 {
     public abstract class GameScreen : IGameScreen
     {
-        protected IAssetManager _assetManager = new AssetManager();
+        protected IAssetManager _assetManager;
 
         private IDictionary<string, ICamera2D> _cameras;
 
         public ICamera2D Camera2D { get; private set; }
 
         public double LevelTimer { get; private set; }
+
+        protected IEventManager EventManager;
 
         /// <summary>
         /// Adds a camera to the level
@@ -71,6 +75,9 @@ namespace NanoEngine.ObjectTypes.General
         /// </summary>
         public virtual void UnloadContent()
         {
+            EventManager = null;
+            _assetManager = null;
+            _cameras = null;
             ContentManagerLoad.Manager.UnloadAll();
         }
 
@@ -101,11 +108,21 @@ namespace NanoEngine.ObjectTypes.General
         public void UpdateScreen(IUpdateManager updateManager)
         {
             LevelTimer += updateManager.gameTime.ElapsedGameTime.TotalSeconds;
+            EventManager.Update();
             _assetManager.UpdateAssets();
             // If we have a camera then update it
             if (Camera2D != null)
                 Camera2D.Update();
             Update();
+        }
+
+        /// <summary>
+        /// Initialise's the screen
+        /// </summary>
+        public void Initialise()
+        {
+            EventManager = new EventManager();
+            _assetManager = new AssetManager(EventManager);
         }
     }
 }

@@ -5,11 +5,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.Events.Interfaces;
 
 namespace NanoEngine.ObjectManagement.Managers
 {
     public class AiFactory : IAiFactory
     {
+        private IEventManager _eventManager;
+
+        public AiFactory(IEventManager eventManager)
+        {
+            _eventManager = eventManager;
+        }
+
         /// <summary>
         /// Factory method to create an AI
         /// </summary>
@@ -20,16 +28,20 @@ namespace NanoEngine.ObjectManagement.Managers
             //Create new AI
             IAiComponent ai = new T();
             //Check if its certian things
-            EventManager.Manager.AddDelegates(ai);
-            //Add AI to list
+            _eventManager.AddDelegates(ai);
             //Return AI
             return ai;
         }
 
+        /// <summary>
+        /// Factory method to create an AI
+        /// </summary>
+        /// <param name="aiType">The type of ai we want to create</param>
+        /// <returns></returns>
         public IAiComponent CreateAi(Type aiType)
         {
             IAiComponent ai = (IAiComponent) Activator.CreateInstance(aiType);
-            EventManager.Manager.AddDelegates(ai);
+            _eventManager.AddDelegates(ai);
             return ai;
         }
     }

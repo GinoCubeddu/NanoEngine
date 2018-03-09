@@ -60,7 +60,6 @@ namespace NanoEngine.Core.Managers
         public override void Update(GameTime gameTime)
         {
             this.gameTime = gameTime;
-            EventManager.Manager.Update();
             SceneManager.Manager.Update(this);
         }
 

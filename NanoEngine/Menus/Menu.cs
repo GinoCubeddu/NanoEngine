@@ -19,7 +19,7 @@ namespace NanoEngine.Menus
 
         private bool active;
 
-        private SoundEffect sound = ContentManagerLoad.Manager.LoadResource<SoundEffect>("Sounds/rollover3.wav");
+        private SoundEffect sound = ContentManagerLoad.Manager.LoadResource<SoundEffect>("Sounds/rollover3");
 
         public Menu(IList<IMenuItem> list, bool active)
         {
@@ -102,10 +102,8 @@ namespace NanoEngine.Menus
         {
             if (active)
             {
-                if (args.TheKeys[KeyStates.Pressed].Contains(Keys.PageDown))
-                    SoundManager.Manager.ChangeLoopedSoundVolume(-0.1F);
-                else if (args.TheKeys[KeyStates.Pressed].Contains(Keys.PageUp))
-                    SoundManager.Manager.ChangeLoopedSoundVolume(0.1F);
+                if (!args.TheKeys.Keys.Contains(KeyStates.Pressed))
+                    return;
 
                 SoundManager.Manager.PlaySound(sound);
                 if (args.TheKeys[KeyStates.Pressed].Contains(Keys.Up))

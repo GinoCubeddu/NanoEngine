@@ -65,8 +65,6 @@ namespace NanoEngine.Core.Managers
             //Create new screen
             currentScreen = new T();
 
-            EventManager.Manager.AddDelegates(currentScreen);
-
             //load the screesn content
             LoadContent();
         }
@@ -89,6 +87,7 @@ namespace NanoEngine.Core.Managers
         /// </summary>
         protected void LoadContent()
         {
+            currentScreen.Initialise();
             //Loads content from the current screen
             currentScreen.LoadContent();
 
@@ -108,7 +107,6 @@ namespace NanoEngine.Core.Managers
         {
             //Unloads content from the current screen
             currentScreen.UnloadContent();
-            EventManager.Manager.RemoveDelegates(currentScreen);
 
             //unload pause screen if not null
             if (pauseScreen != null)

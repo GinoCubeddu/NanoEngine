@@ -11,20 +11,20 @@ namespace NanoEngine
     public class Animation : IAnimation
     {
         // Dictonary to hold the states
-        private IDictionary<string, IDictionary<string, int>> _states;
+        protected IDictionary<string, IDictionary<string, int>> _states;
 
         // The current animation state
-        private string _currentAninmation;
+        protected string _currentAninmation;
 
         // The current Column within the animation
-        private int _currentColumn;
+        protected int _currentColumn;
 
         // The asset that is being animated
-        private readonly IAsset _animatedAsset;
+        protected readonly IAsset _animatedAsset;
 
-        private float _timer;
+        protected float _timer;
 
-        private float fps;
+        protected float fps;
 
         public Animation(IAsset asset)
         {
@@ -39,7 +39,7 @@ namespace NanoEngine
         /// Draws the animation for the asset
         /// </summary>
         /// <param name="renderManager">RenderManager instance required to draw</param>
-        public void Animate(IRenderManager renderManager)
+        public virtual void Animate(IRenderManager renderManager)
         {
             IDictionary<string, int> animationData = _states[_currentAninmation];
             _timer += (float) renderManager.gameTime.ElapsedGameTime.TotalSeconds;
@@ -74,7 +74,7 @@ namespace NanoEngine
         /// <param name="frameHeight">The height for the animation frame</param>
         /// <param name="spriteSheetRow">The row within the spritesheet</param>
         /// <param name="animationFrameCount">The amount of frames the animation has</param>
-        public void AddState(
+        public virtual void AddState(
             string stateName, int frameWidth, int frameHeight,
             int spriteSheetRow, int animationFrameCount
         )
@@ -94,7 +94,7 @@ namespace NanoEngine
         /// <param name="spriteSheetRow">The row within the spritesheet</param>
         /// <param name="animationFrameCount">The amount of frames the animation has</param>
         /// <param name="framerate">The framerate of the animation</param>
-        public void AddState(
+        public virtual void AddState(
             string stateName, int frameWidth, int frameHeight,
             int spriteSheetRow, int animationFrameCount, int framerate
         )
@@ -121,7 +121,7 @@ namespace NanoEngine
         /// Tells the animation to change to a different state of animation
         /// </summary>
         /// <param name="animationState">The state we want to change to</param>
-        public void ChangeAnimationState(string animationState)
+        public virtual void ChangeAnimationState(string animationState)
         {
             if (animationState == _currentAninmation)
                 return;

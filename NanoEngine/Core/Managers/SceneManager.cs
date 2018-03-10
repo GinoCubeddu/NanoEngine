@@ -100,7 +100,7 @@ namespace NanoEngine.Core.Managers
 
             // Add the screen from the avaliable screens to the updating screens
             _updatingScreens[name] = _avaliableScreens[name];
-            _updatingScreens.Remove(name);
+            _avaliableScreens.Remove(name);
         }
 
         /// <summary>

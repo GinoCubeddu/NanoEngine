@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using NanoEngine.Collision;
 using NanoEngine.Collision.CollidableTypes;
+using NanoEngine.Core.Interfaces;
 using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.ObjectTypes.Assets.Control;
@@ -14,9 +15,12 @@ namespace NanoEngine.Testing.Tiles
 {
     class TileMind : AiComponent, ICollisionResponder
     {
-        public override void Update()
+        /// <summary>
+        /// Method that will update the AI
+        /// </summary>
+        /// <param name="updateManager">an instance of the update manager</param>
+        public override void Update(IUpdateManager updateManager)
         {
-
         }
 
         public override void Initialise()

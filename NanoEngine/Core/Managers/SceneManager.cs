@@ -16,9 +16,20 @@ namespace NanoEngine.Core.Managers
 {
     public class SceneManager : ISceneManager
     {
+        // Holds the currently updating screens
         private IDictionary<string, IGameScreen> _updatingScreens;
+
+        // Holds the screens that are avaialbe but not updating
         private IDictionary<string, IGameScreen> _avaliableScreens;
+
+        // Holds all screens that are marked for deletion
         private IList<IGameScreen> _screensMarkedForDeletion;
+
+        // Getter for the currently updating screens
+        public IDictionary<string, IGameScreen> UpdatingScreens
+        {
+            get { return _updatingScreens; }
+        }
 
         //Private static field holding the refrence to the manager
         private static ISceneManager manager;

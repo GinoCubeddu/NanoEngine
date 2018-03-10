@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using NanoEngine.Core.Interfaces;
 using NanoEngine.ObjectManagement.Interfaces;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.ObjectTypes.Assets.Control;
@@ -16,6 +17,15 @@ namespace NanoEngine.Testing.Assets
         private IStateMachine<IAiComponent> _stateMachine;
 
         public IAssetManager AssetManager { get; set; }
+
+        /// <summary>
+        /// Method that will update the AI
+        /// </summary>
+        /// <param name="updateManager">an instance of the update manager</param>
+        public override void Update(IUpdateManager updateManager)
+        {
+            _stateMachine.Update();
+        }
 
         public override void Initialise()
         {
@@ -68,14 +78,6 @@ namespace NanoEngine.Testing.Assets
             if (Vector2.Distance(controledEntity.Position, playersPosition) < 250)
                 return true;
             return false;
-        }
-
-        /// <summary>
-        /// Method that updates the AI
-        /// </summary>
-        public override void Update()
-        {
-            _stateMachine.Update();
         }
     }
 }

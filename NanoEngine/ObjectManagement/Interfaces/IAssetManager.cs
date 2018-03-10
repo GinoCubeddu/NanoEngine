@@ -93,7 +93,8 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// <summary>
         /// Updates all the minds of the assets if they are "spawned" in
         /// </summary>
-        void UpdateAssets();
+        /// <param name="updateManager">an instance of the update manager</param>
+        void UpdateAssets(IUpdateManager updateManager);
 
         /// <summary>
         /// Deletes the asset and it's mind

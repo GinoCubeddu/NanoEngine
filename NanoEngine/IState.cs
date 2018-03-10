@@ -16,7 +16,7 @@ namespace NanoEngine
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        void Enter(T owner);
+        void Enter(T owner, IDictionary<string, object> stateArguments);
 
         /// <summary>
         /// Method that gets called at the end of each state

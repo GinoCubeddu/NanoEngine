@@ -40,7 +40,7 @@ namespace NanoEngine.StateManagement.StateMachine
             if (_avaliableStates.Count == 0)
             {
                 currentState = stateName;
-                state.Enter(_owner);
+                state.Enter(_owner, null);
             }
                 
             // Only add the state if it does not already exsist
@@ -113,13 +113,55 @@ namespace NanoEngine.StateManagement.StateMachine
         }
 
         /// <summary>
+        /// Adds a transition between states that relys on the asset colliding with a
+        /// certian type
+        /// </summary>
+        /// <param name="stateFrom">The sate to transition from</param>
+        /// <param name="stateTo">The state to transition to</param>
+        /// <param name="collidableType">The type to collide with to transition</param>
+        public void AddCollisionTransition(string stateFrom, string stateTo, Type collidableType)
+        {
+            ValidateTransition(stateFrom, stateTo);
+            CheckTransitionHandlerExsists(stateFrom);
+            _stateTransitions[stateFrom].AddCollisionTransition(stateTo, collidableType);
+        }
+
+        /// <summary>
         /// Allows the state machine to handle any collision events that may
         /// cause the state to change
         /// </summary>
         /// <param name="collisionArgs">Arguments that contain information on the event</param>
-        public void HandleCollision(NanoMouseEventArgs collisionArgs)
+        /// <param name="stateArguments">Holds any arguments the mind has passed to the statemachine</param>
+        public void HandleCollision(NanoCollisionEventArgs collisionArgs, IDictionary<string, object> stateArguments)
         {
-            throw new NotImplementedException();
+            if (_stateTransitions.Keys.Contains(currentState))
+            {
+                ChangeState(_stateTransitions[currentState].CheckCollisionTransitions(collisionArgs), stateArguments);
+            }
+        }
+
+        /// <summary>
+        /// Allows the state machine to handle any collision events that may
+        /// cause the state to change
+        /// </summary>
+        /// <param name="collisionArgs">Arguments that contain information on the event</param>
+        public void HandleCollision(NanoCollisionEventArgs collisionArgs)
+        {
+            HandleCollision(collisionArgs, null);
+        }
+
+        /// <summary>
+        /// Allows the state machine to handle any keyboard events that may
+        /// cause the state to change
+        /// </summary>
+        /// <param name="keyboardArgs">Arguments that contain information on the event</param>
+        /// <param name="stateArguments">Holds any arguments the mind has passed to the statemachine</param>
+        public void HandleKeyboardInput(NanoKeyboardEventArgs keyboardArgs, IDictionary<string, object> stateArguments)
+        {
+            if (_stateTransitions.Keys.Contains(currentState))
+            {
+                ChangeState(_stateTransitions[currentState].CheckKeyboardTransitions(keyboardArgs), stateArguments);
+            }
         }
 
         /// <summary>
@@ -129,10 +171,18 @@ namespace NanoEngine.StateManagement.StateMachine
         /// <param name="keyboardArgs">Arguments that contain information on the event</param>
         public void HandleKeyboardInput(NanoKeyboardEventArgs keyboardArgs)
         {
-            if (_stateTransitions.Keys.Contains(currentState))
-            {
-                ChangeState(_stateTransitions[currentState].CheckKeyboardTransitions(keyboardArgs));
-            }
+            HandleKeyboardInput(keyboardArgs, null);
+        }
+
+        /// <summary>
+        /// Allows the state machine to handle any mouse events that may
+        /// cause the state to change
+        /// </summary>
+        /// <param name="mouseArgs">Arguments that contain information on the event</param>
+        /// <param name="stateArguments">Holds any arguments the mind has passed to the statemachine</param>
+        public void HandleMouseInput(NanoMouseEventArgs mouseArgs, IDictionary<string, object> stateArguments)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -142,7 +192,7 @@ namespace NanoEngine.StateManagement.StateMachine
         /// <param name="mouseArgs">Arguments that contain information on the event</param>
         public void HandleMouseInput(NanoMouseEventArgs mouseArgs)
         {
-            throw new NotImplementedException();
+            HandleMouseInput(mouseArgs, null);
         }
 
         /// <summary>
@@ -213,21 +263,22 @@ namespace NanoEngine.StateManagement.StateMachine
         private void CheckMethodTransition()
         {
             if (_stateTransitions.Keys.Contains(currentState))
-                ChangeState(_stateTransitions[currentState].CheckMethodTransitions());
+                ChangeState(_stateTransitions[currentState].CheckMethodTransitions(), null);
         }
 
         /// <summary>
         /// Changes the current state to the passed in state
         /// </summary>
         /// <param name="stateTo"></param>
-        private void ChangeState(string stateTo)
+        /// <param name="stateArguments">Holds any arguments the mind has passed to the statemachine</param>
+        private void ChangeState(string stateTo, IDictionary<string, object> stateArguments)
         {
             // Only change the state if the passed in state is not null
             if (stateTo != null)
             {
                 _avaliableStates[currentState].Exit(_owner);
                 currentState = stateTo;
-                _avaliableStates[currentState].Enter(_owner);
+                _avaliableStates[currentState].Enter(_owner, stateArguments);
             }
         }
 
@@ -236,7 +287,7 @@ namespace NanoEngine.StateManagement.StateMachine
             // THIS IS TEMP AND SHOULD BE MOVED TO THE TRANSITION HOLDER
             if (_stateTransitions.Keys.Contains(currentState) && _stateTransitions[currentState].SuccessState != null)
                 if (_avaliableStates[currentState].IsSuccess)
-                    ChangeState(_stateTransitions[currentState].SuccessState);
+                    ChangeState(_stateTransitions[currentState].SuccessState, null);
 
         }
     }

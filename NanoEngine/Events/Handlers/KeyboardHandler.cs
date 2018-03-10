@@ -11,8 +11,6 @@ namespace NanoEngine.Events.Handlers
 {
     public class KeyboardHandler : IKeyboardHandler
     {
-        private static bool created = false;
-
         private event EventHandler<NanoKeyboardEventArgs> _onKeyboardChanged;
 
         public EventHandler<NanoKeyboardEventArgs> GetOnKeyboardChanged
@@ -26,7 +24,6 @@ namespace NanoEngine.Events.Handlers
 
         public KeyboardHandler()
         {
-            created = true;
         }
 
         /// <summary>

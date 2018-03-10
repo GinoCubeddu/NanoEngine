@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.Core.Interfaces;
 
 namespace NanoEngine.ObjectTypes.Assets
 {
@@ -19,7 +20,8 @@ namespace NanoEngine.ObjectTypes.Assets
         /// <summary>
         /// Method that will update the AI
         /// </summary>
-        void Update();
+        /// <param name="updateManager">an instance of the update manager</param>
+        void Update(IUpdateManager updateManager);
 
         /// <summary>
         /// Method to initalise the AI

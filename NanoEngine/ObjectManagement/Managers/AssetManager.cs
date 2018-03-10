@@ -45,7 +45,6 @@ namespace NanoEngine.ObjectManagement.Managers
             _assetFactory = new AssetFactory();
             _aiFactory = new AiFactory(eventManager);
             _quadTree = new QuadTree(2, 5, RenderManager.RenderBounds);
-            QuadTree.DrawQuadTrees = true;
             _collisionManager = new CollisionManager();
             _physicsManager = new PhysicsManager();
         }
@@ -266,14 +265,15 @@ namespace NanoEngine.ObjectManagement.Managers
         /// <summary>
         /// Updates all the minds of the assets if they are "spawned" in
         /// </summary>
-        public void UpdateAssets()
+        /// <param name="updateManager">an instance of the update manager</param>
+        public void UpdateAssets(IUpdateManager updateManager)
         {
             _physicsManager.UpdatePhysics(_assetDictionary.Values.ToList());
             IList<string> aiKeys = _aiComponents.Keys.ToList();
             foreach (string aiName in aiKeys)
             {
                 if (!_aiComponents[aiName].ControledAsset.Despawn)
-                    _aiComponents[aiName].Update();
+                    _aiComponents[aiName].Update(updateManager);
             }
         }
 

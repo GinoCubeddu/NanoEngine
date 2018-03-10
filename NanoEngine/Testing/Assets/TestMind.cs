@@ -129,7 +129,7 @@ namespace NanoEngine.Testing.Assets
 
         public void OnKeyboardChange(object sender, NanoKeyboardEventArgs args)
         {
-            _StateMachine.HandleKeyboardInput(args);
+            _StateMachine.HandleKeyboardInput(args, null);
         }
 
         public void CollisionResponse(NanoCollisionEventArgs response)

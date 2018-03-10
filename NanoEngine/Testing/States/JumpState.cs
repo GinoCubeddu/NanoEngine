@@ -17,7 +17,7 @@ namespace NanoEngine.Testing.States
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Enter(IAiComponent owner)
+        public void Enter(IAiComponent owner, IDictionary<string, object> stateArguments)
         {
             (owner.ControledAsset as PhysicsEntity).ApplyForce(new Vector2(
                 0, -5    

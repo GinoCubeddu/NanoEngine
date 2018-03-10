@@ -61,12 +61,38 @@ namespace NanoEngine
         /// <param name="stateTo">The state to transition to</param>
         void AddSuccessTransition(string stateFrom, string stateTo);
 
+
+        /// <summary>
+        /// Adds a transition between states that relys on the asset colliding with a
+        /// certian type
+        /// </summary>
+        /// <param name="stateFrom">The sate to transition from</param>
+        /// <param name="stateTo">The state to transition to</param>
+        /// <param name="collidableType">The type to collide with to transition</param>
+        void AddCollisionTransition(string stateFrom, string stateTo, Type collidableType);
+
         /// <summary>
         /// Allows the state machine to handle any collision events that may
         /// cause the state to change
         /// </summary>
         /// <param name="collisionArgs">Arguments that contain information on the event</param>
-        void HandleCollision(NanoMouseEventArgs collisionArgs);
+        /// <param name="stateArguments">Holds any arguments the mind has passed to the statemachine</param>
+        void HandleCollision(NanoCollisionEventArgs collisionArgs, IDictionary<string, object> stateArguments);
+
+        /// <summary>
+        /// Allows the state machine to handle any collision events that may
+        /// cause the state to change
+        /// </summary>
+        /// <param name="collisionArgs">Arguments that contain information on the event</param>
+        void HandleCollision(NanoCollisionEventArgs collisionArgs);
+
+        /// <summary>
+        /// Allows the state machine to handle any keyboard events that may
+        /// cause the state to change
+        /// </summary>
+        /// <param name="keyboardArgs">Arguments that contain information on the event</param>
+        /// <param name="stateArguments">Holds any arguments the mind has passed to the statemachine</param>
+        void HandleKeyboardInput(NanoKeyboardEventArgs keyboardArgs, IDictionary<string, object> stateArguments);
 
         /// <summary>
         /// Allows the state machine to handle any keyboard events that may
@@ -74,6 +100,14 @@ namespace NanoEngine
         /// </summary>
         /// <param name="keyboardArgs">Arguments that contain information on the event</param>
         void HandleKeyboardInput(NanoKeyboardEventArgs keyboardArgs);
+
+        /// <summary>
+        /// Allows the state machine to handle any mouse events that may
+        /// cause the state to change
+        /// </summary>
+        /// <param name="mouseArgs">Arguments that contain information on the event</param>
+        /// <param name="stateArguments">Holds any arguments the mind has passed to the statemachine</param>
+        void HandleMouseInput(NanoMouseEventArgs mouseArgs, IDictionary<string, object> stateArguments);
 
         /// <summary>
         /// Allows the state machine to handle any mouse events that may

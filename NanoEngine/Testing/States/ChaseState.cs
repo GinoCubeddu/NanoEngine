@@ -33,7 +33,8 @@ namespace NanoEngine.Testing.States
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Enter(T owner)
+        /// <param name="stateArguments">Holds any arguments the mind has passed to the statemachine</param>
+        public void Enter(T owner, IDictionary<string, object> stateArguments)
         {
             Console.WriteLine("Entering chase state");
         }

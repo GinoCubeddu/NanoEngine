@@ -76,6 +76,14 @@ namespace NanoEngine
         /// cause the state to change
         /// </summary>
         /// <param name="collisionArgs">Arguments that contain information on the event</param>
+        /// <param name="stateArguments">Holds any arguments the mind has passed to the statemachine</param>
+        void HandleCollision(NanoCollisionEventArgs collisionArgs, IDictionary<string, object> stateArguments);
+
+        /// <summary>
+        /// Allows the state machine to handle any collision events that may
+        /// cause the state to change
+        /// </summary>
+        /// <param name="collisionArgs">Arguments that contain information on the event</param>
         void HandleCollision(NanoCollisionEventArgs collisionArgs);
 
         /// <summary>
@@ -83,7 +91,23 @@ namespace NanoEngine
         /// cause the state to change
         /// </summary>
         /// <param name="keyboardArgs">Arguments that contain information on the event</param>
+        /// <param name="stateArguments">Holds any arguments the mind has passed to the statemachine</param>
+        void HandleKeyboardInput(NanoKeyboardEventArgs keyboardArgs, IDictionary<string, object> stateArguments);
+
+        /// <summary>
+        /// Allows the state machine to handle any keyboard events that may
+        /// cause the state to change
+        /// </summary>
+        /// <param name="keyboardArgs">Arguments that contain information on the event</param>
         void HandleKeyboardInput(NanoKeyboardEventArgs keyboardArgs);
+
+        /// <summary>
+        /// Allows the state machine to handle any mouse events that may
+        /// cause the state to change
+        /// </summary>
+        /// <param name="mouseArgs">Arguments that contain information on the event</param>
+        /// <param name="stateArguments">Holds any arguments the mind has passed to the statemachine</param>
+        void HandleMouseInput(NanoMouseEventArgs mouseArgs, IDictionary<string, object> stateArguments);
 
         /// <summary>
         /// Allows the state machine to handle any mouse events that may

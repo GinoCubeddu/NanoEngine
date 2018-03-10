@@ -26,7 +26,7 @@ namespace NanoEngine.Testing.States
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        public void Enter(T owner)
+        public void Enter(T owner, IDictionary<string, object> stateArguments)
         {
             IsSuccess = false;
             owner.ControledAsset.AssetAnimation.ChangeAnimationState(_animation);

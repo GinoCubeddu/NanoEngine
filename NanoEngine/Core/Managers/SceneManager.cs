@@ -16,6 +16,10 @@ namespace NanoEngine.Core.Managers
 {
     public class SceneManager : ISceneManager
     {
+        private IDictionary<string, IGameScreen> _updatingScreens;
+        private IDictionary<string, IGameScreen> _avaliableScreens;
+        private IList<IGameScreen> _screensMarkedForDeletion;
+
         //Private static field holding the refrence to the manager
         private static ISceneManager manager;
 
@@ -54,78 +58,130 @@ namespace NanoEngine.Core.Managers
         /// <param name="game">game of type Game</param>
         private SceneManager()
         {
+            _updatingScreens = new Dictionary<string, IGameScreen>();
+            _avaliableScreens = new Dictionary<string, IGameScreen>();
+            _screensMarkedForDeletion = new List<IGameScreen>();
         }
 
         /// <summary>
-        /// Method to set the starting screen of the game
+        /// Adds a screen to the scene manager
         /// </summary>
-        /// <typeparam name="T">Type of screen to be created</typeparam>
-        public void setStartScreen<T>() where T : IGameScreen, new()
+        /// <typeparam name="T">The type of screen to add</typeparam>
+        /// <param name="name">The id of the screen</param>
+        public void AddScreen<T>(string name) where T : IGameScreen, new()
         {
-            //Create new screen
-            currentScreen = new T();
+            // Create the new screen
+            IGameScreen screen = new T();
 
-            //load the screesn content
-            LoadContent();
+            // Init the screen and load the content
+            screen.Initialise();
+            screen.LoadContent();
+
+            if (_avaliableScreens.Count == 0 && _updatingScreens.Count == 0)
+            {
+                // If it is the first screen then create the vars and set it to updating
+                _updatingScreens[name] = screen;
+            } else
+            {
+                // If it is not the first screen then load it into the available screens
+                _avaliableScreens[name] = screen;
+            }
         }
 
         /// <summary>
-        /// Method to set the pause screen of the game
+        /// Tells the scene manager to start updating the screen
         /// </summary>
-        /// <typeparam name="T">The type of screen to be craeted</typeparam>
-        public void setPauseScreen<T>() where T : IGameScreen, new()
+        /// <param name="name">The id of the screen to start updating</param>
+        public void StartUpdatingScreen(string name)
         {
-            //create new screen
-            pauseScreen = new T();
-            //Load the screens content
-            pauseScreen.LoadContent();
+            // Only make the swap if the key 
+            if (!_avaliableScreens.ContainsKey(name))
+                return;
+
+            // Add the screen from the avaliable screens to the updating screens
+            _updatingScreens[name] = _avaliableScreens[name];
+            _updatingScreens.Remove(name);
         }
 
         /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
+        /// Tells the scenemnager to stop updating a screen
         /// </summary>
-        protected void LoadContent()
+        /// <param name="name">The id of the screen to stop updating</param>
+        public void StopUpdatingScreen(string name)
         {
-            currentScreen.Initialise();
-            //Loads content from the current screen
-            currentScreen.LoadContent();
+            // Only make the swap if the key is there
+            if (!_updatingScreens.ContainsKey(name))
+                return;
 
-            //load pause screen if not null
-            if (pauseScreen != null)
-                pauseScreen.LoadContent();
-
-            //Gets the current list of entitys
-            // entitys = AssetFactory.Manager.GetList();
+            // Add the screen from the updating screens to the avalible screens
+            _avaliableScreens[name] = _updatingScreens[name];
+            _updatingScreens.Remove(name);
         }
 
         /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
+        /// Tells the scene manager to reload a screen
         /// </summary>
-        protected void UnloadContent()
+        /// <param name="name">The id of the screen to reload</param>
+        public void ReloadScreen(string name)
         {
-            //Unloads content from the current screen
-            currentScreen.UnloadContent();
+            // Set a variable to hold the screen
+            IGameScreen screen;
 
-            //unload pause screen if not null
-            if (pauseScreen != null)
-                pauseScreen.UnloadContent();
+            // Check to see if the screen is within any of the dictonaries
+            if (_avaliableScreens.ContainsKey(name))
+            {
+                screen = _avaliableScreens[name];
+            } else if (_updatingScreens.ContainsKey(name))
+            {
+                screen = _updatingScreens[name];
+            } else
+            {
+                // There is no screen by that name
+                return;
+            }
 
+            // Reload the screen
+            screen.UnloadContent();
+            screen.Initialise();
+            screen.LoadContent();
         }
 
         /// <summary>
-        /// Changes the screen to the passed in screen
+        /// Tells the scenemanager to delete a scene
         /// </summary>
-        /// <typeparam name="T">Screen of type IGameScreen</typeparam>
-        public void ChangeScreen<T>() where T : IGameScreen, new()
+        /// <param name="name">The id of the scene to delete</param>
+        public void DeleteScreen(string name)
         {
-            //Unload the current screen
-            UnloadContent();
-            //Set new screen of the type passed in
-            currentScreen = new T();
-            //Load the content of the screen
-            LoadContent();
+            StopUpdatingScreen(name);
+            // Only attempt to remove the screen 
+            if (_avaliableScreens.ContainsKey(name))
+            {
+                _screensMarkedForDeletion.Add(_avaliableScreens[name]);
+                _avaliableScreens.Remove(name);
+            } else if (_updatingScreens.ContainsKey(name))
+            {
+                _screensMarkedForDeletion.Add(_updatingScreens[name]);
+                _updatingScreens.Remove(name);
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if any screens have been marked for deletion and if so deletes them
+        /// </summary>
+        private void CheckForScreensForDeletion()
+        {
+            // No point continuing iif there are no items to delete
+            if (_screensMarkedForDeletion.Count == 0)
+                return;
+
+            // Unload the content of each screen that is marked for deletion
+            foreach (IGameScreen gameScreen in _screensMarkedForDeletion)
+            {
+                gameScreen.UnloadContent();
+            }
+
+            // Deletes the list by creating a new one
+            _screensMarkedForDeletion = new List<IGameScreen>();
         }
 
         /// <summary>
@@ -135,10 +191,12 @@ namespace NanoEngine.Core.Managers
         /// <param name="updateManager">Provides a refrence to the updateManager.</param>
         public void Update(IUpdateManager updateManager)
         {
-            if (currentScreen != null)
+            // Check to see if any screens are waiting to be deleted
+            CheckForScreensForDeletion();
+            IList<IGameScreen> screens = _updatingScreens.Values.ToList();
+            foreach (IGameScreen screen in screens)
             {
-                //Update the current screen
-                currentScreen.UpdateScreen(updateManager);
+                screen.UpdateScreen(updateManager);
             }
         }
 
@@ -148,16 +206,17 @@ namespace NanoEngine.Core.Managers
         /// <param name="renderManager">Provides a refrence to the renderManager.</param>
         public void Draw(IRenderManager renderManager)
         {
-            if (currentScreen != null)
+            IList<IGameScreen> screens = _updatingScreens.Values.ToList();
+            foreach (IGameScreen screen in screens)
             {
-                if (currentScreen.Camera2D != null)
+                if (screen.Camera2D != null)
                     renderManager.StartDraw(
                         SpriteSortMode.Deferred, BlendState.AlphaBlend, null,
-                        null, null, null, currentScreen.Camera2D.Transform
+                        null, null, null, screen.Camera2D.Transform
                     );
                 else
-                    renderManager.StartDraw(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
-                currentScreen.DrawScreen(renderManager);
+                renderManager.StartDraw(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+                screen.DrawScreen(renderManager);
                 renderManager.EndDraw();
             }
         }

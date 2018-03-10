@@ -78,7 +78,7 @@ namespace NanoEngine.ObjectTypes.General
             EventManager = null;
             _assetManager = null;
             _cameras = null;
-            ContentManagerLoad.Manager.UnloadAll();
+            Camera2D = null;
         }
 
         /// <summary>

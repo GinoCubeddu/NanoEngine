@@ -55,6 +55,9 @@ namespace NanoEngine.Events.Handlers
 
         public void Update()
         {
+            // There is no point in checking the input if nothing is subsribed
+            if (onMouseDown == null)
+                return;
             //Set the previous state to the current state
             previousMouseState = currentMouseState;
             //Set the current state to the mouse state

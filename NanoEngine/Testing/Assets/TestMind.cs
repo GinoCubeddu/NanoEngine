@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using NanoEngine.Collision;
 using NanoEngine.Collision.CollidableTypes;
+using NanoEngine.Core.Interfaces;
 using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.ObjectTypes.Assets.Control;
@@ -26,6 +27,16 @@ namespace NanoEngine.Testing.Assets
         {
             Timer = 0;
             Direction = "right";
+        }
+
+        /// <summary>
+        /// Method that will update the AI
+        /// </summary>
+        /// <param name="updateManager">an instance of the update manager</param>
+        public override void Update(IUpdateManager updateManager)
+        {
+            _StateMachine.Update();
+            Timer++;
         }
 
         public override void Initialise()
@@ -114,12 +125,6 @@ namespace NanoEngine.Testing.Assets
             if (Timer > 360)
                 return true;
             return false;
-        }
-
-        public override void Update()
-        {
-            _StateMachine.Update();
-            Timer++;
         }
 
         public void OnKeyboardChange(object sender, NanoKeyboardEventArgs args)

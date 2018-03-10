@@ -84,7 +84,8 @@ namespace NanoEngine.ObjectTypes.General
         /// <summary>
         /// Abstract method to force sub classes to implement it. It is used to update the screen 
         /// </summary>
-        protected abstract void Update();
+        /// <param name="updateManager">An instance of the update manager</param>
+        protected abstract void Update(IUpdateManager updateManager);
 
         /// <summary>
         /// Abstarct method to force sub classes to implement it
@@ -109,11 +110,11 @@ namespace NanoEngine.ObjectTypes.General
         {
             LevelTimer += updateManager.gameTime.ElapsedGameTime.TotalSeconds;
             EventManager.Update();
-            _assetManager.UpdateAssets();
+            _assetManager.UpdateAssets(updateManager);
             // If we have a camera then update it
             if (Camera2D != null)
                 Camera2D.Update();
-            Update();
+            Update(updateManager);
         }
 
         /// <summary>

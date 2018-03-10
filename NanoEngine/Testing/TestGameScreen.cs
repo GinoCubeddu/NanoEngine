@@ -7,6 +7,7 @@ using NanoEngine.Core.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using NanoEngine.Collision.CollisionTypes;
+using NanoEngine.Core.Managers;
 using NanoEngine.Events.Args;
 using NanoEngine.ObjectManagement.Interfaces;
 using NanoEngine.ObjectManagement.Managers;
@@ -30,9 +31,10 @@ namespace NanoEngine
         {
             _assetManager.LoadLevel("Level2");
             AddCamera("player", _assetManager.RetriveAsset("player"));
+            EventManager.AddDelegates(this);
         }
 
-        protected override void Update()
+        protected override void Update(IUpdateManager updateManager)
         {
 
         }
@@ -48,6 +50,14 @@ namespace NanoEngine
             {
                 if (args.TheKeys[KeyStates.Pressed].Contains(Keys.D1))
                     ChangeCamera("player");
+
+                if (args.TheKeys[KeyStates.Pressed].Contains(Keys.Escape))
+                {
+                    SceneManager.Manager.ReloadScreen("level1");
+                } else if (args.TheKeys[KeyStates.Pressed].Contains(Keys.Delete))
+                {
+                    SceneManager.Manager.DeleteScreen("level1");
+                }
             }
         }
     }

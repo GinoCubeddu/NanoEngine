@@ -34,8 +34,9 @@ namespace NanoEngine.StateManagement.Transitions
         /// <returns>Boolean telling us if it is a valid transition</returns>
         public bool CheckTransition(NanoCollisionEventArgs eventArgs)
         {
-            if (eventArgs.CollidedWith.GetType().IsAssignableFrom(_collidableType))
+            if (_collidableType.IsInstanceOfType(eventArgs.CollidedWith))
                 return true;
+
             return false;
         }
     }

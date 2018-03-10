@@ -9,12 +9,6 @@ namespace NanoEngine.Core.Interfaces
 {
     public interface ISceneManager
     {
-        /// <summary>
-        /// Changes the screen to the passed in screen
-        /// </summary>
-        /// <typeparam name="T">Screen of type IGameScreen</typeparam>
-        void ChangeScreen<T>() where T : IGameScreen, new();
-
         // Getter to retrive the current gamescreen
         IGameScreen CurrentGameScreen { get; }
 
@@ -22,16 +16,35 @@ namespace NanoEngine.Core.Interfaces
         Vector2 ScreenDimentions { get; }
 
         /// <summary>
-        /// Method that sets the games starting screen
+        /// Adds a screen to the scene manager
         /// </summary>
-        /// <typeparam name="T">The type of screen to be set</typeparam>
-        void setStartScreen<T>() where T : IGameScreen, new();
+        /// <typeparam name="T">The type of screen to add</typeparam>
+        /// <param name="name">The id of the screen</param>
+        void AddScreen<T>(string name) where T : IGameScreen, new();
 
         /// <summary>
-        /// Method that sets the pause screen of the game
+        /// Tells the scene manager to start updating the screen
         /// </summary>
-        /// <typeparam name="T">The object type of the screen</typeparam>
-        void setPauseScreen<T>() where T : IGameScreen, new();
+        /// <param name="name">The id of the screen to start updating</param>
+        void StartUpdatingScreen(string name);
+
+        /// <summary>
+        /// Tells the scenemnager to stop updating a screen
+        /// </summary>
+        /// <param name="name">The id of the screen to stop updating</param>
+        void StopUpdatingScreen(string name);
+
+        /// <summary>
+        /// Tells the scene manager to reload a screen
+        /// </summary>
+        /// <param name="name">The id of the screen to reload</param>
+        void ReloadScreen(string name);
+
+        /// <summary>
+        /// Tells the scenemanager to delete a scene
+        /// </summary>
+        /// <param name="name">The id of the scene to delete</param>
+        void DeleteScreen(string name);
 
         /// <summary>
         /// Method to draw the objects on the screen

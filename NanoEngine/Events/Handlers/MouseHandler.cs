@@ -11,8 +11,6 @@ namespace NanoEngine.Events.Handlers
 {
     public class MouseHandler : IMouseHandler
     {
-        private static bool created = false;
-
         //Two states to hold the current and the previous recored states
         MouseState currentMouseState, previousMouseState;
 
@@ -52,10 +50,7 @@ namespace NanoEngine.Events.Handlers
 
         public MouseHandler()
         {
-            if (created)
-                throw new SystemException("Sorry only one instance of the MouseHandler may be created");
-            else
-                created = true;
+
         }
 
         public void Update()

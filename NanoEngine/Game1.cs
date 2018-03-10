@@ -52,7 +52,7 @@ namespace NanoEngine
             LevelLoader.AddLevelAsset<TestAsset, TestMind>(5, "player");
 
             NanoEngineInit.Initialize(GraphicsDevice, this, Content);
-            SceneManager.Manager.setStartScreen<TestGameScreen>();
+            SceneManager.Manager.AddScreen<TestGameScreen>("level1");
             
             base.Initialize();
         }

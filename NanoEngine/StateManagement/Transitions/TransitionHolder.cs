@@ -16,6 +16,8 @@ namespace NanoEngine.StateManagement.Transitions
         // Holds all the method transitions for this state
         private IList<MethodStateTransition> _methodTransitions;
 
+        private IList<CollisionTransition> _collisionTransitions;
+
         // Holds the state for the state to transition to if it is a success
         public string SuccessState { get; set; }
 
@@ -23,6 +25,7 @@ namespace NanoEngine.StateManagement.Transitions
         {
             _keyboardTransitions = null;
             _methodTransitions = null;
+            _collisionTransitions = null;
             SuccessState = null;
         }
 
@@ -90,6 +93,41 @@ namespace NanoEngine.StateManagement.Transitions
                 if (transition.CheckTransition())
                     return transition.StateTo;
 
+            return null;
+        }
+
+        /// <summary>
+        /// Adds a collision transition to the holder
+        /// </summary>
+        /// <param name="stateTo">The state to transition to</param>
+        /// <param name="collidableType">The type to collide with to transition</param>
+        public void AddCollisionTransition(string stateTo, Type collidableType)
+        {
+            // Create a collision transition list if none exsist
+            if (_collisionTransitions == null)
+                _collisionTransitions = new List<CollisionTransition>();
+
+            // Add the transition
+            _collisionTransitions.Add(new CollisionTransition(stateTo, collidableType));
+        }
+
+        /// <summary>
+        /// Checks to see if any of the collision transitions are true
+        /// </summary>
+        /// <param name="eventArgs">The event args to test against</param>
+        /// <returns>The type of the next state if transition requirements met otherwise null</returns>
+        public string CheckCollisionTransitions(NanoCollisionEventArgs eventArgs)
+        {
+            // Only check if any transitions exsist
+            if (_collisionTransitions == null)
+                return null;
+
+            // Loop through each transition and check if any match
+            foreach (CollisionTransition transition in _collisionTransitions)
+                if (transition.CheckTransition(eventArgs))
+                    return transition.StateTo;
+
+            // If we have reached here no tranistions have been met
             return null;
         }
     }

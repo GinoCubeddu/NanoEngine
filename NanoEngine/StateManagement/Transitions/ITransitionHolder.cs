@@ -41,5 +41,19 @@ namespace NanoEngine.StateManagement.Transitions
         /// </summary>
         /// <returns>The type of the next state if transition requirements met otherwise null</returns>
         string CheckMethodTransitions();
+
+        /// <summary>
+        /// Adds a collision transition to the holder
+        /// </summary>
+        /// <param name="stateTo">The state to transition to</param>
+        /// <param name="collidableType">The type to collide with to transition</param>
+        void AddCollisionTransition(string stateTo, Type collidableType);
+
+        /// <summary>
+        /// Checks to see if any of the collision transitions are true
+        /// </summary>
+        /// <param name="eventArgs">The event args to test against</param>
+        /// <returns>The type of the next state if transition requirements met otherwise null</returns>
+        string CheckCollisionTransitions(NanoCollisionEventArgs eventArgs);
     }
 }

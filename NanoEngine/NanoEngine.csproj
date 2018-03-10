@@ -119,6 +119,7 @@
     <Compile Include="StateManagement\StateMachine\StateMachine.cs" />
     <Compile Include="StateManagement\States\KeyStates.cs" />
     <Compile Include="StateManagement\States\MouseStates.cs" />
+    <Compile Include="StateManagement\Transitions\CollisionTransition.cs" />
     <Compile Include="StateManagement\Transitions\ITransitionHolder.cs" />
     <Compile Include="StateManagement\Transitions\KeyboardStateTransition.cs" />
     <Compile Include="StateManagement\Transitions\MethodStateTransition.cs" />

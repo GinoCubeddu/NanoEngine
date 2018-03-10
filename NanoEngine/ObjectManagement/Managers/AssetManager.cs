@@ -36,6 +36,8 @@ namespace NanoEngine.ObjectManagement.Managers
 
         private IPhysicsManager _physicsManager;
 
+        public static bool DrawBounds = false;
+
 
         public AssetManager(IEventManager eventManager)
         {
@@ -45,7 +47,6 @@ namespace NanoEngine.ObjectManagement.Managers
             _assetFactory = new AssetFactory();
             _aiFactory = new AiFactory(eventManager);
             _quadTree = new QuadTree(2, 5, RenderManager.RenderBounds);
-            QuadTree.DrawQuadTrees = true;
             _collisionManager = new CollisionManager();
             _physicsManager = new PhysicsManager();
         }
@@ -197,22 +198,25 @@ namespace NanoEngine.ObjectManagement.Managers
                     _quadTree.Insert(asset);
                 asset.Draw(rendermanager);
 
-                IList<Vector2> assetPoints = asset.Points ?? asset.GetPointsFromBounds();
-                for (int i = 0; i < assetPoints.Count; i++)
+                if (DrawBounds)
                 {
-                    Vector2 edge = assetPoints[i + 1 == assetPoints.Count ? 0 : i + 1] - assetPoints[i];
-                    float angle = (float)Math.Atan2(edge.Y, edge.X);
-                    // draw lines between each point of object
-                    rendermanager.Draw(
-                        rendermanager.BlankTexture,
-                        new Rectangle((int)assetPoints[i].X, (int)assetPoints[i].Y, (int)edge.Length(), 3),
-                        null,
-                        Color.Red,
-                        angle,
-                        new Vector2(0, 0),
-                        SpriteEffects.None,
-                        0
-                    );
+                    IList<Vector2> assetPoints = asset.Points ?? asset.GetPointsFromBounds();
+                    for (int i = 0; i < assetPoints.Count; i++)
+                    {
+                        Vector2 edge = assetPoints[i + 1 == assetPoints.Count ? 0 : i + 1] - assetPoints[i];
+                        float angle = (float)Math.Atan2(edge.Y, edge.X);
+                        // draw lines between each point of object
+                        rendermanager.Draw(
+                            rendermanager.BlankTexture,
+                            new Rectangle((int)assetPoints[i].X, (int)assetPoints[i].Y, (int)edge.Length(), 3),
+                            null,
+                            Color.Red,
+                            angle,
+                            new Vector2(0, 0),
+                            SpriteEffects.None,
+                            0
+                        );
+                    }
                 }
             }
 
@@ -266,14 +270,15 @@ namespace NanoEngine.ObjectManagement.Managers
         /// <summary>
         /// Updates all the minds of the assets if they are "spawned" in
         /// </summary>
-        public void UpdateAssets()
+        /// <param name="updateManager">an instance of the update manager</param>
+        public void UpdateAssets(IUpdateManager updateManager)
         {
             _physicsManager.UpdatePhysics(_assetDictionary.Values.ToList());
             IList<string> aiKeys = _aiComponents.Keys.ToList();
             foreach (string aiName in aiKeys)
             {
                 if (!_aiComponents[aiName].ControledAsset.Despawn)
-                    _aiComponents[aiName].Update();
+                    _aiComponents[aiName].Update(updateManager);
             }
         }
 

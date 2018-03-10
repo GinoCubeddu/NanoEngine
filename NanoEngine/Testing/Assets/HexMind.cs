@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using NanoEngine.Core.Interfaces;
 using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.ObjectTypes.Assets.Control;
@@ -15,11 +16,12 @@ namespace NanoEngine.Testing.Assets
     class HexMind : AiComponent, IKeyboardWanted
     {
         /// <summary>
-        /// Method that updates the AI
+        /// Method that will update the AI
         /// </summary>
-        public override void Update()
+        /// <param name="updateManager">an instance of the update manager</param>
+        public override void Update(IUpdateManager updateManager)
         {
-            
+            throw new NotImplementedException();
         }
 
         public override void Initialise()

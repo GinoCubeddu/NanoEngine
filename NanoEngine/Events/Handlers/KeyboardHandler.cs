@@ -31,6 +31,10 @@ namespace NanoEngine.Events.Handlers
         /// </summary>
         public void Update()
         {
+            // If nothing is subscribed there is no point in checking
+            if (GetOnKeyboardChanged == null)
+                return;
+
             IDictionary<KeyStates, IList<Keys>> k = new Dictionary<KeyStates, IList<Keys>>();
             //Make the previous state equal to the current
             PrevKeyState = currentKeyState;

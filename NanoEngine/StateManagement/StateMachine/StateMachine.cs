@@ -113,13 +113,30 @@ namespace NanoEngine.StateManagement.StateMachine
         }
 
         /// <summary>
+        /// Adds a transition between states that relys on the asset colliding with a
+        /// certian type
+        /// </summary>
+        /// <param name="stateFrom">The sate to transition from</param>
+        /// <param name="stateTo">The state to transition to</param>
+        /// <param name="collidableType">The type to collide with to transition</param>
+        public void AddCollisionTransition(string stateFrom, string stateTo, Type collidableType)
+        {
+            ValidateTransition(stateFrom, stateTo);
+            CheckTransitionHandlerExsists(stateFrom);
+            _stateTransitions[stateFrom].AddCollisionTransition(stateTo, collidableType);
+        }
+
+        /// <summary>
         /// Allows the state machine to handle any collision events that may
         /// cause the state to change
         /// </summary>
         /// <param name="collisionArgs">Arguments that contain information on the event</param>
-        public void HandleCollision(NanoMouseEventArgs collisionArgs)
+        public void HandleCollision(NanoCollisionEventArgs collisionArgs)
         {
-            throw new NotImplementedException();
+            if (_stateTransitions.Keys.Contains(currentState))
+            {
+                ChangeState(_stateTransitions[currentState].CheckCollisionTransitions(collisionArgs));
+            }
         }
 
         /// <summary>

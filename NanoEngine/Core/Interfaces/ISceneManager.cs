@@ -15,6 +15,8 @@ namespace NanoEngine.Core.Interfaces
         //Getter to return the dimentions of the screen
         Vector2 ScreenDimentions { get; }
 
+        IDictionary<string, IGameScreen> UpdatingScreens { get; }
+
         /// <summary>
         /// Adds a screen to the scene manager
         /// </summary>

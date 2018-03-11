@@ -122,6 +122,7 @@ namespace NanoEngine.ObjectTypes.General
         /// </summary>
         public void Initialise()
         {
+            LevelTimer = 0;
             EventManager = new EventManager();
             _assetManager = new AssetManager(EventManager);
         }

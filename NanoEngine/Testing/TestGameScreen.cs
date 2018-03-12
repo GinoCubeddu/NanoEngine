@@ -30,6 +30,7 @@ namespace NanoEngine
         public override void LoadContent()
         {
             _assetManager.LoadLevel("Level2");
+            _assetManager.CreateAsset<ChestAsset>(10, 10);
             AddCamera("player", _assetManager.RetriveAsset("player"));
             EventManager.AddDelegates(this);
         }

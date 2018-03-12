@@ -20,22 +20,37 @@ namespace NanoEngine.ObjectManagement.Managers
 {
     public class AssetManager : IAssetManager
     {
+        // The uid that will be assigned to the next object
         private int _uid;
 
+        // A dict containing all the currently updating assets
         private IDictionary<string, IAsset> _assetDictionary;
 
+        // A dict containing all the available assets that are up for recycling
+        private IDictionary<string, IAsset> _availableAssets;
+
+        // A dict containing all the currently updating ai components
         private IDictionary<string, IAiComponent> _aiComponents;
 
+        // A dict containing all the available ai components that are up for recycling
+        private IDictionary<string, IAsset> _availableAiComponents;
+
+        // An instance of the asset factory
         private IAssetFactory _assetFactory;
 
+        // An instance of the ai factory
         private IAiFactory _aiFactory;
 
+        // an instance of the quad tree
         private IQuadTree _quadTree;
 
+        // An insatnce of the collisionManager
         private ICollisionManager _collisionManager;
 
+        // An instance of the physics manager
         private IPhysicsManager _physicsManager;
 
+        // A bool informing us if we need to draw the bounds or not
         public static bool DrawBounds = false;
 
 
@@ -109,6 +124,7 @@ namespace NanoEngine.ObjectManagement.Managers
         {
             try
             {
+                // offload the creation to the asset factory
                 _assetDictionary.Add(
                     uName,
                     _assetFactory.RetriveNewAsset<T>(
@@ -116,10 +132,13 @@ namespace NanoEngine.ObjectManagement.Managers
                     )
                 );
 
+                // off load the creation to the ai factory
                 _aiComponents.Add(
                     uName,
                     _aiFactory.CreateAi<U>()
                 );
+
+                // THINK ABOUT HOW THIS CAN BE REFACTORED - SHOULD NOT BE HERE
                 if (_aiComponents[uName] is IAssetmanagerNeeded)
                     (_aiComponents[uName] as IAssetmanagerNeeded).AssetManager = this;
 
@@ -148,6 +167,7 @@ namespace NanoEngine.ObjectManagement.Managers
         {
             try
             {
+                // offload the creation of the asset to the asset factory
                 _assetDictionary.Add(
                     uName,
                     _assetFactory.RetriveNewAsset<T>(
@@ -259,6 +279,7 @@ namespace NanoEngine.ObjectManagement.Managers
         /// <param name="filename">The name of the json file within the Content directory</param>
         public void LoadLevel(string filename)
         {
+            // THIS IS BREAKING SINGLE RESPONSIBILTY NEEDS REFACTORING
             ILevelLoader loader = new LevelLoader();
             _uid = loader.LoadTileMap(filename, _assetDictionary, _aiComponents, _assetFactory, _aiFactory, _uid);
             _quadTree = new QuadTree(2, 5, loader.LevelBounds);
@@ -276,11 +297,18 @@ namespace NanoEngine.ObjectManagement.Managers
         /// </summary>
         public void DrawAssets(IRenderManager rendermanager)
         {
+            // THIS IS BREAKING SINGLE RESPONSIBILITY NEEDS REFACTORING
+
+            // clear the current quad tree
             _quadTree.Clear();
+
+            // loop through all the assets
             IList<string> assetKeys = _assetDictionary.Keys.ToList();
             foreach (string assetKey in assetKeys)
             {
+                // Grab the asset
                 IAsset asset = _assetDictionary[assetKey];
+
                 if (asset.Despawn)
                     continue;
 
@@ -363,7 +391,10 @@ namespace NanoEngine.ObjectManagement.Managers
         /// <param name="updateManager">an instance of the update manager</param>
         public void UpdateAssets(IUpdateManager updateManager)
         {
+            // update the physics manager
             _physicsManager.UpdatePhysics(_assetDictionary.Values.ToList());
+
+            // loop through all minds and update them
             IList<string> aiKeys = _aiComponents.Keys.ToList();
             foreach (string aiName in aiKeys)
             {

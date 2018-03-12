@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -33,7 +34,7 @@ namespace NanoEngine.ObjectManagement.Managers
         private IDictionary<string, IAiComponent> _aiComponents;
 
         // A dict containing all the available ai components that are up for recycling
-        private IDictionary<string, IAsset> _availableAiComponents;
+        private IDictionary<string, IAiComponent> _availableAiComponents;
 
         // An instance of the asset factory
         private IAssetFactory _assetFactory;
@@ -299,11 +300,27 @@ namespace NanoEngine.ObjectManagement.Managers
         {
             // THIS IS BREAKING SINGLE RESPONSIBILITY NEEDS REFACTORING
 
+
+
+           // SHOULD DO:
+                // 1: loop through the assets and call their draw method - NOTHING ELSE
+
+
+
+
             // clear the current quad tree
             _quadTree.Clear();
 
-            // loop through all the assets
             IList<string> assetKeys = _assetDictionary.Keys.ToList();
+            foreach (string assetKey in assetKeys)
+            {
+                _assetDictionary[assetKey].Draw(rendermanager);
+            }
+
+            return;
+
+            // loop through all the assets
+            IList<string> assetKeys1 = _assetDictionary.Keys.ToList();
             foreach (string assetKey in assetKeys)
             {
                 // Grab the asset
@@ -390,7 +407,17 @@ namespace NanoEngine.ObjectManagement.Managers
         /// </summary>
         /// <param name="updateManager">an instance of the update manager</param>
         public void UpdateAssets(IUpdateManager updateManager)
-        {
+        { 
+            // THIS METHOD NEEDS TO CHANGE TO DO:
+                // 1 - CALL COLLISION update (and pass the asset list - it is not the asset managers responisibilty to filiter out the non collidables)
+                // 2 - MOVE the quad tree into the collision manager - it is not the responsibility of the asset manager to decide if an asset is
+                    // a collidable and then insert it into the quad tree
+                // 3 - DECIDE where the physics manager belongs...in this class at all?
+                // 4 - loop through all minds and update them
+                // 5 - call the CheckForDespawn method which will remove any entites that are marked for despawn from the dictonaires
+                    // and add them  to the "available assets" dictonary
+
+
             // update the physics manager
             _physicsManager.UpdatePhysics(_assetDictionary.Values.ToList());
 
@@ -400,6 +427,30 @@ namespace NanoEngine.ObjectManagement.Managers
             {
                 if (!_aiComponents[aiName].ControledAsset.Despawn)
                     _aiComponents[aiName].Update(updateManager);
+            }
+
+        }
+
+        private void CheckForDespawns()
+        {
+            // Loop check all assets to see if they want to be despawned
+            foreach (string assetDictionaryKey in _assetDictionary.Keys.ToList())
+            {
+                // If it does want to be despawned
+                if (_assetDictionary[assetDictionaryKey].Despawn)
+                {
+                    // Remove it from the current asset dict and add it to the available asset list
+                    _availableAssets[assetDictionaryKey] = _assetDictionary[assetDictionaryKey];
+                    _assetDictionary.Remove(assetDictionaryKey);
+
+                    // If that asset had a 
+                    if (_aiComponents.ContainsKey(assetDictionaryKey))
+                    {
+                        _availableAiComponents[assetDictionaryKey] = _aiComponents[assetDictionaryKey];
+                        _aiComponents.Remove(assetDictionaryKey);
+                    }
+                }
+
             }
         }
 

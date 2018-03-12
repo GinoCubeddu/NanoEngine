@@ -62,14 +62,32 @@ namespace NanoEngine.ObjectManagement.Managers
         /// <param name="uName">The name which will be given to the 
         /// asset</param>
         /// <param name="posX">The X position of the asset</param>
-        /// <param name="PosY">The Y position of the asset</param>
+        /// <param name="posY">The Y position of the asset</param>
         /// <param name="spawn">Deciding if we want the asset to be
         /// spawned straight away</param>
-        public void CreateAsset<T, U>(string uName, int posX, int PosY, bool spawn = true) 
+        public void CreateAsset<T, U>(string uName, int posX, int posY, bool spawn = true) 
             where T : IAsset, new()
             where U : IAiComponent, new()
         {
-            CreateAsset<T, U>(uName, new Vector2(posX, PosY), spawn);
+            CreateAsset<T, U>(uName, new Vector2(posX, posY), spawn);
+        }
+
+        /// <summary>
+        /// Creates an asset along with it's mind and add's. Once created
+        /// the Asset will be automaticly drawn and the Mind will automaticly
+        /// be updated if spawn is set to true. Otherwise if spawn is false
+        /// the Asset will not be drawn or updated.
+        /// </summary>
+        /// <typeparam name="T">The type of asset that you want</typeparam>
+        /// <param name="uName">The name which will be given to the 
+        /// asset</param>
+        /// <param name="posX">The X position of the asset</param>
+        /// <param name="posY">The Y position of the asset</param>
+        /// <param name="spawn">Deciding if we want the asset to be
+        /// spawned straight away</param>
+        public void CreateAsset<T>(string uName, int posX, int posY, bool spawn = true) where T : IAsset, new()
+        {
+            CreateAsset<T>(uName, new Vector2(posX, posY), spawn);
         }
 
         /// <summary>
@@ -121,9 +139,39 @@ namespace NanoEngine.ObjectManagement.Managers
         /// the Asset will not be drawn or updated.
         /// </summary>
         /// <typeparam name="T">The type of asset that you want</typeparam>
+        /// <param name="uName">The name which will be given to the 
+        /// asset</param>
+        /// <param name="pos">The position of the asset</param>
+        /// <param name="spawn">Deciding if we want the asset to be
+        /// spawned straight away</param>
+        public void CreateAsset<T>(string uName, Vector2 pos, bool spawn = true) where T : IAsset, new()
+        {
+            try
+            {
+                _assetDictionary.Add(
+                    uName,
+                    _assetFactory.RetriveNewAsset<T>(
+                        uName, pos
+                    )
+                );
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates an asset along with it's mind and add's. Once created
+        /// the Asset will be automaticly drawn and the Mind will automaticly
+        /// be updated if spawn is set to true. Otherwise if spawn is false
+        /// the Asset will not be drawn or updated.
+        /// </summary>
+        /// <typeparam name="T">The type of asset that you want</typeparam>
         /// <typeparam name="U">The type of mind you want</typeparam>
         /// <param name="posX">The X position of the asset</param>
-        /// <param name="PosY">The Y position of the asset</param>
+        /// <param name="posY">The Y position of the asset</param>
         /// <param name="spawn">Deciding if we want the asset to be
         /// spawned straight away</param>
         public void CreateAsset<T, U>(int posX, int posY, bool spawn = true)
@@ -131,6 +179,27 @@ namespace NanoEngine.ObjectManagement.Managers
             where U : IAiComponent, new()
         {
             CreateAsset<T, U>(
+                typeof(T).ToString() + _uid.ToString(),
+                new Vector2(posX, posY),
+                spawn
+            );
+            _uid++;
+        }
+
+        /// <summary>
+        /// Creates an asset along with it's mind and add's. Once created
+        /// the Asset will be automaticly drawn and the Mind will automaticly
+        /// be updated if spawn is set to true. Otherwise if spawn is false
+        /// the Asset will not be drawn or updated.
+        /// </summary>
+        /// <typeparam name="T">The type of asset that you want</typeparam>
+        /// <param name="posX">The X position of the asset</param>
+        /// <param name="posY">The Y position of the asset</param>
+        /// <param name="spawn">Deciding if we want the asset to be
+        /// spawned straight away</param>
+        public void CreateAsset<T>(int posX, int posY, bool spawn = true) where T : IAsset, new()
+        {
+            CreateAsset<T>(
                 typeof(T).ToString() + _uid.ToString(),
                 new Vector2(posX, posY),
                 spawn
@@ -162,6 +231,27 @@ namespace NanoEngine.ObjectManagement.Managers
         }
 
         /// <summary>
+        /// Creates an asset along with it's mind and add's. Once created
+        /// the Asset will be automaticly drawn and the Mind will automaticly
+        /// be updated if spawn is set to true. Otherwise if spawn is false
+        /// the Asset will not be drawn or updated.
+        /// </summary>
+        /// <typeparam name="T">The type of asset that you want</typeparam>
+        /// <typeparam name="U">The type of mind you want</typeparam>
+        /// <param name="pos">The position of the asset</param>
+        /// <param name="spawn">Deciding if we want the asset to be
+        /// spawned straight away</param>
+        public void CreateAsset<T>(Vector2 pos, bool spawn = true) where T : IAsset, new()
+        {
+            CreateAsset<T>(
+                typeof(T).ToString() + _uid.ToString(),
+                pos,
+                spawn
+            );
+            _uid++;
+        }
+
+        /// <summary>
         /// Load all the assets from a json file. All ids of all assets within the
         /// json file MUST be added through the static methods of the LevelLoader
         /// class first
@@ -170,7 +260,7 @@ namespace NanoEngine.ObjectManagement.Managers
         public void LoadLevel(string filename)
         {
             ILevelLoader loader = new LevelLoader();
-            loader.LoadTileMap(filename, _assetDictionary, _aiComponents, _assetFactory, _aiFactory, _uid);
+            _uid = loader.LoadTileMap(filename, _assetDictionary, _aiComponents, _assetFactory, _aiFactory, _uid);
             _quadTree = new QuadTree(2, 5, loader.LevelBounds);
 
             foreach (IAiComponent aiComponent in _aiComponents.Values)

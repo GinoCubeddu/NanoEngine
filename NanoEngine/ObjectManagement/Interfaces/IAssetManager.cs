@@ -21,12 +21,28 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// <param name="uName">The name which will be given to the 
         /// asset</param>
         /// <param name="posX">The X position of the asset</param>
-        /// <param name="PosY">The Y position of the asset</param>
+        /// <param name="posY">The Y position of the asset</param>
         /// <param name="spawn">Deciding if we want the asset to be
         /// spawned straight away</param>
-        void CreateAsset<T, U>(string uName, int posX, int PosY, bool spawn = true)
+        void CreateAsset<T, U>(string uName, int posX, int posY, bool spawn = true)
             where T : IAsset, new()
             where U : IAiComponent, new();
+
+        /// <summary>
+        /// Creates an asset along with it's mind and add's. Once created
+        /// the Asset will be automaticly drawn and the Mind will automaticly
+        /// be updated if spawn is set to true. Otherwise if spawn is false
+        /// the Asset will not be drawn or updated.
+        /// </summary>
+        /// <typeparam name="T">The type of asset that you want</typeparam>
+        /// <param name="uName">The name which will be given to the 
+        /// asset</param>
+        /// <param name="posX">The X position of the asset</param>
+        /// <param name="posY">The Y position of the asset</param>
+        /// <param name="spawn">Deciding if we want the asset to be
+        /// spawned straight away</param>
+        void CreateAsset<T>(string uName, int posX, int posY, bool spawn = true)
+            where T : IAsset, new();
 
         /// <summary>
         /// Creates an asset along with it's mind and add's. Once created
@@ -52,15 +68,43 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// the Asset will not be drawn or updated.
         /// </summary>
         /// <typeparam name="T">The type of asset that you want</typeparam>
-        /// <typeparam name="U">The type of mind you want</typeparam>
-
-        /// <param name="posX">The X position of the asset</param>
-        /// <param name="PosY">The Y position of the asset</param>
+        /// <param name="uName">The name which will be given to the 
+        /// asset</param>
+        /// <param name="pos">The position of the asset</param>
         /// <param name="spawn">Deciding if we want the asset to be
         /// spawned straight away</param>
-        void CreateAsset<T, U>(int posX, int PosY, bool spawn = true)
+        void CreateAsset<T>(string uName, Vector2 pos, bool spawn = true)
+            where T : IAsset, new();
+
+        /// <summary>
+        /// Creates an asset along with it's mind and add's. Once created
+        /// the Asset will be automaticly drawn and the Mind will automaticly
+        /// be updated if spawn is set to true. Otherwise if spawn is false
+        /// the Asset will not be drawn or updated.
+        /// </summary>
+        /// <typeparam name="T">The type of asset that you want</typeparam>
+        /// <typeparam name="U">The type of mind you want</typeparam>
+        /// <param name="posX">The X position of the asset</param>
+        /// <param name="posY">The Y position of the asset</param>
+        /// <param name="spawn">Deciding if we want the asset to be
+        /// spawned straight away</param>
+        void CreateAsset<T, U>(int posX, int posY, bool spawn = true)
             where T : IAsset, new()
             where U : IAiComponent, new();
+
+        /// <summary>
+        /// Creates an asset along with it's mind and add's. Once created
+        /// the Asset will be automaticly drawn and the Mind will automaticly
+        /// be updated if spawn is set to true. Otherwise if spawn is false
+        /// the Asset will not be drawn or updated.
+        /// </summary>
+        /// <typeparam name="T">The type of asset that you want</typeparam>
+        /// <param name="posX">The X position of the asset</param>
+        /// <param name="posY">The Y position of the asset</param>
+        /// <param name="spawn">Deciding if we want the asset to be
+        /// spawned straight away</param>
+        void CreateAsset<T>(int posX, int posY, bool spawn = true)
+            where T : IAsset, new();
 
         /// <summary>
         /// Creates an asset along with it's mind and add's. Once created
@@ -76,6 +120,20 @@ namespace NanoEngine.ObjectManagement.Interfaces
         void CreateAsset<T, U>(Vector2 pos, bool spawn = true)
             where T : IAsset, new()
             where U : IAiComponent, new();
+
+        /// <summary>
+        /// Creates an asset along with it's mind and add's. Once created
+        /// the Asset will be automaticly drawn and the Mind will automaticly
+        /// be updated if spawn is set to true. Otherwise if spawn is false
+        /// the Asset will not be drawn or updated.
+        /// </summary>
+        /// <typeparam name="T">The type of asset that you want</typeparam>
+        /// <typeparam name="U">The type of mind you want</typeparam>
+        /// <param name="pos">The position of the asset</param>
+        /// <param name="spawn">Deciding if we want the asset to be
+        /// spawned straight away</param>
+        void CreateAsset<T>(Vector2 pos, bool spawn = true)
+            where T : IAsset, new();
 
         /// <summary>
         /// Load all the assets from a json file. All ids of all assets within the

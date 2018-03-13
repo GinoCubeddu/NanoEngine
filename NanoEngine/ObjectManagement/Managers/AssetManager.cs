@@ -42,9 +42,6 @@ namespace NanoEngine.ObjectManagement.Managers
         // An instance of the ai factory
         private IAiFactory _aiFactory;
 
-        // an instance of the quad tree
-        private IQuadTree _quadTree;
-
         // An insatnce of the collisionManager
         private ICollisionManager _collisionManager;
 
@@ -62,7 +59,6 @@ namespace NanoEngine.ObjectManagement.Managers
             _aiComponents = new Dictionary<string, IAiComponent>();
             _assetFactory = new AssetFactory();
             _aiFactory = new AiFactory(eventManager);
-            _quadTree = new QuadTree(2, 5, RenderManager.RenderBounds);
             _collisionManager = new CollisionManager();
             _physicsManager = new PhysicsManager();
         }
@@ -283,7 +279,7 @@ namespace NanoEngine.ObjectManagement.Managers
             // THIS IS BREAKING SINGLE RESPONSIBILTY NEEDS REFACTORING
             ILevelLoader loader = new LevelLoader();
             _uid = loader.LoadTileMap(filename, _assetDictionary, _aiComponents, _assetFactory, _aiFactory, _uid);
-            _quadTree = new QuadTree(2, 5, loader.LevelBounds);
+            _collisionManager = new CollisionManager(loader.LevelBounds);
 
             foreach (IAiComponent aiComponent in _aiComponents.Values)
             {
@@ -298,108 +294,10 @@ namespace NanoEngine.ObjectManagement.Managers
         /// </summary>
         public void DrawAssets(IRenderManager rendermanager)
         {
-            // THIS IS BREAKING SINGLE RESPONSIBILITY NEEDS REFACTORING
-
-
-
-           // SHOULD DO:
-                // 1: loop through the assets and call their draw method - NOTHING ELSE
-
-
-
-
-            // clear the current quad tree
-            _quadTree.Clear();
-
-            IList<string> assetKeys = _assetDictionary.Keys.ToList();
-            foreach (string assetKey in assetKeys)
-            {
-                _assetDictionary[assetKey].Draw(rendermanager);
-            }
-
-            return;
-
-            // loop through all the assets
-            IList<string> assetKeys1 = _assetDictionary.Keys.ToList();
-            foreach (string assetKey in assetKeys)
-            {
-                // Grab the asset
-                IAsset asset = _assetDictionary[assetKey];
-
-                if (asset.Despawn)
-                    continue;
-
-                if (asset is ICollidable)
-                    _quadTree.Insert(asset);
+            // loop through all assets and update them
+            IList<IAsset> assets = _assetDictionary.Values.ToList();
+            foreach (IAsset asset in assets)
                 asset.Draw(rendermanager);
-
-                if (DrawBounds)
-                {
-                    IList<Vector2> assetPoints = asset.Points ?? asset.GetPointsFromBounds();
-                    for (int i = 0; i < assetPoints.Count; i++)
-                    {
-                        Vector2 edge = assetPoints[i + 1 == assetPoints.Count ? 0 : i + 1] - assetPoints[i];
-                        float angle = (float)Math.Atan2(edge.Y, edge.X);
-                        // draw lines between each point of object
-                        rendermanager.Draw(
-                            rendermanager.BlankTexture,
-                            new Rectangle((int)assetPoints[i].X, (int)assetPoints[i].Y, (int)edge.Length(), 3),
-                            null,
-                            Color.Red,
-                            angle,
-                            new Vector2(0, 0),
-                            SpriteEffects.None,
-                            0
-                        );
-                    }
-                }
-            }
-
-            foreach (string assetKey in assetKeys)
-            {
-                IAsset asset = _assetDictionary[assetKey];
-                if (asset is ICollidable)
-                {
-                    if (asset.Despawn)
-                        continue;
-
-                    // If the asset is a colidable then we want to get all possible collidables
-                    IList<IAsset> possibleCollidables = _quadTree.RetriveCollidables(asset);
-
-                    // We dont want to check for collisions if there are none possible
-                    if (possibleCollidables.Count == 0)
-                        continue;
-                    
-                    // Set a null variable for the assetAI
-                    IAiComponent assetAi = null;
-
-                    // Create a new tuple list to hold the possible collidables
-                    // and their minds
-                    IList<Tuple<IAsset, IAiComponent>> possibleCollidablesList = new List<Tuple<IAsset, IAiComponent>>();
-
-                    // Loop through each possible collsion and add them to the list
-                    foreach (IAsset possibleCollidable in possibleCollidables)
-                    {
-                        // Reset the value to null and then attempt to get the AI for
-                        // the current asset before adding it to the tuple list
-                        assetAi = null;
-                        _aiComponents.TryGetValue(possibleCollidable.UniqueName, out assetAi);
-                        possibleCollidablesList.Add(new Tuple<IAsset, IAiComponent>(
-                            possibleCollidable, assetAi    
-                        ));
-                    }
-
-                    // Reset the ai to null before attempting to get the ai for the
-                    // main asset
-                    assetAi = null;
-                    _aiComponents.TryGetValue(asset.UniqueName, out assetAi);
-                    _collisionManager.CheckCollision(
-                        new Tuple<IAsset, IAiComponent>(asset, assetAi),
-                        possibleCollidablesList
-                    );
-                }
-            }
-            _quadTree.Draw(rendermanager);           
         }
 
         /// <summary>
@@ -408,29 +306,26 @@ namespace NanoEngine.ObjectManagement.Managers
         /// <param name="updateManager">an instance of the update manager</param>
         public void UpdateAssets(IUpdateManager updateManager)
         { 
-            // THIS METHOD NEEDS TO CHANGE TO DO:
-                // 1 - CALL COLLISION update (and pass the asset list - it is not the asset managers responisibilty to filiter out the non collidables)
-                // 2 - MOVE the quad tree into the collision manager - it is not the responsibility of the asset manager to decide if an asset is
-                    // a collidable and then insert it into the quad tree
-                // 3 - DECIDE where the physics manager belongs...in this class at all?
-                // 4 - loop through all minds and update them
-                // 5 - call the CheckForDespawn method which will remove any entites that are marked for despawn from the dictonaires
-                    // and add them  to the "available assets" dictonary
-
-
             // update the physics manager
             _physicsManager.UpdatePhysics(_assetDictionary.Values.ToList());
 
-            // loop through all minds and update them
-            IList<string> aiKeys = _aiComponents.Keys.ToList();
-            foreach (string aiName in aiKeys)
-            {
-                if (!_aiComponents[aiName].ControledAsset.Despawn)
-                    _aiComponents[aiName].Update(updateManager);
-            }
+            // Pass copies of the assets and their minds to the collision manager
+            _collisionManager.Update(
+                new Dictionary<string, IAsset>(_assetDictionary),
+                new Dictionary<string, IAiComponent>(_aiComponents)
+            );
 
+            // loop through all minds and update them
+            IList<IAiComponent> aiComponents = _aiComponents.Values.ToList();
+            foreach (IAiComponent aiComponent in aiComponents)
+                aiComponent.Update(updateManager);
+
+            CheckForDespawns();
         }
 
+        /// <summary>
+        /// Will check to see if there are any assets that need to be "despawned"
+        /// </summary>
         private void CheckForDespawns()
         {
             // Loop check all assets to see if they want to be despawned
@@ -443,14 +338,13 @@ namespace NanoEngine.ObjectManagement.Managers
                     _availableAssets[assetDictionaryKey] = _assetDictionary[assetDictionaryKey];
                     _assetDictionary.Remove(assetDictionaryKey);
 
-                    // If that asset had a 
+                    // If that asset had a ai component attached to it do the same
                     if (_aiComponents.ContainsKey(assetDictionaryKey))
                     {
                         _availableAiComponents[assetDictionaryKey] = _aiComponents[assetDictionaryKey];
                         _aiComponents.Remove(assetDictionaryKey);
                     }
                 }
-
             }
         }
 

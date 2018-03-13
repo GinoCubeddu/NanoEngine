@@ -18,5 +18,13 @@ namespace NanoEngine.Collision.Manager
             Tuple<IAsset, IAiComponent> asset,
             IList<Tuple<IAsset, IAiComponent>> possibleCollisions
         );
+
+        /// <summary>
+        /// Updates the collision manager against the passed in objects
+        /// </summary>
+        /// <param name="objects">
+        /// A dictonary containing all currently active objects and their minds if they have one
+        /// </param>
+        void Update(IDictionary<string, Tuple<IAsset, IAiComponent>> objects);
     }
 }

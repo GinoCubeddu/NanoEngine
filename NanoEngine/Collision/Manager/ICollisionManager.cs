@@ -22,9 +22,8 @@ namespace NanoEngine.Collision.Manager
         /// <summary>
         /// Updates the collision manager against the passed in objects
         /// </summary>
-        /// <param name="objects">
-        /// A dictonary containing all currently active objects and their minds if they have one
-        /// </param>
-        void Update(IDictionary<string, Tuple<IAsset, IAiComponent>> objects);
+        /// <param name="assets">All assets that are on screen</param>
+        /// <param name="aiComponents">All AiComponents that belong to the assets</param>
+        void Update(IDictionary<string, IAsset> assets, IDictionary<string, IAiComponent> aiComponents);
     }
 }

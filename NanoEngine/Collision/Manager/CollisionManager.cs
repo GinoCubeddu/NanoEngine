@@ -30,6 +30,13 @@ namespace NanoEngine.Collision.Manager
         }
 
         /// <summary>
+        /// Constructor for CollisionManager, uses dedault values for quad tree
+        /// </summary>
+        public CollisionManager(Rectangle levelBounds) : this(5, 4, levelBounds)
+        {
+        }
+
+        /// <summary>
         /// Constructor for the CollisionManager
         /// </summary>
         /// <param name="quadTreeMaxObjects">The max objects the quad tree should contain</param>
@@ -81,36 +88,35 @@ namespace NanoEngine.Collision.Manager
         /// <summary>
         /// Updates the collision manager against the passed in objects
         /// </summary>
-        /// <param name="objects">
-        /// A dictonary containing all currently active objects and their minds if they have one
-        /// </param>
-        public void Update(IDictionary<string, Tuple<IAsset, IAiComponent>> objects)
+        /// <param name="assets">All assets that are on screen</param>
+        /// <param name="aiComponents">All AiComponents that belong to the assets</param>
+        public void Update(IDictionary<string, IAsset> assets, IDictionary<string, IAiComponent> aiComponents)
         {
             // Remove all non collidables before continuing
-            objects = RemoveNonCollidables(objects);
+            IDictionary<string, Tuple<IAsset, IAiComponent>> collidableAssets = GetCollidableAssets(assets, aiComponents);
 
             // Insert all assets into the quad tree
-            InsertIntoQuadTree(objects);
+            InsertIntoQuadTree(collidableAssets);
             
             // Check for any collisions
-            CheckForCollisions(objects);
+            CheckForCollisions(collidableAssets);
         }
 
         /// <summary>
         /// Checks to see if any of the assets are colliding with eachother
         /// </summary>
-        /// <param name="objects"></param>
-        private void CheckForCollisions(IDictionary<string, Tuple<IAsset, IAiComponent>> objects)
+        /// <param name="collidableAssets">All of the possible collidable assets</param>
+        private void CheckForCollisions(IDictionary<string, Tuple<IAsset, IAiComponent>> collidableAssets)
         {
             // Loop through each asset within the dict
-            foreach (Tuple<IAsset, IAiComponent> assetData in objects.Values)
+            foreach (Tuple<IAsset, IAiComponent> assetData in collidableAssets.Values)
             {
                 // Create a blacnk list to hold the possible collisions
                 IList<Tuple<IAsset, IAiComponent>> possibleCollisions = new List<Tuple<IAsset, IAiComponent>>();
 
                 // Check the quad tree for any possible collisions
                 foreach (IAsset asset in _quadTree.RetriveCollidables(assetData.Item1))
-                    possibleCollisions.Add(objects[asset.UniqueName]);
+                    possibleCollisions.Add(collidableAssets[asset.UniqueName]);
 
                 // Pass the generated list to the CheckCollision method
                 CheckCollision(assetData, possibleCollisions);
@@ -120,36 +126,48 @@ namespace NanoEngine.Collision.Manager
         /// <summary>
         /// Will insert all collidabel objects into the quad tree
         /// </summary>
-        /// <param name="objects">The dictonary of objects to check</param>
-        private void InsertIntoQuadTree(IDictionary<string, Tuple<IAsset, IAiComponent>> objects)
+        /// <param name="collidableAssets">All of the possible collidable assets</param>
+        private void InsertIntoQuadTree(IDictionary<string, Tuple<IAsset, IAiComponent>> collidableAssets)
         {
             // We need to clear the quad tree before inserting anything
             _quadTree.Clear();
             // Loop through the passed in assets
-            foreach (Tuple<IAsset, IAiComponent> assetData in objects.Values)
+            foreach (Tuple<IAsset, IAiComponent> assetData in collidableAssets.Values)
                 _quadTree.Insert(assetData.Item1);
         }
 
-
         /// <summary>
-        /// Removes all non collidable assets from the passed in dict
+        /// returns all collidbale assets and their minds in a dict
         /// </summary>
-        /// <param name="objects">The dict containing the assets</param>
+        /// <param name="assets">All assets that are on screen</param>
+        /// <param name="aiComponents">All AiComponents that belong to the assets</param>
         /// <returns>The dict without the non collidables</returns>
-        private IDictionary<string, Tuple<IAsset, IAiComponent>> RemoveNonCollidables(IDictionary<string, Tuple<IAsset, IAiComponent>> objects)
+        private IDictionary<string, Tuple<IAsset, IAiComponent>> GetCollidableAssets(
+            IDictionary<string, IAsset> assets, IDictionary<string, IAiComponent> aiComponents   
+        )
         {
-            IList<string> names = new List<string>();
+            // Create a dict to hold the collidableAssets
+            IDictionary<string, Tuple<IAsset, IAiComponent>> collidableAssets = new Dictionary<string, Tuple<IAsset, IAiComponent>>();
 
-            // loop through all the assets and add all non collidables to the list
-            foreach (string assetName in objects.Keys)
-                if(!(objects[assetName].Item1 is ICollidable))
-                    names.Add(assetName);
+            // Loop through all the assets
+            foreach (IAsset asset in assets.Values)
+            {
+                // If the asset is a collidable
+                if (asset is ICollidable)
+                {
+                    // Check to see if the asset has an AI
+                    IAiComponent ai = null;
+                    if (aiComponents.ContainsKey(asset.UniqueName))
+                        ai = aiComponents[asset.UniqueName];
 
-            // Remove all marked assets
-            foreach (string name in names)
-                objects.Remove(name);
-
-            return objects;
+                    // Add them both to the collidableAssets dict
+                    collidableAssets[asset.UniqueName] = new Tuple<IAsset, IAiComponent>(
+                        asset, ai
+                    );
+                }
+            }
+            // Retuen all collidbale assets
+            return collidableAssets;
         }
     }
 }

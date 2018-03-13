@@ -56,7 +56,9 @@ namespace NanoEngine.ObjectManagement.Managers
         {
             _uid = 0;
             _assetDictionary = new Dictionary<string, IAsset>();
+            _availableAssets = new Dictionary<string, IAsset>();
             _aiComponents = new Dictionary<string, IAiComponent>();
+            _availableAiComponents = new Dictionary<string, IAiComponent>();
             _assetFactory = new AssetFactory();
             _aiFactory = new AiFactory(eventManager);
             _collisionManager = new CollisionManager();
@@ -121,19 +123,23 @@ namespace NanoEngine.ObjectManagement.Managers
         {
             try
             {
+                // if the asset manager does not have any spare assets to recycle
                 // offload the creation to the asset factory
-                _assetDictionary.Add(
-                    uName,
-                    _assetFactory.RetriveNewAsset<T>(
-                        uName, pos
-                    )
-                );
+                if (!RecycleAsset(typeof(T), uName, pos))
+                    _assetDictionary.Add(
+                        uName,
+                        _assetFactory.RetriveNewAsset<T>(
+                            uName, pos
+                        )
+                    );
 
-                // off load the creation to the ai factory
-                _aiComponents.Add(
-                    uName,
-                    _aiFactory.CreateAi<U>()
-                );
+                // if the asset manager does not have any spare aiComponents to recycle
+                // offload the creation to the ai factory
+                if (!RecycleAi(typeof(U), _assetDictionary[uName]))
+                    _aiComponents.Add(
+                        uName,
+                        _aiFactory.CreateAi<U>()
+                    );
 
                 // THINK ABOUT HOW THIS CAN BE REFACTORED - SHOULD NOT BE HERE
                 if (_aiComponents[uName] is IAssetmanagerNeeded)
@@ -164,13 +170,15 @@ namespace NanoEngine.ObjectManagement.Managers
         {
             try
             {
-                // offload the creation of the asset to the asset factory
-                _assetDictionary.Add(
-                    uName,
-                    _assetFactory.RetriveNewAsset<T>(
-                        uName, pos
-                    )
-                );
+                // if the asset manager does not have any spare assets to recycle
+                // offload the creation to the asset factory
+                if (!RecycleAsset(typeof(T), uName, pos))
+                    _assetDictionary.Add(
+                        uName,
+                        _assetFactory.RetriveNewAsset<T>(
+                            uName, pos
+                        )
+                    );
             }
             catch (Exception e)
             {
@@ -419,6 +427,79 @@ namespace NanoEngine.ObjectManagement.Managers
             // Remove all items from both dictonaries
             _aiComponents.Clear();
             _assetDictionary.Clear();            
+        }
+
+        /// <summary>
+        /// Checks to see if there are any assets that we can recycle
+        /// </summary>
+        /// <param name="assetType">The asset type to recycle</param>
+        /// <param name="uName">The new uNname for the asset</param>
+        /// <param name="pos">The pos we want to give the asset</param>
+        /// <returns>True if an asset was recycled otherwise false</returns>
+        private bool RecycleAsset(Type assetType, string uName, Vector2 pos)
+        {
+            // If there are no available assets then return false
+            if (_availableAssets.Count == 0)
+                return false;
+
+            // Get all the assets in the list
+            IList<IAsset> avaliableAssets = _availableAssets.Values.ToList();
+
+            // Loop through all available assets
+            foreach (IAsset asset in avaliableAssets)
+            {
+                // if the asset is of the same type
+                if (asset.GetType() == assetType)
+                {
+                    // Remove the asset from available assets
+                    _availableAssets.Remove(asset.UniqueName);
+
+                    // Reinit the asset with the new data
+                    asset.Initilise();
+                    asset.SetUniqueData(uName);
+                    asset.SetPosition(pos);
+
+                    // Add the asset to the updating assets
+                    _assetDictionary[uName] = asset;
+                    return true;
+                }   
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Checks to see if there are any ai that we can recycle
+        /// </summary>
+        /// <param name="aiType">The type of the ai we want</param>
+        /// <param name="asset">The asset that would be assigned to it</param>
+        /// <returns>True if an aiComponent was recycled otherwise false</returns>
+        private bool RecycleAi(Type aiType, IAsset asset)
+        {
+            // If there are no ai components to recycle then return false
+            if (_availableAiComponents.Count == 0)
+                return false;
+
+            // Get all avaliable ai components
+            IList<KeyValuePair<string, IAiComponent>> avaliableAI = _availableAiComponents.ToList();
+
+            foreach (KeyValuePair<string, IAiComponent> aiComponent in avaliableAI)
+            {
+                // if the ai is of the correct type
+                if (aiComponent.GetType() == aiType)
+                {
+                    // remove the ai from the avalaible aicomponents
+                    _availableAssets.Remove(aiComponent.Key);
+
+                    // Reinit the ai with the asset
+                    aiComponent.Value.InitialiseAiComponent(asset);
+
+                    // add the ai to the currently updating ai
+                    _aiComponents[asset.UniqueName] = aiComponent.Value;
+                    return true;
+                }
+            }
+            // if we have reached here then there are no matching ai to recycle
+            return false;
         }
     }
 }

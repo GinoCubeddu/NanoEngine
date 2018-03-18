@@ -22,7 +22,7 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// <param name="assetFactory">A assetFactory instance</param>
         /// <param name="aiFactory">A aiFactory instance</param>
         /// <param name="uId">a uId counter for asset names that have not requested a specific uName</param>
-        void LoadTileMap(
+        int LoadTileMap(
             string fileName, IDictionary<string, IAsset> assets,
             IDictionary<string, IAiComponent> aiComponents, IAssetFactory assetFactory,
             IAiFactory aiFactory, int uId

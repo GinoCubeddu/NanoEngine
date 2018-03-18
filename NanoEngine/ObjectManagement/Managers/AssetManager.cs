@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,22 +21,34 @@ namespace NanoEngine.ObjectManagement.Managers
 {
     public class AssetManager : IAssetManager
     {
+        // The uid that will be assigned to the next object
         private int _uid;
 
+        // A dict containing all the currently updating assets
         private IDictionary<string, IAsset> _assetDictionary;
 
+        // A dict containing all the available assets that are up for recycling
+        private IDictionary<string, IAsset> _availableAssets;
+
+        // A dict containing all the currently updating ai components
         private IDictionary<string, IAiComponent> _aiComponents;
 
+        // A dict containing all the available ai components that are up for recycling
+        private IDictionary<string, IAiComponent> _availableAiComponents;
+
+        // An instance of the asset factory
         private IAssetFactory _assetFactory;
 
+        // An instance of the ai factory
         private IAiFactory _aiFactory;
 
-        private IQuadTree _quadTree;
-
+        // An insatnce of the collisionManager
         private ICollisionManager _collisionManager;
 
+        // An instance of the physics manager
         private IPhysicsManager _physicsManager;
 
+        // A bool informing us if we need to draw the bounds or not
         public static bool DrawBounds = false;
 
 
@@ -43,10 +56,11 @@ namespace NanoEngine.ObjectManagement.Managers
         {
             _uid = 0;
             _assetDictionary = new Dictionary<string, IAsset>();
+            _availableAssets = new Dictionary<string, IAsset>();
             _aiComponents = new Dictionary<string, IAiComponent>();
+            _availableAiComponents = new Dictionary<string, IAiComponent>();
             _assetFactory = new AssetFactory();
             _aiFactory = new AiFactory(eventManager);
-            _quadTree = new QuadTree(2, 5, RenderManager.RenderBounds);
             _collisionManager = new CollisionManager();
             _physicsManager = new PhysicsManager();
         }
@@ -62,14 +76,32 @@ namespace NanoEngine.ObjectManagement.Managers
         /// <param name="uName">The name which will be given to the 
         /// asset</param>
         /// <param name="posX">The X position of the asset</param>
-        /// <param name="PosY">The Y position of the asset</param>
+        /// <param name="posY">The Y position of the asset</param>
         /// <param name="spawn">Deciding if we want the asset to be
         /// spawned straight away</param>
-        public void CreateAsset<T, U>(string uName, int posX, int PosY, bool spawn = true) 
+        public void CreateAsset<T, U>(string uName, int posX, int posY, bool spawn = true) 
             where T : IAsset, new()
             where U : IAiComponent, new()
         {
-            CreateAsset<T, U>(uName, new Vector2(posX, PosY), spawn);
+            CreateAsset<T, U>(uName, new Vector2(posX, posY), spawn);
+        }
+
+        /// <summary>
+        /// Creates an asset along with it's mind and add's. Once created
+        /// the Asset will be automaticly drawn and the Mind will automaticly
+        /// be updated if spawn is set to true. Otherwise if spawn is false
+        /// the Asset will not be drawn or updated.
+        /// </summary>
+        /// <typeparam name="T">The type of asset that you want</typeparam>
+        /// <param name="uName">The name which will be given to the 
+        /// asset</param>
+        /// <param name="posX">The X position of the asset</param>
+        /// <param name="posY">The Y position of the asset</param>
+        /// <param name="spawn">Deciding if we want the asset to be
+        /// spawned straight away</param>
+        public void CreateAsset<T>(string uName, int posX, int posY, bool spawn = true) where T : IAsset, new()
+        {
+            CreateAsset<T>(uName, new Vector2(posX, posY), spawn);
         }
 
         /// <summary>
@@ -91,17 +123,25 @@ namespace NanoEngine.ObjectManagement.Managers
         {
             try
             {
-                _assetDictionary.Add(
-                    uName,
-                    _assetFactory.RetriveNewAsset<T>(
-                        uName, pos
-                    )
-                );
+                // if the asset manager does not have any spare assets to recycle
+                // offload the creation to the asset factory
+                if (!RecycleAsset(typeof(T), uName, pos))
+                    _assetDictionary.Add(
+                        uName,
+                        _assetFactory.RetriveNewAsset<T>(
+                            uName, pos
+                        )
+                    );
 
-                _aiComponents.Add(
-                    uName,
-                    _aiFactory.CreateAi<U>()
-                );
+                // if the asset manager does not have any spare aiComponents to recycle
+                // offload the creation to the ai factory
+                if (!RecycleAi(typeof(U), _assetDictionary[uName]))
+                    _aiComponents.Add(
+                        uName,
+                        _aiFactory.CreateAi<U>()
+                    );
+
+                // THINK ABOUT HOW THIS CAN BE REFACTORED - SHOULD NOT BE HERE
                 if (_aiComponents[uName] is IAssetmanagerNeeded)
                     (_aiComponents[uName] as IAssetmanagerNeeded).AssetManager = this;
 
@@ -121,9 +161,42 @@ namespace NanoEngine.ObjectManagement.Managers
         /// the Asset will not be drawn or updated.
         /// </summary>
         /// <typeparam name="T">The type of asset that you want</typeparam>
+        /// <param name="uName">The name which will be given to the 
+        /// asset</param>
+        /// <param name="pos">The position of the asset</param>
+        /// <param name="spawn">Deciding if we want the asset to be
+        /// spawned straight away</param>
+        public void CreateAsset<T>(string uName, Vector2 pos, bool spawn = true) where T : IAsset, new()
+        {
+            try
+            {
+                // if the asset manager does not have any spare assets to recycle
+                // offload the creation to the asset factory
+                if (!RecycleAsset(typeof(T), uName, pos))
+                    _assetDictionary.Add(
+                        uName,
+                        _assetFactory.RetriveNewAsset<T>(
+                            uName, pos
+                        )
+                    );
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates an asset along with it's mind and add's. Once created
+        /// the Asset will be automaticly drawn and the Mind will automaticly
+        /// be updated if spawn is set to true. Otherwise if spawn is false
+        /// the Asset will not be drawn or updated.
+        /// </summary>
+        /// <typeparam name="T">The type of asset that you want</typeparam>
         /// <typeparam name="U">The type of mind you want</typeparam>
         /// <param name="posX">The X position of the asset</param>
-        /// <param name="PosY">The Y position of the asset</param>
+        /// <param name="posY">The Y position of the asset</param>
         /// <param name="spawn">Deciding if we want the asset to be
         /// spawned straight away</param>
         public void CreateAsset<T, U>(int posX, int posY, bool spawn = true)
@@ -131,6 +204,27 @@ namespace NanoEngine.ObjectManagement.Managers
             where U : IAiComponent, new()
         {
             CreateAsset<T, U>(
+                typeof(T).ToString() + _uid.ToString(),
+                new Vector2(posX, posY),
+                spawn
+            );
+            _uid++;
+        }
+
+        /// <summary>
+        /// Creates an asset along with it's mind and add's. Once created
+        /// the Asset will be automaticly drawn and the Mind will automaticly
+        /// be updated if spawn is set to true. Otherwise if spawn is false
+        /// the Asset will not be drawn or updated.
+        /// </summary>
+        /// <typeparam name="T">The type of asset that you want</typeparam>
+        /// <param name="posX">The X position of the asset</param>
+        /// <param name="posY">The Y position of the asset</param>
+        /// <param name="spawn">Deciding if we want the asset to be
+        /// spawned straight away</param>
+        public void CreateAsset<T>(int posX, int posY, bool spawn = true) where T : IAsset, new()
+        {
+            CreateAsset<T>(
                 typeof(T).ToString() + _uid.ToString(),
                 new Vector2(posX, posY),
                 spawn
@@ -162,6 +256,27 @@ namespace NanoEngine.ObjectManagement.Managers
         }
 
         /// <summary>
+        /// Creates an asset along with it's mind and add's. Once created
+        /// the Asset will be automaticly drawn and the Mind will automaticly
+        /// be updated if spawn is set to true. Otherwise if spawn is false
+        /// the Asset will not be drawn or updated.
+        /// </summary>
+        /// <typeparam name="T">The type of asset that you want</typeparam>
+        /// <typeparam name="U">The type of mind you want</typeparam>
+        /// <param name="pos">The position of the asset</param>
+        /// <param name="spawn">Deciding if we want the asset to be
+        /// spawned straight away</param>
+        public void CreateAsset<T>(Vector2 pos, bool spawn = true) where T : IAsset, new()
+        {
+            CreateAsset<T>(
+                typeof(T).ToString() + _uid.ToString(),
+                pos,
+                spawn
+            );
+            _uid++;
+        }
+
+        /// <summary>
         /// Load all the assets from a json file. All ids of all assets within the
         /// json file MUST be added through the static methods of the LevelLoader
         /// class first
@@ -169,9 +284,10 @@ namespace NanoEngine.ObjectManagement.Managers
         /// <param name="filename">The name of the json file within the Content directory</param>
         public void LoadLevel(string filename)
         {
+            // THIS IS BREAKING SINGLE RESPONSIBILTY NEEDS REFACTORING
             ILevelLoader loader = new LevelLoader();
-            loader.LoadTileMap(filename, _assetDictionary, _aiComponents, _assetFactory, _aiFactory, _uid);
-            _quadTree = new QuadTree(2, 5, loader.LevelBounds);
+            _uid = loader.LoadTileMap(filename, _assetDictionary, _aiComponents, _assetFactory, _aiFactory, _uid);
+            _collisionManager = new CollisionManager(loader.LevelBounds);
 
             foreach (IAiComponent aiComponent in _aiComponents.Values)
             {
@@ -186,85 +302,10 @@ namespace NanoEngine.ObjectManagement.Managers
         /// </summary>
         public void DrawAssets(IRenderManager rendermanager)
         {
-            _quadTree.Clear();
-            IList<string> assetKeys = _assetDictionary.Keys.ToList();
-            foreach (string assetKey in assetKeys)
-            {
-                IAsset asset = _assetDictionary[assetKey];
-                if (asset.Despawn)
-                    continue;
-
-                if (asset is ICollidable)
-                    _quadTree.Insert(asset);
+            // loop through all assets and update them
+            IList<IAsset> assets = _assetDictionary.Values.ToList();
+            foreach (IAsset asset in assets)
                 asset.Draw(rendermanager);
-
-                if (DrawBounds)
-                {
-                    IList<Vector2> assetPoints = asset.Points ?? asset.GetPointsFromBounds();
-                    for (int i = 0; i < assetPoints.Count; i++)
-                    {
-                        Vector2 edge = assetPoints[i + 1 == assetPoints.Count ? 0 : i + 1] - assetPoints[i];
-                        float angle = (float)Math.Atan2(edge.Y, edge.X);
-                        // draw lines between each point of object
-                        rendermanager.Draw(
-                            rendermanager.BlankTexture,
-                            new Rectangle((int)assetPoints[i].X, (int)assetPoints[i].Y, (int)edge.Length(), 3),
-                            null,
-                            Color.Red,
-                            angle,
-                            new Vector2(0, 0),
-                            SpriteEffects.None,
-                            0
-                        );
-                    }
-                }
-            }
-
-            foreach (string assetKey in assetKeys)
-            {
-                IAsset asset = _assetDictionary[assetKey];
-                if (asset is ICollidable)
-                {
-                    if (asset.Despawn)
-                        continue;
-
-                    // If the asset is a colidable then we want to get all possible collidables
-                    IList<IAsset> possibleCollidables = _quadTree.RetriveCollidables(asset);
-
-                    // We dont want to check for collisions if there are none possible
-                    if (possibleCollidables.Count == 0)
-                        continue;
-                    
-                    // Set a null variable for the assetAI
-                    IAiComponent assetAi = null;
-
-                    // Create a new tuple list to hold the possible collidables
-                    // and their minds
-                    IList<Tuple<IAsset, IAiComponent>> possibleCollidablesList = new List<Tuple<IAsset, IAiComponent>>();
-
-                    // Loop through each possible collsion and add them to the list
-                    foreach (IAsset possibleCollidable in possibleCollidables)
-                    {
-                        // Reset the value to null and then attempt to get the AI for
-                        // the current asset before adding it to the tuple list
-                        assetAi = null;
-                        _aiComponents.TryGetValue(possibleCollidable.UniqueName, out assetAi);
-                        possibleCollidablesList.Add(new Tuple<IAsset, IAiComponent>(
-                            possibleCollidable, assetAi    
-                        ));
-                    }
-
-                    // Reset the ai to null before attempting to get the ai for the
-                    // main asset
-                    assetAi = null;
-                    _aiComponents.TryGetValue(asset.UniqueName, out assetAi);
-                    _collisionManager.CheckCollision(
-                        new Tuple<IAsset, IAiComponent>(asset, assetAi),
-                        possibleCollidablesList
-                    );
-                }
-            }
-            _quadTree.Draw(rendermanager);           
         }
 
         /// <summary>
@@ -272,13 +313,46 @@ namespace NanoEngine.ObjectManagement.Managers
         /// </summary>
         /// <param name="updateManager">an instance of the update manager</param>
         public void UpdateAssets(IUpdateManager updateManager)
-        {
+        { 
+            // update the physics manager
             _physicsManager.UpdatePhysics(_assetDictionary.Values.ToList());
-            IList<string> aiKeys = _aiComponents.Keys.ToList();
-            foreach (string aiName in aiKeys)
+
+            // Pass copies of the assets and their minds to the collision manager
+            _collisionManager.Update(
+                new Dictionary<string, IAsset>(_assetDictionary),
+                new Dictionary<string, IAiComponent>(_aiComponents)
+            );
+
+            // loop through all minds and update them
+            IList<IAiComponent> aiComponents = _aiComponents.Values.ToList();
+            foreach (IAiComponent aiComponent in aiComponents)
+                aiComponent.Update(updateManager);
+
+            CheckForDespawns();
+        }
+
+        /// <summary>
+        /// Will check to see if there are any assets that need to be "despawned"
+        /// </summary>
+        private void CheckForDespawns()
+        {
+            // Loop check all assets to see if they want to be despawned
+            foreach (string assetDictionaryKey in _assetDictionary.Keys.ToList())
             {
-                if (!_aiComponents[aiName].ControledAsset.Despawn)
-                    _aiComponents[aiName].Update(updateManager);
+                // If it does want to be despawned
+                if (_assetDictionary[assetDictionaryKey].Despawn)
+                {
+                    // Remove it from the current asset dict and add it to the available asset list
+                    _availableAssets[assetDictionaryKey] = _assetDictionary[assetDictionaryKey];
+                    _assetDictionary.Remove(assetDictionaryKey);
+
+                    // If that asset had a ai component attached to it do the same
+                    if (_aiComponents.ContainsKey(assetDictionaryKey))
+                    {
+                        _availableAiComponents[assetDictionaryKey] = _aiComponents[assetDictionaryKey];
+                        _aiComponents.Remove(assetDictionaryKey);
+                    }
+                }
             }
         }
 
@@ -353,6 +427,79 @@ namespace NanoEngine.ObjectManagement.Managers
             // Remove all items from both dictonaries
             _aiComponents.Clear();
             _assetDictionary.Clear();            
+        }
+
+        /// <summary>
+        /// Checks to see if there are any assets that we can recycle
+        /// </summary>
+        /// <param name="assetType">The asset type to recycle</param>
+        /// <param name="uName">The new uNname for the asset</param>
+        /// <param name="pos">The pos we want to give the asset</param>
+        /// <returns>True if an asset was recycled otherwise false</returns>
+        private bool RecycleAsset(Type assetType, string uName, Vector2 pos)
+        {
+            // If there are no available assets then return false
+            if (_availableAssets.Count == 0)
+                return false;
+
+            // Get all the assets in the list
+            IList<IAsset> avaliableAssets = _availableAssets.Values.ToList();
+
+            // Loop through all available assets
+            foreach (IAsset asset in avaliableAssets)
+            {
+                // if the asset is of the same type
+                if (asset.GetType() == assetType)
+                {
+                    // Remove the asset from available assets
+                    _availableAssets.Remove(asset.UniqueName);
+
+                    // Reinit the asset with the new data
+                    asset.Initilise();
+                    asset.SetUniqueData(uName);
+                    asset.SetPosition(pos);
+
+                    // Add the asset to the updating assets
+                    _assetDictionary[uName] = asset;
+                    return true;
+                }   
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Checks to see if there are any ai that we can recycle
+        /// </summary>
+        /// <param name="aiType">The type of the ai we want</param>
+        /// <param name="asset">The asset that would be assigned to it</param>
+        /// <returns>True if an aiComponent was recycled otherwise false</returns>
+        private bool RecycleAi(Type aiType, IAsset asset)
+        {
+            // If there are no ai components to recycle then return false
+            if (_availableAiComponents.Count == 0)
+                return false;
+
+            // Get all avaliable ai components
+            IList<KeyValuePair<string, IAiComponent>> avaliableAI = _availableAiComponents.ToList();
+
+            foreach (KeyValuePair<string, IAiComponent> aiComponent in avaliableAI)
+            {
+                // if the ai is of the correct type
+                if (aiComponent.GetType() == aiType)
+                {
+                    // remove the ai from the avalaible aicomponents
+                    _availableAssets.Remove(aiComponent.Key);
+
+                    // Reinit the ai with the asset
+                    aiComponent.Value.InitialiseAiComponent(asset);
+
+                    // add the ai to the currently updating ai
+                    _aiComponents[asset.UniqueName] = aiComponent.Value;
+                    return true;
+                }
+            }
+            // if we have reached here then there are no matching ai to recycle
+            return false;
         }
     }
 }

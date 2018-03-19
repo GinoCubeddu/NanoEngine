@@ -175,6 +175,12 @@ namespace NanoEngine.ObjectManagement.Interfaces
         IAiComponent RetriveAssetAI(string uName);
 
         /// <summary>
+        /// Supplies the AssetManager with a render filter.
+        /// </summary>
+        /// <param name="renderFilter">The render filter to use</param>
+        void SupplyRenderFilter(IRenderFilter renderFilter);
+
+        /// <summary>
         /// Unloads and destroys all created assets and their minds
         /// </summary>
         void UnloadAssets();

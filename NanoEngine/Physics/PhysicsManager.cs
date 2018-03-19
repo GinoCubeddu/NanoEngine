@@ -17,8 +17,9 @@ namespace NanoEngine.Physics
         {
             foreach (IAsset asset in assets)
             {
-                if (!(asset is PhysicsEntity pAsset))
+                if (!(asset is PhysicsEntity))
                     continue;
+                PhysicsEntity pAsset = ((PhysicsEntity)asset);
                 pAsset.Velocity *= pAsset.Damping;
                 pAsset.Velocity += pAsset.Acceleration;
                 pAsset.Position += pAsset.Velocity;

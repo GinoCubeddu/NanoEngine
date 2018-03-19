@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
@@ -50,6 +51,8 @@ namespace NanoEngine.ObjectManagement.Managers
 
         // A bool informing us if we need to draw the bounds or not
         public static bool DrawBounds = false;
+
+        private IRenderFilter _renderFilter;
 
 
         public AssetManager(IEventManager eventManager)
@@ -302,8 +305,13 @@ namespace NanoEngine.ObjectManagement.Managers
         /// </summary>
         public void DrawAssets(IRenderManager rendermanager)
         {
+            IList<IAsset> assets;
             // loop through all assets and update them
-            IList<IAsset> assets = _assetDictionary.Values.ToList();
+            if (_renderFilter != null)
+                assets = _renderFilter.SortAssetsInRenderZone(_assetDictionary).Values.ToList();
+            else
+                assets = _assetDictionary.Values.ToList();
+
             foreach (IAsset asset in assets)
                 asset.Draw(rendermanager);
         }
@@ -313,19 +321,27 @@ namespace NanoEngine.ObjectManagement.Managers
         /// </summary>
         /// <param name="updateManager">an instance of the update manager</param>
         public void UpdateAssets(IUpdateManager updateManager)
-        { 
+        {
+            IDictionary<string, IAsset> renderableAssets = new Dictionary<string, IAsset>(_assetDictionary);
+            IDictionary<string, IAiComponent> renderableAI = new Dictionary<string, IAiComponent>(_aiComponents);
+
+            // If we have a render filter use it
+            if (_renderFilter != null)
+            {
+                renderableAssets = _renderFilter.SortAssetsInRenderZone(new Dictionary<string, IAsset>(_assetDictionary));
+                renderableAI = _renderFilter.SortAiInRenderZone(new Dictionary<string, IAiComponent>(_aiComponents));
+            }
+
             // update the physics manager
-            _physicsManager.UpdatePhysics(_assetDictionary.Values.ToList());
+            _physicsManager.UpdatePhysics(renderableAssets.Values.ToList());
 
             // Pass copies of the assets and their minds to the collision manager
             _collisionManager.Update(
-                new Dictionary<string, IAsset>(_assetDictionary),
-                new Dictionary<string, IAiComponent>(_aiComponents)
+                renderableAssets,
+                renderableAI
             );
 
-            // loop through all minds and update them
-            IList<IAiComponent> aiComponents = _aiComponents.Values.ToList();
-            foreach (IAiComponent aiComponent in aiComponents)
+            foreach (IAiComponent aiComponent in renderableAI.Values)
                 aiComponent.Update(updateManager);
 
             CheckForDespawns();
@@ -409,6 +425,11 @@ namespace NanoEngine.ObjectManagement.Managers
 
             // Throw error if asset was not found
             throw new KeyNotFoundException("No ai by the name of " + uName + " exsists");
+        }
+
+        public void SupplyRenderFilter(IRenderFilter renderFilter)
+        {
+            _renderFilter = renderFilter;
         }
 
         /// <summary>

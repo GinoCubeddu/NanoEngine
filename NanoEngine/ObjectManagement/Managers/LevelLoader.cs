@@ -16,16 +16,16 @@ namespace NanoEngine.ObjectManagement.Managers
         // Provides access to the level bounds
         public Rectangle LevelBounds { get; private set; }
 
-        private static IDictionary<int, Tuple<Type, Type, string>> _possibleAssets;
+        private static IDictionary<int, Tuple<Type, Type, string, bool>> _possibleAssets;
 
         /// <summary>
         /// Adds the tile type of T to the possible tile list
         /// </summary>
         /// <typeparam name="T">The asset type to be added</typeparam>
         /// <param name="id">The id that the asset type will be assigned</param>
-        public static void AddLevelAsset<T>(int id) where T : IAsset
+        public static void AddLevelAsset<T>(int id, bool offset = false) where T : IAsset
         {
-            AddLevelAsset(id, typeof(T), null, null);
+            AddLevelAsset(id, typeof(T), null, null, offset);
         }
 
         /// <summary>
@@ -35,9 +35,9 @@ namespace NanoEngine.ObjectManagement.Managers
         /// <typeparam name="T">The asset type to be added</typeparam>
         /// <typeparam name="U">The Ai type to be added</typeparam>
         /// <param name="id">The id that the asset type will be assigned</param>
-        public static void AddLevelAsset<T, U>(int id) where T : IAsset where U : IAiComponent
+        public static void AddLevelAsset<T, U>(int id, bool offset = false) where T : IAsset where U : IAiComponent
         {
-            AddLevelAsset(id, typeof(T), typeof(U), null);
+            AddLevelAsset(id, typeof(T), typeof(U), null, offset);
         }
 
         /// <summary>
@@ -46,9 +46,9 @@ namespace NanoEngine.ObjectManagement.Managers
         /// <typeparam name="T">The asset type to be added</typeparam>
         /// <param name="id">The id that the asset type will be assigned</param>
         /// <param name="uName">The unique name that this asset should have</param>
-        public static void AddLevelAsset<T>(int id, string uName) where T : IAsset
+        public static void AddLevelAsset<T>(int id, string uName, bool offset = false) where T : IAsset
         {
-            AddLevelAsset(id, typeof(T), null, uName);
+            AddLevelAsset(id, typeof(T), null, uName, offset);
         }
 
         /// <summary>
@@ -59,9 +59,9 @@ namespace NanoEngine.ObjectManagement.Managers
         /// <typeparam name="U">The Ai type to be added</typeparam>
         /// <param name="id">The id that the asset type will be assigned</param>
         /// <param name="uName">The unique name that this asset should have</param>
-        public static void AddLevelAsset<T, U>(int id, string uName) where T : IAsset where U : IAiComponent
+        public static void AddLevelAsset<T, U>(int id, string uName, bool offset = false) where T : IAsset where U : IAiComponent
         {
-            AddLevelAsset(id, typeof(T), typeof(U), uName);
+            AddLevelAsset(id, typeof(T), typeof(U), uName, offset);
         }
 
         /// <summary>
@@ -71,12 +71,12 @@ namespace NanoEngine.ObjectManagement.Managers
         /// <typeparam name="U">The Ai type to be added</typeparam>
         /// <param name="id">The id that the asset type will be assigned</param>
         /// <param name="uName">The unique name that this asset should have</param>
-        private static void AddLevelAsset(int id, Type assetType, Type aiType, string uName)
+        private static void AddLevelAsset(int id, Type assetType, Type aiType, string uName, bool offset)
         {
             if (_possibleAssets == null)
-                _possibleAssets = new Dictionary<int, Tuple<Type, Type, string>>();
+                _possibleAssets = new Dictionary<int, Tuple<Type, Type, string, bool>>();
 
-            _possibleAssets[id] = new Tuple<Type, Type, string>(assetType, aiType, uName);
+            _possibleAssets[id] = new Tuple<Type, Type, string, bool>(assetType, aiType, uName, offset);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace NanoEngine.ObjectManagement.Managers
 
                         // If the asset is not quite the size of the tile size then offset it
                         // so it fits in the center
-                        if (asset.Bounds.Width != tileMap.TileWidth || asset.Bounds.Height != tileMap.TileHeight)
+                        if ((asset.Bounds.Width != tileMap.TileWidth || asset.Bounds.Height != tileMap.TileHeight) && _possibleAssets[layer.Data[i]].Item4)
                         {
                             Console.WriteLine(asset.UniqueName + " " + (tileMap.TileWidth - asset.Bounds.Width));
                             asset.SetPosition(new Vector2(

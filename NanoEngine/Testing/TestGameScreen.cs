@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Input;
 using NanoEngine.Collision.CollisionTypes;
 using NanoEngine.Core.Managers;
 using NanoEngine.Events.Args;
+using NanoEngine.ObjectManagement;
 using NanoEngine.ObjectManagement.Interfaces;
 using NanoEngine.ObjectManagement.Managers;
 using NanoEngine.ObjectTypes.Control;
@@ -31,6 +32,9 @@ namespace NanoEngine
         {
             _assetManager.LoadLevel("Level2");
             _assetManager.CreateAsset<ChestAsset>(10, 10);
+            IRenderFilter filter = new RenderFilter();
+            filter.AddRenderTarget(_assetManager.RetriveAsset("player"));
+            _assetManager.SupplyRenderFilter(filter);
             AddCamera("player", _assetManager.RetriveAsset("player"));
             EventManager.AddDelegates(this);
         }

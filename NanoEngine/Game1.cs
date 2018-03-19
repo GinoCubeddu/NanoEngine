@@ -7,6 +7,7 @@ using NanoEngine.ObjectManagement.Managers;
 using NanoEngine.ObjectTypes.General;
 using System;
 using NanoEngine.Core.Camera;
+using NanoEngine.ObjectManagement;
 using NanoEngine.Testing.Assets;
 using NanoEngine.Testing.Tiles;
 
@@ -50,6 +51,11 @@ namespace NanoEngine
             LevelLoader.AddLevelAsset<ChestAsset>(3);
             LevelLoader.AddLevelAsset<CoinAsset>(4);
             LevelLoader.AddLevelAsset<TestAsset, TestMind>(5, "player");
+
+            graphics.PreferredBackBufferWidth = 1980;
+            graphics.PreferredBackBufferHeight = 1080;
+            graphics.ApplyChanges();
+            RenderFilter.RenderOffset = new Vector2(1500, 200);
 
             NanoEngineInit.Initialize(GraphicsDevice, this, Content);
             SceneManager.Manager.AddScreen<TestGameScreen>("level1");

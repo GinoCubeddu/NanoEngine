@@ -85,6 +85,8 @@
     <Compile Include="Game1.cs" />
     <Compile Include="IAnimation.cs" />
     <Compile Include="IAssetmanagerNeeded.cs" />
+    <Compile Include="ObjectManagement\IRenderFilter.cs" />
+    <Compile Include="ObjectManagement\RenderFilter.cs" />
     <Compile Include="Physics\IPhysicsManager.cs" />
     <Compile Include="IState.cs" />
     <Compile Include="NanoEngineInit.cs" />

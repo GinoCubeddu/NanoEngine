@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
+using NanoEngine.Core.Interfaces;
+using NanoEngine.Core.Locator;
 using NanoEngine.Core.Managers;
 using NanoEngine.ObjectTypes.Assets;
 
@@ -15,7 +17,8 @@ namespace NanoEngine.Testing.Tiles
         /// </summary>
         public override void Initilise()
         {
-            SetTexture(ContentManagerLoad.Manager.LoadResource<Texture2D>("Chest"));
+            SetTexture(ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager)
+                .LoadResource<Texture2D>("Chest"));
         }
     }
 }

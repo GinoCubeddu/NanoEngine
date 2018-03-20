@@ -17,6 +17,12 @@ namespace NanoEngine.Core.Interfaces
         void Play(string soundName, bool loop = false);
 
         /// <summary>
+        /// Plays the requested SoundEffect
+        /// </summary>
+        /// <param name="soundName">The name of the sound</param>
+        void PlayBaseSound(string soundName);
+
+        /// <summary>
         /// Pauses the requested SoundEffectInstance
         /// </summary>
         /// <param name="soundName">The name of the sound</param>

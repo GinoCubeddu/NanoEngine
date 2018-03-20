@@ -38,6 +38,7 @@ namespace NanoEngine
             _assetManager.SupplyRenderFilter(filter);
             AddCamera("player", _assetManager.RetriveAsset("player"));
             EventManager.AddDelegates(this);
+            ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).Play("soundTrack", true);
         }
 
         protected override void Update(IUpdateManager updateManager)
@@ -56,6 +57,14 @@ namespace NanoEngine
             {
                 if (args.TheKeys[KeyStates.Pressed].Contains(Keys.D1))
                     ChangeCamera("player");
+
+                if (args.TheKeys[KeyStates.Pressed].Contains(Keys.D1))
+                    ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlayBaseSound("test");
+
+                if (args.TheKeys[KeyStates.Pressed].Contains(Keys.D2))
+                    ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).ChangeVolume(0.1f);
+                if (args.TheKeys[KeyStates.Pressed].Contains(Keys.D3))
+                    ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).ChangeVolume(-0.1f);
 
                 if (args.TheKeys[KeyStates.Pressed].Contains(Keys.Escape))
                 {

@@ -9,19 +9,11 @@ namespace NanoEngine.Core.Managers
 {
     public class SoundManager : ISoundManager
     {
-        //Private soundmanagaer instance
-        public static ISoundManager manager;
-
         //Private float to hold the sound of the looped song
         private float loopedSoundVoloume = 0.2f;
 
         //private list to hold all currently playing songs
         private IList<SoundEffectInstance> currentlyPlaying;
-
-        public static ISoundManager Manager
-        {
-            get { return manager ?? (manager = new SoundManager()); }
-        }
 
         //Dictonary for holding looped sounds
         private Dictionary<string, SoundEffectInstance> loopedSounds;
@@ -29,7 +21,7 @@ namespace NanoEngine.Core.Managers
         /// <summary>
         /// Main constructor for the sound manager
         /// </summary>
-        private SoundManager()
+        public SoundManager()
         {
             loopedSounds = new Dictionary<string, SoundEffectInstance>();
             currentlyPlaying = new List<SoundEffectInstance>();

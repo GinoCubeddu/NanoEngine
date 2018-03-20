@@ -53,15 +53,22 @@ namespace NanoEngine
             LevelLoader.AddLevelAsset<CoinAsset>(4);
             LevelLoader.AddLevelAsset<TestAsset, TestMind>(5, "player");
 
-            graphics.PreferredBackBufferWidth = 1980;
+            graphics.PreferredBackBufferWidth = 1500;
             graphics.PreferredBackBufferHeight = 1080;
             graphics.ApplyChanges();
             RenderFilter.RenderOffset = new Vector2(1500, 200);
 
             NanoEngineInit.Initialize(GraphicsDevice, this, Content);
+
+            ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager)
+                .LoadSound("test", "door-02");
+
+            ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager)
+                .LoadSound("soundTrack", "Desert Theme");
+
             ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
                 .AddScreen<TestGameScreen>("level1");
-            
+
             base.Initialize();
         }
     }

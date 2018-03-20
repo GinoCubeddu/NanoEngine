@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Audio;
+using NanoEngine.Core.Locator;
 
 namespace NanoEngine.Core.Interfaces
 {
-    public interface ISoundManager
+    public interface ISoundManager : IService
     {
         /// <summary>
         /// Plays a sound once that is passed in

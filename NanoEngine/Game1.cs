@@ -7,6 +7,7 @@ using NanoEngine.ObjectManagement.Managers;
 using NanoEngine.ObjectTypes.General;
 using System;
 using NanoEngine.Core.Camera;
+using NanoEngine.Core.Locator;
 using NanoEngine.ObjectManagement;
 using NanoEngine.Testing.Assets;
 using NanoEngine.Testing.Tiles;
@@ -58,7 +59,8 @@ namespace NanoEngine
             RenderFilter.RenderOffset = new Vector2(1500, 200);
 
             NanoEngineInit.Initialize(GraphicsDevice, this, Content);
-            SceneManager.Manager.AddScreen<TestGameScreen>("level1");
+            ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
+                .AddScreen<TestGameScreen>("level1");
             
             base.Initialize();
         }

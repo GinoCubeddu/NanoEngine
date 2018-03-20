@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using NanoEngine.Collision.CollidableTypes;
+using NanoEngine.Core.Interfaces;
+using NanoEngine.Core.Locator;
 
 namespace NanoEngine.Testing.Assets
 {
@@ -14,7 +16,8 @@ namespace NanoEngine.Testing.Assets
     {
         public override void Initilise()
         {
-            SetTexture(ContentManagerLoad.Manager.LoadResource<Texture2D>("player"));
+            SetTexture(ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager)
+                .LoadResource<Texture2D>("player"));
 
             AssetAnimation = new Animation(this);
             AssetAnimation.AddState("idleRight", 27, 64, 0, 8);

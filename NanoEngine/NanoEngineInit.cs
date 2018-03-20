@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using NanoEngine.Core.Camera;
 using NanoEngine.Core.Interfaces;
+using NanoEngine.Core.Locator;
 using NanoEngine.Core.Managers;
 
 namespace NanoEngine
@@ -16,7 +17,9 @@ namespace NanoEngine
         public static void Initialize(GraphicsDevice graphicsDevice, Game game, ContentManager content)
         {
             game.IsMouseVisible = true;
-            ContentManagerLoad.Manager.Intinalise(content);
+            ServiceLocator.Instance.ProvideService(DefaultNanoServices.SceneManager, new SceneManager());
+            ServiceLocator.Instance.ProvideService(DefaultNanoServices.SoundManager, new SoundManager());
+            ServiceLocator.Instance.ProvideService(DefaultNanoServices.ContentManager, new NanoContentManager(content));
 
             Camera2D.SetViewport(graphicsDevice.Viewport);
 

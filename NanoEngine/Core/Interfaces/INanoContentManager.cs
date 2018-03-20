@@ -4,17 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.Core.Locator;
 
 namespace NanoEngine.Core.Interfaces
 {
-    public interface IContentManagerLoad
+    public interface INanoContentManager : IService
     {
-        /// <summary>
-        /// Intilises the contentmanager
-        /// </summary>
-        /// <param name="gContent"></param>
-        void Intinalise(ContentManager gContent);
-
         /// <summary>
         /// Unloads everything
         /// </summary>
@@ -26,12 +21,5 @@ namespace NanoEngine.Core.Interfaces
         /// <param name="path">The path to the resource</param>
         /// <returns>the stored or created resource</returns>
         T LoadResource<T>(string path);
-
-        /// <summary>
-        /// Returns a stored texture or creates a new one if none exsist
-        /// </summary>
-        /// <param name="path">The path to the texture</param>
-        /// <returns>the stored or created texture</returns>
-        Texture2D GetTexture(string path);
     }
 }

@@ -7,6 +7,7 @@ using NanoEngine.Core.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using NanoEngine.Collision.CollisionTypes;
+using NanoEngine.Core.Locator;
 using NanoEngine.Core.Managers;
 using NanoEngine.Events.Args;
 using NanoEngine.ObjectManagement;
@@ -58,10 +59,10 @@ namespace NanoEngine
 
                 if (args.TheKeys[KeyStates.Pressed].Contains(Keys.Escape))
                 {
-                    SceneManager.Manager.ReloadScreen("level1");
+                    ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager).ReloadScreen("level1");
                 } else if (args.TheKeys[KeyStates.Pressed].Contains(Keys.Delete))
                 {
-                    SceneManager.Manager.DeleteScreen("level1");
+                    ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager).DeleteScreen("level1");
                 }
             }
         }

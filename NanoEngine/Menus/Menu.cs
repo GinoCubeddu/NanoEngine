@@ -7,6 +7,8 @@ using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Control;
 using System.Collections.Generic;
 using System;
+using Microsoft.Xna.Framework.Graphics;
+using NanoEngine.Core.Locator;
 using NanoEngine.StateManagement.States;
 
 namespace NanoEngine.Menus
@@ -19,7 +21,8 @@ namespace NanoEngine.Menus
 
         private bool active;
 
-        private SoundEffect sound = ContentManagerLoad.Manager.LoadResource<SoundEffect>("Sounds/rollover3");
+        private SoundEffect sound = (ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager)
+            .LoadResource<SoundEffect>("Dirt"));
 
         public Menu(IList<IMenuItem> list, bool active)
         {
@@ -90,7 +93,7 @@ namespace NanoEngine.Menus
                     if(rect.Contains(e.CurrentMouseState.Position))
                     {
                         if (menuPosition != i)
-                            SoundManager.Manager.PlaySound(sound);
+                            ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlaySound(sound);
 
                         menuPosition = i;
                     }
@@ -105,7 +108,7 @@ namespace NanoEngine.Menus
                 if (!args.TheKeys.Keys.Contains(KeyStates.Pressed))
                     return;
 
-                SoundManager.Manager.PlaySound(sound);
+                ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlaySound(sound);
                 if (args.TheKeys[KeyStates.Pressed].Contains(Keys.Up))
                 {
                     if (menuPosition == 0)

@@ -21,9 +21,6 @@ namespace NanoEngine.Menus
 
         private bool active;
 
-        private SoundEffect sound = (ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager)
-            .LoadResource<SoundEffect>("Dirt"));
-
         public Menu(IList<IMenuItem> list, bool active)
         {
             menuList = list;
@@ -93,7 +90,7 @@ namespace NanoEngine.Menus
                     if(rect.Contains(e.CurrentMouseState.Position))
                     {
                         if (menuPosition != i)
-                            ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlaySound(sound);
+                            ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).Play("test");
 
                         menuPosition = i;
                     }
@@ -108,7 +105,7 @@ namespace NanoEngine.Menus
                 if (!args.TheKeys.Keys.Contains(KeyStates.Pressed))
                     return;
 
-                ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlaySound(sound);
+                ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).Play("test");
                 if (args.TheKeys[KeyStates.Pressed].Contains(Keys.Up))
                 {
                     if (menuPosition == 0)

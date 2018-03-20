@@ -60,12 +60,15 @@
     <Compile Include="Collision\QuadTree.cs" />
     <Compile Include="Core\Camera\Camera2D.cs" />
     <Compile Include="Core\Camera\ICamera2D.cs" />
-    <Compile Include="Core\Interfaces\IContentManagerLoad.cs" />
+    <Compile Include="Core\Interfaces\INanoContentManager.cs" />
     <Compile Include="Core\Interfaces\IRenderManager.cs" />
     <Compile Include="Core\Interfaces\ISceneManager.cs" />
     <Compile Include="Core\Interfaces\ISoundManager.cs" />
     <Compile Include="Core\Interfaces\IUpdateManager.cs" />
-    <Compile Include="Core\Managers\ContentManagerLoad.cs" />
+    <Compile Include="Core\Locator\DefaultNanoServices.cs" />
+    <Compile Include="Core\Locator\IService.cs" />
+    <Compile Include="Core\Locator\ServiceLocator.cs" />
+    <Compile Include="Core\Managers\NanoContentManager.cs" />
     <Compile Include="Core\Managers\RenderManager.cs" />
     <Compile Include="Core\Managers\SceneManager.cs" />
     <Compile Include="Core\Managers\SoundManager.cs" />
@@ -162,33 +165,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Chest.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\coin_16.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Dirt.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Dirt_Tile.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\GrassMid.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Grass_Tile.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\hex.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\player.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\zombie.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

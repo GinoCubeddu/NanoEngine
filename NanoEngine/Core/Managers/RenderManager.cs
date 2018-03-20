@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.Core.Locator;
 
 namespace NanoEngine.Core.Managers
 {
@@ -266,7 +267,7 @@ namespace NanoEngine.Core.Managers
             //Sets background color
             _game1.GraphicsDevice.Clear(bgColor);
 
-            SceneManager.Manager.Draw(this);
+            ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager).Draw(this);
         }
 
         /// <summary>

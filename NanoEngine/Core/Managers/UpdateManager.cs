@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.Core.Locator;
 
 namespace NanoEngine.Core.Managers
 {
@@ -60,7 +61,7 @@ namespace NanoEngine.Core.Managers
         public override void Update(GameTime gameTime)
         {
             this.gameTime = gameTime;
-            SceneManager.Manager.Update(this);
+            ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager).Update(this);
         }
 
         /// <summary>

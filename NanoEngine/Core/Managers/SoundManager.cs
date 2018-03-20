@@ -12,7 +12,9 @@ namespace NanoEngine.Core.Managers
     public class SoundManager : ISoundManager
     {
         // Dict to hold the currently playing sounds
-        private IDictionary<string, SoundEffectInstance> _availableSounds;
+        private IDictionary<string, SoundEffectInstance> _availableSoundEffectInstances;
+
+        private IDictionary<string, SoundEffect> _avaliableSoundEffects;
 
         // Dict to hold sounds that are avaliable
         private float _currentVolume;
@@ -22,8 +24,10 @@ namespace NanoEngine.Core.Managers
         /// </summary>
         public SoundManager()
         {
-            _availableSounds = new Dictionary<string, SoundEffectInstance>();
+            _availableSoundEffectInstances = new Dictionary<string, SoundEffectInstance>();
+            _avaliableSoundEffects = new Dictionary<string, SoundEffect>();
             _currentVolume = 0.5f;
+            SoundEffect.MasterVolume = _currentVolume;
         }
 
         /// <summary>
@@ -34,12 +38,27 @@ namespace NanoEngine.Core.Managers
         public void Play(string soundName, bool loop = false)
         {
             // If the sound does not exsist throw an error
-            if (!_availableSounds.ContainsKey(soundName))
+            if (!_availableSoundEffectInstances.ContainsKey(soundName))
                 throw new KeyNotFoundException(
-                    "ERROR: song with the id of " + soundName +  " not found! Have you loaded it?"
+                    "ERROR: sound with the id of " + soundName +  " not found! Have you loaded it?"
                 );
-            _availableSounds[soundName].IsLooped = loop;
-            _availableSounds[soundName].Play();
+            _availableSoundEffectInstances[soundName].IsLooped = loop;
+            _availableSoundEffectInstances[soundName].Play();
+        }
+
+        /// <summary>
+        /// Plays the requested SoundEffect, however the sound can not be stopped or
+        /// paused
+        /// </summary>
+        /// <param name="soundName">The name of the sound</param>
+        public void PlayBaseSound(string soundName)
+        {
+            // If the sound does not exsist throw an error
+            if (!_avaliableSoundEffects.ContainsKey(soundName))
+                throw new KeyNotFoundException(
+                    "ERROR: sound with the id of " + soundName + " not found! Have you loaded it?"
+                );
+            _avaliableSoundEffects[soundName].Play();
         }
 
         /// <summary>
@@ -49,11 +68,11 @@ namespace NanoEngine.Core.Managers
         public void Pause(string soundName)
         {
             // If the sound does not exsist throw an error
-            if (!_availableSounds.ContainsKey(soundName))
+            if (!_availableSoundEffectInstances.ContainsKey(soundName))
                 throw new KeyNotFoundException(
-                    "ERROR: song with the id of " + soundName + " not found! Have you loaded it?"
+                    "ERROR: sound with the id of " + soundName + " not found! Have you loaded it?"
                 );
-            _availableSounds[soundName].Pause();
+            _availableSoundEffectInstances[soundName].Pause();
         }
 
         /// <summary>
@@ -63,11 +82,11 @@ namespace NanoEngine.Core.Managers
         public void Stop(string soundName)
         {
             // If the sound does not exsist throw an error
-            if (!_availableSounds.ContainsKey(soundName))
+            if (!_availableSoundEffectInstances.ContainsKey(soundName))
                 throw new KeyNotFoundException(
-                    "ERROR: song with the id of " + soundName + " not found! Have you loaded it?"
+                    "ERROR: sound with the id of " + soundName + " not found! Have you loaded it?"
                 );
-            _availableSounds[soundName].Stop();
+            _availableSoundEffectInstances[soundName].Stop();
         }
 
         /// <summary>
@@ -78,12 +97,15 @@ namespace NanoEngine.Core.Managers
         public void LoadSound(string soundName, string path)
         {
             // If the sound does exsist log a warning
-            if (_availableSounds.ContainsKey(soundName))
+            if (_availableSoundEffectInstances.ContainsKey(soundName))
                 Console.WriteLine("WARNING: you are overtiting a sound with the id of " + soundName);
 
             // load sound from the content manager
-            _availableSounds[soundName] = ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager)
-                .LoadResource<SoundEffect>(path).CreateInstance();
+            _avaliableSoundEffects[soundName] = ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager)
+                .LoadResource<SoundEffect>(path);
+            
+            // Create an insatnce of the sound effect
+            _availableSoundEffectInstances[soundName] = _avaliableSoundEffects[soundName].CreateInstance();
         }
 
         /// <summary>
@@ -94,11 +116,15 @@ namespace NanoEngine.Core.Managers
         public void LoadSound(string soundName, SoundEffect soundEffect)
         {
             // If the sound does exsist log a warning
-            if (_availableSounds.ContainsKey(soundName))
+            if (_availableSoundEffectInstances.ContainsKey(soundName))
                 Console.WriteLine("WARNING: you are overtiting a sound with the id of " + soundName);
 
+            // Store the base sound effect
+            _avaliableSoundEffects[soundName] = soundEffect;
+
             // Load the sound
-            _availableSounds[soundName] = soundEffect.CreateInstance();
+            _availableSoundEffectInstances[soundName] = soundEffect.CreateInstance();
+
         }
 
         /// <summary>
@@ -117,8 +143,10 @@ namespace NanoEngine.Core.Managers
                 _currentVolume = 1;
 
             // loop through each sound an change the volume
-            foreach (SoundEffectInstance sound in _availableSounds.Values)
+            foreach (SoundEffectInstance sound in _availableSoundEffectInstances.Values)
                 sound.Volume = _currentVolume;
+
+            SoundEffect.MasterVolume = _currentVolume;
         }
     }
 }

@@ -4,116 +4,121 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Media;
+using NanoEngine.Core.Locator;
 
 namespace NanoEngine.Core.Managers
 {
     public class SoundManager : ISoundManager
     {
-        //Private float to hold the sound of the looped song
-        private float loopedSoundVoloume = 0.2f;
+        // Dict to hold the currently playing sounds
+        private IDictionary<string, SoundEffectInstance> _availableSounds;
 
-        //private list to hold all currently playing songs
-        private IList<SoundEffectInstance> currentlyPlaying;
-
-        //Dictonary for holding looped sounds
-        private Dictionary<string, SoundEffectInstance> loopedSounds;
+        // Dict to hold sounds that are avaliable
+        private float _currentVolume;
 
         /// <summary>
         /// Main constructor for the sound manager
         /// </summary>
         public SoundManager()
         {
-            loopedSounds = new Dictionary<string, SoundEffectInstance>();
-            currentlyPlaying = new List<SoundEffectInstance>();
+            _availableSounds = new Dictionary<string, SoundEffectInstance>();
+            _currentVolume = 0.5f;
         }
 
         /// <summary>
-        /// Plays a sound once that is passed in
+        /// Plays the requested SoundEffectInstance
         /// </summary>
-        /// <param name="sound">The sound effect to be looped</param>
-        public void PlaySound(SoundEffect sound)
+        /// <param name="soundName">The name of the sound</param>
+        /// <param name="loop">Informs the sound manager if it should be looped</param>
+        public void Play(string soundName, bool loop = false)
         {
-            sound.Play();
+            // If the sound does not exsist throw an error
+            if (!_availableSounds.ContainsKey(soundName))
+                throw new KeyNotFoundException(
+                    "ERROR: song with the id of " + soundName +  " not found! Have you loaded it?"
+                );
+            _availableSounds[soundName].IsLooped = loop;
+            _availableSounds[soundName].Play();
         }
 
         /// <summary>
-        /// Loads a sound into a dictonary so its ready to be looped
+        /// Pauses the requested SoundEffectInstance
         /// </summary>
-        /// <param name="sound">The sound effect to be added to the dictonary</param>
-        /// <param name="name">The name you want to give to the sound effect</param>
-        public void LoadLoopedSound(SoundEffect sound, string name)
+        /// <param name="soundName">The name of the sound</param>
+        public void Pause(string soundName)
         {
-            //If the dictonary does not allready have an object by that name
-            if (!loopedSounds.ContainsKey(name))
-            {
-                //Convert sound effect into instance
-                SoundEffectInstance sound1 = sound.CreateInstance();
-                //Set IsLooped to true
-                sound1.IsLooped = true;
-                //Add the sound to the dictonary
-                loopedSounds.Add(name, sound1);
-            }
-            else
-            {
-                Console.WriteLine("SOUND WITH THE NAME " + name + " ALLREADY EXSISTS");
-            }
+            // If the sound does not exsist throw an error
+            if (!_availableSounds.ContainsKey(soundName))
+                throw new KeyNotFoundException(
+                    "ERROR: song with the id of " + soundName + " not found! Have you loaded it?"
+                );
+            _availableSounds[soundName].Pause();
         }
 
         /// <summary>
-        /// Method to start one of the looped sounds
+        /// Stops the requested SoundEffectInstance
         /// </summary>
-        /// <param name="name">Name of the looped sound</param>
-        public void StartLoopedSound(string name)
+        /// <param name="soundName"></param>
+        public void Stop(string soundName)
         {
-            //if the looped sound name exsists
-            if(loopedSounds.ContainsKey(name))
-            {
-                //Add to currently playing list
-                currentlyPlaying.Add(loopedSounds[name]);
-                //Set volume
-                loopedSounds[name].Volume = loopedSoundVoloume;
-                //Play the sound
-                loopedSounds[name].Play();
-            }
-            else
-            {
-                Console.WriteLine("SOUND NOT PLAYING: NO LOOPED SOUND CALLED " + name);
-            }
+            // If the sound does not exsist throw an error
+            if (!_availableSounds.ContainsKey(soundName))
+                throw new KeyNotFoundException(
+                    "ERROR: song with the id of " + soundName + " not found! Have you loaded it?"
+                );
+            _availableSounds[soundName].Stop();
         }
 
         /// <summary>
-        /// Stops a sound from looping
+        /// Loads the sound so its ready to play from the specified path
         /// </summary>
-        /// <param name="soundName">The name of the sound to stop looping</param>
-        public void StopLoopedSound(string soundName)
+        /// <param name="soundName">The id you want to give the sound</param>
+        /// <param name="path">The path to the sound file</param>
+        public void LoadSound(string soundName, string path)
         {
-            //If the name of the looped sound exsists
-            if(loopedSounds.ContainsKey(soundName))
-            {
-                //Stop the sound
-               loopedSounds[soundName].Stop(true);
-               //Remove to currently playing list
-               currentlyPlaying.Add(loopedSounds[soundName]);
-            }
+            // If the sound does exsist log a warning
+            if (_availableSounds.ContainsKey(soundName))
+                Console.WriteLine("WARNING: you are overtiting a sound with the id of " + soundName);
+
+            // load sound from the content manager
+            _availableSounds[soundName] = ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager)
+                .LoadResource<SoundEffect>(path).CreateInstance();
         }
 
         /// <summary>
-        /// Method that allows the increase or decrease of the voloume
+        /// Loads the passed SoundEffect so its ready to play 
         /// </summary>
-        /// <param name="amount">The amount to increase or decrease by</param>
-        public void ChangeLoopedSoundVolume(float amount)
+        /// <param name="soundName">The id you want to give the sound</param>
+        /// <param name="soundEffect">The SoundEffect to load</param>
+        public void LoadSound(string soundName, SoundEffect soundEffect)
         {
-            //If the amount does not exceed the bounds
-            if(!(loopedSoundVoloume + amount < 0) && !(loopedSoundVoloume + amount > 1))
-            {
-                //Updaate the volume
-                loopedSoundVoloume += amount;
-                //set volume of all current playing songs
-                foreach(SoundEffectInstance sound in currentlyPlaying)
-                {
-                    sound.Volume = loopedSoundVoloume;
-                }
-            }
+            // If the sound does exsist log a warning
+            if (_availableSounds.ContainsKey(soundName))
+                Console.WriteLine("WARNING: you are overtiting a sound with the id of " + soundName);
+
+            // Load the sound
+            _availableSounds[soundName] = soundEffect.CreateInstance();
+        }
+
+        /// <summary>
+        /// Change the volume of all sounds
+        /// </summary>
+        /// <param name="amount">The amount to increae the sound by</param>
+        public void ChangeVolume(float amount)
+        {
+            // Increase the sound
+            _currentVolume += amount;
+
+            // Make sure the sound does not go above the max/below the min
+            if (_currentVolume < 0)
+                _currentVolume = 0;
+            if (_currentVolume > 1)
+                _currentVolume = 1;
+
+            // loop through each sound an change the volume
+            foreach (SoundEffectInstance sound in _availableSounds.Values)
+                sound.Volume = _currentVolume;
         }
     }
 }

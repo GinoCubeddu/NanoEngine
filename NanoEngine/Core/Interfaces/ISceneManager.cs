@@ -4,17 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.Core.Locator;
 
 namespace NanoEngine.Core.Interfaces
 {
-    public interface ISceneManager
+    public interface ISceneManager : IService
     {
-        // Getter to retrive the current gamescreen
-        IGameScreen CurrentGameScreen { get; }
-
-        //Getter to return the dimentions of the screen
-        Vector2 ScreenDimentions { get; }
-
+        // Contains all currently updating screens
         IDictionary<string, IGameScreen> UpdatingScreens { get; }
 
         /// <summary>

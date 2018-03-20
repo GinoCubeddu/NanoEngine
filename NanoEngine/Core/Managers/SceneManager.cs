@@ -31,43 +31,7 @@ namespace NanoEngine.Core.Managers
             get { return _updatingScreens; }
         }
 
-        //Private static field holding the refrence to the manager
-        private static ISceneManager manager;
-
-        //Public Getter for scene manager making it a singleton
-        public static ISceneManager Manager
-        {
-            get { return manager ?? (manager = new SceneManager()); }
-        }
-
-        //Public field for the screen dimentions
-        private Vector2 screenDimentions;
-
-        /// <summary>
-        /// Public getter for the screen dimentions
-        /// </summary>
-        public Vector2 ScreenDimentions
-        {
-            get { return screenDimentions; }
-        }
-
-        //private fielf to hold the current screen
-        private IGameScreen currentScreen;
-
-        public IGameScreen CurrentGameScreen
-        {
-            get { return currentScreen; }
-        }
-
-
-        //private field for pause screen
-        private IGameScreen pauseScreen;
-
-        /// <summary>
-        /// Private constructor so it can only be called in the class by the getter making it a singleton
-        /// </summary>
-        /// <param name="game">game of type Game</param>
-        private SceneManager()
+        public SceneManager()
         {
             _updatingScreens = new Dictionary<string, IGameScreen>();
             _avaliableScreens = new Dictionary<string, IGameScreen>();

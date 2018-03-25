@@ -16,7 +16,6 @@ using NanoEngine.Core.Interfaces;
 using NanoEngine.Core.Managers;
 using NanoEngine.Events.Interfaces;
 using NanoEngine.Physics;
-using OpenTK.Graphics.ES20;
 
 namespace NanoEngine.ObjectManagement.Managers
 {
@@ -128,7 +127,7 @@ namespace NanoEngine.ObjectManagement.Managers
             {
                 // if the asset manager does not have any spare assets to recycle
                 // offload the creation to the asset factory
-                if (!RecycleAsset(typeof(T), uName, pos))
+                //if (!RecycleAsset(typeof(T), uName, pos))
                     _assetDictionary.Add(
                         uName,
                         _assetFactory.RetriveNewAsset<T>(
@@ -138,7 +137,7 @@ namespace NanoEngine.ObjectManagement.Managers
 
                 // if the asset manager does not have any spare aiComponents to recycle
                 // offload the creation to the ai factory
-                if (!RecycleAi(typeof(U), _assetDictionary[uName]))
+                //if (!RecycleAi(typeof(U), _assetDictionary[uName]))
                     _aiComponents.Add(
                         uName,
                         _aiFactory.CreateAi<U>()
@@ -175,7 +174,7 @@ namespace NanoEngine.ObjectManagement.Managers
             {
                 // if the asset manager does not have any spare assets to recycle
                 // offload the creation to the asset factory
-                if (!RecycleAsset(typeof(T), uName, pos))
+                //if (!RecycleAsset(typeof(T), uName, pos))
                     _assetDictionary.Add(
                         uName,
                         _assetFactory.RetriveNewAsset<T>(

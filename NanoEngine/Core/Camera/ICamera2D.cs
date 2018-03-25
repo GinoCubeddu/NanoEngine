@@ -22,5 +22,11 @@ namespace NanoEngine.Core.Camera
         /// </summary>
         /// <param name="asset">The asset to be focused on</param>
         void ChangeFocusedAsset(IAsset asset);
+
+        /// <summary>
+        /// Sets the bounds for the level
+        /// </summary>
+        /// <param name="levelBounds">The bounding box of the level</param>
+        void SetLevelBounds(Rectangle levelBounds);
     }
 }

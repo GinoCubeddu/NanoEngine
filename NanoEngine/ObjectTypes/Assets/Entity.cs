@@ -15,6 +15,8 @@ namespace NanoEngine.ObjectTypes.Assets
 
         public static bool DrawAssetBounds = false;
 
+        protected Vector2 _origin = Vector2.Zero;
+
         public IAnimation AssetAnimation { get; protected set; }
 
         //getter for the texture and setter for the texture
@@ -38,6 +40,8 @@ namespace NanoEngine.ObjectTypes.Assets
             get { return _despawn;}
             set { _despawn = value; }
         }
+
+        private float rotation = 0;
 
 
         /// <summary>
@@ -115,6 +119,7 @@ namespace NanoEngine.ObjectTypes.Assets
         /// </summary>
         protected void CreateBounds(int width, int height)
         {
+            Position = Vector2.Zero;
             _bounds = new Rectangle((int)Position.X, (int)Position.Y, width, height);
             _assetWidth = width;
             _assetHeight = height;
@@ -174,10 +179,18 @@ namespace NanoEngine.ObjectTypes.Assets
         }
         public virtual void Draw(IRenderManager renderManager)
         {
+            //rotation += 0.01f;
             if (AssetAnimation != null)
                 AssetAnimation.Animate(renderManager);
             else
-                renderManager.Draw(Texture, Position, Color.White);
+            {
+                renderManager.Draw(Texture, Position, null, Color.White, rotation, Vector2.Zero, 1, SpriteEffects.None, 1);
+                CreateBounds(Texture.Width, Texture.Height);
+                Console.WriteLine(Texture.Bounds.X);
+                Console.WriteLine(Texture.Bounds.Y);
+                
+
+            }
             DrawBounds(renderManager);
         }
 
@@ -193,6 +206,25 @@ namespace NanoEngine.ObjectTypes.Assets
             pointList.Add(new Vector2(_bounds.X + _bounds.Width, _bounds.Y + _bounds.Height));
             pointList.Add(new Vector2(_bounds.X + _bounds.Width, _bounds.Y));
             return pointList;
+        }
+
+        public void Rotate(Vector2 origin, float amount)
+        {
+            if (Points != null)
+            {
+                IList<IList<Vector2>> OriginPoints = new List<IList<Vector2>>(Points);
+                for (int i = 0; i < Points.Count; i++)
+                {
+                    for (int j = 0; j < Points[i].Count; j++)
+                    {
+                        Matrix transform = Matrix.CreateTranslation(-origin.X, -origin.Y, 0f) *
+                                           Matrix.CreateRotationZ(amount) *
+                                           Matrix.CreateTranslation(origin.X, origin.Y, 0f);
+
+                        Points[i][j] = Vector2.Transform(Points[i][j], transform);
+                    }
+                }
+            }
         }
 
         /// <summary>

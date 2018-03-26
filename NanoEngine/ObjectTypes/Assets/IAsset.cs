@@ -81,5 +81,7 @@ namespace NanoEngine.ObjectTypes.Assets
         /// </summary>
         /// <returns>A list of points</returns>
         IList<Vector2> GetPointsFromBounds();
+
+        void Rotate(Vector2 origin, float amount);
     }
 }

@@ -42,7 +42,7 @@ namespace NanoEngine.Core.Managers
         }
         
         //private field to hold background colour
-        private Color bgColor;
+        public static Color bgColor;
 
         // private field used to make sure only one instace of the manager is allowed
         private static bool Created;
@@ -57,6 +57,7 @@ namespace NanoEngine.Core.Managers
             if (Created)
                 throw new Exception("Only one instance of the RenderManager may be created");
             _game1 = game;
+            RenderBounds = GetGD.Viewport.Bounds;
             RenderBounds = GetGD.Viewport.Bounds;
             _blankTexture = new Texture2D(GetGD, 1, 1);
             _blankTexture.SetData<Color>(new Color[] { Color.Black });

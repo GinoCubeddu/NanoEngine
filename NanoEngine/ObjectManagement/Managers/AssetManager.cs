@@ -16,7 +16,6 @@ using NanoEngine.Core.Interfaces;
 using NanoEngine.Core.Managers;
 using NanoEngine.Events.Interfaces;
 using NanoEngine.Physics;
-using OpenTK.Graphics.ES20;
 
 namespace NanoEngine.ObjectManagement.Managers
 {

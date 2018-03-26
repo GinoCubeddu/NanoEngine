@@ -20,11 +20,11 @@ namespace NanoEngine.Testing.Assets
         public override void Initilise()
         {
             SetTexture(ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager).LoadResource<Texture2D>("plane"));
-            IList<Vector2> nozzle = new List<Vector2>();
-            nozzle.Add(new Vector2(2, -105));
-            nozzle.Add(new Vector2(-7, -98));
-            nozzle.Add(new Vector2(7, -98));
-            AddPoints(nozzle);
+            //IList<Vector2> nozzle = new List<Vector2>();
+            //nozzle.Add(new Vector2(2, -105));
+            //nozzle.Add(new Vector2(-7, -98));
+            //nozzle.Add(new Vector2(7, -98));
+            //AddPoints(nozzle);
 
             IList<Vector2> prepella = new List<Vector2>();
             prepella.Add(new Vector2(-23, -94));
@@ -77,11 +77,11 @@ namespace NanoEngine.Testing.Assets
             tail.Add(new Vector2(-43, 79));
             AddPoints(tail);
 
-            IList<Vector2> fin = new List<Vector2>();
-            fin.Add(new Vector2(-10, 88));
-            fin.Add(new Vector2(-1, 103));
-            fin.Add(new Vector2(8, 88));
-            AddPoints(fin);
+            //IList<Vector2> fin = new List<Vector2>();
+            //fin.Add(new Vector2(-10, 88));
+            //fin.Add(new Vector2(-1, 103));
+            //fin.Add(new Vector2(8, 88));
+            //AddPoints(fin);
         }
     }
 }

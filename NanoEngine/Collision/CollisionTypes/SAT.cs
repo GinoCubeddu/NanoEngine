@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NanoEngine.Core.Interfaces;
+using NanoEngine.Core.Managers;
 using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Assets;
 
@@ -18,6 +19,8 @@ namespace NanoEngine.Collision.CollisionTypes
         /// <returns>A boolean value telling us if there has been a collision</returns>
         public Tuple<NanoCollisionEventArgs, NanoCollisionEventArgs> CheckCollision(IAsset asset1, IAsset asset2)
         {
+            RenderManager.bgColor = Color.Blue;
+
             bool collided = false;
 
             // Get the points from asset A
@@ -61,9 +64,7 @@ namespace NanoEngine.Collision.CollisionTypes
             }
 
             if (collided)
-                Console.WriteLine("COLLISOIN DETECTED");
-            else
-                Console.WriteLine("COLLISOIN NOT DETECTED");
+                RenderManager.bgColor = Color.Green;
 
             //// If either of the overlap checks return false then there is no overlap
             //if (!CheckOverLap(asset1Points, asset2Points) || !CheckOverLap(asset2Points, asset1Points))

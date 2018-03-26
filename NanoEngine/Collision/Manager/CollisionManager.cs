@@ -73,8 +73,6 @@ namespace NanoEngine.Collision.Manager
                 {
                     if (_aabb.CheckCanCollide(asset.Item1, possibleCollision.Item1))
                         collision = _sat.CheckCollision(asset.Item1, possibleCollision.Item1);
-                    else
-                        Console.WriteLine("not possible to collide so not checking SAT");
                 }
 
                 // If the collision did not return null then send the collision responses

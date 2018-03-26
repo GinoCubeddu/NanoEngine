@@ -133,6 +133,7 @@
     <Compile Include="Testing\Assets\Hex.cs" />
     <Compile Include="Testing\Assets\HexMind.cs" />
     <Compile Include="Testing\Assets\plane.cs" />
+    <Compile Include="Testing\Assets\PlaneMind.cs" />
     <Compile Include="Testing\States\ChaseState.cs" />
     <Compile Include="Testing\States\CheerState.cs" />
     <Compile Include="Testing\States\HorizontalState.cs" />

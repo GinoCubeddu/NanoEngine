@@ -16,7 +16,7 @@ namespace NanoEngine.Testing
         /// </summary>
         public override void LoadContent()
         {
-            _assetManager.CreateAsset<plane>(50, 50);
+            _assetManager.CreateAsset<plane, PlaneMind>(200, 20);
             _assetManager.CreateAsset<TestAsset, TestMind>(50, 50);
         }
 

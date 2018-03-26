@@ -36,7 +36,6 @@ namespace NanoEngine.Testing.Assets
         public override void Update(IUpdateManager updateManager)
         {
             ((PhysicsEntity)controledEntity).Gravity = Vector2.Zero;
-            Console.WriteLine(controledEntity.Position);
             _StateMachine.Update();
             Timer++;
         }

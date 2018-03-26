@@ -24,6 +24,8 @@ namespace NanoEngine.Core.Managers
         // Blank texture used for drwaing items such as lines
         private Texture2D _blankTexture;
 
+        private IDictionary<Color, Texture2D> _blankTextures;
+
         public Texture2D BlankTexture
         {
             get { return _blankTexture; }
@@ -58,6 +60,8 @@ namespace NanoEngine.Core.Managers
             RenderBounds = GetGD.Viewport.Bounds;
             _blankTexture = new Texture2D(GetGD, 1, 1);
             _blankTexture.SetData<Color>(new Color[] { Color.Black });
+            _blankTextures = new Dictionary<Color, Texture2D>();
+            _blankTextures[Color.Black] = _blankTexture;
             Created = true;
         }
 
@@ -255,6 +259,39 @@ namespace NanoEngine.Core.Managers
         public void EndDraw()
         {
             spriteBatch.End();
+        }
+
+        /// <summary>
+        /// Draws a line between 2 points
+        /// </summary>
+        /// <param name="point1">The starting point</param>
+        /// <param name="point2">The destination point</param>
+        /// <param name="color">The color of the line</param>
+        /// <param name="width">the width of the line</param>
+        public void DrawLine(Vector2 point1, Vector2 point2, Color color, int width)
+        {
+            Texture2D blankTexture = null;
+            if (_blankTextures.ContainsKey(color))
+                blankTexture = _blankTextures[color];
+            else
+            {
+                _blankTextures[color] = blankTexture = new Texture2D(GetGD, 1, 1);
+                _blankTextures[color].SetData<Color>(new Color[] { color });
+                blankTexture = _blankTextures[color];
+            }
+
+            Vector2 edge = point2 - point1;
+            float angle = (float)Math.Atan2(edge.Y, edge.X);
+            Draw(
+                blankTexture,
+                new Rectangle((int)point1.X, (int)point1.Y, (int)edge.Length(), width),
+                null,
+                color,
+                angle,
+                new Vector2(0, 0),
+                SpriteEffects.None,
+                0
+            );
         }
 
         /// <summary>

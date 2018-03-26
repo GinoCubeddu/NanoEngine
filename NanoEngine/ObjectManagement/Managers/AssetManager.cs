@@ -45,9 +45,6 @@ namespace NanoEngine.ObjectManagement.Managers
         // An insatnce of the collisionManager
         private ICollisionManager _collisionManager;
 
-        // An instance of the physics manager
-        private IPhysicsManager _physicsManager;
-
         // A bool informing us if we need to draw the bounds or not
         public static bool DrawBounds = false;
 
@@ -64,7 +61,6 @@ namespace NanoEngine.ObjectManagement.Managers
             _assetFactory = new AssetFactory();
             _aiFactory = new AiFactory(eventManager);
             _collisionManager = new CollisionManager();
-            _physicsManager = new PhysicsManager();
         }
 
         /// <summary>
@@ -330,9 +326,6 @@ namespace NanoEngine.ObjectManagement.Managers
                 renderableAssets = _renderFilter.SortAssetsInRenderZone(new Dictionary<string, IAsset>(_assetDictionary));
                 renderableAI = _renderFilter.SortAiInRenderZone(new Dictionary<string, IAiComponent>(_aiComponents));
             }
-
-            // update the physics manager
-            _physicsManager.UpdatePhysics(renderableAssets.Values.ToList());
 
             // Pass copies of the assets and their minds to the collision manager
             _collisionManager.Update(

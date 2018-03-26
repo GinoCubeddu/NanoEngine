@@ -160,6 +160,16 @@ namespace NanoEngine.Core.Interfaces
         /// </summary>
         void EndDraw();
 
+
+        /// <summary>
+        /// Draws a line between 2 points
+        /// </summary>
+        /// <param name="point1">The starting point</param>
+        /// <param name="point2">The destination point</param>
+        /// <param name="color">The color of the line</param>
+        /// <param name="width">the width of the line</param>
+        void DrawLine(Vector2 point1, Vector2 point2, Color color, int width);
+
         /// <summary>
         /// Getter to return the current graphics device
         /// </summary>

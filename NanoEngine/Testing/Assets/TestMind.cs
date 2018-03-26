@@ -35,6 +35,14 @@ namespace NanoEngine.Testing.Assets
         /// <param name="updateManager">an instance of the update manager</param>
         public override void Update(IUpdateManager updateManager)
         {
+            if (((PhysicsEntity) ControledAsset).Velocity.X > 3)
+            {
+                ((PhysicsEntity) ControledAsset).Velocity = new Vector2(3, ((PhysicsEntity)ControledAsset).Velocity.Y);
+            }
+            if (((PhysicsEntity)ControledAsset).Velocity.Y > 3)
+            {
+                ((PhysicsEntity)ControledAsset).Velocity = new Vector2(((PhysicsEntity)ControledAsset).Velocity.X, 3);
+            }
             _StateMachine.Update();
             Timer++;
         }
@@ -48,7 +56,6 @@ namespace NanoEngine.Testing.Assets
             _StateMachine.AddState(new HorizontalState<IAiComponent>("runRight", -1), "runUp");
             _StateMachine.AddState(new HorizontalState<IAiComponent>("runLeft", 1), "runDown");
             _StateMachine.AddState(new JumpState(), "jump");
-
 
             _StateMachine.AddKeyboardTransition(
                 KeyStates.Pressed, new List<Keys>() { Keys.Space }, "idle", "jump"
@@ -134,7 +141,7 @@ namespace NanoEngine.Testing.Assets
 
         public void CollisionResponse(NanoCollisionEventArgs response)
         {
-            Console.WriteLine("PLAYER: " + response.CollisionSide);
+
         }
     }
 }

@@ -132,6 +132,10 @@
     <Compile Include="Testing\Assets\BlankMind.cs" />
     <Compile Include="Testing\Assets\Hex.cs" />
     <Compile Include="Testing\Assets\HexMind.cs" />
+    <Compile Include="Testing\Assets\Wall.cs" />
+    <Compile Include="Testing\Assets\WallMind.cs" />
+    <Compile Include="Testing\Physics\IBounce.cs" />
+    <Compile Include="Testing\Physics\PhysicsMethods.cs" />
     <Compile Include="Testing\States\ChaseState.cs" />
     <Compile Include="Testing\States\CheerState.cs" />
     <Compile Include="Testing\States\HorizontalState.cs" />

@@ -21,7 +21,7 @@ namespace NanoEngine.ObjectTypes.General
 
         public ICamera2D Camera2D { get; private set; }
 
-        public double LevelTimer { get; private set; }
+        public double LevelTimer { get; set; }
 
         protected IEventManager EventManager;
 

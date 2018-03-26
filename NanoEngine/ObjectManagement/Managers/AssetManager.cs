@@ -312,6 +312,8 @@ namespace NanoEngine.ObjectManagement.Managers
             else
                 assets = _assetDictionary.Values.ToList();
 
+            // update the physics manager
+            _physicsManager.UpdatePhysics(assets);
             foreach (IAsset asset in assets)
                 asset.Draw(rendermanager);
         }
@@ -331,9 +333,6 @@ namespace NanoEngine.ObjectManagement.Managers
                 renderableAssets = _renderFilter.SortAssetsInRenderZone(new Dictionary<string, IAsset>(_assetDictionary));
                 renderableAI = _renderFilter.SortAiInRenderZone(new Dictionary<string, IAiComponent>(_aiComponents));
             }
-
-            // update the physics manager
-            _physicsManager.UpdatePhysics(renderableAssets.Values.ToList());
 
             // Pass copies of the assets and their minds to the collision manager
             _collisionManager.Update(

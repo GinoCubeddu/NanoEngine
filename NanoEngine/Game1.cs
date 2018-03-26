@@ -9,6 +9,8 @@ using System;
 using NanoEngine.Core.Camera;
 using NanoEngine.Core.Locator;
 using NanoEngine.ObjectManagement;
+using NanoEngine.ObjectTypes.Assets;
+using NanoEngine.Testing;
 using NanoEngine.Testing.Assets;
 using NanoEngine.Testing.Tiles;
 
@@ -53,10 +55,11 @@ namespace NanoEngine
             LevelLoader.AddLevelAsset<CoinAsset>(4);
             LevelLoader.AddLevelAsset<TestAsset, TestMind>(5, "player");
 
-            graphics.PreferredBackBufferWidth = 1500;
+            graphics.PreferredBackBufferWidth = 1000;
             graphics.PreferredBackBufferHeight = 1080;
             graphics.ApplyChanges();
             RenderFilter.RenderOffset = new Vector2(1500, 200);
+            Entity.DrawAssetBounds = true;
 
             NanoEngineInit.Initialize(GraphicsDevice, this, Content);
 
@@ -67,7 +70,7 @@ namespace NanoEngine
                 .LoadSound("soundTrack", "Desert Theme");
 
             ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
-                .AddScreen<TestGameScreen>("level1");
+                .AddScreen<TestScreen2>("level1");
 
             base.Initialize();
         }

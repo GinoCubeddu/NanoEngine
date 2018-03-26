@@ -70,7 +70,12 @@ namespace NanoEngine.Collision.Manager
                 if (asset.Item1 is IAABBColidable && possibleCollision.Item1 is IAABBColidable)
                     collision = _aabb.CheckCollision(asset.Item1, possibleCollision.Item1);
                 else
-                    collision = _sat.CheckCollision(asset.Item1, possibleCollision.Item1);
+                {
+                    if (_aabb.CheckCanCollide(asset.Item1, possibleCollision.Item1))
+                        collision = _sat.CheckCollision(asset.Item1, possibleCollision.Item1);
+                    else
+                        Console.WriteLine("not possible to collide so not checking SAT");
+                }
 
                 // If the collision did not return null then send the collision responses
                 if (collision != null)

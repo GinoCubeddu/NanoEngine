@@ -18,14 +18,56 @@ namespace NanoEngine.Collision.CollisionTypes
         /// <returns>A boolean value telling us if there has been a collision</returns>
         public Tuple<NanoCollisionEventArgs, NanoCollisionEventArgs> CheckCollision(IAsset asset1, IAsset asset2)
         {
-            // Get the points of the two collidables, if no points are defined use
-            // points generated from the bounding box
-            IList<Vector2> asset1Points = asset1.Points ?? asset1.GetPointsFromBounds();
-            IList<Vector2> asset2Points = asset2.Points ?? asset2.GetPointsFromBounds();
+            bool collided = false;
 
-            // If either of the overlap checks return false then there is no overlap
-            if (!CheckOverLap(asset1Points, asset2Points) || !CheckOverLap(asset2Points, asset1Points))
-                return null;
+            // Get the points from asset A
+            IList<IList<Vector2>> asset1Points = asset1.Points;
+
+            // If those points are null get them from the bounds
+            if (asset1Points == null)
+            {
+                asset1Points = new List<IList<Vector2>>();
+                asset1Points.Add(asset1.GetPointsFromBounds());
+            }
+
+            // Do the same for asset B
+            IList<IList<Vector2>> asset2Points = asset2.Points;
+            if (asset2Points == null)
+            {
+                asset2Points = new List<IList<Vector2>>();
+                asset2Points.Add(asset2.GetPointsFromBounds());
+            }
+
+            Console.WriteLine("test");
+
+            // Check each "object" in asset A against each "object" in asset B
+            foreach (IList<Vector2> asset1Point in asset1Points)
+            {
+                foreach (IList<Vector2> asset2Point in asset2Points)
+                {
+                    if (CheckOverLap(asset1Point, asset2Point))
+                        collided = true;
+                }
+            }
+
+            // Check each "object" in asset B against each "object" in asset A
+            foreach (IList<Vector2> asset1Point in asset2Points)
+            {
+                foreach (IList<Vector2> asset2Point in asset1Points)
+                {
+                    if (CheckOverLap(asset1Point, asset2Point))
+                        collided = true;
+                }
+            }
+
+            if (collided)
+                Console.WriteLine("COLLISOIN DETECTED");
+            else
+                Console.WriteLine("COLLISOIN NOT DETECTED");
+
+            //// If either of the overlap checks return false then there is no overlap
+            //if (!CheckOverLap(asset1Points, asset2Points) || !CheckOverLap(asset2Points, asset1Points))
+            //    return null;
             return null;
         }
 

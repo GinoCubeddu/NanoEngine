@@ -9,7 +9,10 @@ using System;
 using NanoEngine.Core.Camera;
 using NanoEngine.Core.Locator;
 using NanoEngine.ObjectManagement;
+using NanoEngine.ObjectTypes.Assets;
+using NanoEngine.Physics;
 using NanoEngine.Testing.Assets;
+using NanoEngine.Testing.Physics;
 using NanoEngine.Testing.Tiles;
 
 namespace NanoEngine
@@ -52,10 +55,13 @@ namespace NanoEngine
             LevelLoader.AddLevelAsset<ChestAsset>(3);
             LevelLoader.AddLevelAsset<CoinAsset>(4);
             LevelLoader.AddLevelAsset<TestAsset, TestMind>(5, "player");
+            PhysicsManager.Inject(typeof(IBounce), PhysicsMethods.Bounce);
 
-            graphics.PreferredBackBufferWidth = 1500;
-            graphics.PreferredBackBufferHeight = 1080;
-            graphics.ApplyChanges();
+            Entity.DrawAssetBounds = true;
+
+            //graphics.PreferredBackBufferWidth = 1500;
+            //graphics.PreferredBackBufferHeight = 1080;
+            //graphics.ApplyChanges();
             RenderFilter.RenderOffset = new Vector2(1500, 200);
 
             NanoEngineInit.Initialize(GraphicsDevice, this, Content);

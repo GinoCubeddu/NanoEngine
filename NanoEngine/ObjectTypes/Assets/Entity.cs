@@ -30,6 +30,8 @@ namespace NanoEngine.ObjectTypes.Assets
 
         private bool _despawn = false;
 
+        public static bool DrawAssetBounds = false;
+
         // Property to state if the asset wants to be drawn/updated
         public bool Despawn
         {
@@ -139,12 +141,23 @@ namespace NanoEngine.ObjectTypes.Assets
         /// </summary>
         public abstract void Initilise();
 
+        protected void DrawBounds(IRenderManager rendermanager)
+        {
+            if (DrawAssetBounds)
+            {
+                // Draw the bounding box
+                IList<Vector2> boundPoints = GetPointsFromBounds();
+                for (int i = 0; i < boundPoints.Count; i++)
+                    rendermanager.DrawLine(boundPoints[i], boundPoints[i + 1 == boundPoints.Count ? 0 : i + 1], Color.Red, 2);
+            }
+        }
         public virtual void Draw(IRenderManager renderManager)
         {
             if (AssetAnimation != null)
                 AssetAnimation.Animate(renderManager);
             else
                 renderManager.Draw(Texture, Position, Color.White);
+            DrawBounds(renderManager);
         }
 
         /// <summary>

@@ -13,6 +13,8 @@ namespace NanoEngine.ObjectTypes.Assets
         //Feild for holding the texture
         private Texture2D _texture;
 
+        public static bool DrawAssetBounds = false;
+
         public IAnimation AssetAnimation { get; protected set; }
 
         //getter for the texture and setter for the texture
@@ -22,7 +24,7 @@ namespace NanoEngine.ObjectTypes.Assets
 
         public int Speed;
 
-        public IList<Vector2> Points { get; protected set; }
+        public IList<IList<Vector2>> Points { get; protected set; }
 
         private int _assetWidth;
 
@@ -139,12 +141,44 @@ namespace NanoEngine.ObjectTypes.Assets
         /// </summary>
         public abstract void Initilise();
 
+        protected void DrawBounds(IRenderManager rendermanager)
+        {
+            if (DrawAssetBounds)
+            {
+                // Draw the bounding box
+                IList<Vector2> boundPoints = GetPointsFromBounds();
+                for (int i = 0; i < boundPoints.Count; i++)
+                    rendermanager.DrawLine(boundPoints[i], boundPoints[i + 1 == boundPoints.Count ? 0 : i + 1], Color.Black, 2);
+
+
+                IList<Color> colors = new List<Color>() {Color.Pink, Color.Red, Color.Gold, Color.Yellow};
+
+                // If there are set points then draw them
+                if (Points != null)
+                {
+                    int color = 0;
+                    foreach (IList<Vector2> points in Points)
+                    {
+                        for (int i = 0; i < points.Count; i++)
+                        {
+                            rendermanager.DrawLine(points[i], points[i + 1 == points.Count ? 0 : i + 1], colors[color], 2);
+                        }
+                        color++;
+                        if (color >= colors.Count)
+                            color = 0;
+                    }
+                }
+                    
+                        
+            }
+        }
         public virtual void Draw(IRenderManager renderManager)
         {
             if (AssetAnimation != null)
                 AssetAnimation.Animate(renderManager);
             else
                 renderManager.Draw(Texture, Position, Color.White);
+            DrawBounds(renderManager);
         }
 
         /// <summary>
@@ -161,12 +195,21 @@ namespace NanoEngine.ObjectTypes.Assets
             return pointList;
         }
 
-        protected void AddPoint(Vector2 point)
+        /// <summary>
+        /// Adds a list of points to make a shape around the entity. The points will
+        /// be placed from the center point
+        /// </summary>
+        /// <param name="points"></param>
+        protected void AddPoints(IList<Vector2> points)
         {
             if (Points == null)
-                Points = new List<Vector2>();
+                Points = new List<IList<Vector2>>();
 
-            Points.Add(new Vector2(_textureCenter.X + point.X, _textureCenter.Y + point.Y));
+            IList<Vector2> shapePoints = new List<Vector2>();
+
+            foreach (Vector2 point in points)
+                shapePoints.Add(new Vector2(_textureCenter.X + point.X, _textureCenter.Y + point.Y));
+            Points.Add(shapePoints);
         }
     }
 }

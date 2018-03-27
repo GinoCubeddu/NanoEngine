@@ -35,8 +35,8 @@ namespace NanoEngine.Physics
         /// <summary>
         /// checks matching types/interfaces on assets that are passed in
         /// </summary>
-        /// <param name="asset"></param>
-        /// <param name="asset2"></param>
+        /// <param name="asset">the 1st required asset</param>
+        /// <param name="asset2">the 2nd required asset</param>
         public void ProcessPhysics(IAsset asset, IAsset asset2)
         {
             //if physics entity

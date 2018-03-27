@@ -16,5 +16,13 @@ namespace NanoEngine.Testing.Physics
             if (asset2 is IBounce)
                 Console.WriteLine("Asset 2 is IBOUNCE = ");
         }
+
+        public static void Reflect(IAsset asset1, IAsset asset2)
+        {
+            if (asset1 is IReflect)
+                Console.WriteLine("Asset 1 is IREFLECT = ");
+            if (asset2 is IReflect)
+                Console.WriteLine("Asset 2 is IREFLECT = ");
+        }
     }
 }

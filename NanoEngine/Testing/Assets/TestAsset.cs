@@ -11,9 +11,10 @@ using NanoEngine.Core.Interfaces;
 using NanoEngine.Core.Locator;
 using NanoEngine.Testing.Physics;
 
+
 namespace NanoEngine.Testing.Assets
 {
-    class TestAsset : PhysicsEntity, IAABBColidable, IBounce
+    class TestAsset : PhysicsEntity, IAABBColidable, IReflect, IBounce
     {
         public override void Initilise()
         {

@@ -55,6 +55,7 @@ namespace NanoEngine
             LevelLoader.AddLevelAsset<ChestAsset>(3);
             LevelLoader.AddLevelAsset<CoinAsset>(4);
             LevelLoader.AddLevelAsset<TestAsset, TestMind>(5, "player");
+            PhysicsManager.Inject(typeof(IReflect), PhysicsMethods.Reflect);
             PhysicsManager.Inject(typeof(IBounce), PhysicsMethods.Bounce);
 
             Entity.DrawAssetBounds = true;

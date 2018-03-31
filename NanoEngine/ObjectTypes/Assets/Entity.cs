@@ -133,6 +133,7 @@ namespace NanoEngine.ObjectTypes.Assets
         //getter for the remove property
         private bool remove;
         public bool Remove { get { return remove; } }
+        public bool IsMovable { get; protected set; }
 
         /// <summary>
         /// Method to initalise the the entity

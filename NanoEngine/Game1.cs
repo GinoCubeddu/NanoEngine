@@ -67,11 +67,13 @@ namespace NanoEngine
             ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager)
                 .LoadSound("soundTrack", "Desert Theme");
 
-            ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
-                .AddScreen<TestGameScreen1>("level2");
+       
 
             ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
                 .AddScreen<TestGameScreen>("level1");
+
+            ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
+                .AddScreen<TestGameScreen1>("level2");
 
             base.Initialize();
         }

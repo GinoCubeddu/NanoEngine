@@ -6,16 +6,18 @@ using NanoEngine.Collision;
 using NanoEngine.Collision.CollidableTypes;
 using NanoEngine.Core.Interfaces;
 using NanoEngine.Events.Args;
+using NanoEngine.ObjectManagement.Interfaces;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.ObjectTypes.Assets.Control;
 using NanoEngine.ObjectTypes.Control;
 using NanoEngine.StateManagement.StateMachine;
 using NanoEngine.StateManagement.States;
 using NanoEngine.Testing.States;
+using NanoEngine.Testing.Tiles;
 
 namespace NanoEngine.Testing.Assets
 {
-    class TestMind : AiComponent, IKeyboardWanted, ICollisionResponder
+    class TestMind : AiComponent, IKeyboardWanted, ICollisionResponder, IAssetmanagerNeeded
     {
         private string Direction;
 
@@ -130,11 +132,20 @@ namespace NanoEngine.Testing.Assets
         public void OnKeyboardChange(object sender, NanoKeyboardEventArgs args)
         {
             _StateMachine.HandleKeyboardInput(args, null);
+
+
+            if (args.TheKeys.ContainsKey(KeyStates.Pressed))
+                AssetManager.CreateAsset<CoinAsset, CoinMind>(new Vector2(ControledAsset.Position.X + 50, ControledAsset.Position.Y));
+
         }
 
         public void CollisionResponse(NanoCollisionEventArgs response)
         {
             Console.WriteLine("PLAYER: " + response.CollisionSide);
+            if (response.CollidedWith.UniqueName.ToLower().Contains("coin"))
+                response.CollidedWith.Despawn = true;
         }
+
+        public IAssetManager AssetManager { get; set; }
     }
 }

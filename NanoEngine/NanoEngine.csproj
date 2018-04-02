@@ -42,7 +42,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Animation.cs" />
+    <Compile Include="Animation\Animation.cs" />
+    <Compile Include="Animation\AnimationState.cs" />
     <Compile Include="Collision\CollidableTypes\IAABBColidable.cs" />
     <Compile Include="Collision\CollidableTypes\ICollidable.cs" />
     <Compile Include="Collision\CollidableTypes\ICollisionResponder.cs" />
@@ -86,7 +87,7 @@
     <Compile Include="Events\Interfaces\IKeyboardHandler.cs" />
     <Compile Include="Events\Interfaces\IMouseHandler.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="IAnimation.cs" />
+    <Compile Include="Animation\IAnimation.cs" />
     <Compile Include="IAssetmanagerNeeded.cs" />
     <Compile Include="ObjectManagement\IRenderFilter.cs" />
     <Compile Include="ObjectManagement\RenderFilter.cs" />
@@ -132,10 +133,12 @@
     <Compile Include="Testing\Assets\BlankMind.cs" />
     <Compile Include="Testing\Assets\Hex.cs" />
     <Compile Include="Testing\Assets\HexMind.cs" />
+    <Compile Include="Testing\RedRunner.cs" />
     <Compile Include="Testing\States\ChaseState.cs" />
     <Compile Include="Testing\States\CheerState.cs" />
     <Compile Include="Testing\States\HorizontalState.cs" />
     <Compile Include="Testing\States\JumpState.cs" />
+    <Compile Include="Testing\TestGameScreen1.cs" />
     <Compile Include="Testing\Tiles\ChestAsset.cs" />
     <Compile Include="Testing\Tiles\DirtTile.cs" />
     <Compile Include="Testing\Tiles\CoinAsset.cs" />

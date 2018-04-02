@@ -16,14 +16,20 @@ namespace NanoEngine.Testing.Assets
     {
         public override void Initilise()
         {
+            IsMovable = true;
             SetTexture(ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager)
                 .LoadResource<Texture2D>("player"));
 
-            AssetAnimation = new Animation(this);
-            AssetAnimation.AddState("idleRight", 27, 64, 0, 8);
-            AssetAnimation.AddState("idleLeft", 27, 64, 2, 8);
-            AssetAnimation.AddState("runRight", 35, 64, 1, 6);
-            AssetAnimation.AddState("runLeft", 35, 64, 3, 6);
+            AssetAnimation = new Animation.Animation(this);
+            AssetAnimation.AddState("idleRight", 27, 64, 8, 12, 0, 0);
+            AssetAnimation.AddState("idleLeft", 27, 64, 8, 12, 128, 0);
+            AssetAnimation.AddState("runRight", 35, 64, 6, 12, 64, 0);
+            AssetAnimation.AddState("runLeft", 35, 64, 6, 12, 192, 0);
+
+
+
+
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NanoEngine.Core.Interfaces;
@@ -19,52 +20,67 @@ namespace NanoEngine.Collision.CollisionTypes
         /// <returns>A boolean value telling us if there has been a collision</returns>
         public Tuple<NanoCollisionEventArgs, NanoCollisionEventArgs> CheckCollision(IAsset asset1, IAsset asset2)
         {
-            RenderManager.bgColor = Color.Blue;
-
+            // set the default values
             bool collided = false;
+            Vector2 smallestAxis = Vector2.Zero;
+            float smallestOverlap = 1;
 
             // Get the points from asset A
-            IList<IList<Vector2>> asset1Points = asset1.Points;
+            IDictionary<string, IList<Vector2>> asset1Points = asset1.Points;
 
             // If those points are null get them from the bounds
             if (asset1Points == null)
             {
-                asset1Points = new List<IList<Vector2>>();
-                asset1Points.Add(asset1.GetPointsFromBounds());
+                asset1Points = new Dictionary<string, IList<Vector2>>();
+                asset1Points["body"] = asset1.GetPointsFromBounds();
             }
 
             // Do the same for asset B
-            IList<IList<Vector2>> asset2Points = asset2.Points;
+            IDictionary<string, IList<Vector2>> asset2Points = asset2.Points;
             if (asset2Points == null)
             {
-                asset2Points = new List<IList<Vector2>>();
-                asset2Points.Add(asset2.GetPointsFromBounds());
+                asset2Points = new Dictionary<string, IList<Vector2>>();
+                asset2Points["body"] = asset2.GetPointsFromBounds();
             }
-
-            Console.WriteLine("test");
 
             // Check each "object" in asset A against each "object" in asset B
-            foreach (IList<Vector2> asset1Point in asset1Points)
+            // Loop through each "object" in asset1
+            foreach (string asset1PointKey in asset1Points.Keys)
             {
-                foreach (IList<Vector2> asset2Point in asset2Points)
+                // Loop through each "object" in asset 2
+                foreach (string asset2PointKey in asset2Points.Keys)
                 {
-                    if (CheckOverLap(asset1Point, asset2Point))
+                    // Check current "object" of asset 1 against current "object" of asset 2
+                    // Check current "object" of asset 2 against current "object" of asset 1
+                    if (
+                        !CheckOverLap(asset1Points[asset1PointKey], asset2Points[asset2PointKey], ref smallestAxis, ref smallestOverlap) ||
+                        !CheckOverLap(asset2Points[asset2PointKey], asset1Points[asset1PointKey], ref smallestAxis, ref smallestOverlap)
+                    )
+                    {
+                        // If either of them return false then there is no collision
+                        collided = false;
+                    } else
+                    {
+                        // If none returned false there is a collision between the two objects
+                        // and we dont have to check any other objects
                         collided = true;
+                        break;
+                    }
                 }
-            }
 
-            // Check each "object" in asset B against each "object" in asset A
-            foreach (IList<Vector2> asset1Point in asset2Points)
-            {
-                foreach (IList<Vector2> asset2Point in asset1Points)
-                {
-                    if (CheckOverLap(asset1Point, asset2Point))
-                        collided = true;
-                }
+                // If there is a collision then break out of thej loop
+                if (collided)
+                    break;
             }
 
             if (collided)
+            {
+                // Set the background color to green
                 RenderManager.bgColor = Color.Green;
+                Console.WriteLine("overlap");
+                // output the MTV
+                Console.WriteLine(smallestAxis * smallestOverlap);
+            }
 
             //// If either of the overlap checks return false then there is no overlap
             //if (!CheckOverLap(asset1Points, asset2Points) || !CheckOverLap(asset2Points, asset1Points))
@@ -78,9 +94,13 @@ namespace NanoEngine.Collision.CollisionTypes
         /// <param name="asset1Points">The first list of points</param>
         /// <param name="asset2Points">The second list of points</param>
         /// <returns>Boolean telling us if they have overlapped</returns>
-        private bool CheckOverLap(IList<Vector2> asset1Points, IList<Vector2> asset2Points)
+        private bool CheckOverLap(IList<Vector2> asset1Points, IList<Vector2> asset2Points, ref Vector2 smallestAxis, ref float smallestOverlap)
         {
-            // get the axies's from the first object
+            // Set the local variables
+            Vector2 localSmallestAxis = Vector2.Zero;
+            float localSmallestOverlap = 999;
+           
+            // Grab the axis of the first asset
             IList<Vector2> axies = GetAxies(asset1Points);
             for (int i = 0; i < axies.Count; i++)
             {
@@ -91,9 +111,28 @@ namespace NanoEngine.Collision.CollisionTypes
                 Tuple<float, float> p1 = Project(point, asset1Points);
                 Tuple<float, float> p2 = Project(point, asset2Points);
 
-                if (p2.Item1 - p1.Item2 > 0) return false;
+                // If the MIN on projection2 - MAX on projection1 is GREATER than 0
+                // there is no collision
+                if (Math.Max(p1.Item1, p2.Item1) > Math.Min(p1.Item2, p2.Item2))
+                    return false;
+                else
+                {
+                    // If it is less than 0 there is a collision
+                    // Get the current overlap
+                    float overlap = p2.Item1 - p1.Item2;
+
+                    // If the current is less than the smallest set the smallest
+                    // overlap and axis to the current ones
+                    if (overlap > localSmallestOverlap || localSmallestOverlap == 999)
+                    {
+                        localSmallestOverlap = overlap;
+                        localSmallestAxis = point;
+                    }
+                }
             }
 
+            smallestAxis = localSmallestAxis;
+            smallestOverlap = localSmallestOverlap;
             return true;
         }
 
@@ -143,7 +182,7 @@ namespace NanoEngine.Collision.CollisionTypes
                 float dot = Vector2.Dot(point, points[i]);
                 if (dot < min)
                     min = dot;
-                else if (dot > max)
+                if (dot > max)
                     max = dot;
             }
 

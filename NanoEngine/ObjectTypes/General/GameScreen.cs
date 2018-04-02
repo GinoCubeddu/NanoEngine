@@ -110,10 +110,10 @@ namespace NanoEngine.ObjectTypes.General
         {
             LevelTimer += updateManager.gameTime.ElapsedGameTime.TotalSeconds;
             EventManager.Update();
-            _assetManager.UpdateAssets(updateManager);
             // If we have a camera then update it
             if (Camera2D != null)
                 Camera2D.Update();
+            _assetManager.UpdateAssets(updateManager);
             Update(updateManager);
         }
 

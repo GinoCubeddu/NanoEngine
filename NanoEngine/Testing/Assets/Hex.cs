@@ -23,6 +23,7 @@ namespace NanoEngine.Testing.Assets
                 .LoadResource<Texture2D>("hex"));
 
             IList<Vector2> points = new List<Vector2>();
+            points.Add(new Vector2(-19, -32));
             points.Add(new Vector2(-37, -10));
             points.Add(new Vector2(-37, 10));
             points.Add(new Vector2(-19, 32));
@@ -30,8 +31,8 @@ namespace NanoEngine.Testing.Assets
             points.Add(new Vector2(37, 10));
             points.Add(new Vector2(37, -10));
             points.Add(new Vector2(19, -32));
-            points.Add(new Vector2(-19, -32));
-            AddPoints(points);
+
+            AddPoints("main", points);
         }
     }
 }

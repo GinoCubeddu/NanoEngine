@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 using NanoEngine.Core.Interfaces;
+using NanoEngine.Core.Managers;
 using NanoEngine.ObjectTypes.General;
 using NanoEngine.Testing.Assets;
 
@@ -16,8 +18,10 @@ namespace NanoEngine.Testing
         /// </summary>
         public override void LoadContent()
         {
-            _assetManager.CreateAsset<plane, PlaneMind>(200, 20);
-            _assetManager.CreateAsset<TestAsset, TestMind>(50, 50);
+            //_assetManager.CreateAsset<plane, PlaneMind>(400, 400);
+            _assetManager.CreateAsset<Hex, TestMind>("player", 400, 300);
+            _assetManager.CreateAsset<Hex>(400, 400);
+
         }
 
         /// <summary>

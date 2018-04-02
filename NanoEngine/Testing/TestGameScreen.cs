@@ -37,6 +37,11 @@ namespace NanoEngine
             filter.AddRenderTarget(_assetManager.RetriveAsset("player"));
             _assetManager.SupplyRenderFilter(filter);
             AddCamera("player", _assetManager.RetriveAsset("player"));
+
+            //AddCamera("RedRunner", _assetManager.RetriveAsset("redRunner"));
+
+
+
             Camera2D.SetLevelBounds(new Rectangle(0, 0, 12800, 2560));
             EventManager.AddDelegates(this);
             ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlaySoundEffect("soundTrack", true);

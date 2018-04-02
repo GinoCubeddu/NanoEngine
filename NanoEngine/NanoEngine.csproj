@@ -131,6 +131,7 @@
     <Compile Include="StateManagement\Transitions\MethodStateTransition.cs" />
     <Compile Include="StateManagement\Transitions\TransitionHolder.cs" />
     <Compile Include="Testing\Assets\BlankMind.cs" />
+    <Compile Include="Testing\Assets\CoinMind.cs" />
     <Compile Include="Testing\Assets\Hex.cs" />
     <Compile Include="Testing\Assets\HexMind.cs" />
     <Compile Include="Testing\RedRunner.cs" />

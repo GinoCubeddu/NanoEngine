@@ -24,7 +24,7 @@ namespace NanoEngine.Testing.States
         public void Enter(T owner, IDictionary<string, object> stateArguments)
         {
             Console.WriteLine("Exiting IdleState");
-            owner.ControledAsset.AssetAnimation.ChangeAnimationState(_animationState);
+            //owner.ControledAsset.AssetAnimation.ChangeAnimationState(_animationState);
         }
 
         /// <summary>

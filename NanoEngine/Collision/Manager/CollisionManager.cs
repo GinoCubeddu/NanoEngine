@@ -63,6 +63,8 @@ namespace NanoEngine.Collision.Manager
             // Loop through all possible collisions
             foreach (Tuple<IAsset, IAiComponent> possibleCollision in possibleCollisions)
             {
+                RenderManager.bgColor = Color.Blue;
+
                 Tuple<NanoCollisionEventArgs, NanoCollisionEventArgs> collision = null;
 
                 // If both assets use aabb then we can check through AABB otherwise we NEED toc check
@@ -71,7 +73,7 @@ namespace NanoEngine.Collision.Manager
                     collision = _aabb.CheckCollision(asset.Item1, possibleCollision.Item1);
                 else
                 {
-                    if (_aabb.CheckCanCollide(asset.Item1, possibleCollision.Item1))
+                    //if (_aabb.CheckCanCollide(asset.Item1, possibleCollision.Item1))
                         collision = _sat.CheckCollision(asset.Item1, possibleCollision.Item1);
                 }
 

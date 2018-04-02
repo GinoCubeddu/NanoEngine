@@ -322,18 +322,21 @@ namespace NanoEngine.Core.Managers
 
             Vector2 edge = point2 - point1;
             float angle = (float)Math.Atan2(edge.Y, edge.X);
+            float distance;
+            Vector2.Distance(ref point1, ref point2, out distance);
             Draw(
                 blankTexture,
-                new Rectangle((int)point1.X, (int)point1.Y, (int)edge.Length(), width),
-                null,
+                point1,
+                new Rectangle((int)point1.X, (int)point1.Y, (int)distance, width),
                 color,
                 angle,
                 new Vector2(0, 0),
+                1,
                 SpriteEffects.None,
                 0
             );
         }
-        
+
         /// <summary>
         /// Method to initialise everything
         /// </summary>

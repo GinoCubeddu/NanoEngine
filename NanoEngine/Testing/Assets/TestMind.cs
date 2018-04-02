@@ -35,7 +35,7 @@ namespace NanoEngine.Testing.Assets
         /// <param name="updateManager">an instance of the update manager</param>
         public override void Update(IUpdateManager updateManager)
         {
-            ((PhysicsEntity)controledEntity).Gravity = Vector2.Zero;
+            //((PhysicsEntity)controledEntity).Gravity = Vector2.Zero;
             _StateMachine.Update();
             Timer++;
         }

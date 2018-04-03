@@ -69,8 +69,8 @@ namespace NanoEngine
 
        
 
-            ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
-                .AddScreen<TestGameScreen>("level1");
+            //ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
+            //    .AddScreen<TestGameScreen>("level1");
 
             ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
                 .AddScreen<TestGameScreen1>("level2");

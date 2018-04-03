@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NanoEngine.Core.Interfaces;
 using NanoEngine.ObjectTypes.General;
+using NanoEngine.Testing.Assets;
 
 namespace NanoEngine.Testing
 {
@@ -16,6 +17,7 @@ namespace NanoEngine.Testing
         public override void LoadContent()
         {
             _assetManager.CreateAsset<RedRunner>("redRunner", 100, 100);
+            _assetManager.CreateAsset<saw>("saw", 300, 300);
         }
 
         /// <summary>

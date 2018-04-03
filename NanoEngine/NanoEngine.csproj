@@ -134,6 +134,7 @@
     <Compile Include="Testing\Assets\CoinMind.cs" />
     <Compile Include="Testing\Assets\Hex.cs" />
     <Compile Include="Testing\Assets\HexMind.cs" />
+    <Compile Include="Testing\Assets\saw.cs" />
     <Compile Include="Testing\RedRunner.cs" />
     <Compile Include="Testing\States\ChaseState.cs" />
     <Compile Include="Testing\States\CheerState.cs" />

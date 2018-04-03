@@ -134,5 +134,15 @@ namespace NanoEngine.Menus
                 }
             }
         }
+
+        /// <summary>
+        /// Event Reciver for the mouse down event
+        /// </summary>
+        /// <param name="sender">The object that sends the event</param>
+        /// <param name="e">The arguments that are sent</param>
+        public void OnMouseChanged(object sender, NanoMouseEventArgs e)
+        {
+            // throw new NotImplementedException();
+        }
     }
 }

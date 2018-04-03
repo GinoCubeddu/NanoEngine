@@ -79,9 +79,12 @@
     <Compile Include="Events\Args\NanoKeyboardEventArgs.cs" />
     <Compile Include="Events\Args\NanoMouseEventArgs.cs" />
     <Compile Include="Events\Args\NanoMouseReleasedArgs.cs" />
+    <Compile Include="Events\DefaultNanoEventHandlers.cs" />
     <Compile Include="Events\EventManager.cs" />
-    <Compile Include="Events\Handlers\KeyboardHandler.cs" />
-    <Compile Include="Events\Handlers\MouseHandler.cs" />
+    <Compile Include="Events\Handlers\INanoEventHandler.cs" />
+    <Compile Include="Events\Handlers\NanoMouseHandler.cs" />
+    <Compile Include="Events\Handlers\NanoKeyboardHandler.cs" />
+    <Compile Include="Events\INanoEventSubscriber.cs" />
     <Compile Include="Events\Interfaces\IEventManager.cs" />
     <Compile Include="Events\Interfaces\IHandler.cs" />
     <Compile Include="Events\Interfaces\IKeyboardHandler.cs" />

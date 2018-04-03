@@ -8,6 +8,9 @@ using NanoEngine.ObjectTypes.General;
 using System;
 using NanoEngine.Core.Camera;
 using NanoEngine.Core.Locator;
+using NanoEngine.Events;
+using NanoEngine.Events.Args;
+using NanoEngine.Events.Handlers;
 using NanoEngine.ObjectManagement;
 using NanoEngine.Testing;
 using NanoEngine.Testing.Assets;
@@ -67,10 +70,8 @@ namespace NanoEngine
             ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager)
                 .LoadSound("soundTrack", "Desert Theme");
 
-       
-
-            //ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
-            //    .AddScreen<TestGameScreen>("level1");
+            ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
+                .AddScreen<TestGameScreen>("level1");
 
             ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
                 .AddScreen<TestGameScreen1>("level2");

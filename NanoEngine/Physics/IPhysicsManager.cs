@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Physics
@@ -16,6 +18,6 @@ namespace NanoEngine.Physics
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="asset2"></param>
-        void ProcessPhysics(IAsset asset, IAsset asset2);
+        void ProcessPhysics(IAsset asset, IAsset asset2, Tuple<NanoCollisionEventArgs, NanoCollisionEventArgs> eventArgs);
     }
 }

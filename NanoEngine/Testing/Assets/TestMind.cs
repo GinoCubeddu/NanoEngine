@@ -144,7 +144,6 @@ namespace NanoEngine.Testing.Assets
         public void CollisionResponse(NanoCollisionEventArgs response)
         {
 
-
             /*Vector2 controlledEntityVelocity = ((PhysicsEntity)ControledAsset).Velocity;
 
             Vector2 overlap = response.CollisionOverlap;

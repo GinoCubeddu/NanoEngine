@@ -22,10 +22,10 @@ namespace NanoEngine.ObjectTypes.Assets
         public float Damping { get; set; } = 0.95f;
 
         //the resition is to help prevent a 'perfect bounch' with elasticity, adhesion etc
-        public float Resitition { get; set; } = 0.09999f;
+        public float Resitition { get; set; } = 0.65f;
 
         // The gravity is how fast a force pushes down on an object
-        public Vector2 Gravity { get; set; } = new Vector2(0, 0.2f);
+        public Vector2 Gravity { get; set; } = new Vector2(0, 0);
 
         /// <summary>
         /// Applys a force to the Acceleration of the asset
@@ -44,6 +44,9 @@ namespace NanoEngine.ObjectTypes.Assets
         public virtual void ApplyImpluse(Vector2 closingVelocity)
         {
             Velocity += closingVelocity * Resitition;
+            //Console.WriteLine("ApplyImpulse velocity " + Velocity);
+            //Console.WriteLine("ApplyImpulse closingVelocity " + closingVelocity);
+            //Console.WriteLine("ApplyImpulse Resitition " + Resitition);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NanoEngine.Collision.CollidableTypes;
+using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Physics
@@ -11,7 +12,8 @@ namespace NanoEngine.Physics
     internal class PhysicsManager : IPhysicsManager
     {
 
-        private static IDictionary<Type, Action<IAsset, IAsset>> PhysicsMethods = new Dictionary<Type, Action<IAsset, IAsset>>();
+        private static IDictionary<Type, Action<IAsset, IAsset, Tuple<NanoCollisionEventArgs, NanoCollisionEventArgs>>> _physicsMethods =
+            new Dictionary<Type, Action<IAsset, IAsset, Tuple<NanoCollisionEventArgs, NanoCollisionEventArgs>>>();
 
 
         /// <summary>
@@ -29,6 +31,7 @@ namespace NanoEngine.Physics
                 pAsset.Velocity += pAsset.Acceleration;
                 pAsset.Position += pAsset.Velocity;
                 pAsset.Acceleration = pAsset.Gravity;
+                asset.UpdateBounds();
             }
         }
 
@@ -37,19 +40,19 @@ namespace NanoEngine.Physics
         /// </summary>
         /// <param name="asset">the 1st required asset</param>
         /// <param name="asset2">the 2nd required asset</param>
-        public void ProcessPhysics(IAsset asset, IAsset asset2)
+        public void ProcessPhysics(IAsset asset, IAsset asset2, Tuple<NanoCollisionEventArgs, NanoCollisionEventArgs> eventArgs)
         {
             //if physics entity
             //check dict
             //
             //iterate through the keys (interfaces)
-            foreach (Type type in PhysicsMethods.Keys)
+            foreach (Type type in _physicsMethods.Keys)
             {
                 //if either assett has a matching key (interface)
                 if (type.IsInstanceOfType(asset) || type.IsInstanceOfType(asset2))
                 {
                     //then get the type (interface) and involk the method on both assets, which executes the method in the associated thread
-                    PhysicsMethods[type].Invoke(asset, asset2);
+                    _physicsMethods[type].Invoke(asset, asset2, eventArgs);
                 }
             }
         }
@@ -59,10 +62,10 @@ namespace NanoEngine.Physics
         /// </summary>
         /// <param name="type">The interface type</param>
         /// <param name="method">injects Interfaces and methods into the dictionary</param>
-        public static void Inject(Type type, Action<IAsset, IAsset> method)
+        public static void Inject(Type type, Action<IAsset, IAsset, Tuple<NanoCollisionEventArgs, NanoCollisionEventArgs>> method)
         {
             //add Interface and method to the PhysicsMethods dictionary 
-            PhysicsMethods.Add(type, method);
+            _physicsMethods.Add(type, method);
         }
     }
 }

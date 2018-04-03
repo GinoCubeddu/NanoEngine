@@ -79,7 +79,29 @@ namespace NanoEngine.Collision.CollisionTypes
                 RenderManager.bgColor = Color.Green;
                 Console.WriteLine("overlap");
                 // output the MTV
-                Console.WriteLine(smallestAxis * smallestOverlap);
+                if (asset1.UniqueName == "player")
+                {
+                    asset1.SetPosition(asset1.Position + smallestAxis * smallestOverlap);
+                    foreach (IList<Vector2> points in asset1Points.Values)
+                    {
+                        for (int i = 0; i < points.Count; i++)
+                        {
+                            points[i] += smallestAxis * smallestOverlap;
+                        }
+                    }
+                } else
+                {
+                    asset2.SetPosition(asset2.Position + smallestAxis * smallestOverlap);
+                    foreach (IList<Vector2> points in asset2Points.Values)
+                    {
+                        for (int i = 0; i < points.Count; i++)
+                        {
+                            points[i] += smallestAxis * smallestOverlap;
+                        }
+                    }
+                }
+                
+                
             }
 
             //// If either of the overlap checks return false then there is no overlap
@@ -102,14 +124,15 @@ namespace NanoEngine.Collision.CollisionTypes
            
             // Grab the axis of the first asset
             IList<Vector2> axies = GetAxies(asset1Points);
+
             for (int i = 0; i < axies.Count; i++)
             {
                 // get the point
-                Vector2 point = axies[i];
+                Vector2 axis = axies[i];
 
                 // project the point onto both objects
-                Tuple<float, float> p1 = Project(point, asset1Points);
-                Tuple<float, float> p2 = Project(point, asset2Points);
+                Tuple<float, float> p1 = Project(axis, asset1Points);
+                Tuple<float, float> p2 = Project(axis, asset2Points);
 
                 // If the MIN on projection2 - MAX on projection1 is GREATER than 0
                 // there is no collision
@@ -126,7 +149,7 @@ namespace NanoEngine.Collision.CollisionTypes
                     if (overlap > localSmallestOverlap || localSmallestOverlap == 999)
                     {
                         localSmallestOverlap = overlap;
-                        localSmallestAxis = point;
+                        localSmallestAxis = axis;
                     }
                 }
             }
@@ -148,16 +171,23 @@ namespace NanoEngine.Collision.CollisionTypes
             // loop through each point
             for (int i = 0; i < assetPoints.Count; i++)
             {
-                // the edge is the vector point taken away from the next vector point
-                Vector2 edge;
+                // the axis is the angular vector of the compute ege/axis
+                Vector2 axis;
+
+                // 10, 10 ( 10, 10 - 5, 1
+                // 5, 1 ( 5 , 1 - 4,5
+                // 4, 5 ( 4, 5 - 10, 10
+
 
                 if (i + 1 == assetPoints.Count)
-                    edge = assetPoints[i] - assetPoints[0];
+                    axis = assetPoints[i] - assetPoints[0];
                 else
-                    edge = assetPoints[i] - assetPoints[i + 1];
+                    axis = assetPoints[i] - assetPoints[i + 1];
 
-                edge.Normalize();
-                axies.Add(edge);
+                axis = new Vector2(axis.Y, -axis.X);   
+
+                axis.Normalize();
+                axies.Add(axis);
             }
 
             return axies;

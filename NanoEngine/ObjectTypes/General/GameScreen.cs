@@ -109,7 +109,7 @@ namespace NanoEngine.ObjectTypes.General
         public void UpdateScreen(IUpdateManager updateManager)
         {
             LevelTimer += updateManager.gameTime.ElapsedGameTime.TotalSeconds;
-            EventManager.Update();
+            EventManager.Update(updateManager);
             _assetManager.UpdateAssets(updateManager);
             // If we have a camera then update it
             if (Camera2D != null)

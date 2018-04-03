@@ -129,6 +129,10 @@
     <Compile Include="StateManagement\Transitions\KeyboardStateTransition.cs" />
     <Compile Include="StateManagement\Transitions\MethodStateTransition.cs" />
     <Compile Include="StateManagement\Transitions\TransitionHolder.cs" />
+    <Compile Include="Testing\Assets\BallAsset.cs" />
+    <Compile Include="Testing\Assets\BallMind.cs" />
+    <Compile Include="Testing\Assets\BallTwoAsset.cs" />
+    <Compile Include="Testing\Assets\BallTwoMind.cs" />
     <Compile Include="Testing\Assets\BlankMind.cs" />
     <Compile Include="Testing\Assets\Hex.cs" />
     <Compile Include="Testing\Assets\HexMind.cs" />
@@ -137,6 +141,7 @@
     <Compile Include="Testing\Physics\IBounce.cs" />
     <Compile Include="Testing\Physics\IReflect.cs" />
     <Compile Include="Testing\Physics\PhysicsMethods.cs" />
+    <Compile Include="Testing\Physics\vector2.cs" />
     <Compile Include="Testing\States\ChaseState.cs" />
     <Compile Include="Testing\States\CheerState.cs" />
     <Compile Include="Testing\States\HorizontalState.cs" />

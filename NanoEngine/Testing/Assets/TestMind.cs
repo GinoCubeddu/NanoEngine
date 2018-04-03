@@ -17,7 +17,7 @@ using NanoEngine.Testing.Tiles;
 
 namespace NanoEngine.Testing.Assets
 {
-    class TestMind : AiComponent, IKeyboardWanted, ICollisionResponder, IAssetmanagerNeeded
+    class TestMind : AiComponent, IKeyboardWanted, ICollisionResponder, IAssetmanagerNeeded, IMouseWanted
     {
         private string Direction;
 
@@ -147,5 +147,15 @@ namespace NanoEngine.Testing.Assets
         }
 
         public IAssetManager AssetManager { get; set; }
+
+        /// <summary>
+        /// Event Reciver for the mouse down event
+        /// </summary>
+        /// <param name="sender">The object that sends the event</param>
+        /// <param name="e">The arguments that are sent</param>
+        public void OnMouseChanged(object sender, NanoMouseEventArgs e)
+        {
+            Console.WriteLine(e.CurrentMouseState.Position);
+        }
     }
 }

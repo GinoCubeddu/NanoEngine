@@ -9,6 +9,8 @@ using NanoEngine.Core.Camera;
 using NanoEngine.Core.Interfaces;
 using NanoEngine.Core.Locator;
 using NanoEngine.Core.Managers;
+using NanoEngine.Events;
+using NanoEngine.Events.Handlers;
 
 namespace NanoEngine
 {
@@ -17,13 +19,16 @@ namespace NanoEngine
         public static void Initialize(GraphicsDevice graphicsDevice, Game game, ContentManager content)
         {
             game.IsMouseVisible = true;
+
+            EventManager.AddHandlerType(DefaultNanoEventHandlers.KeyboardHandler, typeof(NanoKeyboardHandler));
+            EventManager.AddHandlerType(DefaultNanoEventHandlers.MouseHandler, typeof(NanoMouseHandler));
+
             ServiceLocator.Instance.ProvideService(DefaultNanoServices.SceneManager, new SceneManager());
             ServiceLocator.Instance.ProvideService(DefaultNanoServices.SoundManager, new SoundManager());
             ServiceLocator.Instance.ProvideService(DefaultNanoServices.ContentManager, new NanoContentManager(content));
 
             Camera2D.SetViewport(graphicsDevice.Viewport);
 
-            // TODO: Add your initialization logic here
             IRenderManager renderManager = new RenderManager(game);
             game.Components.Add((IGameComponent)renderManager);
 

@@ -22,7 +22,7 @@ namespace NanoEngine.ObjectTypes.Assets
         public float Damping { get; set; } = 0.95f;
 
         //the resition is to help prevent a 'perfect bounch' with elasticity, adhesion etc
-        public float Resitition { get; set; } = 0.65f;
+        public float Resitition { get; set; } = 0.999f;
 
         // The gravity is how fast a force pushes down on an object
         public Vector2 Gravity { get; set; } = new Vector2(0, 0);

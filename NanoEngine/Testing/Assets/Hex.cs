@@ -30,5 +30,7 @@ namespace NanoEngine.Testing.Assets
             AddPoint(new Vector2(19, -32));
             AddPoint(new Vector2(-19, -32));
         }
+
+        public int CollidableId => 2;
     }
 }

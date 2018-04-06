@@ -24,5 +24,7 @@ namespace NanoEngine.Testing.Assets
             //AssetAnimation.AddState("walkRight", 50, 64, 1, 2, 4);
             //AssetAnimation.AddState("cheer", 50, 64, 2, 2, 4);
         }
+
+        public int CollidableId => 4;
     }
 }

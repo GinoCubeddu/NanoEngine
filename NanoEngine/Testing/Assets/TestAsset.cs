@@ -25,11 +25,8 @@ namespace NanoEngine.Testing.Assets
             AssetAnimation.AddState("idleLeft", 27, 64, 8, 12, 128, 0);
             AssetAnimation.AddState("runRight", 35, 64, 6, 12, 64, 0);
             AssetAnimation.AddState("runLeft", 35, 64, 6, 12, 192, 0);
-
-
-
-
-
         }
+
+        public int CollidableId => 1;
     }
 }

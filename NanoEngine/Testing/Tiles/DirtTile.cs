@@ -21,5 +21,7 @@ namespace NanoEngine.Testing.Tiles
             SetTexture(ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager)
                 .LoadResource<Texture2D>("Dirt"));
         }
+
+        public int CollidableId => 4;
     }
 }

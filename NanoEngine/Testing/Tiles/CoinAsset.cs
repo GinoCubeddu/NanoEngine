@@ -22,5 +22,7 @@ namespace NanoEngine.Testing.Tiles
             SetTexture(ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager)
                 .LoadResource<Texture2D>("coin_16"));
         }
+
+        public int CollidableId => 3;
     }
 }

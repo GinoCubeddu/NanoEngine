@@ -22,6 +22,9 @@ namespace NanoEngine.Collision.Manager
         // Instance of the quad tree
         private IQuadTree _quadTree;
 
+        // a static dict to hold all the collision id comibinations that should be ignored
+        private static IDictionary<int, IList<int>> _collisionExceptions = new Dictionary<int, IList<int>>();
+
         /// <summary>
         /// Constructor for CollisionManager, uses dedault values for quad tree
         /// </summary>
@@ -50,6 +53,31 @@ namespace NanoEngine.Collision.Manager
         }
 
         /// <summary>
+        /// Adds a collision exception between 2 collidable ID's so collision checks
+        /// will not happen between them
+        /// </summary>
+        /// <param name="collidableId1">The id of the first type</param>
+        /// <param name="collidableId2">The id of the second type</param>
+        public static void AddCollisionException(int collidableId1, int collidableId2)
+        {
+            // If the first id does not have any pre exsisting exceptions the create a new list
+            if (!_collisionExceptions.ContainsKey(collidableId1))
+                _collisionExceptions[collidableId1] = new List<int>();
+
+            // If the second id does not have any pre exsisting exceptions the create a new list
+            if (!_collisionExceptions.ContainsKey(collidableId2))
+                _collisionExceptions[collidableId2] = new List<int>();
+
+            // Add the second collisable id to the first collidable id list
+            _collisionExceptions[collidableId1].Add(collidableId2);
+
+            // Only add the first to the second if they are not the same to avoid
+            // duplicate values
+            if (collidableId1 != collidableId2)
+                _collisionExceptions[collidableId2].Add(collidableId1);
+        }
+
+        /// <summary>
         /// Checks to see if there is a collsion between an asset and a list
         /// of assets
         /// </summary>
@@ -63,6 +91,14 @@ namespace NanoEngine.Collision.Manager
             // Loop through all possible collisions
             foreach (Tuple<IAsset, IAiComponent> possibleCollision in possibleCollisions)
             {
+                // Get the collidable ID's for both assets
+                int asset1CollidableId = ((ICollidable) asset.Item1).CollidableId;
+                int asset2CollidableId = ((ICollidable) possibleCollision.Item1).CollidableId;
+
+                // If id for asset1 exsists in the exception dict and its list contains the id of the second id then skip collision check
+                if (_collisionExceptions.ContainsKey(asset1CollidableId) && _collisionExceptions[asset1CollidableId].Contains(asset2CollidableId))
+                    continue;
+                
                 Tuple<NanoCollisionEventArgs, NanoCollisionEventArgs> collision = null;
 
                 // If both assets use aabb then we can check through AABB otherwise we NEED toc check

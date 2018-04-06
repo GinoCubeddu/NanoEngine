@@ -89,6 +89,8 @@
     <Compile Include="Events\Interfaces\IHandler.cs" />
     <Compile Include="Events\Interfaces\IKeyboardHandler.cs" />
     <Compile Include="Events\Interfaces\IMouseHandler.cs" />
+    <Compile Include="Factories\ISceneFactory.cs" />
+    <Compile Include="Factories\SceneFactory.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Animation\IAnimation.cs" />
     <Compile Include="IAssetmanagerNeeded.cs" />

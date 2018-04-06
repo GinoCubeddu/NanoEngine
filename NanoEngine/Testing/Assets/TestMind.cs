@@ -131,6 +131,13 @@ namespace NanoEngine.Testing.Assets
         public void OnKeyboardChange(object sender, NanoKeyboardEventArgs args)
         {
             _StateMachine.HandleKeyboardInput(args, null);
+            if (args.TheKeys.ContainsKey(KeyStates.Pressed))
+            {
+                if (args.TheKeys[KeyStates.Pressed].Contains(Keys.D1))
+                    controledEntity.Rotate(controledEntity.Position, -0.02f);
+                if (args.TheKeys[KeyStates.Pressed].Contains(Keys.D2))
+                    controledEntity.Rotate(controledEntity.Position, 0.02f);
+            }
         }
 
         public void CollisionResponse(NanoCollisionEventArgs response)

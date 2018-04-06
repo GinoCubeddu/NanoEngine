@@ -37,6 +37,7 @@ namespace NanoEngine.Collision.CollisionTypes
 
             // Do the same for asset B
             IDictionary<string, IList<Vector2>> asset2Points = asset2.Points;
+            
             if (asset2Points == null)
             {
                 asset2Points = new Dictionary<string, IList<Vector2>>();
@@ -134,15 +135,17 @@ namespace NanoEngine.Collision.CollisionTypes
                 Tuple<float, float> p1 = Project(axis, asset1Points);
                 Tuple<float, float> p2 = Project(axis, asset2Points);
 
+                float overlap = p2.Item1 - p1.Item2;
+
                 // If the MIN on projection2 - MAX on projection1 is GREATER than 0
                 // there is no collision
-                if (Math.Max(p1.Item1, p2.Item1) > Math.Min(p1.Item2, p2.Item2))
+                if (overlap >= 0)
                     return false;
                 else
                 {
                     // If it is less than 0 there is a collision
                     // Get the current overlap
-                    float overlap = p2.Item1 - p1.Item2;
+                    
 
                     // If the current is less than the smallest set the smallest
                     // overlap and axis to the current ones
@@ -184,6 +187,7 @@ namespace NanoEngine.Collision.CollisionTypes
                 else
                     axis = assetPoints[i] - assetPoints[i + 1];
 
+
                 axis = new Vector2(axis.Y, -axis.X);   
 
                 axis.Normalize();
@@ -199,17 +203,22 @@ namespace NanoEngine.Collision.CollisionTypes
         /// <param name="point">The singular point</param>
         /// <param name="points">The list of points</param>
         /// <returns/>The min and max projections of the point<returns>
-        public Tuple<float, float> Project(Vector2 point, IList<Vector2> points)
+        public Tuple<float, float> Project(Vector2 axis, IList<Vector2> points)
         {
             // to project you have to get the dot value of the single 
             // point of one other object combined with the values of each of this
             // objects points then take the min and max value
-            float min = Vector2.Dot(point, points[0]);
+            float min = Vector2.Dot(axis, points[0]);
             float max = min;
+
+            // the axis the the directional vector
+            // the point is the maginitue vector (length)
+
+            // The dot works out 
 
             for (int i = 0; i < points.Count; i++)
             {
-                float dot = Vector2.Dot(point, points[i]);
+                float dot = Vector2.Dot(axis, points[i]);
                 if (dot < min)
                     min = dot;
                 if (dot > max)

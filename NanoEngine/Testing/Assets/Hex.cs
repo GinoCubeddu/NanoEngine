@@ -12,7 +12,7 @@ using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Testing.Assets
 {
-    public class Hex : Entity, ISATColidable
+    public class Hex : PhysicsEntity, ISATColidable
     {
         /// <summary>
         /// Method to initalise the the entity

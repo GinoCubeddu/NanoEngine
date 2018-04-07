@@ -15,5 +15,8 @@ namespace NanoEngine.Collision.CollisionTypes
         /// <param name="asset2">The second asset to be checked against</param>
         /// <returns>A boolean value telling us if it is possible for a collision</returns>
         bool CheckCanCollide(IAsset asset1, IAsset asset2);
+
+
+        CollisionSide GetCollisionSide(IAsset asset1, IAsset asset2);
     }
 }

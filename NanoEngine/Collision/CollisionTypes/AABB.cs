@@ -94,7 +94,7 @@ namespace NanoEngine.Collision.CollisionTypes
             };
         }
 
-        private CollisionSide GetCollisionSide(IAsset asset1, IAsset asset2)
+        public CollisionSide GetCollisionSide(IAsset asset1, IAsset asset2)
         {
             float bc = (float)(asset2.Bounds.Y + asset2.Bounds.Height) - asset1.Bounds.Y;
             float tc = (float)(asset1.Bounds.Y + asset1.Bounds.Height) - asset2.Bounds.Y;

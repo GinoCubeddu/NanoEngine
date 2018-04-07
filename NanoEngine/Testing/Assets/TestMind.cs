@@ -143,6 +143,15 @@ namespace NanoEngine.Testing.Assets
         public void CollisionResponse(NanoCollisionEventArgs response)
         {
             Console.WriteLine("PLAYER: " + response.CollisionSide);
+            controledEntity.SetPosition(controledEntity.Position + response.CollisionOverlap);
+            ((PhysicsEntity)controledEntity).ApplyForce(response.CollisionOverlap);
+            foreach (IList<Vector2> points in controledEntity.Points.Values)
+            {
+                for (int i = 0; i < points.Count; i++)
+                {
+                    points[i] += response.CollisionOverlap;
+                }
+            }
         }
     }
 }

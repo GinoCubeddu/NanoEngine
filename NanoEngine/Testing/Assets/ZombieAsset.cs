@@ -19,10 +19,10 @@ namespace NanoEngine.Testing.Assets
         public override void Initilise()
         {
             SetTexture(ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager)
-                .LoadResource<Texture2D>("zombie")); AssetAnimation = new Animation(this);
-            AssetAnimation.AddState("walkLeft", 50, 64, 0, 2, 4);
-            AssetAnimation.AddState("walkRight", 50, 64, 1, 2, 4);
-            AssetAnimation.AddState("cheer", 50, 64, 2, 2, 4);
+                .LoadResource<Texture2D>("zombie")); AssetAnimation = new Animation.Animation(this);
+            //AssetAnimation.AddState("walkLeft", 50, 64, 0, 2, 4);
+            //AssetAnimation.AddState("walkRight", 50, 64, 1, 2, 4);
+            //AssetAnimation.AddState("cheer", 50, 64, 2, 2, 4);
         }
     }
 }

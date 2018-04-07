@@ -5,24 +5,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.Core.Interfaces;
 
 namespace NanoEngine.Events
 {
     public class EventManager : IEventManager
     {
         //List to hold the the handlers
-        private IList<IHandler> _handlers;
+        private IList<INanoEventHandler> _handlers;
+
+        // Static dict to hold all the possible handler types
+        private static IDictionary<string, Type> _handlerTypes = new Dictionary<string, Type>();
 
         /// <summary>
         /// Private constructor so it can only be created inside by the getter
         /// </summary>
         public EventManager()
         {
-            //Initialise the instance variables
-            _handlers = new List<IHandler>();
-            //Add handlers to list
-            _handlers.Add(new MouseHandler());
-            _handlers.Add(new KeyboardHandler());
+            // Create the new handlers list
+            _handlers = new List<INanoEventHandler>();
+
+            // loop through the possible handlers and add them to the list
+            foreach (Type handlerType in _handlerTypes.Values)
+                _handlers.Add((INanoEventHandler)Activator.CreateInstance(handlerType));
         }
 
         /// <summary>
@@ -31,16 +36,12 @@ namespace NanoEngine.Events
         /// <param name="obj">The delgate object</param>
         public void AddDelegates(object obj)
         {
-            if(obj is IMouseWanted)
+            // Only pass the object if it is of the correct type
+            if (obj is INanoEventSubscribe)
             {
-                (_handlers[0] as IMouseHandler).GetOnMouseDown += (obj as IMouseWanted).OnMouseDown;
-                (_handlers[0] as IMouseHandler).GetOnMouseUp += (obj as IMouseWanted).OnMouseUp;
-                (_handlers[0] as IMouseHandler).GetOnMouseMoved += (obj as IMouseWanted).OnMouseMoved;
-            }
-
-            if (obj is IKeyboardWanted)
-            {
-                (_handlers[1] as IKeyboardHandler).GetOnKeyboardChanged += (obj as IKeyboardWanted).OnKeyboardChange;
+                // Pass the object to each handler so they can decide if they want it
+                foreach (INanoEventHandler nanoEventHandler in _handlers)
+                    nanoEventHandler.Subscribe((INanoEventSubscribe)obj);
             }
         }
 
@@ -50,29 +51,46 @@ namespace NanoEngine.Events
         /// <param name="obj">The delgate object</param>
         public void RemoveDelegates(object obj)
         {
-            if (obj is IMouseWanted)
+            // Only pass the object if it is of the correct type
+            if (obj is INanoEventSubscribe)
             {
-                (_handlers[0] as IMouseHandler).GetOnMouseDown -= (obj as IMouseWanted).OnMouseDown;
-                (_handlers[0] as IMouseHandler).GetOnMouseUp -= (obj as IMouseWanted).OnMouseUp;
-                (_handlers[0] as IMouseHandler).GetOnMouseMoved -= (obj as IMouseWanted).OnMouseMoved;
+                foreach (INanoEventHandler nanoEventHandler in _handlers)
+                    nanoEventHandler.Desubscribe((INanoEventSubscribe)obj);
+            }
+        }
+
+        /// <summary>
+        /// Adds a new event handler to the event manager. The handler must inherit from INanoEventHandler
+        /// NOTE: The new handler will only come into play on new screens and screens that are reloaded
+        /// </summary>
+        /// <param name="handlerName"></param>
+        /// <param name="handlerType"></param>
+        public static void AddHandlerType(string handlerName, Type handlerType)
+        {
+            // Only add a new handler if it is of the correct type
+            if (typeof(INanoEventHandler).IsAssignableFrom(handlerType))
+            {
+                // log a warning if we are about to overwite a handler
+                if (_handlerTypes.ContainsKey(handlerName))
+                    Console.WriteLine("WARNING: About to overwrite the " + handlerType + " handler within the eventmanager");
+                
+                // Add the handler and return
+                _handlerTypes[handlerName] =  handlerType;
+                return;
             }
 
-            if (obj is IKeyboardWanted)
-            {
-                (_handlers[1] as IKeyboardHandler).GetOnKeyboardChanged -= (obj as IKeyboardWanted).OnKeyboardChange;
-            }
+            // log a message if attempting to add a handler that is not the correct type
+            Console.WriteLine("Handler is not of type INanoEventHandler skipping addition");
         }
 
         /// <summary>
         /// Method to update all the handlers
         /// </summary>
-        public void Update()
+        public void Update(IUpdateManager updateManager)
         {
-            //Loop through the handlers and update them.
-            foreach(IHandler item in _handlers)
-            {
-                item.Update();
-            }
+            // loop through each handler and update it
+            foreach (INanoEventHandler nanoEventHandler in _handlers)
+                nanoEventHandler.Update(updateManager);
         }
     }
 }

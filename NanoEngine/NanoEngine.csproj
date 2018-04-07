@@ -42,7 +42,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Animation.cs" />
+    <Compile Include="Animation\Animation.cs" />
+    <Compile Include="Animation\AnimationState.cs" />
     <Compile Include="Collision\CollidableTypes\IAABBColidable.cs" />
     <Compile Include="Collision\CollidableTypes\ICollidable.cs" />
     <Compile Include="Collision\CollidableTypes\ICollisionResponder.cs" />
@@ -78,15 +79,20 @@
     <Compile Include="Events\Args\NanoKeyboardEventArgs.cs" />
     <Compile Include="Events\Args\NanoMouseEventArgs.cs" />
     <Compile Include="Events\Args\NanoMouseReleasedArgs.cs" />
+    <Compile Include="Events\DefaultNanoEventHandlers.cs" />
     <Compile Include="Events\EventManager.cs" />
-    <Compile Include="Events\Handlers\KeyboardHandler.cs" />
-    <Compile Include="Events\Handlers\MouseHandler.cs" />
+    <Compile Include="Events\Handlers\INanoEventHandler.cs" />
+    <Compile Include="Events\Handlers\NanoMouseHandler.cs" />
+    <Compile Include="Events\Handlers\NanoKeyboardHandler.cs" />
+    <Compile Include="Events\INanoEventSubscriber.cs" />
     <Compile Include="Events\Interfaces\IEventManager.cs" />
     <Compile Include="Events\Interfaces\IHandler.cs" />
     <Compile Include="Events\Interfaces\IKeyboardHandler.cs" />
     <Compile Include="Events\Interfaces\IMouseHandler.cs" />
+    <Compile Include="Factories\ISceneFactory.cs" />
+    <Compile Include="Factories\SceneFactory.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="IAnimation.cs" />
+    <Compile Include="Animation\IAnimation.cs" />
     <Compile Include="IAssetmanagerNeeded.cs" />
     <Compile Include="ObjectManagement\IRenderFilter.cs" />
     <Compile Include="ObjectManagement\RenderFilter.cs" />
@@ -130,15 +136,19 @@
     <Compile Include="StateManagement\Transitions\MethodStateTransition.cs" />
     <Compile Include="StateManagement\Transitions\TransitionHolder.cs" />
     <Compile Include="Testing\Assets\BlankMind.cs" />
+    <Compile Include="Testing\Assets\CoinMind.cs" />
     <Compile Include="Testing\Assets\Hex.cs" />
     <Compile Include="Testing\Assets\HexMind.cs" />
     <Compile Include="Testing\Assets\plane.cs" />
     <Compile Include="Testing\Assets\PlaneMind.cs" />
+    <Compile Include="Testing\Assets\saw.cs" />
+    <Compile Include="Testing\RedRunner.cs" />
     <Compile Include="Testing\States\ChaseState.cs" />
     <Compile Include="Testing\States\CheerState.cs" />
     <Compile Include="Testing\States\HorizontalState.cs" />
     <Compile Include="Testing\States\JumpState.cs" />
     <Compile Include="Testing\TestScreen2.cs" />
+    <Compile Include="Testing\TestGameScreen1.cs" />
     <Compile Include="Testing\Tiles\ChestAsset.cs" />
     <Compile Include="Testing\Tiles\DirtTile.cs" />
     <Compile Include="Testing\Tiles\CoinAsset.cs" />

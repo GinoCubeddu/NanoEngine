@@ -21,7 +21,7 @@ namespace NanoEngine.ObjectTypes.General
 
         public ICamera2D Camera2D { get; private set; }
 
-        public double LevelTimer { get; private set; }
+        public double LevelTimer { get; set; }
 
         protected IEventManager EventManager;
 
@@ -109,11 +109,11 @@ namespace NanoEngine.ObjectTypes.General
         public void UpdateScreen(IUpdateManager updateManager)
         {
             LevelTimer += updateManager.gameTime.ElapsedGameTime.TotalSeconds;
-            EventManager.Update();
+            EventManager.Update(updateManager);
+            _assetManager.UpdateAssets(updateManager);
             // If we have a camera then update it
             if (Camera2D != null)
                 Camera2D.Update();
-            _assetManager.UpdateAssets(updateManager);
             Update(updateManager);
         }
 

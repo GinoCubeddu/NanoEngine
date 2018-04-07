@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
+using NanoEngine.Collision.CollidableTypes;
 using NanoEngine.Core.Interfaces;
 using NanoEngine.Core.Locator;
 using NanoEngine.Core.Managers;
@@ -11,7 +12,7 @@ using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Testing.Tiles
 {
-    class CoinAsset : Entity
+    class CoinAsset : Entity, IAABBColidable
     {
         /// <summary>
         /// Method to initalise the the entity

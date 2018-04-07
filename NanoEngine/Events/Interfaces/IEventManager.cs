@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.Core.Interfaces;
 
 namespace NanoEngine.Events.Interfaces
 {
@@ -22,6 +23,6 @@ namespace NanoEngine.Events.Interfaces
         /// <summary>
         /// Method to update all the handlers
         /// </summary>
-        void Update();
+        void Update(IUpdateManager updateManager);
     }
 }

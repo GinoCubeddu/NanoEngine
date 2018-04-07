@@ -37,8 +37,14 @@ namespace NanoEngine
             filter.AddRenderTarget(_assetManager.RetriveAsset("player"));
             _assetManager.SupplyRenderFilter(filter);
             AddCamera("player", _assetManager.RetriveAsset("player"));
+
+            //AddCamera("RedRunner", _assetManager.RetriveAsset("redRunner"));
+
+
+
+            Camera2D.SetLevelBounds(new Rectangle(0, 0, 12800, 2560));
             EventManager.AddDelegates(this);
-            ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).Play("soundTrack", true);
+            ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlaySoundEffect("soundTrack", true);
         }
 
         protected override void Update(IUpdateManager updateManager)
@@ -59,12 +65,12 @@ namespace NanoEngine
                     ChangeCamera("player");
 
                 if (args.TheKeys[KeyStates.Pressed].Contains(Keys.D1))
-                    ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlayBaseSound("test");
+                    ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlayBaseSoundEffect("test");
 
                 if (args.TheKeys[KeyStates.Pressed].Contains(Keys.D2))
-                    ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).ChangeVolume(0.1f);
+                    ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).ChangeSoundEffectVolume(0.1f);
                 if (args.TheKeys[KeyStates.Pressed].Contains(Keys.D3))
-                    ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).ChangeVolume(-0.1f);
+                    ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).ChangeSoundEffectVolume(-0.1f);
 
                 if (args.TheKeys[KeyStates.Pressed].Contains(Keys.Escape))
                 {

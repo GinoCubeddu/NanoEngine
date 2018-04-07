@@ -78,7 +78,7 @@ namespace NanoEngine.Core.Managers
         /// </summary>
         public void ExitGame()
         {
-            _game1.Exit();
+            // _game1.Exit();
         }
 
         /// <summary>

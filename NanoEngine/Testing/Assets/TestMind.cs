@@ -37,6 +37,7 @@ namespace NanoEngine.Testing.Assets
         /// <param name="updateManager">an instance of the update manager</param>
         public override void Update(IUpdateManager updateManager)
         {
+            //((PhysicsEntity)controledEntity).Gravity = Vector2.Zero;
             _StateMachine.Update();
             Timer++;
         }
@@ -132,8 +133,13 @@ namespace NanoEngine.Testing.Assets
         public void OnKeyboardChange(object sender, NanoKeyboardEventArgs args)
         {
             _StateMachine.HandleKeyboardInput(args, null);
-
-
+            if (args.TheKeys.ContainsKey(KeyStates.Pressed))
+            {
+                if (args.TheKeys[KeyStates.Pressed].Contains(Keys.D1))
+                    controledEntity.Rotate(controledEntity.Position, -0.02f);
+                if (args.TheKeys[KeyStates.Pressed].Contains(Keys.D2))
+                    controledEntity.Rotate(controledEntity.Position, 0.02f);
+            }
             if (args.TheKeys.ContainsKey(KeyStates.Pressed))
                 AssetManager.CreateAsset<CoinAsset, CoinMind>(new Vector2(ControledAsset.Position.X + 50, ControledAsset.Position.Y));
 
@@ -142,6 +148,14 @@ namespace NanoEngine.Testing.Assets
         public void CollisionResponse(NanoCollisionEventArgs response)
         {
             Console.WriteLine("PLAYER: " + response.CollisionSide);
+            controledEntity.SetPosition(controledEntity.Position + response.CollisionOverlap);
+            foreach (IList<Vector2> points in controledEntity.Points.Values)
+            {
+                for (int i = 0; i < points.Count; i++)
+                {
+                    points[i] += response.CollisionOverlap;
+                }
+            }
             if (response.CollidedWith.UniqueName.ToLower().Contains("coin"))
                 response.CollidedWith.Despawn = true;
         }

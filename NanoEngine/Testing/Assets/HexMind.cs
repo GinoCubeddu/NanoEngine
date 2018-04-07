@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using NanoEngine.Collision.CollidableTypes;
 using NanoEngine.Core.Interfaces;
 using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Assets;
@@ -13,7 +14,7 @@ using NanoEngine.StateManagement.States;
 
 namespace NanoEngine.Testing.Assets
 {
-    class HexMind : AiComponent, IKeyboardWanted
+    class HexMind : AiComponent, IKeyboardWanted, ICollisionResponder
     {
         /// <summary>
         /// Method that will update the AI
@@ -47,6 +48,11 @@ namespace NanoEngine.Testing.Assets
                 if (args.TheKeys[KeyStates.Pressed].Contains(Keys.Down))
                     controledEntity.SetPosition(new Vector2(0, 1));
             }
+        }
+
+        public void CollisionResponse(NanoCollisionEventArgs response)
+        {
+            controledEntity.SetPosition(controledEntity.Position + response.CollisionOverlap);
         }
     }
 }

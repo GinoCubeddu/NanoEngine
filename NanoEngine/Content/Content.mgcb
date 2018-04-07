@@ -1,4 +1,3 @@
-
 #----------------------------- Global Properties ----------------------------#
 
 /outputDir:bin/WindowsGL
@@ -133,6 +132,30 @@
 /processorParam:Quality=Best
 /build:Desert Theme.mp3
 
+#begin 1x.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:1x.png
+
+#begin 60.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:60.png
+
 #begin plane.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -144,4 +167,3 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:plane.png
-

@@ -211,7 +211,9 @@ namespace NanoEngine.Collision
 
             // Add all the assets from this quadrant
             foreach (IAsset pAsset in _assets)
-                if (pAsset.UniqueName != asset.UniqueName)
+                // Only return the result if the asset is not the same as itself and atleast one item is moveable
+                // No point in doing the test if both are not movable
+                if (pAsset.UniqueName != asset.UniqueName && (pAsset.IsMovable || asset.IsMovable))
                     possibleCollidables.Add(pAsset);
 
             return possibleCollidables;

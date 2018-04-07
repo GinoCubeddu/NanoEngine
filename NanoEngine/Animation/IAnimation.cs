@@ -1,10 +1,7 @@
-﻿using NanoEngine.Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.Xna.Framework;
+using NanoEngine.Core.Interfaces;
 
-namespace NanoEngine
+namespace NanoEngine.Animation
 {
     public interface IAnimation
     {
@@ -15,31 +12,18 @@ namespace NanoEngine
         void Animate(IRenderManager renderManager);
 
         /// <summary>
-        /// Adds a state to the animation dict giving the animation a default
-        /// frame rate of 12 frames per second.
-        /// </summary>
-        /// <param name="stateName">A unique name for the state</param>
-        /// <param name="frameWidth">The width for the animation frame</param>
-        /// <param name="frameHeight">The height for the animation frame</param>
-        /// <param name="spriteSheetRow">The row within the spritesheet</param>
-        /// <param name="animationFrameCount">The amount of frames the animation has</param>
-        void AddState(
-            string stateName, int frameWidth, int frameHeight,
-            int spriteSheetRow, int animationFrameCount
-        );
-
-        /// <summary>
         /// Adds a state to the animation dict
         /// </summary>
         /// <param name="stateName">A unique name for the state</param>
         /// <param name="frameWidth">The width for the animation frame</param>
         /// <param name="frameHeight">The height for the animation frame</param>
-        /// <param name="spriteSheetRow">The row within the spritesheet</param>
         /// <param name="animationFrameCount">The amount of frames the animation has</param>
         /// <param name="framerate">The framerate of the animation</param>
+        /// <param name="yPos">The y position that the frames will share</param>
+        /// <param name="startX">The start position on the x axis of the texture</param>
         void AddState(
             string stateName, int frameWidth, int frameHeight,
-            int spriteSheetRow, int animationFrameCount, int framerate
+            int animationFrameCount, int framerate, int yPos, int startX
         );
 
         /// <summary>
@@ -47,5 +31,21 @@ namespace NanoEngine
         /// </summary>
         /// <param name="animationState">The state we want to change to</param>
         void ChangeAnimationState(string animationState);
+
+
+
+        /// <summary>
+        /// Adds an empty state to the animation
+        /// </summary>
+        /// <param name="stateName">The name of the state</param>
+        /// <param name="frameRate">The correct frame rate</param>
+        void CreateEmptyState(string stateName, int frameRate);
+
+        /// <summary>
+        /// Adds a frame to the requested animation state
+        /// </summary>
+        /// <param name="stateName">The state to be added to</param>
+        /// <param name="frame">The frame rectangle</param>
+        void AddFrameToState(string stateName, Rectangle frame);
     }
 }

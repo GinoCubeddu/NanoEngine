@@ -477,6 +477,7 @@ namespace NanoEngine.ObjectManagement.Managers
                     asset.Initilise();
                     asset.SetUniqueData(uName);
                     asset.SetPosition(pos);
+                    asset.Despawn = false;
 
                     // Add the asset to the updating assets
                     _assetDictionary[uName] = asset;
@@ -504,10 +505,10 @@ namespace NanoEngine.ObjectManagement.Managers
             foreach (KeyValuePair<string, IAiComponent> aiComponent in avaliableAI)
             {
                 // if the ai is of the correct type
-                if (aiComponent.GetType() == aiType)
+                if (aiComponent.Value.GetType() == aiType)
                 {
                     // remove the ai from the avalaible aicomponents
-                    _availableAssets.Remove(aiComponent.Key);
+                    _availableAiComponents.Remove(aiComponent.Key);
 
                     // Reinit the ai with the asset
                     aiComponent.Value.InitialiseAiComponent(asset);

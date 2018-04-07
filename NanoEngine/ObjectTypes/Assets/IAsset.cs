@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.Animation;
 
 namespace NanoEngine.ObjectTypes.Assets
 {
@@ -30,6 +31,9 @@ namespace NanoEngine.ObjectTypes.Assets
 
         //getter for the remove variable
         bool Remove { get; }
+
+        // Getter to tell if the asset is moveable
+        bool IsMovable { get; }
 
         // Getter for the animation class that belongs to the asset
         IAnimation AssetAnimation { get; }

@@ -90,7 +90,7 @@ namespace NanoEngine.Menus
                     if(rect.Contains(e.CurrentMouseState.Position))
                     {
                         if (menuPosition != i)
-                            ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).Play("test");
+                            ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlaySoundEffect("test");
 
                         menuPosition = i;
                     }
@@ -105,7 +105,7 @@ namespace NanoEngine.Menus
                 if (!args.TheKeys.Keys.Contains(KeyStates.Pressed))
                     return;
 
-                ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).Play("test");
+                ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlaySoundEffect("test");
                 if (args.TheKeys[KeyStates.Pressed].Contains(Keys.Up))
                 {
                     if (menuPosition == 0)
@@ -133,6 +133,16 @@ namespace NanoEngine.Menus
                     menuList[menuPosition].Controler.Clicked();
                 }
             }
+        }
+
+        /// <summary>
+        /// Event Reciver for the mouse down event
+        /// </summary>
+        /// <param name="sender">The object that sends the event</param>
+        /// <param name="e">The arguments that are sent</param>
+        public void OnMouseChanged(object sender, NanoMouseEventArgs e)
+        {
+            // throw new NotImplementedException();
         }
     }
 }

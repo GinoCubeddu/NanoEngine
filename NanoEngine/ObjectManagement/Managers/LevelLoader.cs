@@ -116,7 +116,7 @@ namespace NanoEngine.ObjectManagement.Managers
                 {
                     // If we are at the end of the map then go down one row and
                     // reset the coloum to 0
-                    if (i % tileMap.Width == 0)
+                    if (i % tileMap.Width == 0 && i != 0)
                     {
                         y += 1;
                         x = 0;

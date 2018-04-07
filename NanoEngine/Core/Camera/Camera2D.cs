@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NanoEngine.Core.Managers;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.Testing.Assets;
 
@@ -17,13 +18,25 @@ namespace NanoEngine.Core.Camera
         // Holds the asset that the camera is focused on
         private IAsset _focusedAsset;
 
+        private Rectangle _levelBounds;
+
         // Holds the center point of the viewport
         private static Vector2 _viewportCenter;
         
         public Camera2D(IAsset asset)
         {
             _focusedAsset = asset;
+            _levelBounds = Rectangle.Empty;
             Update();
+        }
+
+        /// <summary>
+        /// Sets the bounds for the level
+        /// </summary>
+        /// <param name="levelBounds">The bounding box of the level</param>
+        public void SetLevelBounds(Rectangle levelBounds)
+        {
+            _levelBounds = levelBounds;
         }
 
         /// <summary>
@@ -47,6 +60,17 @@ namespace NanoEngine.Core.Camera
             // If the x or y is less than 0 then set them to 0
             if (posX < 0)
                 posX = 0;
+
+            if (!_levelBounds.IsEmpty)
+            {
+                Vector2 viewportDimentions = _viewportCenter * 2;
+
+                if (posX + (viewportDimentions.X) > _levelBounds.Right)
+                    posX = _levelBounds.Right - viewportDimentions.X;
+
+                if (posY + (viewportDimentions.Y) > _levelBounds.Bottom)
+                    posY = _levelBounds.Bottom - viewportDimentions.Y;
+            }
 
             if (posY < 0)
                 posY = 0;

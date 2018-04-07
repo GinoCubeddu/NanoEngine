@@ -32,8 +32,14 @@ namespace NanoEngine
 
         public override void LoadContent()
         {
-            _assetManager.CreateAsset<BallTwolAsset, BallTwoMind>(400,200);
-            _assetManager.CreateAsset<BallAsset, BallMind>(40,150);
+            /*  for (int i = 0; i < 2; i++)
+              {
+                  _assetManager.CreateAsset<BallTwolAsset, BallTwoMind>(50 * i, 50);
+              }*/
+
+            _assetManager.CreateAsset<BallTwolAsset, BallTwoMind>(50, 50);
+           // _assetManager.CreateAsset<BallTwolAsset, BallTwoMind>(400,200);
+            _assetManager.CreateAsset<BallAsset, BallMind>(500,150);
             _assetManager.CreateAsset<Wall, WallMind>(-64, 0);
             _assetManager.CreateAsset<Wall, WallMind>(800, 0);
             _assetManager.CreateAsset<Wall, WallMind>("top", 0, -64);

@@ -11,7 +11,7 @@ using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Testing.Assets
 {
-    class Wall : Entity, IAABBColidable
+    class Wall : PhysicsEntity, IAABBColidable
     {
         public override void Initilise()
         {

@@ -24,6 +24,7 @@ namespace NanoEngine.Physics
                 pAsset.Velocity += pAsset.Acceleration;
                 pAsset.Position += pAsset.Velocity;
                 pAsset.Acceleration = pAsset.Gravity;
+                asset.UpdateBounds();
             }
         }
     }

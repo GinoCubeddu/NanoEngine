@@ -22,7 +22,7 @@ namespace NanoEngine.ObjectTypes.Assets
         public float Damping { get; set; } = 0.95f;
 
         // The gravity is how fast a force pushes down on an object
-        public Vector2 Gravity { get; set; } = new Vector2(0, 0.2f);
+        public Vector2 Gravity { get; set; } = new Vector2(0, 0);
 
         /// <summary>
         /// Applys a force to the Acceleration of the asset

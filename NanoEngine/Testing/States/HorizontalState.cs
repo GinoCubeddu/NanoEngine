@@ -30,7 +30,7 @@ namespace NanoEngine.Testing.States
         public void Enter(T owner, IDictionary<string, object> stateArguments)
         {
             Console.WriteLine("Entering WalkingState");
-            owner.ControledAsset.AssetAnimation.ChangeAnimationState(_animationState);
+            //owner.ControledAsset.AssetAnimation.ChangeAnimationState(_animationState);
         }
 
         /// <summary>
@@ -50,9 +50,10 @@ namespace NanoEngine.Testing.States
         /// <param name="owner">The AI that owns the state</param>
         public void Update(T owner)
         {
-            (owner.ControledAsset as PhysicsEntity)?.ApplyForce(new Vector2(
-                0, 0.2f * _direction
-            ));
+            ((Entity)owner.ControledAsset).Move(new Vector2(0, 1f * _direction));
+            //(owner.ControledAsset as PhysicsEntity)?.ApplyForce(new Vector2(
+            //    0, 0.1f * _direction
+            //));
         }
     }
 }

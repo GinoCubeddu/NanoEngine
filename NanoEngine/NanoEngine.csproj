@@ -139,12 +139,15 @@
     <Compile Include="Testing\Assets\CoinMind.cs" />
     <Compile Include="Testing\Assets\Hex.cs" />
     <Compile Include="Testing\Assets\HexMind.cs" />
+    <Compile Include="Testing\Assets\plane.cs" />
+    <Compile Include="Testing\Assets\PlaneMind.cs" />
     <Compile Include="Testing\Assets\saw.cs" />
     <Compile Include="Testing\RedRunner.cs" />
     <Compile Include="Testing\States\ChaseState.cs" />
     <Compile Include="Testing\States\CheerState.cs" />
     <Compile Include="Testing\States\HorizontalState.cs" />
     <Compile Include="Testing\States\JumpState.cs" />
+    <Compile Include="Testing\TestScreen2.cs" />
     <Compile Include="Testing\TestGameScreen1.cs" />
     <Compile Include="Testing\Tiles\ChestAsset.cs" />
     <Compile Include="Testing\Tiles\DirtTile.cs" />

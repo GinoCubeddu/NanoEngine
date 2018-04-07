@@ -20,7 +20,7 @@ namespace NanoEngine.Testing
         {
             //_assetManager.CreateAsset<plane, PlaneMind>(400, 400);
             _assetManager.CreateAsset<Hex, TestMind>("player", 400, 300);
-            _assetManager.CreateAsset<Hex>(400, 400);
+            _assetManager.CreateAsset<plane>(400, 400);
 
         }
 

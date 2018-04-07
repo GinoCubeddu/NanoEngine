@@ -29,6 +29,11 @@ namespace NanoEngine.Testing.Assets
 
         public override void Update(IUpdateManager updateManager)
         {
+
+           /* if (((PhysicsEntity) ControledAsset).Velocity.Y < 0.000005)
+            {
+                ((PhysicsEntity) ControledAsset).Gravity = Vector2.Zero;
+            }*/
             if (((PhysicsEntity)ControledAsset).Velocity.X > 10)
             {
                 ((PhysicsEntity)ControledAsset).Velocity = new Vector2(5, ((PhysicsEntity)ControledAsset).Velocity.Y);

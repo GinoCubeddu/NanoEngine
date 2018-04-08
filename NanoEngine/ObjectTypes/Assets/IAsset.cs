@@ -24,7 +24,7 @@ namespace NanoEngine.ObjectTypes.Assets
         Rectangle Bounds { get; set; }
 
         // Getter for the points that make up an object
-        IList<Vector2> Points { get; }
+        IDictionary<string, IList<Vector2>> Points { get; }
 
         //Getter for the unique name
         string UniqueName { get; }
@@ -85,5 +85,7 @@ namespace NanoEngine.ObjectTypes.Assets
         /// </summary>
         /// <returns>A list of points</returns>
         IList<Vector2> GetPointsFromBounds();
+
+        void Rotate(Vector2 origin, float amount);
     }
 }

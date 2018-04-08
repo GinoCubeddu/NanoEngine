@@ -40,7 +40,6 @@ namespace NanoEngine.Testing.Assets
         /// <param name="updateManager">an instance of the update manager</param>
         public override void Update(IUpdateManager updateManager)
         {
-            Console.WriteLine("ballMind velocity" + ((PhysicsEntity)ControledAsset).Velocity);
             if (((PhysicsEntity)ControledAsset).Velocity.X > 10)
             {
                 ((PhysicsEntity)ControledAsset).Velocity = new Vector2(0.6f, ((PhysicsEntity)ControledAsset).Velocity.Y);
@@ -128,20 +127,6 @@ namespace NanoEngine.Testing.Assets
         public void CollisionResponse(NanoCollisionEventArgs response)
         {
 
-            /*Vector2 controlledEntityVelocity = ((PhysicsEntity)ControledAsset).Velocity;
-
-            Vector2 overlap = response.CollisionOverlap;
-
-            Vector2 cn = Vector2.Normalize(overlap);
-
-            ((PhysicsEntity)ControledAsset).Position += 0.5f * overlap * cn;
-
-
-            float cvA = Vector2.Dot(cn, controlledEntityVelocity);
-
-            Vector2 velocityA =  (cn * cvA);
-
-            ((PhysicsEntity)ControledAsset).ApplyImpluse(velocityA); */
         }
     }
 }

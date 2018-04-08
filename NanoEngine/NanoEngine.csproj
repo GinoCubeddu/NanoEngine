@@ -135,16 +135,29 @@
     <Compile Include="StateManagement\Transitions\KeyboardStateTransition.cs" />
     <Compile Include="StateManagement\Transitions\MethodStateTransition.cs" />
     <Compile Include="StateManagement\Transitions\TransitionHolder.cs" />
+    <Compile Include="Testing\Assets\BallAsset.cs" />
+    <Compile Include="Testing\Assets\BallMind.cs" />
+    <Compile Include="Testing\Assets\BallTwoAsset.cs" />
+    <Compile Include="Testing\Assets\BallTwoMind.cs" />
     <Compile Include="Testing\Assets\BlankMind.cs" />
     <Compile Include="Testing\Assets\CoinMind.cs" />
     <Compile Include="Testing\Assets\Hex.cs" />
     <Compile Include="Testing\Assets\HexMind.cs" />
+    <Compile Include="Testing\Assets\Wall.cs" />
+    <Compile Include="Testing\Assets\WallMind.cs" />
+    <Compile Include="Testing\Physics\IBounce.cs" />
+    <Compile Include="Testing\Physics\IReflect.cs" />
+    <Compile Include="Testing\Physics\PhysicsMethods.cs" />
+    <Compile Include="Testing\Physics\vector2.cs" />
+    <Compile Include="Testing\Assets\plane.cs" />
+    <Compile Include="Testing\Assets\PlaneMind.cs" />
     <Compile Include="Testing\Assets\saw.cs" />
     <Compile Include="Testing\RedRunner.cs" />
     <Compile Include="Testing\States\ChaseState.cs" />
     <Compile Include="Testing\States\CheerState.cs" />
     <Compile Include="Testing\States\HorizontalState.cs" />
     <Compile Include="Testing\States\JumpState.cs" />
+    <Compile Include="Testing\TestScreen2.cs" />
     <Compile Include="Testing\TestGameScreen1.cs" />
     <Compile Include="Testing\Tiles\ChestAsset.cs" />
     <Compile Include="Testing\Tiles\DirtTile.cs" />
@@ -188,6 +201,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="Content\Level2.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

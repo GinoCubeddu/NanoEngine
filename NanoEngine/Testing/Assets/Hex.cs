@@ -12,7 +12,7 @@ using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Testing.Assets
 {
-    public class Hex : Entity, ISATColidable
+    public class Hex : PhysicsEntity, ISATColidable
     {
         /// <summary>
         /// Method to initalise the the entity
@@ -21,14 +21,19 @@ namespace NanoEngine.Testing.Assets
         {
             SetTexture(ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager)
                 .LoadResource<Texture2D>("hex"));
-            AddPoint(new Vector2(-37, -10));
-            AddPoint(new Vector2(-37, 10));
-            AddPoint(new Vector2(-19, 32));
-            AddPoint(new Vector2(19, 32));
-            AddPoint(new Vector2(37, 10));
-            AddPoint(new Vector2(37, -10));
-            AddPoint(new Vector2(19, -32));
-            AddPoint(new Vector2(-19, -32));
+
+            IsMovable = true;
+            IList<Vector2> points = new List<Vector2>();
+            points.Add(new Vector2(-19, -32));
+            points.Add(new Vector2(-37, -10));
+            points.Add(new Vector2(-37, 10));
+            points.Add(new Vector2(-19, 32));
+            points.Add(new Vector2(19, 32));
+            points.Add(new Vector2(37, 10));
+            points.Add(new Vector2(37, -10));
+            points.Add(new Vector2(19, -32));
+
+            AddPoints("main", points);
         }
 
         public int CollidableId => 2;

@@ -19,6 +19,7 @@ namespace NanoEngine.Testing.Tiles
         /// </summary>
         public override void Initilise()
         {
+            IsMovable = true;
             SetTexture(ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager)
                 .LoadResource<Texture2D>("GrassMid"));
         }

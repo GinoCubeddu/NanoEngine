@@ -14,7 +14,7 @@ using NanoEngine.Testing.Physics;
 
 namespace NanoEngine.Testing.Assets
 {
-    class TestAsset : PhysicsEntity, IAABBColidable, IReflect, IBounce
+    class TestAsset : PhysicsEntity, ISATColidable, IReflect, IBounce
     {
         public override void Initilise()
         {

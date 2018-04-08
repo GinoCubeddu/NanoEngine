@@ -48,12 +48,16 @@ namespace NanoEngine.ObjectManagement.Managers
         // A bool informing us if we need to draw the bounds or not
         public static bool DrawBounds = false;
 
+        // render filter used to fileter out any assets not within its bounds
         private IRenderFilter _renderFilter;
 
+        // An instance of the event manager
+        private IEventManager _eventManager;
 
         public AssetManager(IEventManager eventManager)
         {
             _uid = 0;
+            _eventManager = eventManager;
             _assetDictionary = new Dictionary<string, IAsset>();
             _availableAssets = new Dictionary<string, IAsset>();
             _aiComponents = new Dictionary<string, IAiComponent>();
@@ -358,6 +362,9 @@ namespace NanoEngine.ObjectManagement.Managers
                     // If that asset had a ai component attached to it do the same
                     if (_aiComponents.ContainsKey(assetDictionaryKey))
                     {
+                        // Remove all delegates from the event manager linked ot the mind
+                        _eventManager.RemoveDelegates(_aiComponents[assetDictionaryKey]);
+
                         _availableAiComponents[assetDictionaryKey] = _aiComponents[assetDictionaryKey];
                         _aiComponents.Remove(assetDictionaryKey);
                     }
@@ -380,6 +387,8 @@ namespace NanoEngine.ObjectManagement.Managers
             // If the asset has a mind delete that first
             if (_aiComponents.ContainsKey(uName))
             {
+                // Remove the develgaets for the ai
+                _eventManager.RemoveDelegates(_aiComponents[uName]);
                 _aiComponents[uName] = null;
                 _aiComponents.Remove(uName);
             }                
@@ -507,6 +516,9 @@ namespace NanoEngine.ObjectManagement.Managers
 
                     // Reinit the ai with the asset
                     aiComponent.Value.InitialiseAiComponent(asset);
+
+                    // Provide it to the event manager so it can re add the delegates if needed
+                    _eventManager.AddDelegates(aiComponent);
 
                     // add the ai to the currently updating ai
                     _aiComponents[asset.UniqueName] = aiComponent.Value;

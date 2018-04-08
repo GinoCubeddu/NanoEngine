@@ -17,6 +17,12 @@ namespace NanoEngine.Collision
         void Clear();
 
         /// <summary>
+        /// Returns the collidable lists for each qudrant that the tree has
+        /// </summary>
+        /// <returns>A list of lists containing the quadrants for each sector</returns>
+        IList<IList<Tuple<IAsset, IAiComponent>>> GetCollidablesByQuadrant();
+
+        /// <summary>
         /// Method will draw the quadtree to the scene if the DrawQuadTree
         /// paramater is set to true. Defaults to false
         /// </summary>
@@ -28,7 +34,7 @@ namespace NanoEngine.Collision
         /// and quadrant of the quad tree
         /// </summary>
         /// <param name="asset"></param>
-        void Insert(IAsset asset);
+        void Insert(Tuple<IAsset, IAiComponent> asset);
 
         /// <summary>
         /// Reteives all the possible assets that the passed in asset could
@@ -36,7 +42,7 @@ namespace NanoEngine.Collision
         /// </summary>
         /// <param name="asset"></param>
         /// <returns></returns>
-        IList<IAsset> RetriveCollidables(IAsset asset);
+        IList<Tuple<IAsset, IAiComponent>> RetriveCollidables(IAsset asset);
 
         /// <summary>
         /// Method to split the quadtree into another quad tree by creating

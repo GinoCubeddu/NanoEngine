@@ -22,6 +22,7 @@ namespace NanoEngine.Testing.Assets
             SetTexture(ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager)
                 .LoadResource<Texture2D>("hex"));
 
+            IsMovable = true;
             IList<Vector2> points = new List<Vector2>();
             points.Add(new Vector2(-19, -32));
             points.Add(new Vector2(-37, -10));

@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.Events;
 
 namespace NanoEngine.ObjectTypes.Control
 {
-    public interface IKeyboardWanted
+    public interface IKeyboardWanted : INanoEventSubscribe
     {
         /// <summary>
         /// Reciver for the keyboard change event

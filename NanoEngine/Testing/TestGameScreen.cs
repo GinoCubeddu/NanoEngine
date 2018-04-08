@@ -32,21 +32,20 @@ namespace NanoEngine
 
         public override void LoadContent()
         {
-            /* for (int i = 0; i < 2; i++)
-              {
-                  _assetManager.CreateAsset<BallTwolAsset, BallTwoMind>(100 * i, 150);
-              }
-            */
-            _assetManager.CreateAsset<BallTwolAsset, BallTwoMind>(300, 200);
-           // _assetManager.CreateAsset<BallTwolAsset, BallTwoMind>(400,200);
-            _assetManager.CreateAsset<BallAsset, BallMind>(500,150);
-            _assetManager.CreateAsset<Wall, WallMind>(-64, 0);
-            _assetManager.CreateAsset<Wall, WallMind>(800, 0);
-            _assetManager.CreateAsset<Wall, WallMind>("top", 0, -64);
-            _assetManager.CreateAsset<Wall, WallMind>("bot", 0, 480);
-            _assetManager.RetriveAsset("top").SetTexture(ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager).LoadResource<Texture2D>("wall-horizontal"));
-            _assetManager.RetriveAsset("bot").SetTexture(ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager).LoadResource<Texture2D>("wall-horizontal"));
+            _assetManager.LoadLevel("Level2");
+            _assetManager.CreateAsset<ChestAsset>(10, 10);
+            IRenderFilter filter = new RenderFilter();
+            filter.AddRenderTarget(_assetManager.RetriveAsset("player"));
+            _assetManager.SupplyRenderFilter(filter);
+            AddCamera("player", _assetManager.RetriveAsset("player"));
 
+            //AddCamera("RedRunner", _assetManager.RetriveAsset("redRunner"));
+
+
+
+            Camera2D.SetLevelBounds(new Rectangle(0, 0, 12800, 2560));
+            EventManager.AddDelegates(this);
+            ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlaySoundEffect("soundTrack", true);
         }
 
         protected override void Update(IUpdateManager updateManager)

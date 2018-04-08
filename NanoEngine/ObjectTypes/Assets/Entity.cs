@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.Animation;
 
 namespace NanoEngine.ObjectTypes.Assets
 {
@@ -13,16 +14,22 @@ namespace NanoEngine.ObjectTypes.Assets
         //Feild for holding the texture
         private Texture2D _texture;
 
+        // Informs the netity if if should draw its bounds
+        public static bool DrawAssetBounds = false;
+
+        // The origin point of the entity (its draw origin)
+        protected Vector2 _origin = Vector2.Zero;
+
         public IAnimation AssetAnimation { get; protected set; }
 
         //getter for the texture and setter for the texture
         public Texture2D Texture { get { return _texture; } }
 
+        // The center of the texture
         public Vector2 _textureCenter;
 
-        public int Speed;
 
-        public IList<Vector2> Points { get; protected set; }
+        public IDictionary<string, IList<Vector2>> Points { get; protected set; }
 
         private int _assetWidth;
 
@@ -38,6 +45,8 @@ namespace NanoEngine.ObjectTypes.Assets
             get { return _despawn;}
             set { _despawn = value; }
         }
+
+        private float rotation = 0;
 
 
         /// <summary>
@@ -90,18 +99,23 @@ namespace NanoEngine.ObjectTypes.Assets
         public void SetPosition(Vector2 position)
         {
             _position = position;
-            //else
-            //{
-            //    _position.X += position.X;
-            //    _position.Y += position.Y;
 
-            //    if (Points != null)
-            //        for (int i = 0; i < Points.Count; i++)
-            //        {
-            //            Points[i] = new Vector2(Points[i].X + position.X, Points[i].Y + position.Y);
-            //        }
-            //}
             UpdateBounds();
+        }
+
+        public void Move(Vector2 amount)
+        {
+            _position += amount;
+
+            UpdateBounds();
+            if (Points != null)
+                foreach (string key in Points.Keys)
+                {
+                    for (int i = 0; i < Points[key].Count; i++)
+                    {
+                        Points[key][i] += amount;
+                    }
+                }
         }
 
         //Field for bounds rectangle
@@ -135,6 +149,7 @@ namespace NanoEngine.ObjectTypes.Assets
         //getter for the remove property
         private bool remove;
         public bool Remove { get { return remove; } }
+        public bool IsMovable { get; protected set; }
 
         /// <summary>
         /// Method to initalise the the entity
@@ -149,14 +164,36 @@ namespace NanoEngine.ObjectTypes.Assets
                 IList<Vector2> boundPoints = GetPointsFromBounds();
                 for (int i = 0; i < boundPoints.Count; i++)
                     rendermanager.DrawLine(boundPoints[i], boundPoints[i + 1 == boundPoints.Count ? 0 : i + 1], Color.Red, 2);
+
+                IList<Color> colors = new List<Color>() {Color.Pink, Color.Red, Color.Gold, Color.Yellow};
+
+                // If there are set points then draw them
+                if (Points != null)
+                {
+                    int color = 0;
+                    foreach (IList<Vector2> points in Points.Values)
+                    {
+                        for (int i = 0; i < points.Count; i++)
+                        {
+                            rendermanager.DrawLine(points[i], points[i + 1 == points.Count ? 0 : i + 1], colors[color], 1);
+                        }
+                        color++;
+                        if (color >= colors.Count)
+                            color = 0;
+                    }
+                }                        
             }
         }
         public virtual void Draw(IRenderManager renderManager)
         {
+            //rotation += 0.01f;
             if (AssetAnimation != null)
                 AssetAnimation.Animate(renderManager);
             else
-                renderManager.Draw(Texture, Position, Color.White);
+            {
+                renderManager.Draw(Texture, Position, null, Color.White, rotation, Vector2.Zero, 1, SpriteEffects.None, 1);
+                CreateBounds(Texture.Width, Texture.Height);              
+            }
             DrawBounds(renderManager);
         }
 
@@ -174,12 +211,39 @@ namespace NanoEngine.ObjectTypes.Assets
             return pointList;
         }
 
-        protected void AddPoint(Vector2 point)
+        public void Rotate(Vector2 origin, float amount)
+        {
+            if (Points != null)
+            {
+                foreach (string key in Points.Keys)
+                {
+                    for (int j = 0; j < Points[key].Count; j++)
+                    {
+                        Matrix transform = Matrix.CreateTranslation(-origin.X, -origin.Y, 0f) *
+                                           Matrix.CreateRotationZ(amount) *
+                                           Matrix.CreateTranslation(origin.X, origin.Y, 0f);
+
+                        Points[key][j] = Vector2.Transform(Points[key][j], transform);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Adds a list of points to make a shape around the entity. The points will
+        /// be placed from the center point
+        /// </summary>
+        /// <param name="points"></param>
+        protected void AddPoints(string pointClusterName, IList<Vector2> points)
         {
             if (Points == null)
-                Points = new List<Vector2>();
+                Points = new Dictionary<string, IList<Vector2>>();
 
-            Points.Add(new Vector2(_textureCenter.X + point.X, _textureCenter.Y + point.Y));
+            IList<Vector2> shapePoints = new List<Vector2>();
+
+            foreach (Vector2 point in points)
+                shapePoints.Add(new Vector2(_textureCenter.X + point.X, _textureCenter.Y + point.Y));
+            Points[pointClusterName] = shapePoints;
         }
     }
 }

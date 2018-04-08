@@ -80,6 +80,9 @@ namespace NanoEngine
                 .LoadSound("soundTrack", "Desert Theme");
 
             ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
+                .AddScreen<PhysicsScreen>("physics");
+
+            ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
                 .AddScreen<TestGameScreen>("level1");
 
             ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)

@@ -13,6 +13,8 @@ namespace NanoEngine.Testing.Assets
 {
     class Wall : Entity, IAABBColidable
     {
+        public int CollidableId => 9;
+
         public override void Initilise()
         {
             SetTexture(ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager).LoadResource<Texture2D>("wall-vert"));

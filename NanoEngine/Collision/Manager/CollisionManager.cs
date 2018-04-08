@@ -213,6 +213,8 @@ namespace NanoEngine.Collision.Manager
                     // If the collision did not return null then send the collision responses
                     if (collision != null)
                     {
+                        _physicsManager.ProcessPhysics(possibleCollisions[i].Item1, possibleCollisions[j].Item1, collision);
+
                         (possibleCollisions[i].Item2 as ICollisionResponder)?.CollisionResponse(
                             collision.Item1
                         );

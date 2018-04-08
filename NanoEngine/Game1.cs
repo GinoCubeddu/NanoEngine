@@ -6,6 +6,7 @@ using NanoEngine.Core.Managers;
 using NanoEngine.ObjectManagement.Managers;
 using NanoEngine.ObjectTypes.General;
 using System;
+using NanoEngine.Collision.Manager;
 using NanoEngine.Core.Camera;
 using NanoEngine.Core.Locator;
 using NanoEngine.Events;

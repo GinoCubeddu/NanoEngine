@@ -35,5 +35,7 @@ namespace NanoEngine.Testing.Assets
 
             AddPoints("main", points);
         }
+
+        public int CollidableId => 2;
     }
 }

@@ -20,6 +20,8 @@ namespace NanoEngine.Collision
         // Holds the level of the tree
         private int _level;
 
+        public static IRenderManager MyRenderManager;
+
         // Holds the bounds for the current quadrant
         private Rectangle _bounds;
 
@@ -63,6 +65,7 @@ namespace NanoEngine.Collision
         /// </summary>
         public void Clear()
         {
+            Draw();
             // Delete the old list by overwriting it with a new one
             _assets = null;
             _assets = new List<Tuple<IAsset, IAiComponent>>();
@@ -82,28 +85,28 @@ namespace NanoEngine.Collision
         /// paramater is set to true. Defaults to false
         /// </summary>
         /// <param name="renderManager">The manager which will do the drawing</param>
-        public void Draw(IRenderManager renderManager)
+        public void Draw()
         {
             // Draws each side of the quad tree
             if (DrawQuadTrees)
             {
-                renderManager.Draw(
-                    renderManager.BlankTexture,
+                MyRenderManager.Draw(
+                    MyRenderManager.BlankTexture,
                     new Rectangle(_bounds.X, _bounds.Y, _bounds.Width, 3),
                     Color.White
                 );
-                renderManager.Draw(
-                    renderManager.BlankTexture,
+                MyRenderManager.Draw(
+                    MyRenderManager.BlankTexture,
                     new Rectangle(_bounds.X, _bounds.Y + _bounds.Height, _bounds.Width, 3),
                     Color.White
                 );
-                renderManager.Draw(
-                    renderManager.BlankTexture,
+                MyRenderManager.Draw(
+                    MyRenderManager.BlankTexture,
                     new Rectangle(_bounds.X + _bounds.Width, _bounds.Y, 3, _bounds.Height),
                     Color.White
                 );
-                renderManager.Draw(
-                    renderManager.BlankTexture,
+                MyRenderManager.Draw(
+                    MyRenderManager.BlankTexture,
                     new Rectangle(_bounds.X, _bounds.Y, 3, _bounds.Height),
                     Color.White
                 );
@@ -111,7 +114,7 @@ namespace NanoEngine.Collision
                 // Call the same method on the sub trees
                 if (_nodes[0] != null)
                     foreach (QuadTree quadTree in _nodes)
-                        quadTree.Draw(renderManager);
+                        quadTree.Draw();
             }
         }
 

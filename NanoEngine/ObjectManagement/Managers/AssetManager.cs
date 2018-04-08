@@ -123,7 +123,7 @@ namespace NanoEngine.ObjectManagement.Managers
             {
                 // if the asset manager does not have any spare assets to recycle
                 // offload the creation to the asset factory
-                //if (!RecycleAsset(typeof(T), uName, pos))
+                if (!RecycleAsset(typeof(T), uName, pos))
                     _assetDictionary.Add(
                         uName,
                         _assetFactory.RetriveNewAsset<T>(
@@ -133,7 +133,7 @@ namespace NanoEngine.ObjectManagement.Managers
 
                 // if the asset manager does not have any spare aiComponents to recycle
                 // offload the creation to the ai factory
-                //if (!RecycleAi(typeof(U), _assetDictionary[uName]))
+                if (!RecycleAi(typeof(U), _assetDictionary[uName]))
                     _aiComponents.Add(
                         uName,
                         _aiFactory.CreateAi<U>()
@@ -170,7 +170,7 @@ namespace NanoEngine.ObjectManagement.Managers
             {
                 // if the asset manager does not have any spare assets to recycle
                 // offload the creation to the asset factory
-                //if (!RecycleAsset(typeof(T), uName, pos))
+                if (!RecycleAsset(typeof(T), uName, pos))
                     _assetDictionary.Add(
                         uName,
                         _assetFactory.RetriveNewAsset<T>(
@@ -307,6 +307,8 @@ namespace NanoEngine.ObjectManagement.Managers
             else
                 assets = _assetDictionary.Values.ToList();
 
+            // update the physics manager
+            _physicsManager.UpdatePhysics(assets);
             foreach (IAsset asset in assets)
                 asset.Draw(rendermanager);
         }
@@ -471,6 +473,7 @@ namespace NanoEngine.ObjectManagement.Managers
                     asset.Initilise();
                     asset.SetUniqueData(uName);
                     asset.SetPosition(pos);
+                    asset.Despawn = false;
 
                     // Add the asset to the updating assets
                     _assetDictionary[uName] = asset;
@@ -498,10 +501,10 @@ namespace NanoEngine.ObjectManagement.Managers
             foreach (KeyValuePair<string, IAiComponent> aiComponent in avaliableAI)
             {
                 // if the ai is of the correct type
-                if (aiComponent.GetType() == aiType)
+                if (aiComponent.Value.GetType() == aiType)
                 {
                     // remove the ai from the avalaible aicomponents
-                    _availableAssets.Remove(aiComponent.Key);
+                    _availableAiComponents.Remove(aiComponent.Key);
 
                     // Reinit the ai with the asset
                     aiComponent.Value.InitialiseAiComponent(asset);

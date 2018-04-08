@@ -6,6 +6,7 @@ using NanoEngine.Collision;
 using NanoEngine.Collision.CollidableTypes;
 using NanoEngine.Core.Interfaces;
 using NanoEngine.Events.Args;
+using NanoEngine.ObjectManagement.Interfaces;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.ObjectTypes.Assets.Control;
 using NanoEngine.ObjectTypes.Control;
@@ -13,9 +14,11 @@ using NanoEngine.StateManagement.StateMachine;
 using NanoEngine.StateManagement.States;
 using NanoEngine.Testing.States;
 using NanoEngine.Physics;
+using NanoEngine.Testing.Tiles;
+
 namespace NanoEngine.Testing.Assets
 {
-    class TestMind : AiComponent, IKeyboardWanted, ICollisionResponder
+    class TestMind : AiComponent, IKeyboardWanted, ICollisionResponder, IAssetmanagerNeeded, IMouseWanted
     {
         private string Direction;
 
@@ -45,6 +48,7 @@ namespace NanoEngine.Testing.Assets
             {
                 ((PhysicsEntity)ControledAsset).Velocity = new Vector2(((PhysicsEntity)ControledAsset).Velocity.X, 3);
             }
+            //((PhysicsEntity)controledEntity).Gravity = Vector2.Zero;
             _StateMachine.Update();
             Timer++;
         }
@@ -139,25 +143,44 @@ namespace NanoEngine.Testing.Assets
         public void OnKeyboardChange(object sender, NanoKeyboardEventArgs args)
         {
             _StateMachine.HandleKeyboardInput(args, null);
+            if (args.TheKeys.ContainsKey(KeyStates.Pressed))
+            {
+                if (args.TheKeys[KeyStates.Pressed].Contains(Keys.D1))
+                    controledEntity.Rotate(controledEntity.Position, -0.02f);
+                if (args.TheKeys[KeyStates.Pressed].Contains(Keys.D2))
+                    controledEntity.Rotate(controledEntity.Position, 0.02f);
+            }
+            
+
         }
 
         public void CollisionResponse(NanoCollisionEventArgs response)
         {
+            Console.WriteLine("PLAYER: " + response.CollisionSide);
+            controledEntity.SetPosition(controledEntity.Position - response.CollisionOverlap);
 
-            /*Vector2 controlledEntityVelocity = ((PhysicsEntity)ControledAsset).Velocity;
+            if (controledEntity.Points != null)
+                foreach (IList<Vector2> points in controledEntity.Points.Values)
+                {
+                    for (int i = 0; i < points.Count; i++)
+                    {
+                        points[i] -= response.CollisionOverlap;
+                    }
+                }
+            if (response.CollidedWith.UniqueName.ToLower().Contains("coin"))
+                response.CollidedWith.Despawn = true;
+        }
 
-            Vector2 overlap = response.CollisionOverlap;
+        public IAssetManager AssetManager { get; set; }
 
-            Vector2 cn = Vector2.Normalize(overlap);
-
-            ((PhysicsEntity)ControledAsset).Position += 0.5f * overlap * cn;
-
-
-            float cvA = Vector2.Dot(cn, controlledEntityVelocity);
-
-            Vector2 velocityA =  (cn * cvA);
-
-            ((PhysicsEntity)ControledAsset).ApplyImpluse(velocityA); */
+        /// <summary>
+        /// Event Reciver for the mouse down event
+        /// </summary>
+        /// <param name="sender">The object that sends the event</param>
+        /// <param name="e">The arguments that are sent</param>
+        public void OnMouseChanged(object sender, NanoMouseEventArgs e)
+        {
+            Console.WriteLine(e.CurrentMouseState.Position);
         }
     }
 }

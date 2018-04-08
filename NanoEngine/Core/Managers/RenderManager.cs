@@ -21,6 +21,8 @@ namespace NanoEngine.Core.Managers
         //Private field to hold refrence to sprite batch
         private static SpriteBatch spriteBatch;
 
+        private IDictionary<Color, Texture2D> _blankTextures;
+
         // Blank texture used for drwaing items such as lines
         private Texture2D _blankTexture;
 
@@ -42,7 +44,7 @@ namespace NanoEngine.Core.Managers
         }
         
         //private field to hold background colour
-        private Color bgColor;
+        public static Color bgColor;
 
         // private field used to make sure only one instace of the manager is allowed
         private static bool Created;
@@ -57,6 +59,7 @@ namespace NanoEngine.Core.Managers
             if (Created)
                 throw new Exception("Only one instance of the RenderManager may be created");
             _game1 = game;
+            RenderBounds = GetGD.Viewport.Bounds;
             RenderBounds = GetGD.Viewport.Bounds;
             _blankTexture = new Texture2D(GetGD, 1, 1);
             _blankTexture.SetData<Color>(new Color[] { Color.Black });
@@ -332,6 +335,42 @@ namespace NanoEngine.Core.Managers
         /// Getter to return the current graphics device
         /// </summary>
         public GraphicsDevice GetGD { get { return _game1.GraphicsDevice; } }
+
+        /// <summary>
+        /// Draws a line between 2 points
+        /// </summary>
+        /// <param name="point1">The starting point</param>
+        /// <param name="point2">The destination point</param>
+        /// <param name="color">The color of the line</param>
+        /// <param name="width">the width of the line</param>
+        public void DrawLine(Vector2 point1, Vector2 point2, Color color, int width)
+        {
+            Texture2D blankTexture = null;
+            if (_blankTextures.ContainsKey(color))
+                blankTexture = _blankTextures[color];
+            else
+            {
+                _blankTextures[color] = blankTexture = new Texture2D(GetGD, 1, 1);
+                _blankTextures[color].SetData<Color>(new Color[] { color });
+                blankTexture = _blankTextures[color];
+            }
+
+            Vector2 edge = point2 - point1;
+            float angle = (float)Math.Atan2(edge.Y, edge.X);
+            float distance;
+            Vector2.Distance(ref point1, ref point2, out distance);
+            Draw(
+                blankTexture,
+                point1,
+                new Rectangle((int)point1.X, (int)point1.Y, (int)distance, width),
+                color,
+                angle,
+                new Vector2(0, 0),
+                1,
+                SpriteEffects.None,
+                0
+            );
+        }
 
         /// <summary>
         /// Method to initialise everything

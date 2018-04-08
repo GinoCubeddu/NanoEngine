@@ -33,7 +33,7 @@ namespace NanoEngine.Collision
         private IQuadTree[] _nodes;
 
         // Holds all the assets that belong to this level/quadrant
-        private IList<IAsset> _assets;
+        private IList<Tuple<IAsset, IAiComponent>> _assets;
 
         // Tells the quad tree wether to draw or not
         public static bool DrawQuadTrees = false;
@@ -53,7 +53,7 @@ namespace NanoEngine.Collision
             _verticalCenterPoint = _bounds.X + (_bounds.Width / 2);
             _horizontalCenterPoint = _bounds.Y + (_bounds.Height / 2);
             _nodes = new IQuadTree[4];
-            _assets = new List<IAsset>();
+            _assets = new List<Tuple<IAsset, IAiComponent>>();
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace NanoEngine.Collision
         {
             // Delete the old list by overwriting it with a new one
             _assets = null;
-            _assets = new List<IAsset>();
+            _assets = new List<Tuple<IAsset, IAiComponent>>();
 
             // Loop through the sub quads and call the same method to clear
             // its assets then nullify the quadrant
@@ -120,9 +120,9 @@ namespace NanoEngine.Collision
         /// and quadrant of the quad tree
         /// </summary>
         /// <param name="asset"></param>
-        public void Insert(IAsset asset)
+        public void Insert(Tuple<IAsset, IAiComponent> asset)
         {
-            int index = GetAssetIndex(asset);
+            int index = GetAssetIndex(asset.Item1);
             // If the quadrant has sub quad trees we first want to attempt
             // to add it to one of those
             if (_nodes[0] != null && index != -1)
@@ -135,7 +135,7 @@ namespace NanoEngine.Collision
             {
                 // If the asset does not quite fit into one of the quadrants
                 // AND the quadtree has already been split
-                foreach (int i in GetQuadrantsIn(asset))
+                foreach (int i in GetQuadrantsIn(asset.Item1))
                     _nodes[i].Insert(asset);
                 return;
             }
@@ -151,19 +151,19 @@ namespace NanoEngine.Collision
 
                 // create a list to store the assets as we loop so we can remove
                 // them later
-                IList<IAsset> assetsToRemove = new List<IAsset>();
+                IList<Tuple<IAsset, IAiComponent>> assetsToRemove = new List<Tuple<IAsset, IAiComponent>>();
                 // loop through the objects
                 for (int i = 0; i < _assets.Count; i++)
                 {
                     // get the index of the object
-                    index = GetAssetIndex(_assets[i]);
+                    index = GetAssetIndex(_assets[i].Item1);
                     // if the object fits into a sub quad
                     if (index != -1)
                         // insert into specific quadrant if it fully fits
                         _nodes[index].Insert(_assets[i]);
                     else
                         // insert into the multiple quadrants it is in
-                        foreach (int j in GetQuadrantsIn(_assets[i]))
+                        foreach (int j in GetQuadrantsIn(_assets[i].Item1))
                             _nodes[j].Insert(_assets[i]);
 
                     // Add the asset for removal
@@ -171,7 +171,7 @@ namespace NanoEngine.Collision
                 }
 
                 // Loop through the assets and remove them from this level
-                foreach (IAsset asset1 in assetsToRemove)
+                foreach (Tuple<IAsset, IAiComponent> asset1 in assetsToRemove)
                 {
                     _assets.Remove(asset1);
                 }
@@ -184,10 +184,10 @@ namespace NanoEngine.Collision
         /// </summary>
         /// <param name="asset"></param>
         /// <returns></returns>
-        public IList<IAsset> RetriveCollidables(IAsset asset)
+        public IList<Tuple<IAsset, IAiComponent>> RetriveCollidables(IAsset asset)
         {
             // Create list to store the collidables of this quadrant
-            var possibleCollidables = new List<IAsset>();
+            var possibleCollidables = new List<Tuple<IAsset, IAiComponent>>();
 
             // Get the index of the asset we want to get the collidables for
             int index = GetAssetIndex(asset);
@@ -210,11 +210,39 @@ namespace NanoEngine.Collision
             }
 
             // Add all the assets from this quadrant
-            foreach (IAsset pAsset in _assets)
-                if (pAsset.UniqueName != asset.UniqueName)
+            foreach (Tuple<IAsset, IAiComponent> pAsset in _assets)
+                // Only return the result if the asset is not the same as itself and atleast one item is moveable
+                // No point in doing the test if both are not movable
+                if (pAsset.Item1.UniqueName != asset.UniqueName)
                     possibleCollidables.Add(pAsset);
 
             return possibleCollidables;
+        }
+
+        /// <summary>
+        /// Returns the collidable lists for each qudrant that the tree has
+        /// </summary>
+        /// <returns>A list of lists containing the quadrants for each sector</returns>
+        public IList<IList<Tuple<IAsset, IAiComponent>>> GetCollidablesByQuadrant()
+        {
+            // Create the list for the current quadrant
+            IList<IList<Tuple<IAsset, IAiComponent>>> _quadrantList = new List<IList<Tuple<IAsset, IAiComponent>>>();
+
+            // Add the current assets to the list
+            _quadrantList.Add(_assets);
+
+            // if there are child nodes loop through them
+            if (_nodes[0] != null)
+            {
+                foreach (IQuadTree quadTree in _nodes)
+                {
+                    // Add the returned quadrants to the list
+                    ((List<IList<Tuple<IAsset, IAiComponent>>>)_quadrantList).AddRange(quadTree.GetCollidablesByQuadrant());
+                }
+            }
+
+            // Return the list for this and its child quadrants
+            return _quadrantList;
         }
 
         /// <summary>

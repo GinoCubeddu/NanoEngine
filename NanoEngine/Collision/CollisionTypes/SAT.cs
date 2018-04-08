@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NanoEngine.Core.Interfaces;
+using NanoEngine.Core.Managers;
 using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Assets;
 
@@ -18,14 +20,81 @@ namespace NanoEngine.Collision.CollisionTypes
         /// <returns>A boolean value telling us if there has been a collision</returns>
         public Tuple<NanoCollisionEventArgs, NanoCollisionEventArgs> CheckCollision(IAsset asset1, IAsset asset2)
         {
-            // Get the points of the two collidables, if no points are defined use
-            // points generated from the bounding box
-            IList<Vector2> asset1Points = asset1.Points ?? asset1.GetPointsFromBounds();
-            IList<Vector2> asset2Points = asset2.Points ?? asset2.GetPointsFromBounds();
+            // set the default values
+            bool collided = false;
+            Vector2 smallestAxis = Vector2.Zero;
+            float smallestOverlap = 999;
 
-            // If either of the overlap checks return false then there is no overlap
-            if (!CheckOverLap(asset1Points, asset2Points) || !CheckOverLap(asset2Points, asset1Points))
-                return null;
+            // Get the points from asset A
+            IDictionary<string, IList<Vector2>> asset1Points = asset1.Points;
+
+            // If those points are null get them from the bounds
+            if (asset1Points == null)
+            {
+                asset1Points = new Dictionary<string, IList<Vector2>>();
+                asset1Points["body"] = asset1.GetPointsFromBounds();
+            }
+
+            // Do the same for asset B
+            IDictionary<string, IList<Vector2>> asset2Points = asset2.Points;
+            
+            if (asset2Points == null)
+            {
+                asset2Points = new Dictionary<string, IList<Vector2>>();
+                asset2Points["body"] = asset2.GetPointsFromBounds();
+            }
+
+            // Check each "object" in asset A against each "object" in asset B
+            // Loop through each "object" in asset1
+            foreach (string asset1PointKey in asset1Points.Keys)
+            {
+                // Loop through each "object" in asset 2
+                foreach (string asset2PointKey in asset2Points.Keys)
+                {
+                    // Check current "object" of asset 1 against current "object" of asset 2
+                    // Check current "object" of asset 2 against current "object" of asset 1
+                    // If both of them return true then there is a collision however if there is a gap
+                    // on either of the checks then it is impossible for there to be a collision
+                    if (
+                        CheckOverLap(asset1Points[asset1PointKey], asset2Points[asset2PointKey], ref smallestAxis, ref smallestOverlap) &&
+                        CheckOverLap(asset2Points[asset2PointKey], asset1Points[asset1PointKey], ref smallestAxis, ref smallestOverlap)
+                    )
+                    {
+                        // If none returned false there is a collision between the two objects
+                        // and we dont have to check any other objects
+                        collided = true;
+                        break;
+                    }
+                }
+
+                // If there is a collision then break out of thej loop
+                if (collided)
+                    break;
+            }
+
+            if (collided)
+            {
+                // The MTV is calcutated by multiplying the smallest axis by the smallet overlap
+                // we then multiply the mtv by 0.5 as each entity will need to move half each
+                Vector2 mtv = smallestAxis * smallestOverlap * 0.5f;
+
+                // Return the collision args for this collision
+                return new Tuple<NanoCollisionEventArgs, NanoCollisionEventArgs>(
+                    new NanoCollisionEventArgs()
+                    {
+                        CollidedWith = asset2,
+                        CollisionOverlap = mtv,
+                        CollisionSide = CollisionSide.UNKNOWN
+                    },
+                    new NanoCollisionEventArgs()
+                    {
+                        CollidedWith = asset1,
+                        CollisionOverlap = -mtv,
+                        CollisionSide = CollisionSide.UNKNOWN
+                    }
+                );
+            }
+            // return null if no collision happened
             return null;
         }
 
@@ -35,22 +104,51 @@ namespace NanoEngine.Collision.CollisionTypes
         /// <param name="asset1Points">The first list of points</param>
         /// <param name="asset2Points">The second list of points</param>
         /// <returns>Boolean telling us if they have overlapped</returns>
-        private bool CheckOverLap(IList<Vector2> asset1Points, IList<Vector2> asset2Points)
+        private bool CheckOverLap(IList<Vector2> asset1Points, IList<Vector2> asset2Points, ref Vector2 smallestAxis, ref float smallestOverlap)
         {
-            // get the axies's from the first object
+            // Set the local variables
+            Vector2 localSmallestAxis = Vector2.Zero;
+            float localSmallestOverlap = 999;
+
+            // Grab the axis of the first asset
             IList<Vector2> axies = GetAxies(asset1Points);
+
+            // loop through each axis that was generated
             for (int i = 0; i < axies.Count; i++)
             {
-                // get the point
-                Vector2 point = axies[i];
+                // get the axis that we want to project against
+                Vector2 axis = axies[i];
 
                 // project the point onto both objects
-                Tuple<float, float> p1 = Project(point, asset1Points);
-                Tuple<float, float> p2 = Project(point, asset2Points);
+                Tuple<float, float> p1 = Project(axis, asset1Points);
+                Tuple<float, float> p2 = Project(axis, asset2Points);
 
-                if (p2.Item1 - p1.Item2 > 0) return false;
+
+                // If the MIN on projection2 - MAX on projection1 is GREATER than 0
+                // there is no collision
+                float overlap = p2.Item1 - p1.Item2;
+                
+                if (overlap >= 0)
+                    return false;
+                else
+                {
+                    // If it is less than 0 there is a collision
+                    // Get the current overlap
+
+                    // If the current is less than the smallest set the smallest
+                    // overlap and axis to the current ones
+                    if (overlap > localSmallestOverlap || localSmallestOverlap == 999)
+                    {
+                        localSmallestOverlap = overlap;
+                        localSmallestAxis = axis;
+                    }
+                }
             }
 
+            // update the smallest axis and smallest overlap
+            smallestAxis = localSmallestAxis;
+            smallestOverlap = localSmallestOverlap;
+           
             return true;
         }
 
@@ -66,18 +164,29 @@ namespace NanoEngine.Collision.CollisionTypes
             // loop through each point
             for (int i = 0; i < assetPoints.Count; i++)
             {
-                // the edge is the vector point taken away from the next vector point
-                Vector2 edge;
+                // the axis is the angular vector of the compute ege/axis
+                Vector2 axis;
 
+                // Get the vector2 axis that the for the shape by doing a subtraction
+                // of each vector 2 "point" that makes up the shape including the first from
+                // the last
                 if (i + 1 == assetPoints.Count)
-                    edge = assetPoints[i] - assetPoints[0];
+                    axis = assetPoints[i] - assetPoints[0];
                 else
-                    edge = assetPoints[i] - assetPoints[i + 1];
+                    axis = assetPoints[i] - assetPoints[i + 1];
 
-                edge.Normalize();
-                axies.Add(edge);
+                // We need to get the normal of the axis by getting the perpindicular
+                // vector
+                axis = new Vector2(axis.Y, -axis.X);   
+
+                // We then need to turn it into a unit vector with a magintiue of 1
+                axis.Normalize();
+
+                // Add the axis to the list 
+                axies.Add(axis);
             }
 
+            // return all the axis's that were generated
             return axies;
         }
 
@@ -87,23 +196,33 @@ namespace NanoEngine.Collision.CollisionTypes
         /// <param name="point">The singular point</param>
         /// <param name="points">The list of points</param>
         /// <returns/>The min and max projections of the point<returns>
-        public Tuple<float, float> Project(Vector2 point, IList<Vector2> points)
+        public Tuple<float, float> Project(Vector2 axis, IList<Vector2> points)
         {
             // to project you have to get the dot value of the single 
             // point of one other object combined with the values of each of this
             // objects points then take the min and max value
-            float min = Vector2.Dot(point, points[0]);
+            float min = Vector2.Dot(axis, points[0]);
             float max = min;
 
+            // the axis the the directional vector
+            // the point is the maginitue vector (length)
+
+            // Loop through each "point" of the asset
             for (int i = 0; i < points.Count; i++)
             {
-                float dot = Vector2.Dot(point, points[i]);
+                // Calculate the dot product of the axis against the current point
+                // The dot product will "project" the point against the axis to form
+                // a "shadow" the dot is calculated by axisX * pointX + axisY * pointY
+                float dot = Vector2.Dot(axis, points[i]);
+
+                // Grab the max and min of the projection
                 if (dot < min)
                     min = dot;
-                else if (dot > max)
+                if (dot > max)
                     max = dot;
             }
 
+            // return the projections min and max
             return Tuple.Create(min, max);
         }
     }

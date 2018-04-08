@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.Animation;
 
 namespace NanoEngine.ObjectTypes.Assets
 {
@@ -23,13 +24,16 @@ namespace NanoEngine.ObjectTypes.Assets
         Rectangle Bounds { get; set; }
 
         // Getter for the points that make up an object
-        IList<Vector2> Points { get; }
+        IDictionary<string, IList<Vector2>> Points { get; }
 
         //Getter for the unique name
         string UniqueName { get; }
 
         //getter for the remove variable
         bool Remove { get; }
+
+        // Getter to tell if the asset is moveable
+        bool IsMovable { get; }
 
         // Getter for the animation class that belongs to the asset
         IAnimation AssetAnimation { get; }
@@ -81,5 +85,7 @@ namespace NanoEngine.ObjectTypes.Assets
         /// </summary>
         /// <returns>A list of points</returns>
         IList<Vector2> GetPointsFromBounds();
+
+        void Rotate(Vector2 origin, float amount);
     }
 }

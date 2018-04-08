@@ -8,9 +8,13 @@ using NanoEngine.ObjectTypes.General;
 using System;
 using NanoEngine.Core.Camera;
 using NanoEngine.Core.Locator;
+using NanoEngine.Events;
+using NanoEngine.Events.Args;
+using NanoEngine.Events.Handlers;
 using NanoEngine.ObjectManagement;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.Physics;
+using NanoEngine.Testing;
 using NanoEngine.Testing.Assets;
 using NanoEngine.Testing.Physics;
 using NanoEngine.Testing.Tiles;
@@ -64,6 +68,7 @@ namespace NanoEngine
             //graphics.PreferredBackBufferHeight = 1080;
             //graphics.ApplyChanges();
             RenderFilter.RenderOffset = new Vector2(1500, 200);
+            Entity.DrawAssetBounds = true;
 
             NanoEngineInit.Initialize(GraphicsDevice, this, Content);
 
@@ -75,6 +80,9 @@ namespace NanoEngine
 
             ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
                 .AddScreen<TestGameScreen>("level1");
+
+            ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
+                .AddScreen<TestGameScreen1>("level2");
 
             base.Initialize();
         }

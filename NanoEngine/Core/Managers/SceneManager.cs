@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NanoEngine.Events;
+using NanoEngine.Factories;
 using NanoEngine.ObjectTypes.Control;
 
 namespace NanoEngine.Core.Managers
@@ -25,6 +26,8 @@ namespace NanoEngine.Core.Managers
         // Holds all screens that are marked for deletion
         private IList<IGameScreen> _screensMarkedForDeletion;
 
+        private ISceneFactory _sceneFactory;
+
         // Getter for the currently updating screens
         public IDictionary<string, IGameScreen> UpdatingScreens
         {
@@ -36,6 +39,7 @@ namespace NanoEngine.Core.Managers
             _updatingScreens = new Dictionary<string, IGameScreen>();
             _avaliableScreens = new Dictionary<string, IGameScreen>();
             _screensMarkedForDeletion = new List<IGameScreen>();
+            _sceneFactory = new SceneFactory();
         }
 
         /// <summary>
@@ -45,12 +49,8 @@ namespace NanoEngine.Core.Managers
         /// <param name="name">The id of the screen</param>
         public void AddScreen<T>(string name) where T : IGameScreen, new()
         {
-            // Create the new screen
-            IGameScreen screen = new T();
-
-            // Init the screen and load the content
-            screen.Initialise();
-            screen.LoadContent();
+            // Request a screen of the type T
+            IGameScreen screen = _sceneFactory.CreateScreen<T>();
 
             if (_avaliableScreens.Count == 0 && _updatingScreens.Count == 0)
             {

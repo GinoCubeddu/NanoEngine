@@ -188,6 +188,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="Content\Level2.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -308,7 +308,6 @@ namespace NanoEngine.ObjectManagement.Managers
                 assets = _assetDictionary.Values.ToList();
 
             // update the physics manager
-            _physicsManager.UpdatePhysics(assets);
             foreach (IAsset asset in assets)
                 asset.Draw(rendermanager);
         }

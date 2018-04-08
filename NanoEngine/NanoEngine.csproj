@@ -145,6 +145,7 @@
     <Compile Include="Testing\Assets\HexMind.cs" />
     <Compile Include="Testing\Assets\Wall.cs" />
     <Compile Include="Testing\Assets\WallMind.cs" />
+    <Compile Include="Testing\PhysicsScreen.cs" />
     <Compile Include="Testing\Physics\IBounce.cs" />
     <Compile Include="Testing\Physics\IReflect.cs" />
     <Compile Include="Testing\Physics\PhysicsMethods.cs" />
@@ -201,8 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
     <None Include="Content\Level2.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -37,8 +37,6 @@ namespace NanoEngine.ObjectTypes.Assets
 
         private bool _despawn = false;
 
-        public static bool DrawAssetBounds = false;
-
         // Property to state if the asset wants to be drawn/updated
         public bool Despawn
         {

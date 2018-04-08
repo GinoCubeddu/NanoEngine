@@ -12,6 +12,7 @@ using NanoEngine.Events;
 using NanoEngine.Events.Args;
 using NanoEngine.Events.Handlers;
 using NanoEngine.ObjectManagement;
+using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.Testing;
 using NanoEngine.Testing.Assets;
 using NanoEngine.Testing.Tiles;
@@ -73,7 +74,7 @@ namespace NanoEngine
                 .LoadSound("soundTrack", "Desert Theme");
 
             ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
-                .AddScreen<TestScreen2>("level1");
+                .AddScreen<TestGameScreen>("level1");
 
             ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
                 .AddScreen<TestGameScreen1>("level2");

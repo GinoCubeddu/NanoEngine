@@ -83,13 +83,13 @@ namespace NanoEngine.Collision.CollisionTypes
                     new NanoCollisionEventArgs()
                     {
                         CollidedWith = asset2,
-                        CollisionOverlap = -mtv,
+                        CollisionOverlap = mtv,
                         CollisionSide = CollisionSide.UNKNOWN
                     },
                     new NanoCollisionEventArgs()
                     {
                         CollidedWith = asset1,
-                        CollisionOverlap = mtv,
+                        CollisionOverlap = -mtv,
                         CollisionSide = CollisionSide.UNKNOWN
                     }
                 );

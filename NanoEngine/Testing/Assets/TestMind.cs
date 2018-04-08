@@ -13,6 +13,7 @@ using NanoEngine.ObjectTypes.Control;
 using NanoEngine.StateManagement.StateMachine;
 using NanoEngine.StateManagement.States;
 using NanoEngine.Testing.States;
+using NanoEngine.Physics;
 using NanoEngine.Testing.Tiles;
 
 namespace NanoEngine.Testing.Assets
@@ -25,8 +26,10 @@ namespace NanoEngine.Testing.Assets
 
         public int Timer;
 
+
         public TestMind()
         {
+ 
             Timer = 0;
             Direction = "right";
         }
@@ -37,6 +40,14 @@ namespace NanoEngine.Testing.Assets
         /// <param name="updateManager">an instance of the update manager</param>
         public override void Update(IUpdateManager updateManager)
         {
+            if (((PhysicsEntity) ControledAsset).Velocity.X > 3)
+            {
+                ((PhysicsEntity) ControledAsset).Velocity = new Vector2(3, ((PhysicsEntity)ControledAsset).Velocity.Y);
+            }
+            if (((PhysicsEntity)ControledAsset).Velocity.Y > 3)
+            {
+                ((PhysicsEntity)ControledAsset).Velocity = new Vector2(((PhysicsEntity)ControledAsset).Velocity.X, 3);
+            }
             //((PhysicsEntity)controledEntity).Gravity = Vector2.Zero;
             _StateMachine.Update();
             Timer++;
@@ -51,7 +62,6 @@ namespace NanoEngine.Testing.Assets
             _StateMachine.AddState(new HorizontalState<IAiComponent>("runRight", -1), "runUp");
             _StateMachine.AddState(new HorizontalState<IAiComponent>("runLeft", 1), "runDown");
             _StateMachine.AddState(new JumpState(), "jump");
-
 
             _StateMachine.AddKeyboardTransition(
                 KeyStates.Pressed, new List<Keys>() { Keys.Space }, "idle", "jump"

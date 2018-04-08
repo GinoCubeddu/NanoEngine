@@ -11,21 +11,17 @@ using NanoEngine.Core.Interfaces;
 using NanoEngine.Core.Locator;
 using NanoEngine.Testing.Physics;
 
+using System.Threading.Tasks;
 
 namespace NanoEngine.Testing.Assets
 {
-    class TestAsset : PhysicsEntity, IAABBColidable, IReflect, IBounce
+    class BallAsset : PhysicsEntity, IAABBColidable, IBounce
     {
         public override void Initilise()
         {
-            IsMovable = true;
             SetTexture(ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager)
-                .LoadResource<Texture2D>("player"));
-            AssetAnimation = new Animation.Animation(this);
-            AssetAnimation.AddState("idleRight", 27, 64, 8, 12, 0, 0);
-            AssetAnimation.AddState("idleLeft", 27, 64, 8, 12, 128, 0);
-            AssetAnimation.AddState("runRight", 35, 64, 6, 12, 64, 0);
-            AssetAnimation.AddState("runLeft", 35, 64, 6, 12, 192, 0);
+               .LoadResource<Texture2D>("ball2"));
+           Gravity = new Vector2(0, 0.5f);
         }
     }
 }

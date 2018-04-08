@@ -8,6 +8,7 @@ using NanoEngine.Collision.CollisionTypes;
 using NanoEngine.Core.Managers;
 using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Assets;
+using NanoEngine.Physics;
 
 namespace NanoEngine.Collision.Manager
 {
@@ -22,12 +23,18 @@ namespace NanoEngine.Collision.Manager
         // Instance of the quad tree
         private IQuadTree _quadTree;
 
+        private IPhysicsManager _physicsManager;
+
+
         /// <summary>
         /// Constructor for CollisionManager, uses dedault values for quad tree
         /// </summary>
         public CollisionManager() : this(5, 4, RenderManager.RenderBounds)
         {
+            
         }
+
+    
 
         /// <summary>
         /// Constructor for CollisionManager, uses dedault values for quad tree
@@ -47,6 +54,7 @@ namespace NanoEngine.Collision.Manager
             _sat = new SAT();
             _aabb = new AABB();
             _quadTree = new QuadTree(quadTreeMaxObjects, quadTreeMaxLevels, quadTreeBounds);
+            _physicsManager = new PhysicsManager();
         }
 
         /// <summary>
@@ -91,6 +99,8 @@ namespace NanoEngine.Collision.Manager
                 // If the collision did not return null then send the collision responses
                 if (collision != null)
                 {
+                    _physicsManager.ProcessPhysics(asset.Item1, possibleCollision.Item1, collision);
+
                     (asset.Item2 as ICollisionResponder)?.CollisionResponse(
                         collision.Item1
                     );
@@ -187,6 +197,8 @@ namespace NanoEngine.Collision.Manager
         /// <param name="aiComponents">All AiComponents that belong to the assets</param>
         public void Update(IDictionary<string, IAsset> assets, IDictionary<string, IAiComponent> aiComponents)
         {
+            _physicsManager.UpdatePhysics(assets.Values.ToList());
+
             // Remove all non collidables before continuing
             IDictionary<string, Tuple<IAsset, IAiComponent>> collidableAssets = GetCollidableAssets(assets, aiComponents);
 

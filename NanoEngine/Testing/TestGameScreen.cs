@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using NanoEngine.Core.Interfaces;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NanoEngine.Collision.CollisionTypes;
 using NanoEngine.Core.Locator;

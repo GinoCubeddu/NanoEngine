@@ -90,7 +90,7 @@ namespace NanoEngine.Menus
                     if(rect.Contains(e.CurrentMouseState.Position))
                     {
                         if (menuPosition != i)
-                            ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlaySoundEffect("test");
+                           // ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlaySoundEffect("test");
 
                         menuPosition = i;
                     }
@@ -105,7 +105,7 @@ namespace NanoEngine.Menus
                 if (!args.TheKeys.Keys.Contains(KeyStates.Pressed))
                     return;
 
-                ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlaySoundEffect("test");
+               // ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlaySoundEffect("test");
                 if (args.TheKeys[KeyStates.Pressed].Contains(Keys.Up))
                 {
                     if (menuPosition == 0)

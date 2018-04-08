@@ -73,11 +73,11 @@ namespace NanoEngine
 
             NanoEngineInit.Initialize(GraphicsDevice, this, Content);
 
-            ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager)
+            /*ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager)
                 .LoadSound("test", "door-02");
 
             ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager)
-                .LoadSound("soundTrack", "Desert Theme");
+                .LoadSound("soundTrack", "Desert Theme"); */
 
             ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
                 .AddScreen<PhysicsScreen>("physics");

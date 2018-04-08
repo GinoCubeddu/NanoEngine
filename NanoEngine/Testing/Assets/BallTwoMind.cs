@@ -30,17 +30,13 @@ namespace NanoEngine.Testing.Assets
         public override void Update(IUpdateManager updateManager)
         {
 
-           /* if (((PhysicsEntity) ControledAsset).Velocity.Y < 0.000005)
-            {
-                ((PhysicsEntity) ControledAsset).Gravity = Vector2.Zero;
-            }*/
             if (((PhysicsEntity)ControledAsset).Velocity.X > 10)
             {
-                ((PhysicsEntity)ControledAsset).Velocity = new Vector2(5, ((PhysicsEntity)ControledAsset).Velocity.Y);
+                ((PhysicsEntity)ControledAsset).Velocity = new Vector2(0.6f, ((PhysicsEntity)ControledAsset).Velocity.Y);
             }
             if (((PhysicsEntity)ControledAsset).Velocity.Y > 10)
             {
-                ((PhysicsEntity)ControledAsset).Velocity = new Vector2(((PhysicsEntity)ControledAsset).Velocity.X, 5);
+                ((PhysicsEntity)ControledAsset).Velocity = new Vector2(((PhysicsEntity)ControledAsset).Velocity.X, 0.6f);
             }
         }
     }

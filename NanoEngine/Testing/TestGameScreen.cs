@@ -45,7 +45,7 @@ namespace NanoEngine
 
             Camera2D.SetLevelBounds(new Rectangle(0, 0, 12800, 2560));
             EventManager.AddDelegates(this);
-            ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlaySoundEffect("soundTrack", true);
+            // ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlaySoundEffect("soundTrack", true);
         }
 
         protected override void Update(IUpdateManager updateManager)

@@ -11,7 +11,7 @@ using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Testing.Assets
 {
-    class Wall : Entity, IAABBColidable
+    class Wall : Entity, ISATColidable
     {
         public int CollidableId => 9;
 

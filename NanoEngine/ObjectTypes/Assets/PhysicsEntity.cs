@@ -16,13 +16,13 @@ namespace NanoEngine.ObjectTypes.Assets
         public Vector2 Velocity { get; set; } = new Vector2(0, 0);
 
         // The InverseMass is half the actual mass of the object
-        public float InverseMass { get; set; } = 1.5f;
+        public float InverseMass { get; set; } = 0.5f;
 
         // The damping is how much resistance the object has
-        public float Damping { get; set; } = 0.95f;
+        public float Damping { get; set; } = 0.99f;
 
         //the resition is to help prevent a 'perfect bounch' with elasticity, adhesion etc
-        public float Resitition { get; set; } = 1.1f;
+        public float Resitition { get; set; } = 0.999f;
 
         // The gravity is how fast a force pushes down on an object
         public Vector2 Gravity { get; set; } = new Vector2(0, 0);
@@ -34,7 +34,7 @@ namespace NanoEngine.ObjectTypes.Assets
         public virtual void ApplyForce(Vector2 force)
         {
             // Add the force multiplied by the inverseMass to the Acceleration
-            Acceleration += force * InverseMass;
+           Acceleration += force * InverseMass;
         }
 
         /// <summary>
@@ -44,9 +44,7 @@ namespace NanoEngine.ObjectTypes.Assets
         public virtual void ApplyImpluse(Vector2 closingVelocity)
         {
             Velocity += closingVelocity * Resitition;
-            //Console.WriteLine("ApplyImpulse velocity " + Velocity);
-            //Console.WriteLine("ApplyImpulse closingVelocity " + closingVelocity);
-            //Console.WriteLine("ApplyImpulse Resitition " + Resitition);
+
         }
     }
 }

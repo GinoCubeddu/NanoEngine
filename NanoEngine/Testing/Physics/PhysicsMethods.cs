@@ -23,6 +23,10 @@ namespace NanoEngine.Testing.Physics
 
             
                 //2. move the two balls apart a distance of ‘overlap’ along the collision normal:  
+                //ball1.position += 0.5 * overlap * cnormal;  ball2.position -= 0.5 * overlap * cnormal;
+                //((PhysicsEntity)asset1).Position += 0.5f * eventArgs.Item1.CollisionOverlap * cn;
+                //((PhysicsEntity)asset2).Position -= 0.5f * eventArgs.Item2.CollisionOverlap * cn;
+
                 asset1.SetPosition(asset1.Position - eventArgs.Item1.CollisionOverlap);
                 asset2.SetPosition(asset2.Position - eventArgs.Item2.CollisionOverlap);
 
@@ -37,12 +41,12 @@ namespace NanoEngine.Testing.Physics
                 //4. multiply the result with the collision normal to get the true closing velocity -The result of this is a scalar (ie speed, not velocity) 
                 //get transferring velocity
                 Vector2 velocityA = (cn * cvB) - (cn * cvA) *  ((PhysicsEntity)asset1).InverseMass;
-                Vector2 velocityB = (cn * cvA) - (-cn * cvB) *  ((PhysicsEntity)asset2).InverseMass;
+                Vector2 velocityB = (cn * cvA) - (-cn *cvB) *  ((PhysicsEntity)asset2).InverseMass;
                 // We just essentially moved the component from element A and B to get the remaining closing velocity value we now need to add that with the elements velocity i.e.
                 //5. Apply the resulting velocity vector to the two entities using the ‘ApplyImpulse’ methods.  the entities must be reflected in opposite directions
 
-               ((PhysicsEntity)asset1).ApplyImpluse(velocityA * cn);
-               ((PhysicsEntity)asset2).ApplyImpluse(velocityB * cn);
+               ((PhysicsEntity)asset1).ApplyImpluse(velocityA);
+               ((PhysicsEntity)asset2).ApplyImpluse(velocityB);
 
             }
             else if (asset1 is IBounce)

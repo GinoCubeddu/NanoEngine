@@ -101,30 +101,14 @@ namespace NanoEngine.Collision.CollisionTypes
             float lc = (float)(asset1.Bounds.X + asset1.Bounds.Width) - asset2.Bounds.X;
             float rc = (float)(asset2.Bounds.X + asset2.Bounds.Width) - asset1.Bounds.X;
 
-            if (asset1.Bounds.Height != asset1.Bounds.Width)
-            {
-                if (tc < bc && tc < lc && tc < rc)
-                    return CollisionSide.TOP;
-                if (bc < tc && bc < lc && bc < rc)
-                    return CollisionSide.BOTTOM;
-                if (lc < bc && lc < tc && lc < rc)
-                    return CollisionSide.LEFT;
-                if (rc < bc && rc < lc && rc < tc)
-                    return CollisionSide.RIGHT;
-            }
-            else
-            {
-                if (tc > bc && tc > lc && tc > rc)
-                    return CollisionSide.TOP;
-                if (bc > tc && bc > lc && bc > rc)
-                    return CollisionSide.BOTTOM;
-                if (lc > bc && lc > tc && lc > rc)
-                    return CollisionSide.LEFT;
-                if (rc > bc && rc > lc && rc > tc)
-                    return CollisionSide.RIGHT;
-            }
-
-            
+            if (tc > bc && tc > lc && tc > rc)
+                return CollisionSide.TOP;
+            if (bc > tc && bc > lc && bc > rc)
+                return CollisionSide.BOTTOM;
+            if (lc > bc && lc > tc && lc > rc)
+                return CollisionSide.LEFT;
+            if (rc > bc && rc > lc && rc > tc)
+                return CollisionSide.RIGHT;
             return CollisionSide.UNKNOWN;
         }
     }

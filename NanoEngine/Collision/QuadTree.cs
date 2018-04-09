@@ -65,6 +65,7 @@ namespace NanoEngine.Collision
         /// </summary>
         public void Clear()
         {
+            // Part of hack to draw quad tree
             Draw();
             // Delete the old list by overwriting it with a new one
             _assets = null;
@@ -90,6 +91,7 @@ namespace NanoEngine.Collision
             // Draws each side of the quad tree
             if (DrawQuadTrees)
             {
+                // Draw a line between each of the corners of the quad tree
                MyRenderManager.Draw(
                     MyRenderManager.BlankTexture,
                     new Rectangle(_bounds.X, _bounds.Y, _bounds.Width, 3),
@@ -254,15 +256,20 @@ namespace NanoEngine.Collision
         /// </summary>
         public void Split()
         {
+            // Get the width and the height of what the sub nodes should be by dividing
+            // the current width/hight by 2
             int subNodeWidth = (int)(_bounds.Width / 2);
             int subNodeHeight = (int)(_bounds.Height / 2);
 
+            // Create top left node
             _nodes[0] = new QuadTree(
                 _level + 1, _maxObjects, _maxLevels,
                 new Rectangle(
                     _bounds.X, _bounds.Y, subNodeWidth, subNodeHeight
                 )
             );
+
+            // Create top right node
             _nodes[1] = new QuadTree(
                 _level + 1, _maxObjects, _maxLevels,
                 new Rectangle(
@@ -270,6 +277,8 @@ namespace NanoEngine.Collision
                     subNodeHeight
                 )
             );
+
+            // Create bot left node
             _nodes[2] = new QuadTree(
                 _level + 1, _maxObjects, _maxLevels,
                 new Rectangle(
@@ -277,6 +286,8 @@ namespace NanoEngine.Collision
                     subNodeHeight
                 )
             );
+
+            // Create bot right node
             _nodes[3] = new QuadTree(
                 _level + 1, _maxObjects, _maxLevels,
                 new Rectangle(
@@ -313,6 +324,7 @@ namespace NanoEngine.Collision
                               asset.Bounds.X + asset.Bounds.Width < _bounds.X + _bounds.Width);
 
             // Check to see it the asset fits into any of the quadrants
+            // if it does then return the correct index
             if (topNode && leftNode)
                 index = 0;
             else if (topNode && rightNode)
@@ -329,7 +341,7 @@ namespace NanoEngine.Collision
         /// Gets the index of all the quadrants that the passed in asset is in
         /// </summary>
         /// <param name="asset">The asset to check against</param>
-        /// <returns></returns>
+        /// <returns>A list of all the qudrants the asset is in</returns>
         private IList<int> GetQuadrantsIn(IAsset asset)
         {
             // Create an empty list

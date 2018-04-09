@@ -73,9 +73,11 @@ namespace NanoEngine.ObjectManagement.Managers
         /// <param name="uName">The unique name that this asset should have</param>
         private static void AddLevelAsset(int id, Type assetType, Type aiType, string uName, bool offset)
         {
+            // Create the possible assets list only when we need it
             if (_possibleAssets == null)
                 _possibleAssets = new Dictionary<int, Tuple<Type, Type, string, bool>>();
 
+            // Populate the id with the correct data
             _possibleAssets[id] = new Tuple<Type, Type, string, bool>(assetType, aiType, uName, offset);
         }
 
@@ -105,10 +107,13 @@ namespace NanoEngine.ObjectManagement.Managers
             var file = File.OpenText("Content/" + fileName);
             TileMap tileMap = (TileMap)s.Deserialize(file, typeof(TileMap));
 
+            // Set the level bounds
             LevelBounds = new Rectangle(0, 0, (tileMap.Width * tileMap.TileWidth), (tileMap.Height * tileMap.TileHeight));
 
+            // Loop through each layer in the tile map
             foreach (Layer layer in tileMap.Layers)
             {
+                // Set x and y to 0
                 int x = 0;
                 int y = 0;
 
@@ -147,7 +152,6 @@ namespace NanoEngine.ObjectManagement.Managers
                         // so it fits in the center
                         if ((asset.Bounds.Width != tileMap.TileWidth || asset.Bounds.Height != tileMap.TileHeight) && _possibleAssets[layer.Data[i]].Item4)
                         {
-                            Console.WriteLine(asset.UniqueName + " " + (tileMap.TileWidth - asset.Bounds.Width));
                             asset.SetPosition(new Vector2(
                                 asset.Position.X + ((tileMap.TileWidth - asset.Bounds.Width) * 0.5f),
                                 asset.Position.Y + (tileMap.TileHeight - asset.Bounds.Height)
@@ -164,10 +168,12 @@ namespace NanoEngine.ObjectManagement.Managers
                             aiComponents[uName].InitialiseAiComponent(asset);
                         }
                     }
+                    // Incriment the colloum
                     x++;
                 }
             }
 
+            // return the current uid
             return uId;
         }
     }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using NanoEngine.Core.Interfaces;
-using NanoEngine.Core.States;
 using NanoEngine.Events;
 using NanoEngine.ObjectManagement.Managers;
 using System;
@@ -17,17 +16,7 @@ namespace NanoEngine.Core.Managers
         //private static field to hold the instace of Game1
         private static Game _game1;
 
-        //private boolean to hold the game state
-        CurrentGameState gameState;
-
-        public GameTime gameTime { get; private set; }
-
-        //public getter for the game state
-        public CurrentGameState GameState
-        {
-            get { return gameState; }
-            set { gameState = value; }
-        }
+        public GameTime GameTime { get; private set; }
 
         //private key to hold the pause key
         private Keys pauseButton;
@@ -60,7 +49,7 @@ namespace NanoEngine.Core.Managers
         /// <param name="gameTime">The current time of the game</param>
         public override void Update(GameTime gameTime)
         {
-            this.gameTime = gameTime;
+            this.GameTime = gameTime;
             ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager).Update(this);
         }
 
@@ -94,8 +83,7 @@ namespace NanoEngine.Core.Managers
         /// </summary>
         public override void Initialize()
         {
-            gameState = CurrentGameState.running;
-            pauseButton = Keys.P;
+
         }
     }
 }

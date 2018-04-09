@@ -90,7 +90,7 @@ namespace NanoEngine.Collision
             // Draws each side of the quad tree
             if (DrawQuadTrees)
             {
-                MyRenderManager.Draw(
+               MyRenderManager.Draw(
                     MyRenderManager.BlankTexture,
                     new Rectangle(_bounds.X, _bounds.Y, _bounds.Width, 3),
                     Color.White

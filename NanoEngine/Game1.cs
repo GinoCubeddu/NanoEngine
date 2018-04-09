@@ -15,10 +15,6 @@ using NanoEngine.Events.Handlers;
 using NanoEngine.ObjectManagement;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.Physics;
-using NanoEngine.Testing;
-using NanoEngine.Testing.Assets;
-using NanoEngine.Testing.Physics;
-using NanoEngine.Testing.Tiles;
 using NanoEngine.Collision;
 
 namespace NanoEngine
@@ -56,13 +52,6 @@ namespace NanoEngine
         protected override void Initialize()
         {
             this.IsMouseVisible = true;
-            LevelLoader.AddLevelAsset<DirtTile, TileMind>(1);
-            LevelLoader.AddLevelAsset<GrassTile, TileMind>(2);
-            LevelLoader.AddLevelAsset<ChestAsset>(3);
-            LevelLoader.AddLevelAsset<CoinAsset>(4);
-            LevelLoader.AddLevelAsset<TestAsset, TestMind>(5, "player");
-           // PhysicsManager.Inject(typeof(IReflect), PhysicsMethods.Reflect);
-            PhysicsManager.Inject(typeof(IBounce), PhysicsMethods.Bounce);
 
             Entity.DrawAssetBounds = true;
 
@@ -84,10 +73,6 @@ namespace NanoEngine
             // Get the scenemanager from the service locator
             ISceneManager sceneManager = ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager);
             QuadTree.DrawQuadTrees = true;
-            // Use the scenemanager to set up screens
-            //sceneManager.AddScreen<PhysicsScreen>("physics");
-            sceneManager.AddScreen<TestGameScreen>("level1");
-            sceneManager.AddScreen<TestGameScreen1>("level2");
 
             base.Initialize();
         }

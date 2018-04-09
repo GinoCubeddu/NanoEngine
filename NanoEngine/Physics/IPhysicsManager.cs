@@ -5,7 +5,7 @@ using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Physics
 {
-    internal interface IPhysicsManager
+    public  interface IPhysicsManager
     {
         /// <summary>
         /// Updates the physics on all the assets that are passed in

@@ -7,7 +7,6 @@ using NanoEngine.ObjectManagement.Interfaces;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.ObjectTypes.LevelContents;
 using Newtonsoft.Json;
-using NanoEngine.Testing.Assets;
 
 namespace NanoEngine.ObjectManagement.Managers
 {

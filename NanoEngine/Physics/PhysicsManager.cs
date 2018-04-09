@@ -9,7 +9,7 @@ using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.Physics
 {
-    internal class PhysicsManager : IPhysicsManager
+    public class PhysicsManager : IPhysicsManager
     {
 
         private static IDictionary<Type, Action<IAsset, IAsset, Tuple<NanoCollisionEventArgs, NanoCollisionEventArgs>>> _physicsMethods =

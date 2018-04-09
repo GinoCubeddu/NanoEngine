@@ -250,6 +250,7 @@ namespace NanoEngine.Collision
             return _quadrantList;
         }
 
+
         /// <summary>
         /// Method to split the quadtree into another quad tree by creating
         /// 4 sub quads as child nodes

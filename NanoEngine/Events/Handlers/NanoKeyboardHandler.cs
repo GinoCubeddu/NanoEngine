@@ -38,14 +38,17 @@ namespace NanoEngine.Events.Handlers
             //If the state has chaged
             if (_currentKeyState != _prevKeyState)
             {
+                // Get the currently pressed keys
                 IList<Keys> pressedKeys = GetPressedKeys(
                     _currentKeyState.GetPressedKeys(), _prevKeyState.GetPressedKeys()
                 );
 
+                // Get the released keys
                 IList<Keys> releasedKeys = GetReleasedKeys(
                     _currentKeyState.GetPressedKeys(), _prevKeyState.GetPressedKeys()
                 );
 
+                // Add them to the dictonary
                 if (pressedKeys.Count > 0)
                     k.Add(KeyStates.Pressed, pressedKeys);
 
@@ -87,9 +90,13 @@ namespace NanoEngine.Events.Handlers
         /// <returns>The list containing the released keys</returns>
         private IList<Keys> GetReleasedKeys(IList<Keys> currentKeys, IList<Keys> previousKeys)
         {
+            // Creates a new list
             IList<Keys> releasedKeys = new List<Keys>();
+
+            // Loops through the previous keys
             foreach (Keys key in previousKeys)
             {
+                // If the current keys do not contain the previous key then its been released
                 if (!currentKeys.Contains(key))
                     releasedKeys.Add(key);
             }

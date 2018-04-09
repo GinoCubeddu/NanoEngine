@@ -15,13 +15,16 @@ using System.Threading.Tasks;
 
 namespace NanoEngine.Testing.Assets
 {
-    class BallAsset : PhysicsEntity, IAABBColidable, IBounce
+    class BallAsset : PhysicsEntity, ISATColidable, IBounce
     {
+        public int CollidableId => 6;
+
         public override void Initilise()
         {
+            IsMovable = true;
             SetTexture(ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager)
                .LoadResource<Texture2D>("ball2"));
-           Gravity = new Vector2(0, 0.5f);
+            Gravity = Vector2.Zero;
         }
     }
 }

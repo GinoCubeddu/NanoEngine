@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.Collision;
 using NanoEngine.Core.Locator;
 
 namespace NanoEngine.Core.Managers
@@ -22,6 +23,9 @@ namespace NanoEngine.Core.Managers
         private static SpriteBatch spriteBatch;
 
         private IDictionary<Color, Texture2D> _blankTextures;
+
+        // Private filed to tell if we are drawing
+        private bool _drawing;
 
         // Blank texture used for drwaing items such as lines
         private Texture2D _blankTexture;
@@ -56,7 +60,9 @@ namespace NanoEngine.Core.Managers
         {
             if (Created)
                 throw new Exception("Only one instance of the RenderManager may be created");
+            QuadTree.MyRenderManager = this;
             _game1 = game;
+            _drawing = false;
             RenderBounds = GetGD.Viewport.Bounds;
             RenderBounds = GetGD.Viewport.Bounds;
             _blankTexture = new Texture2D(GetGD, 1, 1);
@@ -199,6 +205,7 @@ namespace NanoEngine.Core.Managers
         /// </summary>
         public void StartDraw()
         {
+            _drawing = true;
             spriteBatch.Begin();
         }
 
@@ -209,6 +216,7 @@ namespace NanoEngine.Core.Managers
         /// <param name="blendState">Blending options</param>
         public void StartDraw(SpriteSortMode sortMode, BlendState blendState)
         {
+            _drawing = true;
             spriteBatch.Begin(sortMode, blendState);
         }
 
@@ -222,6 +230,7 @@ namespace NanoEngine.Core.Managers
         /// <param name="rasterizerState">Rasterization options</param>
         public void StartDraw(SpriteSortMode sortMode, BlendState blendState, SamplerState samplerState, DepthStencilState depthStencilState, RasterizerState rasterizerState)
         {
+            _drawing = true;
             spriteBatch.Begin(sortMode, blendState, samplerState, depthStencilState, rasterizerState);
         }
 
@@ -236,6 +245,7 @@ namespace NanoEngine.Core.Managers
         /// <param name="effect">Effect options</param>
         public void StartDraw(SpriteSortMode sortMode, BlendState blendState, SamplerState samplerState, DepthStencilState depthStencilState, RasterizerState rasterizerState, Effect effect)
         {
+            _drawing = true;
             spriteBatch.Begin(sortMode, blendState, samplerState, depthStencilState, rasterizerState, effect);
         }
 
@@ -251,6 +261,7 @@ namespace NanoEngine.Core.Managers
         /// <param name="transformMatrix">Transformation matrix for scale, rotate, translate options.</param>
         public void StartDraw(SpriteSortMode sortMode, BlendState blendState, SamplerState samplerState, DepthStencilState depthStencilState, RasterizerState rasterizerState, Effect effect, Matrix transformMatrix)
         {
+            _drawing = true;
             spriteBatch.Begin(sortMode, blendState, samplerState, depthStencilState, rasterizerState, effect, transformMatrix);
         }
 
@@ -259,7 +270,11 @@ namespace NanoEngine.Core.Managers
         /// </summary>
         public void EndDraw()
         {
-            spriteBatch.End();
+            if (_drawing)
+            {
+                _drawing = false;
+                spriteBatch.End();
+            }
         }
 
         /// <summary>

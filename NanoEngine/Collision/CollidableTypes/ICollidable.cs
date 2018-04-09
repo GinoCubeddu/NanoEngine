@@ -7,6 +7,7 @@ namespace NanoEngine.Collision.CollidableTypes
 {
     public interface ICollidable
     {
+        // An ID to identify the type of collidable
         int CollidableId { get; }
     }
 }

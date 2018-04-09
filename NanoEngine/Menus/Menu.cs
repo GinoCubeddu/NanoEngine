@@ -15,6 +15,10 @@ namespace NanoEngine.Menus
 {
     public class Menu : IKeyboardWanted, IMouseWanted
     {
+        // NOTE: THIS CLASS IS PENDING REFACTOR AND AS SUCH WILL BE COMMENTED ON REFACTOR
+
+
+
         private IList<IMenuItem> menuList;
 
         private int menuPosition;

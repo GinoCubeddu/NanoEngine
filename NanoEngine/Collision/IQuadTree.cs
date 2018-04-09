@@ -27,7 +27,7 @@ namespace NanoEngine.Collision
         /// paramater is set to true. Defaults to false
         /// </summary>
         /// <param name="renderManager">The manager which will do the drawing</param>
-        void Draw(IRenderManager renderManager);
+        void Draw();
 
         /// <summary>
         /// Method that inserts the passed in asset to the correct level

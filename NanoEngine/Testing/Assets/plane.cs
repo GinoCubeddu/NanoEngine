@@ -14,6 +14,8 @@ namespace NanoEngine.Testing.Assets
 {
     class plane : Entity, ISATColidable
     {
+        public int CollidableId => 8;
+
         /// <summary>
         /// Method to initalise the the entity
         /// </summary>

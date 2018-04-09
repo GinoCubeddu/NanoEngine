@@ -41,6 +41,7 @@ namespace NanoEngine.StateManagement.Transitions
             if (_keyboardTransitions == null)
                 _keyboardTransitions = new List<KeyboardStateTransition>();
 
+            // Add the new state
             _keyboardTransitions.Add(new KeyboardStateTransition(
                 stateTo, keyboardType, keys
             ));
@@ -53,6 +54,7 @@ namespace NanoEngine.StateManagement.Transitions
         /// <returns>The type of the next state if transition requirements met otherwise null</returns>
         public string CheckKeyboardTransitions(NanoKeyboardEventArgs keyboardEvent)
         {
+            // If there are any keyboard transistions
             if (_keyboardTransitions == null)
                 return null;
 
@@ -85,6 +87,7 @@ namespace NanoEngine.StateManagement.Transitions
         /// <returns>The type of the next state if transition requirements met otherwise null</returns>
         public string CheckMethodTransitions()
         {
+            // Only check if there are method transitions
             if (_methodTransitions == null)
                 return null;
 

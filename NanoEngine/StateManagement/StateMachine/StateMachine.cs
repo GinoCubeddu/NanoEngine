@@ -57,8 +57,11 @@ namespace NanoEngine.StateManagement.StateMachine
         /// <param name="stateTo">The state to transition to</param>
         public void AddKeyboardTransition(KeyStates wantedState, IList<Keys> keysRequired, string stateFrom, string stateTo)
         {
+            // Make sure the transition is valid
             ValidateTransition(stateFrom, stateTo);
+            // Check that the Transition handler exsists
             CheckTransitionHandlerExsists(stateFrom);
+            // Add the transition
             _stateTransitions[stateFrom].AddKeyboardTransition(stateTo, wantedState, keysRequired);
         }
 
@@ -95,8 +98,13 @@ namespace NanoEngine.StateManagement.StateMachine
         /// <param name="expectedOutcome">Wether the method shold return true or false</param>
         public void AddMethodCheckTransition(Func<bool> methodBoolCheck, string stateFrom, string stateTo, bool expectedOutcome)
         {
+            // Make sure the transition is valid
             ValidateTransition(stateFrom, stateTo);
+
+            // Check that the Transition handler exsists
             CheckTransitionHandlerExsists(stateFrom);
+
+            // Add the transition
             _stateTransitions[stateFrom].AddMethodTransition(stateTo, methodBoolCheck, expectedOutcome);
         }
 
@@ -107,8 +115,13 @@ namespace NanoEngine.StateManagement.StateMachine
         /// <param name="stateTo">The state to transition to</param>
         public void AddSuccessTransition(string stateFrom, string stateTo)
         {
+            // Make sure the transition is valid
             ValidateTransition(stateFrom, stateTo);
+
+            // Check that the Transition handler exsists
             CheckTransitionHandlerExsists(stateFrom);
+
+            // Add the transition
             _stateTransitions[stateFrom].SuccessState = stateTo;
         }
 
@@ -121,8 +134,13 @@ namespace NanoEngine.StateManagement.StateMachine
         /// <param name="collidableType">The type to collide with to transition</param>
         public void AddCollisionTransition(string stateFrom, string stateTo, Type collidableType)
         {
+            // Make sure the transition is valid
             ValidateTransition(stateFrom, stateTo);
+
+            // Check that the Transition handler exsists
             CheckTransitionHandlerExsists(stateFrom);
+
+            // Add the transition
             _stateTransitions[stateFrom].AddCollisionTransition(stateTo, collidableType);
         }
 
@@ -134,10 +152,9 @@ namespace NanoEngine.StateManagement.StateMachine
         /// <param name="stateArguments">Holds any arguments the mind has passed to the statemachine</param>
         public void HandleCollision(NanoCollisionEventArgs collisionArgs, IDictionary<string, object> stateArguments)
         {
+            // if there is a transition handler for the key then queiry it and change state based on result
             if (_stateTransitions.Keys.Contains(currentState))
-            {
                 ChangeState(_stateTransitions[currentState].CheckCollisionTransitions(collisionArgs), stateArguments);
-            }
         }
 
         /// <summary>
@@ -158,10 +175,9 @@ namespace NanoEngine.StateManagement.StateMachine
         /// <param name="stateArguments">Holds any arguments the mind has passed to the statemachine</param>
         public void HandleKeyboardInput(NanoKeyboardEventArgs keyboardArgs, IDictionary<string, object> stateArguments)
         {
+            // if there is a transition handler for the key then queiry it and change state based on result
             if (_stateTransitions.Keys.Contains(currentState))
-            {
                 ChangeState(_stateTransitions[currentState].CheckKeyboardTransitions(keyboardArgs), stateArguments);
-            }
         }
 
         /// <summary>
@@ -200,8 +216,13 @@ namespace NanoEngine.StateManagement.StateMachine
         /// </summary>
         public void Update()
         {
+            // Check success states
             CheckSuccessTransition();
+
+            // Check method states
             CheckMethodTransition();
+
+            // Update the current state
             _avaliableStates[currentState].Update(_owner);
         }
 
@@ -251,6 +272,7 @@ namespace NanoEngine.StateManagement.StateMachine
         /// <param name="stateType">The name of the state</param>
         private void CheckTransitionHandlerExsists(string stateType)
         {
+            // If a handler does not exsist then create it
             if(!_stateTransitions.ContainsKey(stateType))
                 _stateTransitions.Add(stateType, new TransitionHolder());
         }
@@ -262,6 +284,7 @@ namespace NanoEngine.StateManagement.StateMachine
         /// </summary>
         private void CheckMethodTransition()
         {
+            // if there is a transition handler for the key then queiry it and change state based on result
             if (_stateTransitions.Keys.Contains(currentState))
                 ChangeState(_stateTransitions[currentState].CheckMethodTransitions(), null);
         }
@@ -276,8 +299,10 @@ namespace NanoEngine.StateManagement.StateMachine
             // Only change the state if the passed in state is not null
             if (stateTo != null)
             {
+                // exit the current state
                 _avaliableStates[currentState].Exit(_owner);
                 currentState = stateTo;
+                // enter the next state
                 _avaliableStates[currentState].Enter(_owner, stateArguments);
             }
         }

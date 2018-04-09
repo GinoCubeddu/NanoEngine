@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NanoEngine.Core.Managers;
 using NanoEngine.ObjectTypes.Assets;
-using NanoEngine.Testing.Assets;
 
 namespace NanoEngine.Core.Camera
 {

@@ -14,7 +14,7 @@
     <MonoGamePlatform>WindowsGL</MonoGamePlatform>
     <MonoGameContentBuilderExe>
     </MonoGameContentBuilderExe>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -73,7 +73,6 @@
     <Compile Include="Core\Managers\SceneManager.cs" />
     <Compile Include="Core\Managers\SoundManager.cs" />
     <Compile Include="Core\Managers\UpdateManager.cs" />
-    <Compile Include="Core\States\CurrentGameState.cs" />
     <Compile Include="Events\Args\NanoCollisionEventArgs.cs" />
     <Compile Include="Events\Args\NanoKeyboardEventArgs.cs" />
     <Compile Include="Events\Args\NanoMouseEventArgs.cs" />
@@ -134,44 +133,6 @@
     <Compile Include="StateManagement\Transitions\KeyboardStateTransition.cs" />
     <Compile Include="StateManagement\Transitions\MethodStateTransition.cs" />
     <Compile Include="StateManagement\Transitions\TransitionHolder.cs" />
-    <Compile Include="Testing\Assets\BallAsset.cs" />
-    <Compile Include="Testing\Assets\BallMind.cs" />
-    <Compile Include="Testing\Assets\BallTwoAsset.cs" />
-    <Compile Include="Testing\Assets\BallTwoMind.cs" />
-    <Compile Include="Testing\Assets\BlankMind.cs" />
-    <Compile Include="Testing\Assets\CoinMind.cs" />
-    <Compile Include="Testing\Assets\Hex.cs" />
-    <Compile Include="Testing\Assets\HexMind.cs" />
-    <Compile Include="Testing\Assets\Wall.cs" />
-    <Compile Include="Testing\Assets\WallMind.cs" />
-    <Compile Include="Testing\PhysicsScreen.cs" />
-    <Compile Include="Testing\Physics\IBounce.cs" />
-    <Compile Include="Testing\Physics\IReflect.cs" />
-    <Compile Include="Testing\Physics\PhysicsMethods.cs" />
-    <Compile Include="Testing\Physics\vector2.cs" />
-    <Compile Include="Testing\Assets\plane.cs" />
-    <Compile Include="Testing\Assets\PlaneMind.cs" />
-    <Compile Include="Testing\Assets\saw.cs" />
-    <Compile Include="Testing\RedRunner.cs" />
-    <Compile Include="Testing\States\ChaseState.cs" />
-    <Compile Include="Testing\States\CheerState.cs" />
-    <Compile Include="Testing\States\HorizontalState.cs" />
-    <Compile Include="Testing\States\JumpState.cs" />
-    <Compile Include="Testing\TestScreen2.cs" />
-    <Compile Include="Testing\TestGameScreen1.cs" />
-    <Compile Include="Testing\Tiles\ChestAsset.cs" />
-    <Compile Include="Testing\Tiles\DirtTile.cs" />
-    <Compile Include="Testing\Tiles\CoinAsset.cs" />
-    <Compile Include="Testing\Tiles\GrassTile.cs" />
-    <Compile Include="Testing\States\IdleState.cs" />
-    <Compile Include="Testing\States\PatrolState.cs" />
-    <Compile Include="Testing\Assets\TestAsset.cs" />
-    <Compile Include="Testing\TestGameScreen.cs" />
-    <Compile Include="Testing\Assets\TestMind.cs" />
-    <Compile Include="Testing\States\WalkingState.cs" />
-    <Compile Include="Testing\Assets\ZombieAsset.cs" />
-    <Compile Include="Testing\Assets\ZombieMind.cs" />
-    <Compile Include="Testing\Tiles\TileMind.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">

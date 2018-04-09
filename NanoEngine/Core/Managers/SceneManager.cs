@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NanoEngine.Core.Interfaces;
-using NanoEngine.Core.States;
 using NanoEngine.ObjectManagement.Managers;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.ObjectTypes.General;

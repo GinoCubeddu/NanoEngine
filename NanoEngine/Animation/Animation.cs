@@ -90,7 +90,7 @@ namespace NanoEngine.Animation
             // using the information provided
             for (int i = 0; i < animationFrameCount; i++)
             {
-                _states[stateName].AddFrame(new Rectangle(startX + i * frameWidth, yPos, frameWidth, frameHeight));
+                _states[stateName].AddFrame(new Rectangle(startX + i * frameWidth, yPos * frameHeight, frameWidth, frameHeight));
             }
         }
 

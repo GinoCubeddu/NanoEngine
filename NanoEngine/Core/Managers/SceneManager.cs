@@ -181,6 +181,7 @@ namespace NanoEngine.Core.Managers
         /// <param name="renderManager">Provides a refrence to the renderManager.</param>
         public void Draw(IRenderManager renderManager)
         {
+            renderManager.EndDraw();
             IList<IGameScreen> screens = _updatingScreens.Values.ToList();
             foreach (IGameScreen screen in screens)
             {
@@ -192,7 +193,6 @@ namespace NanoEngine.Core.Managers
                 else
                 renderManager.StartDraw(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
                 screen.DrawScreen(renderManager);
-                renderManager.EndDraw();
             }
         }
     }

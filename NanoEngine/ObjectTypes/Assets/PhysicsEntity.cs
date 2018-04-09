@@ -44,9 +44,6 @@ namespace NanoEngine.ObjectTypes.Assets
         public virtual void ApplyImpluse(Vector2 closingVelocity)
         {
             Velocity += closingVelocity * Resitition;
-            //Console.WriteLine("ApplyImpulse velocity " + Velocity);
-            //Console.WriteLine("ApplyImpulse closingVelocity " + closingVelocity);
-            //Console.WriteLine("ApplyImpulse Resitition " + Resitition);
         }
     }
 }

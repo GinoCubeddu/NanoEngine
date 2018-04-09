@@ -28,7 +28,7 @@ namespace NanoEngine.Animation
         /// <summary>
         /// Returns how many frames the animation has
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The amount of frames within the animation</returns>
         public int GetFrameCount()
         {
             return _frames.Count;
@@ -60,8 +60,8 @@ namespace NanoEngine.Animation
         /// <summary>
         /// Returns the requested frame
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">The id of the requested frame</param>
+        /// <returns>The requested frame</returns>
         public Rectangle GetFrame(int id)
         {
             return _frames[id];

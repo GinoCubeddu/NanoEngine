@@ -11,12 +11,12 @@ namespace NanoEngine.ObjectManagement.Managers
     public class AssetFactory : IAssetFactory
     {
         /// <summary>
-        /// Returns a new entity that can be used outside of the entity list
+        /// Returns a new asset of type T
         /// </summary>
-        /// <typeparam name="T">Type of entity</typeparam>
-        /// <param name="uName">The name to give the entity</param>
+        /// <typeparam name="T">Type of asset</typeparam>
+        /// <param name="uName">The name to give the asset</param>
         /// <param name="position">Vector2 position of the asset</param>
-        /// <returns>a newly created entity</returns>
+        /// <returns>a newly created asset</returns>
         public IAsset RetriveNewAsset<T>(string uName, Vector2 position) where T : IAsset, new()
         {
             //Create new entity
@@ -27,6 +27,13 @@ namespace NanoEngine.ObjectManagement.Managers
             return asset;
         }
 
+        /// <summary>
+        /// Returns a new asset of type assetType
+        /// </summary>
+        /// <param name="assetType">Type of asset</param>
+        /// <param name="uName">The name to give the asset</param>
+        /// <param name="position">Vector2 position of the asset</param>
+        /// <returns>a newly created as
         public IAsset RetriveNewAsset(Type assetType, string uName, Vector2 position)
         {
             IAsset asset = (IAsset) Activator.CreateInstance(assetType);
@@ -36,10 +43,13 @@ namespace NanoEngine.ObjectManagement.Managers
 
         private void InitiliseAsset(IAsset asset, string uName, Vector2 position)
         {
+            // set the asset pos
             asset.SetPosition(position);
 
+            // init the asset
             asset.Initilise();
 
+            // set its u data
             asset.SetUniqueData(uName);
         }
     }

@@ -286,11 +286,15 @@ namespace NanoEngine.ObjectManagement.Managers
         /// <param name="filename">The name of the json file within the Content directory</param>
         public void LoadLevel(string filename)
         {
-            // THIS IS BREAKING SINGLE RESPONSIBILTY NEEDS REFACTORING
+            // Create a new  level loader
             ILevelLoader loader = new LevelLoader();
+            // Load the tile map and return the latest uid
             _uid = loader.LoadTileMap(filename, _assetDictionary, _aiComponents, _assetFactory, _aiFactory, _uid);
+
+            // Recreate the asset manager with the new bounds
             _collisionManager = new CollisionManager(loader.LevelBounds);
 
+            // Pass the asset manager to each ai component -- SHOULD NOT BE HERE
             foreach (IAiComponent aiComponent in _aiComponents.Values)
             {
                 if (aiComponent is IAssetmanagerNeeded)
@@ -304,14 +308,16 @@ namespace NanoEngine.ObjectManagement.Managers
         /// </summary>
         public void DrawAssets(IRenderManager rendermanager)
         {
+            // Create a new asset list populated by the render filter or
+            // the current asset list so we can loop through without worrying
+            // about any assets being added/removed to the current list
             IList<IAsset> assets;
-            // loop through all assets and update them
             if (_renderFilter != null)
                 assets = _renderFilter.SortAssetsInRenderZone(_assetDictionary).Values.ToList();
             else
                 assets = _assetDictionary.Values.ToList();
 
-            // update the physics manager
+            // loop through all assets and draw them
             foreach (IAsset asset in assets)
                 asset.Draw(rendermanager);
         }
@@ -322,13 +328,16 @@ namespace NanoEngine.ObjectManagement.Managers
         /// <param name="updateManager">an instance of the update manager</param>
         public void UpdateAssets(IUpdateManager updateManager)
         {
+            // Create a dict for all the renderable assets and AI
             IDictionary<string, IAsset> renderableAssets = new Dictionary<string, IAsset>(_assetDictionary);
             IDictionary<string, IAiComponent> renderableAI = new Dictionary<string, IAiComponent>(_aiComponents);
 
             // If we have a render filter use it
             if (_renderFilter != null)
             {
+                // Populate the asset dict from the render filter
                 renderableAssets = _renderFilter.SortAssetsInRenderZone(new Dictionary<string, IAsset>(_assetDictionary));
+                // Populate the ai dict from the render filter
                 renderableAI = _renderFilter.SortAiInRenderZone(new Dictionary<string, IAiComponent>(_aiComponents));
             }
 
@@ -338,6 +347,7 @@ namespace NanoEngine.ObjectManagement.Managers
                 renderableAI
             );
 
+            // Loop through the renderable assets and update them
             foreach (IAiComponent aiComponent in renderableAI.Values)
                 aiComponent.Update(updateManager);
 

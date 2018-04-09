@@ -45,6 +45,8 @@ namespace NanoEngine.Core.Managers
                 throw new KeyNotFoundException(
                     "ERROR: sound with the id of " + songName + " not found! Have you loaded it?"
                 );
+
+            // Use the media player to start the song
             MediaPlayer.Play(_availableSongs[songName]);
             MediaPlayer.IsRepeating = loop;
         }
@@ -108,6 +110,8 @@ namespace NanoEngine.Core.Managers
                 throw new KeyNotFoundException(
                     "ERROR: sound with the id of " + soundName + " not found! Have you loaded it?"
                 );
+
+            // Start the sound effect
             _availableSoundEffectInstances[soundName].IsLooped = loop;
             _availableSoundEffectInstances[soundName].Play();
         }
@@ -124,6 +128,7 @@ namespace NanoEngine.Core.Managers
                 throw new KeyNotFoundException(
                     "ERROR: sound with the id of " + soundName + " not found! Have you loaded it?"
                 );
+            // Play the base sound effect
             _avaliableSoundEffects[soundName].Play();
         }
 
@@ -138,6 +143,7 @@ namespace NanoEngine.Core.Managers
                 throw new KeyNotFoundException(
                     "ERROR: sound with the id of " + soundName + " not found! Have you loaded it?"
                 );
+            // Pause the sound effect
             _availableSoundEffectInstances[soundName].Pause();
         }
 
@@ -152,6 +158,7 @@ namespace NanoEngine.Core.Managers
                 throw new KeyNotFoundException(
                     "ERROR: sound with the id of " + soundName + " not found! Have you loaded it?"
                 );
+            // stop the sound effect
             _availableSoundEffectInstances[soundName].Stop();
         }
 

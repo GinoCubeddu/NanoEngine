@@ -108,7 +108,7 @@ namespace NanoEngine.ObjectTypes.General
         /// <param name="updateManager">Provides a refrence to the updateManager.</param>
         public void UpdateScreen(IUpdateManager updateManager)
         {
-            LevelTimer += updateManager.gameTime.ElapsedGameTime.TotalSeconds;
+            LevelTimer += updateManager.GameTime.ElapsedGameTime.TotalSeconds;
             EventManager.Update(updateManager);
             _assetManager.UpdateAssets(updateManager);
             // If we have a camera then update it

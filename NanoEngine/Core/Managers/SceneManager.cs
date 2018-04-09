@@ -131,11 +131,16 @@ namespace NanoEngine.Core.Managers
             // Only attempt to remove the screen 
             if (_avaliableScreens.ContainsKey(name))
             {
+                // Mark the screen for deletion
                 _screensMarkedForDeletion.Add(_avaliableScreens[name]);
+                // remove from the avliable screens
                 _avaliableScreens.Remove(name);
-            } else if (_updatingScreens.ContainsKey(name))
+            } // If the screen was updating and not in avaliable screens
+            else if (_updatingScreens.ContainsKey(name))
             {
+                // mark screen for deletion
                 _screensMarkedForDeletion.Add(_updatingScreens[name]);
+                // Remove from the updating screens
                 _updatingScreens.Remove(name);
             }
         }
@@ -168,11 +173,14 @@ namespace NanoEngine.Core.Managers
         {
             // Check to see if any screens are waiting to be deleted
             CheckForScreensForDeletion();
+
+            // Get a copy of the current scenes incase we need to edit the main one
+            // mid loop
             IList<IGameScreen> screens = _updatingScreens.Values.ToList();
+
+            // Call update on each scene
             foreach (IGameScreen screen in screens)
-            {
                 screen.UpdateScreen(updateManager);
-            }
         }
 
         /// <summary>
@@ -181,17 +189,29 @@ namespace NanoEngine.Core.Managers
         /// <param name="renderManager">Provides a refrence to the renderManager.</param>
         public void Draw(IRenderManager renderManager)
         {
+            // Call end draw first (part of quad tree draw hack)
             renderManager.EndDraw();
+
+            // Get a copy of the current scenes incase we need to edit the main one
+            // mid loop
             IList<IGameScreen> screens = _updatingScreens.Values.ToList();
+            // Loop through each screen and call draw
             foreach (IGameScreen screen in screens)
             {
+                // If we have a camera start the draw for the camera
                 if (screen.Camera2D != null)
+                {
                     renderManager.StartDraw(
                         SpriteSortMode.Deferred, BlendState.AlphaBlend, null,
                         null, null, null, screen.Camera2D.Transform
                     );
+                }
                 else
-                renderManager.StartDraw(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+                {
+                    // If we dont have camera start draw normaly
+                    renderManager.StartDraw(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+                }
+                // Call Draw screen
                 screen.DrawScreen(renderManager);
             }
         }

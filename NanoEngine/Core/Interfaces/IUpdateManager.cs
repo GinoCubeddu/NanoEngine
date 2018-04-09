@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using NanoEngine.Core.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +10,9 @@ namespace NanoEngine.Core.Interfaces
     public interface IUpdateManager
     {
         /// <summary>
-        /// Public getter for the current game state
+        /// Public getter for the current game time
         /// </summary>
-        CurrentGameState GameState { get; set; }
-
-        GameTime gameTime { get; }
+        GameTime GameTime { get; }
 
         /// <summary>
         /// Public setter for the pause button

@@ -19,6 +19,7 @@ using NanoEngine.Testing;
 using NanoEngine.Testing.Assets;
 using NanoEngine.Testing.Physics;
 using NanoEngine.Testing.Tiles;
+using NanoEngine.Collision;
 
 namespace NanoEngine
 {
@@ -79,11 +80,14 @@ namespace NanoEngine
             ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager)
                 .LoadSound("soundTrack", "Desert Theme");
 
-            ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
-                .AddScreen<TestGameScreen>("level1");
 
-            ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager)
-                .AddScreen<TestGameScreen1>("level2");
+            // Get the scenemanager from the service locator
+            ISceneManager sceneManager = ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager);
+            QuadTree.DrawQuadTrees = true;
+            // Use the scenemanager to set up screens
+            //sceneManager.AddScreen<PhysicsScreen>("physics");
+            sceneManager.AddScreen<TestGameScreen>("level1");
+            sceneManager.AddScreen<TestGameScreen1>("level2");
 
             base.Initialize();
         }

@@ -49,9 +49,11 @@ namespace NanoEngine.Collision.CollisionTypes
 
         private NanoCollisionEventArgs GenerateCollisionEventArgs(IAsset asset1, IAsset asset2)
         {
+            // Set the distance and collision side to 0
             Vector2 distance = Vector2.Zero;
             CollisionSide collisionSide;
 
+            // Get the correct collision side
             collisionSide = GetCollisionSide(asset1, asset2);
 
 
@@ -96,35 +98,29 @@ namespace NanoEngine.Collision.CollisionTypes
 
         public CollisionSide GetCollisionSide(IAsset asset1, IAsset asset2)
         {
-            float bc = (float)(asset2.Bounds.Y + asset2.Bounds.Height) - asset1.Bounds.Y;
-            float tc = (float)(asset1.Bounds.Y + asset1.Bounds.Height) - asset2.Bounds.Y;
-            float lc = (float)(asset1.Bounds.X + asset1.Bounds.Width) - asset2.Bounds.X;
-            float rc = (float)(asset2.Bounds.X + asset2.Bounds.Width) - asset1.Bounds.X;
+            // Get the values for which side asset 2 is on of asset 1
+            float bc = (float)(asset2.Bounds.Y + asset2.Bounds.Height) - asset1.Bounds.Y; // bottom side of asset 1
+            float tc = (float)(asset1.Bounds.Y + asset1.Bounds.Height) - asset2.Bounds.Y; //  top side of asset 1
+            float lc = (float)(asset1.Bounds.X + asset1.Bounds.Width) - asset2.Bounds.X; // left side of asset 1
+            float rc = (float)(asset2.Bounds.X + asset2.Bounds.Width) - asset1.Bounds.X; // right side of asset 1
 
-            if (asset1.Bounds.Height != asset1.Bounds.Width)
-            {
-                if (tc < bc && tc < lc && tc < rc)
-                    return CollisionSide.TOP;
-                if (bc < tc && bc < lc && bc < rc)
-                    return CollisionSide.BOTTOM;
-                if (lc < bc && lc < tc && lc < rc)
-                    return CollisionSide.LEFT;
-                if (rc < bc && rc < lc && rc < tc)
-                    return CollisionSide.RIGHT;
-            }
-            else
-            {
-                if (tc > bc && tc > lc && tc > rc)
-                    return CollisionSide.TOP;
-                if (bc > tc && bc > lc && bc > rc)
-                    return CollisionSide.BOTTOM;
-                if (lc > bc && lc > tc && lc > rc)
-                    return CollisionSide.LEFT;
-                if (rc > bc && rc > lc && rc > tc)
-                    return CollisionSide.RIGHT;
-            }
+            // If tc is bigger then eveything else it was a top collision
+            if (tc > bc && tc > lc && tc > rc)
+                return CollisionSide.TOP;
 
-            
+            // If bc is bigger then eveything else it was a bottom collision
+            if (bc > tc && bc > lc && bc > rc)
+                return CollisionSide.BOTTOM;
+
+            // If lc is bigger then eveything else it was a left collision
+            if (lc > bc && lc > tc && lc > rc)
+                return CollisionSide.LEFT;
+
+            // If rc is bigger then eveything else it was a right collision
+            if (rc > bc && rc > lc && rc > tc)
+                return CollisionSide.RIGHT;
+
+            // If none match we dont know the collision side
             return CollisionSide.UNKNOWN;
         }
     }

@@ -55,6 +55,7 @@ namespace NanoEngine.Animation
                     frameIncriment = (int)Math.Round(_timer / _states[_currentAninmation].FrameRate);
                 }
 
+                // Tell the AnimationState to update by the calcualated frames
                 animationData.ChangePosition(frameIncriment);
 
                  // Reset the timer to 0
@@ -82,6 +83,7 @@ namespace NanoEngine.Animation
            int animationFrameCount, int framerate = 12, int yPos = 0, int startX = 0
         )
         {
+            // Call the Craete state method to register it
             CreateState(stateName, framerate);
 
             // For loop through the animationFramCount and add a new frame to the animation
@@ -122,6 +124,7 @@ namespace NanoEngine.Animation
         /// <param name="frameRate">The correct frame rate</param>
         public virtual void CreateEmptyState(string stateName, int frameRate)
         {
+            // Creates an empty state within the animation states
             CreateState(stateName, frameRate);
         }
 
@@ -132,8 +135,10 @@ namespace NanoEngine.Animation
         /// <param name="frame">The frame rectangle</param>
         public virtual void AddFrameToState(string stateName, Rectangle frame)
         {
+            // If the requested state does not exsist throw an error
             if (!_states.ContainsKey(stateName))
                 throw new KeyNotFoundException("No state by the id " + stateName + " found.");
+            // If the state does exsist add the frame
             _states[stateName].AddFrame(frame);
         }
 

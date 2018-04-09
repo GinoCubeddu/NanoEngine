@@ -54,7 +54,6 @@
     <Compile Include="Collision\CollisionTypes\ICollisionType.cs" />
     <Compile Include="Collision\CollisionTypes\ISAT.cs" />
     <Compile Include="Collision\CollisionTypes\SAT.cs" />
-    <Compile Include="Collision\CollisionResponse.cs" />
     <Compile Include="Collision\IQuadTree.cs" />
     <Compile Include="Collision\Manager\CollisionManager.cs" />
     <Compile Include="Collision\Manager\ICollisionManager.cs" />

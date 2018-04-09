@@ -23,10 +23,6 @@ namespace NanoEngine.Testing.Physics
 
             
                 //2. move the two balls apart a distance of ‘overlap’ along the collision normal:  
-                //ball1.position += 0.5 * overlap * cnormal;  ball2.position -= 0.5 * overlap * cnormal;
-                //((PhysicsEntity)asset1).Position += 0.5f * eventArgs.Item1.CollisionOverlap * cn;
-                //((PhysicsEntity)asset2).Position -= 0.5f * eventArgs.Item2.CollisionOverlap * cn;
-
                 asset1.SetPosition(asset1.Position - eventArgs.Item1.CollisionOverlap);
                 asset2.SetPosition(asset2.Position - eventArgs.Item2.CollisionOverlap);
 

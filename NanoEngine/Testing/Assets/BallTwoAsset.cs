@@ -24,7 +24,7 @@ namespace NanoEngine.Testing.Assets
             IsMovable = true;
             SetTexture(ServiceLocator.Instance.RetriveService<INanoContentManager>(DefaultNanoServices.ContentManager)
                .LoadResource<Texture2D>("ball2"));
-           // Gravity = new Vector2(0, 0.2f);
+             // Gravity = new Vector2(0, 0.01f);
         }
     }
 }

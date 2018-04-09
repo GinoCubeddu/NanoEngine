@@ -47,7 +47,7 @@ namespace NanoEngine.Testing.Assets
             if (((PhysicsEntity)ControledAsset).Velocity.Y > 10)
             {
                 ((PhysicsEntity)ControledAsset).Velocity = new Vector2(((PhysicsEntity)ControledAsset).Velocity.X, 0.6f);
-            }
+            } 
 
             if (movingUp)
                 ((PhysicsEntity)ControledAsset).ApplyForce(new Vector2(0, -0.6f));

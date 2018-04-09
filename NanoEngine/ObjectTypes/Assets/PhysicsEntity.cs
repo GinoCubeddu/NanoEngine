@@ -16,7 +16,7 @@ namespace NanoEngine.ObjectTypes.Assets
         public Vector2 Velocity { get; set; } = new Vector2(0, 0);
 
         // The InverseMass is half the actual mass of the object
-        public float InverseMass { get; set; } = 1.5f;
+        public float InverseMass { get; set; } = 0.5f;
 
         // The damping is how much resistance the object has
         public float Damping { get; set; } = 0.99f;

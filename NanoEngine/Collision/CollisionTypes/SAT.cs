@@ -126,7 +126,16 @@ namespace NanoEngine.Collision.CollisionTypes
 
                 // If the MIN on projection2 - MAX on projection1 is GREATER than 0
                 // there is no collision
-                float overlap = p2.Item1 - p1.Item2;
+                float overlap;
+
+                if (p1.Item1 < p2.Item1)
+                {
+                    overlap = p2.Item1 - p1.Item2;
+                }
+                else
+                {
+                    overlap = p1.Item1 - p2.Item2;
+                }
                 
                 if (overlap >= 0)
                     return false;
@@ -145,10 +154,12 @@ namespace NanoEngine.Collision.CollisionTypes
                 }
             }
 
-            // update the smallest axis and smallest overlap
-            smallestAxis = localSmallestAxis;
-            smallestOverlap = localSmallestOverlap;
-           
+            if (smallestOverlap < localSmallestOverlap || smallestOverlap == 999)
+            {
+                // update the smallest axis and smallest overlap
+                smallestAxis = localSmallestAxis;
+                smallestOverlap = localSmallestOverlap;
+            }
             return true;
         }
 

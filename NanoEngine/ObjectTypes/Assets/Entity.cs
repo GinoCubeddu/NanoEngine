@@ -20,10 +20,13 @@ namespace NanoEngine.ObjectTypes.Assets
         // The origin point of the entity (its draw origin)
         protected Vector2 _origin = Vector2.Zero;
 
+
         public IAnimation AssetAnimation { get; protected set; }
 
         //getter for the texture and setter for the texture
         public Texture2D Texture { get { return _texture; } }
+
+        public float DrawLevel { get; protected set; } = 0f;
 
         // The center of the texture
         public Vector2 _textureCenter;
@@ -97,7 +100,6 @@ namespace NanoEngine.ObjectTypes.Assets
         public void SetPosition(Vector2 position)
         {
             _position = position;
-
             UpdateBounds();
         }
 
@@ -189,7 +191,7 @@ namespace NanoEngine.ObjectTypes.Assets
                 AssetAnimation.Animate(renderManager);
             else
             {
-                renderManager.Draw(Texture, Position, null, Color.White, rotation, Vector2.Zero, 1, SpriteEffects.None, 1);
+                renderManager.Draw(Texture, Position, null, Color.White, rotation, Vector2.Zero, 1, SpriteEffects.None, DrawLevel);
                 CreateBounds(Texture.Width, Texture.Height);              
             }
             DrawBounds(renderManager);

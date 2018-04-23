@@ -14,6 +14,8 @@ namespace NanoEngine.ObjectTypes.Assets
         // Getter for the texture of the entity
         Texture2D Texture { get; }
 
+        float DrawLevel { get; }
+
         // Property to state if the asset wants to be drawn/updated
         bool Despawn { get; set; }
 
@@ -31,6 +33,8 @@ namespace NanoEngine.ObjectTypes.Assets
 
         //getter for the remove variable
         bool Remove { get; }
+
+        void Move(Vector2 amount);
 
         // Getter to tell if the asset is moveable
         bool IsMovable { get; }

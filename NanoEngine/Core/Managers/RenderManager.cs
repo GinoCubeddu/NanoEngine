@@ -306,7 +306,7 @@ namespace NanoEngine.Core.Managers
                 angle,
                 new Vector2(0, 0),
                 SpriteEffects.None,
-                0
+                1
             );
         }
 

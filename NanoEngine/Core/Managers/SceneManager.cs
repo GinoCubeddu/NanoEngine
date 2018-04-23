@@ -201,14 +201,14 @@ namespace NanoEngine.Core.Managers
                 if (screen.Camera2D != null)
                 {
                     renderManager.StartDraw(
-                        SpriteSortMode.Deferred, BlendState.AlphaBlend, null,
+                        SpriteSortMode.FrontToBack, BlendState.AlphaBlend, null,
                         null, null, null, screen.Camera2D.Transform
                     );
                 }
                 else
                 {
                     // If we dont have camera start draw normaly
-                    renderManager.StartDraw(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+                    renderManager.StartDraw(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
                 }
                 // Call Draw screen
                 screen.DrawScreen(renderManager);

@@ -151,10 +151,7 @@ namespace NanoEngine.ObjectManagement.Managers
                         // so it fits in the center
                         if ((asset.Bounds.Width != tileMap.TileWidth || asset.Bounds.Height != tileMap.TileHeight) && _possibleAssets[layer.Data[i]].Item4)
                         {
-                            asset.SetPosition(new Vector2(
-                                asset.Position.X + ((tileMap.TileWidth - asset.Bounds.Width) * 0.5f),
-                                asset.Position.Y + (tileMap.TileHeight - asset.Bounds.Height)
-                            ));
+                            asset.Move(new Vector2((tileMap.TileWidth - asset.Bounds.Width) * 0.5f, tileMap.TileHeight - asset.Bounds.Height));
                         }
 
                         // Add the asset to the dictonary

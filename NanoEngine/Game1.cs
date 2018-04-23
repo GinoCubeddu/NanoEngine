@@ -63,13 +63,6 @@ namespace NanoEngine
 
             NanoEngineInit.Initialize(GraphicsDevice, this, Content);
 
-            ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager)
-                .LoadSound("test", "door-02");
-
-            ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager)
-                .LoadSound("soundTrack", "Desert Theme");
-
-
             // Get the scenemanager from the service locator
             ISceneManager sceneManager = ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager);
             QuadTree.DrawQuadTrees = true;

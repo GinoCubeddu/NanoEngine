@@ -78,6 +78,9 @@ namespace NanoEngine.Collision.CollisionTypes
                 // we then multiply the mtv by 0.5 as each entity will need to move half each
                 Vector2 mtv = smallestAxis * smallestOverlap * 0.5f;
 
+                if (Vector2.Dot(mtv, (asset2.Position - asset1.Position)) < 0)
+                    mtv = mtv * -1;
+
                 // Return the collision args for this collision
                 return new Tuple<NanoCollisionEventArgs, NanoCollisionEventArgs>(
                     new NanoCollisionEventArgs()

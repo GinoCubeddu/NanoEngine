@@ -188,15 +188,14 @@ namespace NanoEngine.Core.Managers
         /// <param name="renderManager">Provides a refrence to the renderManager.</param>
         public void Draw(IRenderManager renderManager)
         {
-            // Call end draw first (part of quad tree draw hack)
-            renderManager.EndDraw();
-
             // Get a copy of the current scenes incase we need to edit the main one
             // mid loop
             IList<IGameScreen> screens = _updatingScreens.Values.ToList();
             // Loop through each screen and call draw
             foreach (IGameScreen screen in screens)
             {
+                // Call end draw first (part of quad tree draw hack)
+                renderManager.EndDraw();
                 // If we have a camera start the draw for the camera
                 if (screen.Camera2D != null)
                 {

@@ -65,7 +65,7 @@ namespace NanoEngine.Animation
             
             renderManager.Draw(
                 _animatedAsset.Texture, _animatedAsset.Position, animationData.GetCurrentFrame(),
-                Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, _animatedAsset.DrawLevel
+                Color.White * _animatedAsset.Transparancy, 0, Vector2.Zero, 1, _animatedAsset.AssetSpriteEffects, _animatedAsset.DrawLevel
             );
 
         }

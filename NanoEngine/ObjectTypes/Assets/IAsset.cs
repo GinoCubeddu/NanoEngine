@@ -25,6 +25,12 @@ namespace NanoEngine.ObjectTypes.Assets
         // getter for the entitys bounding box
         Rectangle Bounds { get; set; }
 
+        // Getter for the SpriteEffects used in drawing
+        SpriteEffects AssetSpriteEffects { get; set; }
+
+        // Transparancy setting for the asset
+        float Transparancy { get; set; }
+
         // Getter for the points that make up an object
         IDictionary<string, IList<Vector2>> Points { get; }
 

@@ -32,6 +32,10 @@ namespace NanoEngine.ObjectTypes.Assets
         public Vector2 _textureCenter;
 
 
+        public SpriteEffects AssetSpriteEffects { get; set; } = SpriteEffects.None;
+
+        public float Transparancy { get; set; } = 1;
+
         public IDictionary<string, IList<Vector2>> Points { get; protected set; }
 
         private int _assetWidth;
@@ -191,7 +195,7 @@ namespace NanoEngine.ObjectTypes.Assets
                 AssetAnimation.Animate(renderManager);
             else
             {
-                renderManager.Draw(Texture, Position, null, Color.White, rotation, Vector2.Zero, 1, SpriteEffects.None, DrawLevel);
+                renderManager.Draw(Texture, Position, null, Color.White * Transparancy, rotation, Vector2.Zero, 1, AssetSpriteEffects, DrawLevel);
                 CreateBounds(Texture.Width, Texture.Height);              
             }
             DrawBounds(renderManager);

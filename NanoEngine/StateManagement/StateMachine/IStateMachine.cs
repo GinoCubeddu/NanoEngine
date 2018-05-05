@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Input;
+using NanoEngine.Core.Interfaces;
 using NanoEngine.Events.Args;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.StateManagement.States;
@@ -119,6 +120,7 @@ namespace NanoEngine
         /// <summary>
         /// Updates the currently active state
         /// </summary>
-        void Update();
+        /// <param name="updateManager">Instance of the update manager</param>
+        void Update(IUpdateManager updateManager);
     }
 }

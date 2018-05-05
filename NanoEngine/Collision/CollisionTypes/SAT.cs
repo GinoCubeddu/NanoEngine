@@ -24,6 +24,8 @@ namespace NanoEngine.Collision.CollisionTypes
             bool collided = false;
             Vector2 smallestAxis = Vector2.Zero;
             float smallestOverlap = 999;
+            string asset1CollisionArea = "";
+            string asset2CollisionArea = "";
 
             // Get the points from asset A
             IDictionary<string, IList<Vector2>> asset1Points = asset1.Points;
@@ -62,6 +64,8 @@ namespace NanoEngine.Collision.CollisionTypes
                     {
                         // If none returned false there is a collision between the two objects
                         // and we dont have to check any other objects
+                        asset1CollisionArea = asset1PointKey;
+                        asset2CollisionArea = asset2PointKey;
                         collided = true;
                         break;
                     }
@@ -87,13 +91,15 @@ namespace NanoEngine.Collision.CollisionTypes
                     {
                         CollidedWith = asset2,
                         CollisionOverlap = mtv,
-                        CollisionSide = CollisionSide.UNKNOWN
+                        CollisionSide = CollisionSide.UNKNOWN,
+                        CollisionArea = asset1CollisionArea
                     },
                     new NanoCollisionEventArgs()
                     {
                         CollidedWith = asset1,
                         CollisionOverlap = -mtv,
-                        CollisionSide = CollisionSide.UNKNOWN
+                        CollisionSide = CollisionSide.UNKNOWN,
+                        CollisionArea = asset2CollisionArea
                     }
                 );
             }

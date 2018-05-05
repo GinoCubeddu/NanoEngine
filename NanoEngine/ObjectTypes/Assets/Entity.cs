@@ -23,6 +23,8 @@ namespace NanoEngine.ObjectTypes.Assets
 
         public IAnimation AssetAnimation { get; protected set; }
 
+        public Vector2 BoundsOffset { get; set; } = Vector2.Zero;
+
         //getter for the texture and setter for the texture
         public Texture2D Texture { get { return _texture; } }
 
@@ -133,7 +135,7 @@ namespace NanoEngine.ObjectTypes.Assets
         /// </summary>
         protected void CreateBounds(int width, int height)
         {
-            _bounds = new Rectangle((int)Position.X, (int)Position.Y, width, height);
+            _bounds = new Rectangle((int)Position.X + (int)BoundsOffset.X, (int)Position.Y + (int)BoundsOffset.Y, width, height);
             _assetWidth = width;
             _assetHeight = height;
             _textureCenter = new Vector2(
@@ -146,8 +148,8 @@ namespace NanoEngine.ObjectTypes.Assets
         /// </summary>
         public void UpdateBounds()
         {
-            _bounds.X = (int)Position.X;
-            _bounds.Y = (int)Position.Y;
+            _bounds.X = (int)Position.X + (int)BoundsOffset.X;
+            _bounds.Y = (int)Position.Y + (int)BoundsOffset.Y;
         }
 
         //getter for the remove property

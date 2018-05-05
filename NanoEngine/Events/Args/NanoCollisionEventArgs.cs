@@ -18,5 +18,8 @@ namespace NanoEngine.Events.Args
 
         // The amount of overlap that the objects have
         public Vector2 CollisionOverlap { get; set; }
+
+
+        public String CollisionArea { get; set; }
     }
 }

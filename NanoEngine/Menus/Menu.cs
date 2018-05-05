@@ -23,12 +23,20 @@ namespace NanoEngine.Menus
 
         private int menuPosition;
 
+        private string _soundEffect;
+
         private bool active;
 
-        public Menu(IList<IMenuItem> list, bool active)
+        public Menu(IList<IMenuItem> list, bool active, string soundEffectname)
         {
             menuList = list;
             this.active = active;
+            _soundEffect = soundEffectname;
+        }
+
+        public Menu(IList<IMenuItem> list, bool active) : this(list, active, null)
+        {
+            
         }
 
         public void Draw(IRenderManager renderManager)
@@ -93,8 +101,8 @@ namespace NanoEngine.Menus
                     Rectangle rect = new Rectangle((int)menuList[i].Position.X, (int)menuList[i].Position.Y, (int)menuList[i].Texture1.Width, (int)menuList[i].Texture1.Height);
                     if(rect.Contains(e.CurrentMouseState.Position))
                     {
-                        if (menuPosition != i)
-                            ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlaySoundEffect("test");
+                        if (menuPosition != i && _soundEffect != null)
+                            ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlayBaseSoundEffect(_soundEffect);
 
                         menuPosition = i;
                     }
@@ -109,7 +117,9 @@ namespace NanoEngine.Menus
                 if (!args.TheKeys.Keys.Contains(KeyStates.Pressed))
                     return;
 
-                ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlaySoundEffect("test");
+                if (_soundEffect != null)
+                    ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlaySoundEffect(_soundEffect);
+
                 if (args.TheKeys[KeyStates.Pressed].Contains(Keys.Up))
                 {
                     if (menuPosition == 0)

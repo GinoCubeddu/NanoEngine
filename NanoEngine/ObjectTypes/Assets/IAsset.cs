@@ -48,6 +48,8 @@ namespace NanoEngine.ObjectTypes.Assets
         // Getter for the animation class that belongs to the asset
         IAnimation AssetAnimation { get; }
 
+        Vector2 BoundsOffset { get; set; }
+
         /// <summary>
         /// Sets the position of the entity
         /// </summary>

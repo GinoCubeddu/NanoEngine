@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NanoEngine.Core.Interfaces;
 using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine
@@ -30,6 +31,7 @@ namespace NanoEngine
         /// </summary>
         /// <typeparam name="T">The type of AI that the state uses</typeparam>
         /// <param name="owner">The AI that owns the state</param>
-        void Update(T owner);
+        /// <param name="updateManager">Instance of the update manager</param>
+        void Update(IUpdateManager updateManager, T owner);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
+using NanoEngine.Core.Interfaces;
 using NanoEngine.Events.Args;
 using NanoEngine.StateManagement.States;
 using NanoEngine.StateManagement.Transitions;
@@ -211,10 +212,12 @@ namespace NanoEngine.StateManagement.StateMachine
             HandleMouseInput(mouseArgs, null);
         }
 
+
         /// <summary>
         /// Updates the currently active state
         /// </summary>
-        public void Update()
+        /// <param name="updateManager">Instance of the update manager</param>
+        public void Update(IUpdateManager updateManager)
         {
             // Check success states
             CheckSuccessTransition();
@@ -223,7 +226,7 @@ namespace NanoEngine.StateManagement.StateMachine
             CheckMethodTransition();
 
             // Update the current state
-            _avaliableStates[currentState].Update(_owner);
+            _avaliableStates[currentState].Update(updateManager, _owner);
         }
 
         /// <summary>

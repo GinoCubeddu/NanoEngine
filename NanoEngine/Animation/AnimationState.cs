@@ -11,7 +11,7 @@ namespace NanoEngine.Animation
     public class AnimationState
     {
         // The current frame in the animation
-        private int _currentFrame;
+        public int CurrentFrame { get; private set; }
 
         public float FrameRate { get; private set; }
         
@@ -21,7 +21,7 @@ namespace NanoEngine.Animation
         public AnimationState(int frameRate)
         {
             FrameRate = 1f / frameRate;
-            _currentFrame = 0;
+            CurrentFrame = 0;
             _frames = new List<Rectangle>();
         }
 
@@ -73,7 +73,7 @@ namespace NanoEngine.Animation
         /// <returns>The current animation bounds</returns>
         public Rectangle GetCurrentFrame()
         {
-            return _frames[_currentFrame];
+            return _frames[CurrentFrame];
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace NanoEngine.Animation
             // use moduls to change the frame
             // Suggestion from Twitch user Tyyppi_77
             // Modulus works by using the remander of the division
-            _currentFrame = (_currentFrame + amount) % _frames.Count;
+            CurrentFrame = (CurrentFrame + amount) % _frames.Count;
         }
         
 
@@ -94,7 +94,7 @@ namespace NanoEngine.Animation
         /// </summary>
         public void ResetAnimation()
         {
-            _currentFrame = 0;
+            CurrentFrame = 0;
         }
     }
 }

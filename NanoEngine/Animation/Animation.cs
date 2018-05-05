@@ -39,7 +39,8 @@ namespace NanoEngine.Animation
             _timer += (float) renderManager.gameTime.ElapsedGameTime.TotalSeconds;
 
             // Set the bounds of the controled asset
-            _animatedAsset.Bounds = new Rectangle((int) _animatedAsset.Position.X, (int) _animatedAsset.Position.Y,
+            _animatedAsset.Bounds = new Rectangle((int) _animatedAsset.Position.X + (int) _animatedAsset.BoundsOffset.X,
+                (int) _animatedAsset.Position.Y + (int) _animatedAsset.BoundsOffset.Y,
                 animationData.GetCurrentFrame().Width, animationData.GetCurrentFrame().Height);
 
             // If it is time to move to the next frame
@@ -58,7 +59,7 @@ namespace NanoEngine.Animation
 
                 // Tell the AnimationState to update by the calcualated frames
                 animationData.ChangePosition(frameIncriment);
-
+                
                  // Reset the timer to 0
                 _timer = 0;
             }

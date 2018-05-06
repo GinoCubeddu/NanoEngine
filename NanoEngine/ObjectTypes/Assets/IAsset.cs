@@ -31,6 +31,9 @@ namespace NanoEngine.ObjectTypes.Assets
         // Transparancy setting for the asset
         float Transparancy { get; set; }
 
+        // Tint to draw with
+        Color TintColor { get; set; }
+
         // Getter for the points that make up an object
         IDictionary<string, IList<Vector2>> Points { get; }
 

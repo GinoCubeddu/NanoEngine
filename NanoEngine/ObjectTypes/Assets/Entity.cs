@@ -33,6 +33,7 @@ namespace NanoEngine.ObjectTypes.Assets
         // The center of the texture
         public Vector2 _textureCenter;
 
+        public Color TintColor { get; set; } = Color.White;
 
         public SpriteEffects AssetSpriteEffects { get; set; } = SpriteEffects.None;
 
@@ -197,7 +198,7 @@ namespace NanoEngine.ObjectTypes.Assets
                 AssetAnimation.Animate(renderManager);
             else
             {
-                renderManager.Draw(Texture, Position, null, Color.White * Transparancy, rotation, Vector2.Zero, 1, AssetSpriteEffects, DrawLevel);
+                renderManager.Draw(Texture, Position, null, TintColor * Transparancy, rotation, Vector2.Zero, 1, AssetSpriteEffects, DrawLevel);
                 CreateBounds(Texture.Width, Texture.Height);              
             }
             DrawBounds(renderManager);

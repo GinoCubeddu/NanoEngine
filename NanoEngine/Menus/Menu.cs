@@ -47,11 +47,13 @@ namespace NanoEngine.Menus
                 {
                     if(i == menuPosition)
                     {
-                        renderManager.Draw(menuList[i].Texture2, menuList[i].Position, Color.White);
+                        renderManager.Draw(menuList[i].Texture2, menuList[i].Position, null, Color.White, 0,
+                            Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
                     }
                     else
                     {
-                        renderManager.Draw(menuList[i].Texture1, menuList[i].Position, Color.White);
+                        renderManager.Draw(menuList[i].Texture1, menuList[i].Position, null, Color.White, 0,
+                            Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
                     }
                 }
             }
@@ -142,10 +144,6 @@ namespace NanoEngine.Menus
                         menuPosition++;
                     }
                 }
-                else if (args.TheKeys[KeyStates.Pressed].Contains(Keys.Enter))
-                {
-                    menuList[menuPosition].Controler.Clicked();
-                }
             }
         }
 
@@ -158,6 +156,18 @@ namespace NanoEngine.Menus
         {
             // throw new NotImplementedException();
             // if (e.CurrentMouseState.)
+            for (int i = 0; i < menuList.Count; i++)
+            {
+                Rectangle rect = new Rectangle((int)menuList[i].Position.X, (int)menuList[i].Position.Y, (int)menuList[i].Texture1.Width, (int)menuList[i].Texture1.Height);
+                if (rect.Contains(e.CurrentMouseState.Position))
+                {
+                    if (menuPosition != i && _soundEffect != null)
+                        ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager).PlayBaseSoundEffect(_soundEffect);
+
+                    menuPosition = i;
+                }
+            }
+
             if (e.CurrentMouseState.LeftButton == ButtonState.Pressed)
             {
                 Rectangle rect = new Rectangle((int)menuList[menuPosition].Position.X, (int)menuList[menuPosition].Position.Y, (int)menuList[menuPosition].Texture1.Width, (int)menuList[menuPosition].Texture1.Height);

@@ -17,7 +17,7 @@ namespace NanoEngine.Menus
     {
         // NOTE: THIS CLASS IS PENDING REFACTOR AND AS SUCH WILL BE COMMENTED ON REFACTOR
 
-
+        
 
         private IList<IMenuItem> menuList;
 
@@ -157,6 +157,15 @@ namespace NanoEngine.Menus
         public void OnMouseChanged(object sender, NanoMouseEventArgs e)
         {
             // throw new NotImplementedException();
+            // if (e.CurrentMouseState.)
+            if (e.CurrentMouseState.LeftButton == ButtonState.Pressed)
+            {
+                Rectangle rect = new Rectangle((int)menuList[menuPosition].Position.X, (int)menuList[menuPosition].Position.Y, (int)menuList[menuPosition].Texture1.Width, (int)menuList[menuPosition].Texture1.Height);
+                if (rect.Contains(e.CurrentMouseState.Position))
+                {
+                    menuList[menuPosition].Controler.Clicked();
+                }
+            }  
         }
     }
 }

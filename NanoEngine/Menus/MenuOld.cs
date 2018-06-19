@@ -13,7 +13,7 @@ using NanoEngine.StateManagement.States;
 
 namespace NanoEngine.Menus
 {
-    public class Menu : IKeyboardWanted, IMouseWanted
+    public class MenuOld : IKeyboardWanted, IMouseWanted
     {
         // NOTE: THIS CLASS IS PENDING REFACTOR AND AS SUCH WILL BE COMMENTED ON REFACTOR
 
@@ -27,14 +27,14 @@ namespace NanoEngine.Menus
 
         private bool active;
 
-        public Menu(IList<IMenuItem> list, bool active, string soundEffectname)
+        public MenuOld(IList<IMenuItem> list, bool active, string soundEffectname)
         {
             menuList = list;
             this.active = active;
             _soundEffect = soundEffectname;
         }
 
-        public Menu(IList<IMenuItem> list, bool active) : this(list, active, null)
+        public MenuOld(IList<IMenuItem> list, bool active) : this(list, active, null)
         {
             
         }

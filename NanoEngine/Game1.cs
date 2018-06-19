@@ -65,8 +65,9 @@ namespace NanoEngine
 
             // Get the scenemanager from the service locator
             ISceneManager sceneManager = ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager);
-            QuadTree.DrawQuadTrees = true;
+            ISoundManager soundManager = ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager);
 
+            QuadTree.DrawQuadTrees = true;
             base.Initialize();
         }
     }

@@ -10,9 +10,6 @@ namespace NanoEngine.Core.Interfaces
 {
     public interface ISceneManager : IService
     {
-        // Contains all currently updating screens
-        IDictionary<string, IGameScreen> UpdatingScreens { get; }
-
         /// <summary>
         /// Adds a screen to the scene manager
         /// </summary>

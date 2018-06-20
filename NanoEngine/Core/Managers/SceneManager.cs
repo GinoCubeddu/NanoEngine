@@ -5,7 +5,9 @@ using NanoEngine.ObjectManagement.Managers;
 using NanoEngine.ObjectTypes.Assets;
 using NanoEngine.ObjectTypes.General;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using NanoEngine.Events;
@@ -17,7 +19,7 @@ namespace NanoEngine.Core.Managers
     public class SceneManager : ISceneManager
     {
         // Holds the currently updating screens
-        private IDictionary<string, IGameScreen> _updatingScreens;
+        private IOrderedDictionary _updatingScreens;
 
         // Holds the screens that are avaialbe but not updating
         private IDictionary<string, IGameScreen> _avaliableScreens;
@@ -27,15 +29,11 @@ namespace NanoEngine.Core.Managers
 
         private ISceneFactory _sceneFactory;
 
-        // Getter for the currently updating screens
-        public IDictionary<string, IGameScreen> UpdatingScreens
-        {
-            get { return _updatingScreens; }
-        }
 
         public SceneManager()
         {
-            _updatingScreens = new Dictionary<string, IGameScreen>();
+            _updatingScreens = new OrderedDictionary();
+            // _updatingScreens = new Dictionary<string, IGameScreen>();
             _avaliableScreens = new Dictionary<string, IGameScreen>();
             _screensMarkedForDeletion = new List<IGameScreen>();
             _sceneFactory = new SceneFactory();
@@ -84,11 +82,11 @@ namespace NanoEngine.Core.Managers
         public void StopUpdatingScreen(string name)
         {
             // Only make the swap if the key is there
-            if (!_updatingScreens.ContainsKey(name))
+            if (!_updatingScreens.Contains(name))
                 return;
 
             // Add the screen from the updating screens to the avalible screens
-            _avaliableScreens[name] = _updatingScreens[name];
+            _avaliableScreens[name] = (IGameScreen)_updatingScreens[name];
             _updatingScreens.Remove(name);
         }
 
@@ -105,9 +103,9 @@ namespace NanoEngine.Core.Managers
             if (_avaliableScreens.ContainsKey(name))
             {
                 screen = _avaliableScreens[name];
-            } else if (_updatingScreens.ContainsKey(name))
+            } else if (_updatingScreens.Contains(name))
             {
-                screen = _updatingScreens[name];
+                screen = (IGameScreen)_updatingScreens[name];
             } else
             {
                 // There is no screen by that name
@@ -135,10 +133,10 @@ namespace NanoEngine.Core.Managers
                 // remove from the avliable screens
                 _avaliableScreens.Remove(name);
             } // If the screen was updating and not in avaliable screens
-            else if (_updatingScreens.ContainsKey(name))
+            else if (_updatingScreens.Contains(name))
             {
                 // mark screen for deletion
-                _screensMarkedForDeletion.Add(_updatingScreens[name]);
+                _screensMarkedForDeletion.Add((IGameScreen)_updatingScreens[name]);
                 // Remove from the updating screens
                 _updatingScreens.Remove(name);
             }
@@ -175,7 +173,11 @@ namespace NanoEngine.Core.Managers
 
             // Get a copy of the current scenes incase we need to edit the main one
             // mid loop
-            IList<IGameScreen> screens = _updatingScreens.Values.ToList();
+            IList<IGameScreen> screens = new List<IGameScreen>();
+            foreach (DictionaryEntry dictionaryEntry in _updatingScreens)
+            {
+                screens.Add((IGameScreen)dictionaryEntry.Value);
+            }
 
             // Call update on each scene
             foreach (IGameScreen screen in screens)
@@ -190,7 +192,11 @@ namespace NanoEngine.Core.Managers
         {
             // Get a copy of the current scenes incase we need to edit the main one
             // mid loop
-            IList<IGameScreen> screens = _updatingScreens.Values.ToList();
+            IList<IGameScreen> screens = new List<IGameScreen>();
+            foreach (DictionaryEntry dictionaryEntry in _updatingScreens)
+            {
+                screens.Add((IGameScreen)dictionaryEntry.Value);
+            }
             // Loop through each screen and call draw
             foreach (IGameScreen screen in screens)
             {

@@ -331,8 +331,10 @@ namespace NanoEngine.Core.Managers
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(_game1.GraphicsDevice);
             bgColor = Color.CornflowerBlue;
-            Matrix _scale = Matrix.CreateScale(_game1.GraphicsDevice.Viewport.Width / 800f, _game1.GraphicsDevice.Viewport.Width / 800f, 1);
-            spriteScale = new Vector2(_scale.Scale.X, _scale.Scale.Y);
+            Vector3 _scale = Vector3.One;
+            Matrix _matrix = Matrix.CreateScale(_game1.GraphicsDevice.Viewport.Width / 800f, _game1.GraphicsDevice.Viewport.Width / 800f, 1);
+            _matrix.Decompose(out _scale, out _, out _);
+            spriteScale = new Vector2(_scale.X, _scale.Y);
         }
 
         /// <summary>
@@ -340,8 +342,10 @@ namespace NanoEngine.Core.Managers
         /// </summary>
         public void UpdateSpriteScale()
         {
-            Matrix _scale = Matrix.CreateScale(_game1.GraphicsDevice.Viewport.Width / 800f, _game1.GraphicsDevice.Viewport.Width / 800f, 1);
-            spriteScale = new Vector2(_scale.Scale.X, _scale.Scale.Y);
+            Vector3 _scale = Vector3.One;
+            Matrix _matrix = Matrix.CreateScale(_game1.GraphicsDevice.Viewport.Width / 800f, _game1.GraphicsDevice.Viewport.Width / 800f, 1);
+            _matrix.Decompose(out _scale, out _, out _);
+            spriteScale = new Vector2(_scale.X, _scale.Y);
         }
 
         /// <summary>

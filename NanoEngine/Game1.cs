@@ -58,6 +58,7 @@ namespace NanoEngine
             //graphics.PreferredBackBufferWidth = 1500;
             //graphics.PreferredBackBufferHeight = 1080;
             //graphics.ApplyChanges();
+
             RenderFilter.RenderOffset = new Vector2(1500, 200);
             Entity.DrawAssetBounds = true;
 

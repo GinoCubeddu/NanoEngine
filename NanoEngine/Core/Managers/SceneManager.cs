@@ -47,7 +47,7 @@ namespace NanoEngine.Core.Managers
         public void AddScreen<T>(string name) where T : IGameScreen, new()
         {
             // Request a screen of the type T
-            IGameScreen screen = _sceneFactory.CreateScreen<T>();
+            IGameScreen screen = _sceneFactory.CreateScreen<T>(name);
 
             if (_avaliableScreens.Count == 0 && _updatingScreens.Count == 0)
             {
@@ -114,7 +114,7 @@ namespace NanoEngine.Core.Managers
 
             // Reload the screen
             screen.UnloadContent();
-            screen.Initialise();
+            screen.Initialise(screen.ScreenName);
             screen.LoadContent();
         }
 

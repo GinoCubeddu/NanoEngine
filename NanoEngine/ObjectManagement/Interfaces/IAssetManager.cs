@@ -24,7 +24,7 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// <param name="posY">The Y position of the asset</param>
         /// <param name="spawn">Deciding if we want the asset to be
         /// spawned straight away</param>
-        void CreateAsset<T, U>(string uName, int posX, int posY, bool spawn = true)
+        string CreateAsset<T, U>(string uName, int posX, int posY, bool spawn = true)
             where T : IAsset, new()
             where U : IAiComponent, new();
 
@@ -41,7 +41,7 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// <param name="posY">The Y position of the asset</param>
         /// <param name="spawn">Deciding if we want the asset to be
         /// spawned straight away</param>
-        void CreateAsset<T>(string uName, int posX, int posY, bool spawn = true)
+        string CreateAsset<T>(string uName, int posX, int posY, bool spawn = true)
             where T : IAsset, new();
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// <param name="pos">The position of the asset</param>
         /// <param name="spawn">Deciding if we want the asset to be
         /// spawned straight away</param>
-        void CreateAsset<T, U>(string uName, Vector2 pos, bool spawn = true)
+        string CreateAsset<T, U>(string uName, Vector2 pos, bool spawn = true)
             where T : IAsset, new()
             where U : IAiComponent, new();
 
@@ -73,7 +73,7 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// <param name="pos">The position of the asset</param>
         /// <param name="spawn">Deciding if we want the asset to be
         /// spawned straight away</param>
-        void CreateAsset<T>(string uName, Vector2 pos, bool spawn = true)
+        string CreateAsset<T>(string uName, Vector2 pos, bool spawn = true)
             where T : IAsset, new();
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// <param name="posY">The Y position of the asset</param>
         /// <param name="spawn">Deciding if we want the asset to be
         /// spawned straight away</param>
-        void CreateAsset<T, U>(int posX, int posY, bool spawn = true)
+        string CreateAsset<T, U>(int posX, int posY, bool spawn = true)
             where T : IAsset, new()
             where U : IAiComponent, new();
 
@@ -103,7 +103,7 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// <param name="posY">The Y position of the asset</param>
         /// <param name="spawn">Deciding if we want the asset to be
         /// spawned straight away</param>
-        void CreateAsset<T>(int posX, int posY, bool spawn = true)
+        string CreateAsset<T>(int posX, int posY, bool spawn = true)
             where T : IAsset, new();
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// <param name="pos">The position of the asset</param>
         /// <param name="spawn">Deciding if we want the asset to be
         /// spawned straight away</param>
-        void CreateAsset<T, U>(Vector2 pos, bool spawn = true)
+        string CreateAsset<T, U>(Vector2 pos, bool spawn = true)
             where T : IAsset, new()
             where U : IAiComponent, new();
 
@@ -132,7 +132,7 @@ namespace NanoEngine.ObjectManagement.Interfaces
         /// <param name="pos">The position of the asset</param>
         /// <param name="spawn">Deciding if we want the asset to be
         /// spawned straight away</param>
-        void CreateAsset<T>(Vector2 pos, bool spawn = true)
+        string CreateAsset<T>(Vector2 pos, bool spawn = true)
             where T : IAsset, new();
 
         /// <summary>

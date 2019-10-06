@@ -12,6 +12,9 @@ namespace NanoEngine.ObjectTypes.General
         // Returns the current camera of the screen
         ICamera2D Camera2D { get; }
 
+        // Returns the name of the screen
+        String ScreenName { get; }
+
         // Returns the current amount of update time this screen has had
         double LevelTimer { get; set; }
 
@@ -40,6 +43,7 @@ namespace NanoEngine.ObjectTypes.General
         /// <summary>
         /// Initialise's the screen
         /// </summary>
-        void Initialise();
+        /// <param name="name">The name of the screen</param>
+        void Initialise(String name);
     }
 }

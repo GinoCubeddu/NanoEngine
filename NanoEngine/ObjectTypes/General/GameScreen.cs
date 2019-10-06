@@ -19,6 +19,8 @@ namespace NanoEngine.ObjectTypes.General
 
         private IDictionary<string, ICamera2D> _cameras;
 
+        public String ScreenName { get; private set; }
+
         public ICamera2D Camera2D { get; private set; }
 
         public double LevelTimer { get; set; }
@@ -120,10 +122,13 @@ namespace NanoEngine.ObjectTypes.General
         /// <summary>
         /// Initialise's the screen
         /// </summary>
-        public void Initialise()
+        /// <param name="name">The name of the screen</param>
+        public void Initialise(String name)
         {
+            ScreenName = name;
             LevelTimer = 0;
             EventManager = new EventManager();
+            EventManager.AddDelegates(this);
             _assetManager = new AssetManager(EventManager);
         }
     }

@@ -14,7 +14,7 @@ using NanoEngine.StateManagement.States;
 
 namespace NanoEngine.Menus
 {
-    class Menu : IMenu, IKeyboardWanted, IMouseWanted
+    public class Menu : IMenu, IKeyboardWanted, IMouseWanted
     {
         // The name of the menu
         public string Name { get; }

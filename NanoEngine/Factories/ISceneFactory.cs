@@ -13,7 +13,8 @@ namespace NanoEngine.Factories
         /// Creates and initalises the requested game screen and returns it
         /// </summary>
         /// <typeparam name="T">The type of screen to create</typeparam>
+        /// <param name="name">The name of the screen</param>
         /// <returns>The created game screen</returns>
-        IGameScreen CreateScreen<T>() where T : IGameScreen, new();
+        IGameScreen CreateScreen<T>(String name) where T : IGameScreen, new();
     }
 }

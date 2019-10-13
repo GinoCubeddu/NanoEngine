@@ -11,44 +11,44 @@ namespace NanoEngine.Core.Interfaces
     public interface ISceneManager : IService
     {
         /// <summary>
-        /// Adds a screen to the scene manager
+        /// Adds a scene to the scene manager
         /// </summary>
-        /// <typeparam name="T">The type of screen to add</typeparam>
-        /// <param name="name">The id of the screen</param>
-        void AddScreen<T>(string name) where T : IGameScreen, new();
+        /// <typeparam name="T">The type of scene to add</typeparam>
+        /// <param name="name">The id of the scene</param>
+        void AddScene<T>(string name) where T : IGameScene, new();
 
         /// <summary>
-        /// Tells the scene manager to start updating the screen
+        /// Tells the scene manager to start updating the scene
         /// </summary>
-        /// <param name="name">The id of the screen to start updating</param>
-        void StartUpdatingScreen(string name);
+        /// <param name="name">The id of the scene to start updating</param>
+        void StartUpdatingScene(string name);
 
         /// <summary>
-        /// Tells the scenemnager to stop updating a screen
+        /// Tells the scenemnager to stop updating a scene
         /// </summary>
-        /// <param name="name">The id of the screen to stop updating</param>
-        void StopUpdatingScreen(string name);
+        /// <param name="name">The id of the scene to stop updating</param>
+        void StopUpdatingScene(string name);
 
         /// <summary>
-        /// Tells the scene manager to reload a screen
+        /// Tells the scene manager to reload a scene
         /// </summary>
-        /// <param name="name">The id of the screen to reload</param>
-        void ReloadScreen(string name);
+        /// <param name="name">The id of the scene to reload</param>
+        void ReloadScene(string name);
 
         /// <summary>
         /// Tells the scenemanager to delete a scene
         /// </summary>
         /// <param name="name">The id of the scene to delete</param>
-        void DeleteScreen(string name);
+        void DeleteScene(string name);
 
         /// <summary>
-        /// Method to draw the objects on the screen
+        /// Method to draw the objects on the scene
         /// </summary>
         /// <param name="renderManager">Provides a refrence to the renderManager.</param>
         void Draw(IRenderManager renderManager);
 
         /// <summary>
-        /// Method to update the objects on the screen
+        /// Method to update the objects on the scene
         /// </summary>
         /// <param name="updateManager">Provides a refrence to the updateManager.</param>
         void Update(IUpdateManager updateManager);

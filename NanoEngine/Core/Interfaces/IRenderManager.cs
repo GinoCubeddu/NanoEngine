@@ -10,7 +10,7 @@ namespace NanoEngine.Core.Interfaces
     public interface IRenderManager
     {
         /// <summary>
-        /// Method to change the background colour of the screen
+        /// Method to change the background colour of the scene
         /// </summary>
         /// <param name="color"></param>
         void ChangeBackgroundColor(Color color);
@@ -20,14 +20,14 @@ namespace NanoEngine.Core.Interfaces
         Texture2D BlankTexture { get; }
 
         /// <summary>
-        /// Draws an object to the screen
+        /// Draws an object to the scene
         /// </summary>
         /// <param name="entity">entity to be drawn</param>
         /// <param name="tint">Color overlay for object</param>
         void Draw(Color tint);
 
         /// <summary>
-        /// Draws an object to the screen
+        /// Draws an object to the scene
         /// </summary>
         /// <param name="texture">Texture for the object</param>
         /// <param name="position">Position of the object</param>
@@ -35,7 +35,7 @@ namespace NanoEngine.Core.Interfaces
         void Draw(Texture2D texture, Vector2 position, Color tint);
 
         /// <summary>
-        /// Draws an object to the screen
+        /// Draws an object to the scene
         /// </summary>
         /// <param name="texture">Texture for the object</param>
         /// <param name="position">Position of the object</param>
@@ -44,27 +44,27 @@ namespace NanoEngine.Core.Interfaces
         void Draw(Texture2D texture, Vector2 position, Nullable<Rectangle> sourceRectangle, Color tint);
 
         /// <summary>
-        /// Draws an object to the screen
+        /// Draws an object to the scene
         /// </summary>
         /// <param name="texture">Texture for the object</param>
-        /// <param name="destination">A rectangle that specifies (in screen coordinates) the destination for drawing the sprite</param>
+        /// <param name="destination">A rectangle that specifies (in scene coordinates) the destination for drawing the sprite</param>
         /// <param name="tint">Colour overlay for the object</param>
         void Draw(Texture2D texture, Rectangle destination, Color tint);
 
         /// <summary>
-        /// Draws an object to the screen
+        /// Draws an object to the scene
         /// </summary>
         /// <param name="texture">Texture for the object</param>
-        /// <param name="destination">A rectangle that specifies (in screen coordinates) the destination for drawing the sprite</param>
+        /// <param name="destination">A rectangle that specifies (in scene coordinates) the destination for drawing the sprite</param>
         /// <param name="sourceRectangle">A rectangle that specifies (in texels) the source texels from a texture. Use null to draw the entire texture</param>
         /// <param name="tint">Colour overlay for the object</param>
         void Draw(Texture2D texture, Rectangle destination, Nullable<Rectangle> sourceRectangle, Color tint);
 
         /// <summary>
-        /// Draws an object to the screen
+        /// Draws an object to the scene
         /// </summary>
         /// <param name="texture">Texture for the object</param>
-        /// <param name="destination">A rectangle that specifies (in screen coordinates) the destination for drawing the sprite</param>
+        /// <param name="destination">A rectangle that specifies (in scene coordinates) the destination for drawing the sprite</param>
         /// <param name="sourceRectangle">A rectangle that specifies (in texels) the source texels from a texture. Use null to draw the entire texture</param>
         /// <param name="tint">Colour overlay for the object</param>
         /// <param name="rotation">The rotation for the object to rotate around the origin</param>
@@ -74,10 +74,10 @@ namespace NanoEngine.Core.Interfaces
         void Draw(Texture2D texture, Rectangle destination, Nullable<Rectangle> sourceRectangle, Color tint, float rotation, Vector2 origin, SpriteEffects effects, float layerDepth);
 
         /// <summary>
-        /// Draws an object to the screen
+        /// Draws an object to the scene
         /// </summary>
         /// <param name="texture">Texture for the object</param>
-        /// <param name="destination">A rectangle that specifies (in screen coordinates) the destination for drawing the sprite</param>
+        /// <param name="destination">A rectangle that specifies (in scene coordinates) the destination for drawing the sprite</param>
         /// <param name="sourceRectangle">A rectangle that specifies (in texels) the source texels from a texture. Use null to draw the entire texture</param>
         /// <param name="tint">Colour overlay for the object</param>
         /// <param name="rotation">The rotation for the object to rotate around the origin</param>
@@ -88,10 +88,10 @@ namespace NanoEngine.Core.Interfaces
         void Draw(Texture2D texture, Vector2 position, Nullable<Rectangle> sourceRectangle, Color tint, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth);
 
         /// <summary>
-        /// Draws an object to the screen
+        /// Draws an object to the scene
         /// </summary>
         /// <param name="texture">Texture for the object</param>
-        /// <param name="destination">A rectangle that specifies (in screen coordinates) the destination for drawing the sprite</param>
+        /// <param name="destination">A rectangle that specifies (in scene coordinates) the destination for drawing the sprite</param>
         /// <param name="sourceRectangle">A rectangle that specifies (in texels) the source texels from a texture. Use null to draw the entire texture</param>
         /// <param name="tint">Colour overlay for the object</param>
         /// <param name="rotation">The rotation for the object to rotate around the origin</param>
@@ -102,7 +102,7 @@ namespace NanoEngine.Core.Interfaces
         void Draw(Texture2D texture, Vector2 position, Nullable<Rectangle> sourceRectangle, Color tint, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth);
 
         /// <summary>
-        /// Draws a string to the screen
+        /// Draws a string to the scene
         /// </summary>
         /// <param name="font">The font to be used</param>
         /// <param name="text">The text to be drawn</param>

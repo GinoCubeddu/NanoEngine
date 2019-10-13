@@ -1,20 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using NanoEngine.Core.Interfaces;
-using NanoEngine.Core.Managers;
-using NanoEngine.ObjectManagement.Managers;
-using NanoEngine.ObjectTypes.General;
 using System;
-using NanoEngine.Collision.Manager;
-using NanoEngine.Core.Camera;
 using NanoEngine.Core.Locator;
-using NanoEngine.Events;
-using NanoEngine.Events.Args;
-using NanoEngine.Events.Handlers;
 using NanoEngine.ObjectManagement;
 using NanoEngine.ObjectTypes.Assets;
-using NanoEngine.Physics;
 using NanoEngine.Collision;
 
 namespace NanoEngine
@@ -53,11 +42,6 @@ namespace NanoEngine
         {
             this.IsMouseVisible = true;
 
-            Entity.DrawAssetBounds = true;
-
-            //graphics.PreferredBackBufferWidth = 1500;
-            //graphics.PreferredBackBufferHeight = 1080;
-            //graphics.ApplyChanges();
 
             RenderFilter.RenderOffset = new Vector2(1500, 200);
             Entity.DrawAssetBounds = true;

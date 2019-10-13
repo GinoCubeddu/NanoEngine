@@ -75,7 +75,7 @@ namespace NanoEngine.Menus
         }
 
         /// <summary>
-        /// Draws the button on screen
+        /// Draws the button on scene
         /// </summary>
         /// <param name="renderManager">An instance of the render manager</param>
         public virtual void Draw(IRenderManager renderManager)

@@ -13,13 +13,13 @@ using NanoEngine.ObjectTypes.Assets;
 
 namespace NanoEngine.ObjectTypes.General
 {
-    public abstract class GameScreen : IGameScreen
+    public abstract class GameScene : IGameScene
     {
         protected IAssetManager _assetManager;
 
         private IDictionary<string, ICamera2D> _cameras;
 
-        public String ScreenName { get; private set; }
+        public String SceneName { get; private set; }
 
         public ICamera2D Camera2D { get; private set; }
 
@@ -68,7 +68,7 @@ namespace NanoEngine.ObjectTypes.General
         }
 
         /// <summary>
-        /// Abstract method to force sub classes to implement it. It is used to load content to the screen 
+        /// Abstract method to force sub classes to implement it. It is used to load content to the scene 
         /// </summary>
         public abstract void LoadContent();
 
@@ -84,7 +84,7 @@ namespace NanoEngine.ObjectTypes.General
         }
 
         /// <summary>
-        /// Abstract method to force sub classes to implement it. It is used to update the screen 
+        /// Abstract method to force sub classes to implement it. It is used to update the scene 
         /// </summary>
         /// <param name="updateManager">An instance of the update manager</param>
         protected abstract void Update(IUpdateManager updateManager);
@@ -99,16 +99,16 @@ namespace NanoEngine.ObjectTypes.General
         /// Method to Draw the scene
         /// </summary>
         /// <param name="renderManager">RenderManager containing draw methods</param>
-        public void DrawScreen(IRenderManager renderManager)
+        public void DrawScene(IRenderManager renderManager)
         {
             _assetManager.DrawAssets(renderManager);
             Draw(renderManager);
         }
         /// <summary>
-        /// Method to update the GameScreen
+        /// Method to update the GameScene
         /// </summary>
         /// <param name="updateManager">Provides a refrence to the updateManager.</param>
-        public void UpdateScreen(IUpdateManager updateManager)
+        public void UpdateScene(IUpdateManager updateManager)
         {
             LevelTimer += updateManager.GameTime.ElapsedGameTime.TotalSeconds;
             EventManager.Update(updateManager);
@@ -120,12 +120,12 @@ namespace NanoEngine.ObjectTypes.General
         }
 
         /// <summary>
-        /// Initialise's the screen
+        /// Initialise's the scene
         /// </summary>
-        /// <param name="name">The name of the screen</param>
+        /// <param name="name">The name of the scene</param>
         public void Initialise(String name)
         {
-            ScreenName = name;
+            SceneName = name;
             LevelTimer = 0;
             EventManager = new EventManager();
             EventManager.AddDelegates(this);

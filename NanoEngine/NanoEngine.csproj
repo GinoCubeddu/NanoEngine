@@ -120,8 +120,8 @@
     <Compile Include="ObjectTypes\Assets\Control\IAIComponent.cs" />
     <Compile Include="ObjectTypes\Assets\IAsset.cs" />
     <Compile Include="ObjectTypes\Control\IKeyboardWanted.cs" />
-    <Compile Include="ObjectTypes\General\GameScreen.cs" />
-    <Compile Include="ObjectTypes\General\IGameScreen.cs" />
+    <Compile Include="ObjectTypes\General\GameScene.cs" />
+    <Compile Include="ObjectTypes\General\IGameScene.cs" />
     <Compile Include="ObjectTypes\Control\IMouseWanted.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

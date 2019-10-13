@@ -230,7 +230,7 @@ namespace NanoEngine.Collision.Manager
         /// <summary>
         /// Updates the collision manager against the passed in objects
         /// </summary>
-        /// <param name="assets">All assets that are on screen</param>
+        /// <param name="assets">All assets that are on scene</param>
         /// <param name="aiComponents">All AiComponents that belong to the assets</param>
         public void Update(IDictionary<string, IAsset> assets, IDictionary<string, IAiComponent> aiComponents)
         {
@@ -278,7 +278,7 @@ namespace NanoEngine.Collision.Manager
         /// <summary>
         /// returns all collidbale assets and their minds in a dict
         /// </summary>
-        /// <param name="assets">All assets that are on screen</param>
+        /// <param name="assets">All assets that are on scene</param>
         /// <param name="aiComponents">All AiComponents that belong to the assets</param>
         /// <returns>The dict without the non collidables</returns>
         private IDictionary<string, Tuple<IAsset, IAiComponent>> GetCollidableAssets(

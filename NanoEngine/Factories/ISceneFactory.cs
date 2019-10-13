@@ -10,11 +10,11 @@ namespace NanoEngine.Factories
     public interface ISceneFactory
     {
         /// <summary>
-        /// Creates and initalises the requested game screen and returns it
+        /// Creates and initalises the requested game scene and returns it
         /// </summary>
-        /// <typeparam name="T">The type of screen to create</typeparam>
-        /// <param name="name">The name of the screen</param>
-        /// <returns>The created game screen</returns>
-        IGameScreen CreateScreen<T>(String name) where T : IGameScreen, new();
+        /// <typeparam name="T">The type of scene to create</typeparam>
+        /// <param name="name">The name of the scene</param>
+        /// <returns>The created game scene</returns>
+        IGameScene CreateScene<T>(String name) where T : IGameScene, new();
     }
 }

@@ -61,7 +61,7 @@ namespace NanoEngine.Events
 
         /// <summary>
         /// Adds a new event handler to the event manager. The handler must inherit from INanoEventHandler
-        /// NOTE: The new handler will only come into play on new screens and screens that are reloaded
+        /// NOTE: The new handler will only come into play on new scene and scene that are reloaded
         /// </summary>
         /// <param name="handlerName"></param>
         /// <param name="handlerType"></param>

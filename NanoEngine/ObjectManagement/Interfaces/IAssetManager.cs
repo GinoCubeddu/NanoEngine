@@ -144,7 +144,7 @@ namespace NanoEngine.ObjectManagement.Interfaces
         void LoadLevel(string filename);
 
         /// <summary>
-        /// Draws all the assets on the screen if they are "spawned" in
+        /// Draws all the assets on the scene if they are "spawned" in
         /// </summary>
         void DrawAssets(IRenderManager rendermanager);
 

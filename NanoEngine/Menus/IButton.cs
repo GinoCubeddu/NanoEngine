@@ -33,7 +33,7 @@ namespace NanoEngine.Menus
         void ToggleActiveTexture();
 
         /// <summary>
-        /// Draws the button on screen
+        /// Draws the button on scene
         /// </summary>
         /// <param name="renderManager">An instance of the render manager</param>
         void Draw(IRenderManager renderManager);

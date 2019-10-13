@@ -2,11 +2,11 @@
 <package >
   <metadata>
     <id>NanoEngine</id>
-    <version>0.0.99</version>
+    <version>0.0.1</version>
     <title>NanoEngine</title>
     <authors>GinoCubeddu</authors>
     <owners>GinoCubeddu</owners>
     <description>A simple 2d games engine</description>
-    <copyright>Copyright 2018</copyright>
+    <copyright>Copyright 2019</copyright>
   </metadata>
 </package>

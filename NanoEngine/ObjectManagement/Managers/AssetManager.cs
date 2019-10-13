@@ -306,7 +306,7 @@ namespace NanoEngine.ObjectManagement.Managers
         }
 
         /// <summary>
-        /// Draws all the assets on the screen if they are "spawned" in
+        /// Draws all the assets on the scene if they are "spawned" in
         /// </summary>
         public void DrawAssets(IRenderManager rendermanager)
         {

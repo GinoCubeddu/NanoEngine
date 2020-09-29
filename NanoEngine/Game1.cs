@@ -1,16 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
-using NanoEngine.Core.Interfaces;
-using System;
-using NanoEngine.Core.Locator;
 using NanoEngine.ObjectManagement;
-using NanoEngine.ObjectTypes.Assets;
-using NanoEngine.Collision;
+using System;
 
 namespace NanoEngine
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -32,27 +25,12 @@ namespace NanoEngine
             }
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
+            // TODO: Add your initialization logic here
             this.IsMouseVisible = true;
-
-
             RenderFilter.RenderOffset = new Vector2(1500, 200);
-            Entity.DrawAssetBounds = true;
-
             NanoEngineInit.Initialize(GraphicsDevice, this, Content);
-
-            // Get the scenemanager from the service locator
-            ISceneManager sceneManager = ServiceLocator.Instance.RetriveService<ISceneManager>(DefaultNanoServices.SceneManager);
-            ISoundManager soundManager = ServiceLocator.Instance.RetriveService<ISoundManager>(DefaultNanoServices.SoundManager);
-
-            QuadTree.DrawQuadTrees = true;
             base.Initialize();
         }
     }
